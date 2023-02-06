@@ -1,0 +1,16 @@
+const mongoose = require('mongoose');
+
+const flagSchema = mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
+  reason: {
+    type: String,
+    required: true,
+  },
+});
+
+const Flag = mongoose.model('Flag', flagSchema);
+
+module.exports = Flag;
