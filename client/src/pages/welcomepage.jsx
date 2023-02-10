@@ -1,7 +1,7 @@
 import React from 'react'
 import Bar from '../UIComponents/appBar'
-import {Box , Grid, Stack,Typography } from '@mui/material'
-
+import {Box , Grid, Stack,Typography,Button } from '@mui/material'
+import { Link } from "react-router-dom";
 
 function welcomepage() {
   return (
@@ -85,6 +85,11 @@ function welcomepage() {
                <Typography variant='h6'>  Introducing: A new Iris experience </Typography> 
                 <Typography variant='h8'> We suggest you the best fit person on our platform for a long lasting relationship with having better privacy.</Typography>
               </Box>
+          <Link to="/login">
+              <Button variant="contained" >
+                  Join Now
+              </Button>
+          </Link>    
 	</Grid>
 
 	<Grid item xs={12} textAlign="center" height='150px' >
@@ -92,6 +97,13 @@ function welcomepage() {
                <Typography variant='h6'> Increased capability </Typography> 
                 <Typography variant='h8'> AI algorithm gives the best fit compared to other matching platforms  </Typography>
               </Box>
+
+          <Link to="/login">
+              <Button variant="contained" >
+                  Join Now
+              </Button>
+          </Link>   
+
 	</Grid>
 
     
@@ -100,13 +112,25 @@ function welcomepage() {
                <Typography variant='h6'> High quality matching  </Typography> 
                 <Typography variant='h8'> Matching is done based on your personal interests and characteristics</Typography>
               </Box>
-	</Grid>
+              
+          <Link to="/login">
+              <Button variant="contained" >
+                  Join Now
+              </Button>
+          </Link>   
+ 	</Grid>
 
     <Grid item xs={12} textAlign="center" height='150px' >
             <Box className='IndexIntro'> 
                <Typography variant='h6'>  Service </Typography> 
                 <Typography variant='h8'>We give a platform with advance privacy features </Typography>
               </Box>
+
+          <Link to="/login">
+              <Button variant="contained" >
+                  Join Now
+              </Button>
+          </Link>   
 	</Grid>
 
   <Grid item xs={12} textAlign="center" height='150px' >
@@ -114,10 +138,6 @@ function welcomepage() {
                <Typography variant='h6'>   © 2023 Project Iris. All Rights Reserved  </Typography> 
               </Box>
 	</Grid>
-
-.
-
-
 
 </Grid>
 
