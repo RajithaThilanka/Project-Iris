@@ -134,7 +134,7 @@ const userSchema = new mongoose.Schema(
     },
     connections: [
       {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
       },
     ],
