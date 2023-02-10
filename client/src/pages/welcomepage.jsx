@@ -2,9 +2,6 @@ import React from 'react'
 import Bar from '../UIComponents/appBar'
 import {Box , Grid, Stack,Typography } from '@mui/material'
 
-import image1 from '../images/slider/image1';
-
-import ImageSlider from "../UIComponents/sliderComponent/ImageSlider";
 
 function welcomepage() {
   return (
