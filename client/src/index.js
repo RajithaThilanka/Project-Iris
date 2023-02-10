@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Login from './pages/Login/login';
 import Registration from './pages/Login/registration';
+import Signup from './pages/SIgnup/signup';
+import Lookingfor from './pages/SIgnup/Lookinfor/lookingfor';
 
 
 import{
@@ -26,7 +28,18 @@ const router=createBrowserRouter([
  {
   path:"registration", 
   element:<Registration />
+ },
+
+ {
+  path:"signup", 
+  element:<Signup />
+ },
+
+ {
+  path:"lookingfor", 
+  element:<Lookingfor />
  }
+
 
 ]);
 
