@@ -136,8 +136,12 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  const cookies = req.headers.cookie;
-  const token = cookies ? cookies.split('=')[1] : null;
+  let token;
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.headers.cookie) {
+    token = req.headers.cookie.split('=')[1];
+  }
 
   if (!token) {
     return next(
