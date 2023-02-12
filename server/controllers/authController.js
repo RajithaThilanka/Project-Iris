@@ -166,7 +166,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (currentUser.verified == false) {
     return next(
       new AppError(
-        'You have to verify your account in order to access this service',
+        'You have to verify your email in order to access this service',
         401
       )
     );
