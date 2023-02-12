@@ -81,18 +81,6 @@ exports.acceptConnection = catchAsync(async (req, res, next) => {
     .populate({ path: 'receiverId' })
     .execPopulate();
 
-  // await User.findByIdAndUpdate(userId, {
-  //   $push: {
-  //     connections: senderId,
-  //   },
-  // });
-
-  // await User.findByIdAndUpdate(senderId, {
-  //   $push: {
-  //     connections: userId,
-  //   },
-  // });
-
   res.status(200).json({
     status: 'success',
     data: {

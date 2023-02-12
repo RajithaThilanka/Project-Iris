@@ -14,13 +14,17 @@ router
   );
 router
   .route('/accept/:id')
-  .patch(authController.protect, datesController.acceptDate);
+  .patch(
+    authController.protect,
+    friendsController.checkFriend,
+    datesController.acceptDate
+  );
 
 router
-  .route('/sent/:status')
+  .route('/sent')
   .get(authController.protect, datesController.getAllSentDates);
 router
-  .route('/received/:status')
+  .route('/received')
   .get(authController.protect, datesController.getAllReceivedDates);
 router
   .route('/cancel/:id')

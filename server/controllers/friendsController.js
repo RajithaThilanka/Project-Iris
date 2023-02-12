@@ -220,6 +220,7 @@ exports.getFriendRequestsSent = catchAsync(async (req, res, next) => {
 exports.checkFriend = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
+
   const doc = await Connection.findOne({
     $or: [
       {
