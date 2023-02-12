@@ -28,6 +28,8 @@ router
   .route('/sent')
   .get(authController.protect, connectionsController.getConnectionRequestsSent);
 
-router.route('/').get(authController.protect, userController.getConnections);
+router
+  .route('/')
+  .get(authController.protect, connectionsController.getConnections);
 
 module.exports = router;

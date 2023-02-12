@@ -132,19 +132,7 @@ const userSchema = new mongoose.Schema(
     sports: {
       type: [String],
     },
-    connections: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    ],
     // answers: [Number],
-    friends: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-      },
-    ],
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,

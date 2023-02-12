@@ -4,7 +4,7 @@ const AppError = require('../utils/appError');
 const User = require('../models/userModel');
 
 // Send a friend request
-
+// Tested
 exports.inviteFriend = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
@@ -12,24 +12,20 @@ exports.inviteFriend = catchAsync(async (req, res, next) => {
   if (userId === receiverId) {
     return next(new AppError('Request to yourself unauthorized', 401));
   }
-  const doc = await Connection.findOne({
-    $or: [
-      {
-        senderId: userId,
-        receiverId: receiverId,
-      },
-      {
-        senderId: receiverId,
-        receiverId: userId,
-      },
-    ],
-    status: 'connected',
-  });
-  if (!doc) {
-    return next(new AppError('Friend Request unauthorized', 401));
-  }
-
-  const updatedConnection = await doc.updateOne(
+  let updatedConnection = await Connection.findOneAndUpdate(
+    {
+      $or: [
+        {
+          senderId: userId,
+          receiverId: receiverId,
+        },
+        {
+          senderId: receiverId,
+          receiverId: userId,
+        },
+      ],
+      status: 'connected',
+    },
     {
       status: 'friend-req-pending',
     },
@@ -38,31 +34,38 @@ exports.inviteFriend = catchAsync(async (req, res, next) => {
       new: true,
     }
   );
+  if (!updatedConnection) {
+    return next(new AppError('Friend Request unauthorized', 401));
+  }
+
+  updatedConnection = await updatedConnection
+    .populate({
+      path: 'senderId',
+    })
+    .populate({
+      path: 'receiverId',
+    })
+    .execPopulate();
 
   res.status(200).json({
     status: 'success',
     data: {
-      connection: updatedConnection,
+      data: updatedConnection,
     },
   });
 });
 
 // Accept a friend request
-
+// Tested
 exports.acceptFriend = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const senderId = req.params.id;
-  const doc = await Connection.findOne({
-    receiverId: userId,
-    senderId: senderId,
-    status: 'friend-req-pending',
-  });
-
-  if (!doc) {
-    return next(new AppError('Friend Request Accept unauthorized', 401));
-  }
-
-  const updatedConnection = await doc.updateOne(
+  let updatedConnection = await Connection.findOneAndUpdate(
+    {
+      receiverId: userId,
+      senderId: senderId,
+      status: 'friend-req-pending',
+    },
     {
       status: 'friends',
     },
@@ -71,17 +74,17 @@ exports.acceptFriend = catchAsync(async (req, res, next) => {
       validateBeforeSave: false,
     }
   );
-  await User.findByIdAndUpdate(userId, {
-    $push: {
-      friends: senderId,
-    },
-  });
 
-  await User.findByIdAndUpdate(senderId, {
-    $push: {
-      friends: userId,
-    },
-  });
+  if (!updatedConnection) {
+    return next(new AppError('Friend Request Accept unauthorized', 401));
+  }
+
+  updatedConnection = await updatedConnection
+    .populate({
+      path: 'senderId',
+    })
+    .populate({ path: 'receiverId' })
+    .execPopulate();
 
   res.status(200).json({
     status: 'success',
@@ -92,39 +95,36 @@ exports.acceptFriend = catchAsync(async (req, res, next) => {
 });
 
 // Unfriend a user
-
+// Tested
 exports.removeFriend = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const removeUserId = req.params.id;
-  const doc = await Connection.findOne({
-    $or: [
-      {
-        senderId: userId,
-        receiverId: removeUserId,
-      },
-      {
-        senderId: removeUserId,
-        receiverId: userId,
-      },
-    ],
-    status: 'friends',
-  });
+  let updatedConnection = await Connection.findOneAndUpdate(
+    {
+      $or: [
+        {
+          senderId: userId,
+          receiverId: removeUserId,
+        },
+        {
+          senderId: removeUserId,
+          receiverId: userId,
+        },
+      ],
+      status: 'friends',
+    },
+    {
+      status: 'connected',
+    },
+    {
+      new: true,
+      validateBeforeSave: false,
+    }
+  );
 
-  if (!doc) {
+  if (!updatedConnection) {
     return next(new AppError('No friend found', 404));
   }
-
-  await User.findByIdAndUpdate(userId, {
-    $pull: {
-      friends: removeUserId,
-    },
-  });
-  await User.findByIdAndUpdate(removeUserId, {
-    $pull: {
-      friends: userId,
-    },
-  });
-  await doc.deleteOne();
 
   res.status(200).json({
     status: 'success',
@@ -133,28 +133,32 @@ exports.removeFriend = catchAsync(async (req, res, next) => {
 });
 
 // Cancel friend request
+// Tested
 exports.cancelFriendInvite = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const removeUserId = req.params.id;
-  const doc = await Connection.findOne({
-    $or: [
-      {
-        senderId: userId,
-        receiverId: removeUserId,
-      },
-      {
-        senderId: removeUserId,
-        receiverId: userId,
-      },
-    ],
-    status: 'friend-req-pending',
-  });
+  const doc = await Connection.findOneAndUpdate(
+    {
+      $or: [
+        {
+          senderId: userId,
+          receiverId: removeUserId,
+        },
+        {
+          senderId: removeUserId,
+          receiverId: userId,
+        },
+      ],
+      status: 'friend-req-pending',
+    },
+    {
+      status: 'connected',
+    }
+  );
 
   if (!doc) {
     return next(new AppError('Cancel friend request unauthorized', 401));
   }
-
-  await doc.deleteOne();
 
   res.status(200).json({
     status: 'success',
@@ -163,65 +167,56 @@ exports.cancelFriendInvite = catchAsync(async (req, res, next) => {
 });
 
 // Get all friend received requests
-
-// Sending only an array of userId s
-
+// Tested
 exports.getFriendRequestsReceived = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
 
-  const friendRequestsReceived = await Connection.aggregate([
-    {
-      $match: {
-        receiverId: userId,
-        status: 'friend-req-pending',
-      },
-    },
-    {
-      $group: {
-        _id: '$receiverId',
-        nRequests: { $sum: 1 },
-        receivedFrom: { $push: '$senderId' },
-      },
-    },
-  ]);
+  let friendsRequestsReceived = await Connection.find({
+    receiverId: userId,
+    status: 'friend-req-pending',
+  })
+    .populate({
+      path: 'senderId',
+    })
+    .populate({
+      path: 'receiverId',
+    });
 
   res.status(200).json({
     status: 'success',
+    nRequests: friendsRequestsReceived.length,
     data: {
-      data: friendRequestsReceived,
+      data: friendsRequestsReceived,
     },
   });
 });
 
 // Get all friend sent requests
-
+// Tested
 exports.getFriendRequestsSent = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
 
-  const friendRequestsSent = await Connection.aggregate([
-    {
-      $match: {
-        senderId: userId,
-        status: 'friend-req-pending',
-      },
-    },
-    {
-      $group: {
-        _id: '$senderId',
-        nRequests: { $sum: 1 },
-        sentTo: { $push: '$receiverId' },
-      },
-    },
-  ]);
+  const friendsRequestsSent = await Connection.find({
+    senderId: userId,
+    status: 'friend-req-pending',
+  })
+    .populate({
+      path: 'senderId',
+    })
+    .populate({
+      path: 'receiverId',
+    });
 
   res.status(200).json({
     status: 'success',
+    nRequests: friendsRequestsSent.length,
     data: {
-      data: friendRequestsSent,
+      data: friendsRequestsSent,
     },
   });
 });
 
+// Tested
 exports.checkFriend = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
@@ -242,6 +237,36 @@ exports.checkFriend = catchAsync(async (req, res, next) => {
     return next(new AppError('You are not friends with the user', 401));
   }
   next();
+});
+// Tested
+exports.getFriends = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const friends = await Connection.find({
+    $or: [
+      {
+        senderId: userId,
+      },
+      {
+        receiverId: userId,
+      },
+    ],
+    status: 'friends',
+  })
+    .populate('senderId')
+    .populate('receiverId');
+
+  const finalFriends = friends.map(con => {
+    const { senderId } = con;
+
+    return senderId._id + '' != userId ? con.senderId : con.receiverId;
+  });
+  res.status(200).json({
+    status: 'success',
+    nConnections: finalFriends.length,
+    data: {
+      data: finalFriends,
+    },
+  });
 });
 
 // Review a completed date

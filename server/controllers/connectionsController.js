@@ -81,17 +81,17 @@ exports.acceptConnection = catchAsync(async (req, res, next) => {
     .populate({ path: 'receiverId' })
     .execPopulate();
 
-  await User.findByIdAndUpdate(userId, {
-    $push: {
-      connections: senderId,
-    },
-  });
+  // await User.findByIdAndUpdate(userId, {
+  //   $push: {
+  //     connections: senderId,
+  //   },
+  // });
 
-  await User.findByIdAndUpdate(senderId, {
-    $push: {
-      connections: userId,
-    },
-  });
+  // await User.findByIdAndUpdate(senderId, {
+  //   $push: {
+  //     connections: userId,
+  //   },
+  // });
 
   res.status(200).json({
     status: 'success',
@@ -131,16 +131,6 @@ exports.removeConnection = catchAsync(async (req, res, next) => {
     return next(new AppError('No connection found', 404));
   }
 
-  await User.findByIdAndUpdate(userId, {
-    $pull: {
-      connections: removeUserId,
-    },
-  });
-  await User.findByIdAndUpdate(removeUserId, {
-    $pull: {
-      connections: userId,
-    },
-  });
   await doc.deleteOne();
 
   res.status(200).json({
@@ -207,7 +197,7 @@ exports.getConnectionRequestsReceived = catchAsync(async (req, res, next) => {
 });
 
 // Get all conneciton sent requests
-
+// Tested
 exports.getConnectionRequestsSent = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
 
@@ -227,6 +217,37 @@ exports.getConnectionRequestsSent = catchAsync(async (req, res, next) => {
     nRequests: connectionRequestsSent.length,
     data: {
       data: connectionRequestsSent,
+    },
+  });
+});
+
+// Tested
+exports.getConnections = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const connections = await Connection.find({
+    $or: [
+      {
+        senderId: userId,
+      },
+      {
+        receiverId: userId,
+      },
+    ],
+    status: 'connected',
+  })
+    .populate('senderId')
+    .populate('receiverId');
+
+  const finalConnections = connections.map(con => {
+    const { senderId } = con;
+
+    return senderId._id + '' != userId ? con.senderId : con.receiverId;
+  });
+  res.status(200).json({
+    status: 'success',
+    nConnections: finalConnections.length,
+    data: {
+      data: finalConnections,
     },
   });
 });

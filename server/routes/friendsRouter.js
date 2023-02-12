@@ -27,6 +27,6 @@ router
   .route('/sent')
   .get(authController.protect, friendsController.getFriendRequestsSent);
 
-router.route('/').get(authController.protect, userController.getFriends);
+router.route('/').get(authController.protect, friendsController.getFriends);
 
 module.exports = router;
