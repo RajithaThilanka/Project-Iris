@@ -3,12 +3,12 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const User = require('../models/userModel');
 
-//INVITE FOR A CONNECTION
-
+// Dini
+// Invite for a connection
+// Tested
 exports.inviteConnection = catchAsync(async (req, res, next) => {
-  const userId = req.user._id;
+  const userId = req.user._id; //sender ID
   const receiverId = req.params.id;
-
   if (userId === receiverId) {
     return next(new AppError('Request to yourself unauthorized', 401));
   }
@@ -24,6 +24,7 @@ exports.inviteConnection = catchAsync(async (req, res, next) => {
       },
     ],
   });
+
   if (doc) {
     return next(new AppError('Request unauthorized', 401));
   }
@@ -48,11 +49,14 @@ exports.inviteConnection = catchAsync(async (req, res, next) => {
   });
 });
 
-//ACCEPT A CONNECTION
+// Dini
+// Accept a connection request
+// Tested
 
 exports.acceptConnection = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const senderId = req.params.id;
+
   let updatedConnection = await Connection.findOneAndUpdate(
     {
       receiverId: userId,
@@ -67,16 +71,16 @@ exports.acceptConnection = catchAsync(async (req, res, next) => {
       new: true,
     }
   );
-
+  if (!updatedConnection) {
+    return next(new AppError('Accept unauthorized', 401));
+  }
   updatedConnection = await updatedConnection
     .populate({
       path: 'senderId',
     })
     .populate({ path: 'receiverId' })
     .execPopulate();
-  if (!updatedConnection) {
-    return next(new AppError('Accept unauthorized', 401));
-  }
+
   await User.findByIdAndUpdate(userId, {
     $push: {
       connections: senderId,
@@ -98,7 +102,7 @@ exports.acceptConnection = catchAsync(async (req, res, next) => {
 });
 
 // Remove connection
-
+// Tested
 exports.removeConnection = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const removeUserId = req.params.id;
@@ -119,9 +123,6 @@ exports.removeConnection = catchAsync(async (req, res, next) => {
       },
       {
         status: 'friend-req-pending',
-      },
-      {
-        status: 'friends',
       },
     ],
   });
@@ -149,7 +150,7 @@ exports.removeConnection = catchAsync(async (req, res, next) => {
 });
 
 // Cancel Connection Invitation
-
+// Tested
 exports.cancelConnectionInvite = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const removeUserId = req.params.id;
@@ -180,30 +181,25 @@ exports.cancelConnectionInvite = catchAsync(async (req, res, next) => {
 });
 
 // Get all conneciton received requests
-
-// Sending only an array of userId s
+// Tested
 
 exports.getConnectionRequestsReceived = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
 
-  const connectionRequestsReceived = await Connection.aggregate([
-    {
-      $match: {
-        receiverId: userId,
-        status: 'con-req-pending',
-      },
-    },
-    {
-      $group: {
-        _id: '$receiverId',
-        nRequests: { $sum: 1 },
-        receivedFrom: { $push: '$senderId' },
-      },
-    },
-  ]);
+  let connectionRequestsReceived = await Connection.find({
+    receiverId: userId,
+    status: 'con-req-pending',
+  })
+    .populate({
+      path: 'senderId',
+    })
+    .populate({
+      path: 'receiverId',
+    });
 
   res.status(200).json({
     status: 'success',
+    nRequests: connectionRequestsReceived.length,
     data: {
       data: connectionRequestsReceived,
     },

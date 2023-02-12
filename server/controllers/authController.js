@@ -17,12 +17,12 @@ const signToken = id =>
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
-  res.cookie('jwt', token, {
-    path: '/',
-    expires: new Date(Date.now() + 1000 * 60 * 5),
-    httpOnly: true,
-    sameSite: 'lax',
-  });
+  // res.cookie('jwt', token, {
+  //   path: '/',
+  //   expires: new Date(Date.now() + 1000 * 60 * 5),
+  //   httpOnly: true,
+  //   sameSite: 'lax',
+  // });
 
   user.password = undefined;
   res.status(statusCode).json({
@@ -137,11 +137,11 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
-  if (req.headers.authorization) {
+  if (req.headers.authorization)
     token = req.headers.authorization.split(' ')[1];
-  } else if (req.headers.cookie) {
-    token = req.headers.cookie.split('=')[1];
-  }
+  // } else if (req.headers.cookie) {
+  //   token = req.headers.cookie.split('=')[1];
+  // }
 
   if (!token) {
     return next(
