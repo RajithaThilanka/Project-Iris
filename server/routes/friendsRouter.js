@@ -1,32 +1,61 @@
 const express = require('express');
 const friendsController = require('../controllers/friendsController');
 const authController = require('../controllers/authController');
-const userController = require('../controllers/userController');
 
 const router = express.Router({ mergeParams: true });
 
 router
   .route('/invite/:id')
-  .patch(authController.protect, friendsController.inviteFriend);
+  .patch(
+    authController.protect,
+    authController.checkManualVerification,
+    friendsController.inviteFriend
+  );
 router
   .route('/accept/:id')
-  .patch(authController.protect, friendsController.acceptFriend);
+  .patch(
+    authController.protect,
+    authController.checkManualVerification,
+    friendsController.acceptFriend
+  );
 router
   .route('/remove/:id')
-  .patch(authController.protect, friendsController.removeFriend);
+  .patch(
+    authController.protect,
+    authController.checkManualVerification,
+    friendsController.removeFriend
+  );
 
 router
   .route('/cancel/:id')
-  .patch(authController.protect, friendsController.cancelFriendInvite);
+  .patch(
+    authController.protect,
+    authController.checkManualVerification,
+    friendsController.cancelFriendInvite
+  );
 
 router
   .route('/received')
-  .get(authController.protect, friendsController.getFriendRequestsReceived);
+  .get(
+    authController.protect,
+    authController.checkManualVerification,
+    friendsController.getFriendRequestsReceived
+  );
 
 router
   .route('/sent')
-  .get(authController.protect, friendsController.getFriendRequestsSent);
+  .get(
+    authController.protect,
+    authController.checkManualVerification,
+    friendsController.getFriendRequestsSent
+  );
 
-router.route('/').get(authController.protect, friendsController.getFriends);
+router
+  .route('/')
+  .get(
+    authController.protect,
+    authController.checkManualVerification,
+    friendsController.getFriends
+  );
 
 module.exports = router;

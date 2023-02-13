@@ -17,8 +17,8 @@ const LookingForSchema = new mongoose.Schema({
     maxAge: Number,
   },
   height: {
-    minHeight: [Number],
-    maxHeight: [Number],
+    minHeight: Number,
+    maxHeight: Number,
   },
 });
 

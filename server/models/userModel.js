@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Please provide your occupation'],
     },
     height: {
-      type: [Number],
+      type: Number,
       required: [true, 'Please provide your height'],
     },
     maritalStatus: {
@@ -77,9 +77,18 @@ const userSchema = new mongoose.Schema(
         message: 'Please provide a valid monthly income',
       },
     },
-    hasChildren: Boolean,
-    religion: String,
-    ethnicity: String,
+    hasChildren: {
+      type: Boolean,
+      required: true,
+    },
+    religion: {
+      type: String,
+      required: true,
+    },
+    ethnicity: {
+      type: String,
+      required: true,
+    },
     profilePhoto: String,
     password: {
       type: String,
@@ -108,11 +117,10 @@ const userSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now(),
-      select: false,
     },
+    // Refers to the tags that will be sent to AI
     profileDescription: {
       type: String,
-      minlength: 50,
     },
     userDescription: {
       type: String,
@@ -145,10 +153,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    manuallyVerified: {
-      type: Boolean,
-      default: false,
-    },
+
     index: {
       type: Number,
     },
@@ -175,6 +180,13 @@ const userSchema = new mongoose.Schema(
 //   localField: '_id',
 // });
 
+userSchema.virtual('age').get(function () {
+  let date = new Date(this.dob);
+  let today = new Date();
+  let timeDiff = today.getTime() - date.getTime();
+  let age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365);
+  return age;
+});
 //Document Middleware
 
 userSchema.pre('save', async function (next) {

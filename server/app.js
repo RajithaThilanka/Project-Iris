@@ -20,29 +20,14 @@ app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(xss());
-
-// app.set('view engine', 'pug');
-// app.set('views', path.join(__dirname, 'views'));
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static('images'));
 
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP! Please try again later',
 });
-
-// app.use(
-//   hpp({
-//     whitelist: [
-//       'duration',
-//       'ratingsAverage',
-//       'ratingsQuantity',
-//       'maxGroupSize',
-//       'difficulty',
-//       'price',
-//     ],
-//   })
-// );
 
 app.use('/api', limiter);
 

@@ -1,11 +1,9 @@
 Implement sending message to reported User and reportedBy User after review
-Implement restrict routes
+
 Implement hate speech
-Implement cluster add when signing up -- done
+
 Implement sending answers
 Implement flag in hate speech psotive
-Implement image upload for reporting -- done
-Implement user verification -- done
-Implement admin routes 
+
 Re activate account
-implement lookingFor update for admin
+Test generating suggestions

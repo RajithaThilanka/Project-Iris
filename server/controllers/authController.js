@@ -8,6 +8,9 @@ const crypto = require('crypto');
 const UserVerification = require('../models/useVerificationModel');
 const request = require('request-promise');
 const LookingFor = require('../models/lookingForModel');
+const Admin = require('../models/adminModel');
+const ManualVerification = require('../models/manualVerificationModel');
+const { formatMils } = require('../utils/utilFuncs');
 
 const signToken = id =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -152,9 +155,8 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
-    return new AppError(
-      'The user belonging to this token does no longer exist',
-      401
+    return next(
+      new AppError('The user belonging to this token does no longer exist', 401)
     );
   }
   if (currentUser.changedPasswordAfter(decoded.iat)) {
@@ -265,33 +267,142 @@ exports.getLatestIndex = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.verifyAccount = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(
-    req.params.id,
-    {
-      manuallyVerified: true,
-    },
-    {
-      runValidators: false,
-      new: true,
-    }
+exports.checkManualVerification = catchAsync(async (req, res, next) => {
+  const verification = await ManualVerification.findOne({
+    userId: req.user._id,
+  });
+
+  if (verification?.status == 'verified') return next();
+  else if (verification?.status == 'pending') {
+    const allowedMs = 7 * 24 * 60 * 60 * 1000;
+    const diffMs = Math.abs(Date.now() - req.user.createdAt);
+    if (diffMs <= allowedMs) return next();
+  }
+  return next(
+    new AppError('You have to verify your account to access this service')
   );
+});
+
+// Admin login
+
+exports.adminLogin = catchAsync(async (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return next(new AppError('Please provide an username and a password', 400));
+  }
+  const admin = await Admin.findOne({ username: username }).select('+password');
+  if (!admin || !(await admin.correctPassword(password, admin.password))) {
+    return next(new AppError('Incorrect username or password', 401));
+  }
+  createSendToken(admin, 200, res);
+});
+
+exports.adminProtect = catchAsync(async (req, res, next) => {
+  let token;
+  if (req.headers.authorization)
+    token = req.headers.authorization.split(' ')[1];
+
+  if (!token) {
+    return next(
+      new AppError('You are not logged in! Please login to access', 401)
+    );
+  }
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const currentUser = await Admin.findById(decoded.id);
+  if (!currentUser) {
+    return next(
+      new AppError(`You don't have permission to perform this action`, 401)
+    );
+  }
+  req.user = currentUser;
+  next();
+});
+// Request manual verification
+exports.requestManualVerify = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const doc = await ManualVerification.findOne({
+    userId: userId,
+  });
+  if (doc) {
+    switch (doc.status) {
+      case 'pending':
+        return next(
+          new AppError('Your manual verification request is pending!', 400)
+        );
+      case 'verified':
+        return next(
+          new AppError('Your account is already manually verified!', 400)
+        );
+      case 'failed': {
+        const waitMs = 2 * 24 * 60 * 60 * 1000;
+        const t = Math.abs(Date.now() - doc.createdAt);
+        if (t < waitMs) {
+          const { d, h, m, s } = formatMils(Math.abs(waitMs - t));
+          return next(
+            new AppError(
+              `Your account verification has been failed. Please wait ${d} day ${h} hours ${m} minutes ${s} seconds before submitting another request`,
+              400
+            )
+          );
+        } else {
+          await doc.deleteOne();
+        }
+      }
+    }
+  }
+  const { liveFeed, nicPhoto } = req.body;
+  const manualVerificationRequest = await ManualVerification.create({
+    userId,
+    liveFeed,
+    nicPhoto,
+  });
+
   res.status(200).json({
     status: 'success',
     data: {
-      data: user,
+      data: manualVerificationRequest,
     },
   });
 });
 
-exports.checkManualVerification = (req, res, next) => {
-  if (!req.user.manuallyVerified) {
+exports.getAllVerificationRequests = catchAsync(async (req, res, next) => {
+  const verificationRequests = await ManualVerification.find({
+    status: 'pending',
+  }).populate('userId');
+
+  res.status(200).json({
+    status: 'success',
+    nRequests: verificationRequests.length,
+    data: {
+      data: verificationRequests,
+    },
+  });
+});
+
+// Verify manual verification
+exports.verifyAccount = catchAsync(async (req, res, next) => {
+  const verifiedUser = await ManualVerification.findOneAndUpdate(
+    {
+      userId: req.params.id,
+    },
+    {
+      status: req.body.status,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  ).populate('userId');
+
+  if (!verifiedUser) {
     return next(
-      new AppError(
-        'You have to verify your identity to access this service',
-        401
-      )
+      new AppError('Manual verification failed! No user found!', 404)
     );
   }
-  next();
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: verifiedUser,
+    },
+  });
+});
