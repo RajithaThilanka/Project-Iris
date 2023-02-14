@@ -303,7 +303,7 @@ exports.checkManualVerification = catchAsync(async (req, res, next) => {
   });
 
   if (verification?.status == 'verified') return next();
-  else if (verification?.status == 'pending') {
+  else if (!verification || verification?.status == 'pending') {
     const allowedMs = 7 * 24 * 60 * 60 * 1000;
     const diffMs = Math.abs(Date.now() - req.user.createdAt);
     if (diffMs <= allowedMs) return next();

@@ -38,7 +38,7 @@ router
   );
 router
   .route('/cancel/:id')
-  .get(
+  .delete(
     authController.protect,
     authController.checkManualVerification,
     datesController.cancelDateInvite

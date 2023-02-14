@@ -229,7 +229,7 @@ exports.getConnections = catchAsync(async (req, res, next) => {
   const finalConnections = connections.map(con => {
     const { senderId } = con;
 
-    return senderId._id + '' != userId ? con.senderId : con.receiverId;
+    return senderId?._id + '' != userId ? con.senderId : con.receiverId;
   });
   res.status(200).json({
     status: 'success',
