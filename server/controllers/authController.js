@@ -11,6 +11,8 @@ const LookingFor = require('../models/lookingForModel');
 const Admin = require('../models/adminModel');
 const ManualVerification = require('../models/manualVerificationModel');
 const { formatMils } = require('../utils/utilFuncs');
+const Answer = require('../models/answerModel');
+const Question = require('../models/questionModel');
 
 const signToken = id =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -37,6 +39,35 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
+const setupAnswerModel = async user => {
+  await Answer.create({
+    userId: user._id,
+  });
+  const questions = await Question.find({});
+  // Shuffle array
+  const shuffled = questions.sort(() => 0.5 - Math.random());
+
+  // Get sub-array of first n elements after shuffled
+  let selected = shuffled.slice(0, 50);
+  const selectedIds = selected.map(el => el._id);
+  await Answer.findOneAndUpdate(
+    {
+      userId: user._id,
+    },
+    {
+      questions: selectedIds,
+    }
+  );
+};
+
+const setupLookingFor = async (user, req) => {
+  const { lookingFor } = req.body;
+  delete req.body.lookingFor;
+  const newLookingFor = await LookingFor.create({
+    userId: user._id,
+    ...lookingFor,
+  });
+};
 exports.signup = catchAsync(async (req, res, next) => {
   const notAllowed = [
     'role',
@@ -49,8 +80,6 @@ exports.signup = catchAsync(async (req, res, next) => {
   notAllowed.forEach(field => {
     if (Object.keys(req.body).includes(field)) delete req.body[field];
   });
-  const { lookingFor } = req.body;
-  delete req.body.lookingFor;
 
   let existingUser;
 
@@ -61,10 +90,11 @@ exports.signup = catchAsync(async (req, res, next) => {
     );
   }
   const newUser = await User.create(req.body);
-  const newLookingFor = await LookingFor.create({
-    userId: newUser._id,
-    ...lookingFor,
-  });
+  // setup answer model
+  setupAnswerModel(newUser);
+  // setup looking for
+  setupLookingFor(newUser, req);
+
   const newUserVerification = await UserVerification.create({
     userId: newUser._id,
   });

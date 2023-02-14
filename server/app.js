@@ -3,7 +3,7 @@ const { json } = require('express');
 const path = require('path');
 const userRouter = require('./routes/userRouter');
 const uploadRouter = require('./routes/uploadRouter');
-const reportRouter = require('./routes/reportRouter');
+const questionRouter = require('./routes/questionRouter');
 const cors = require('cors');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
@@ -32,8 +32,8 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/reports', reportRouter);
 app.use('/api/v1/upload', uploadRouter);
+app.use('/api/v1/questions', questionRouter);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });

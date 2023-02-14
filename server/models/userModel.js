@@ -119,27 +119,27 @@ const userSchema = new mongoose.Schema(
       default: Date.now(),
     },
     // Refers to the tags that will be sent to AI
-    profileDescription: {
-      type: String,
-    },
+    // profileDescription: {
+    //   type: String,
+    // },
     userDescription: {
       type: String,
     },
-    movies: {
-      type: [String],
-    },
-    music: {
-      type: [String],
-    },
-    politics: {
-      type: [String],
-    },
-    socialMedia: {
-      type: [String],
-    },
-    sports: {
-      type: [String],
-    },
+    // movies: {
+    //   type: [String],
+    // },
+    // music: {
+    //   type: [String],
+    // },
+    // politics: {
+    //   type: [String],
+    // },
+    // socialMedia: {
+    //   type: [String],
+    // },
+    // sports: {
+    //   type: [String],
+    // },
     // answers: [Number],
     passwordChangedAt: Date,
     passwordResetToken: String,

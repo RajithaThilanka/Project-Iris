@@ -2,6 +2,7 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const aiController = require('../controllers/aiController');
+const answerController = require('../controllers/answerController');
 const connectionsRouter = require('./connectionsRouter');
 const friendsRouter = require('./friendsRouter');
 const dateRouter = require('./dateRouter');
@@ -41,7 +42,9 @@ router
 router.use('/me/connections', connectionsRouter);
 router.use('/me/friends', friendsRouter);
 router.use('/me/dates', dateRouter);
-
+router
+  .route('/me/submit-answer/:id')
+  .patch(authController.protect, answerController.addAnswer);
 router
   .route('/me')
   .get(authController.protect, userController.getMe, userController.getUser);
@@ -60,7 +63,7 @@ router.route('/').get(userController.getUsers);
 
 router
   .route('/:id')
-  .get(authController.adminProtect, userController.getUser)
+  .get(userController.getUser)
   .patch(authController.adminProtect, userController.updateUser)
   .delete(authController.adminProtect, userController.deleteUser);
 
