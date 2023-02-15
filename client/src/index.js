@@ -1,54 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import Login from './pages/Login/login';
-import Registration from './pages/Login/registration';
-import Signup from './pages/SIgnup/signup';
-import Lookingfor from './pages/SIgnup/Lookinfor/lookingfor';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import Login from "./pages/Login/login";
+import Registration from "./pages/Login/registration";
+import Signup from "./pages/SIgnup/signup";
+import Lookingfor from "./pages/SIgnup/Lookinfor/lookingfor";
+import { Provider } from "react-redux";
+import store from "./store/ReduxStore";
 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
 
-import{
-createBrowserRouter,
-RouterProvider,
-} from "react-router-dom";
+  {
+    path: "login",
+    element: <Login />,
+  },
 
-const router=createBrowserRouter([
- {
-   path:"/",
-   element:<App />,
- },
+  {
+    path: "registration",
+    element: <Registration />,
+  },
 
- {
-  path:"login", 
-  element:<Login />
- },
+  {
+    path: "signup",
+    element: <Signup />,
+  },
 
- {
-  path:"registration", 
-  element:<Registration />
- },
-
- {
-  path:"signup", 
-  element:<Signup />
- },
-
- {
-  path:"lookingfor", 
-  element:<Lookingfor />
- },
-
-
+  {
+    path: "lookingfor",
+    element: <Lookingfor />,
+  },
 ]);
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <RouterProvider router={router}/>
-
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
