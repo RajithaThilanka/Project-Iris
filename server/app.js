@@ -3,7 +3,7 @@ const { json } = require('express');
 const path = require('path');
 const userRouter = require('./routes/userRouter');
 const uploadRouter = require('./routes/uploadRouter');
-const reportRouter = require('./routes/reportRouter');
+const questionRouter = require('./routes/questionRouter');
 const cors = require('cors');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
@@ -20,10 +20,8 @@ app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(xss());
-
-// app.set('view engine', 'pug');
-// app.set('views', path.join(__dirname, 'views'));
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static('images'));
 
 const limiter = rateLimit({
   max: 100,
@@ -31,24 +29,11 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP! Please try again later',
 });
 
-// app.use(
-//   hpp({
-//     whitelist: [
-//       'duration',
-//       'ratingsAverage',
-//       'ratingsQuantity',
-//       'maxGroupSize',
-//       'difficulty',
-//       'price',
-//     ],
-//   })
-// );
-
 app.use('/api', limiter);
 
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/reports', reportRouter);
 app.use('/api/v1/upload', uploadRouter);
+app.use('/api/v1/questions', questionRouter);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });

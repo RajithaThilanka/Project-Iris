@@ -4,6 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 // Invite for a date
+// Tested
 exports.inviteDate = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
@@ -38,13 +39,17 @@ exports.inviteDate = catchAsync(async (req, res, next) => {
 
   const { scheduledAt, dateType } = req.body;
 
-  const newDate = await date.create({
+  let newDate = await date.create({
     senderId: userId,
     receiverId,
     scheduledAt,
     dateType,
   });
 
+  newDate = await newDate
+    .populate('senderId')
+    .populate('receiverId')
+    .execPopulate();
   res.status(200).json({
     status: 'success',
     data: {
@@ -53,20 +58,17 @@ exports.inviteDate = catchAsync(async (req, res, next) => {
   });
 });
 
+// Accept a date invite
+// Tested
 exports.acceptDate = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const senderId = req.params.id;
-  const doc = await date.findOne({
-    receiverId: userId,
-    senderId: senderId,
-    status: 'pending',
-  });
-
-  if (!doc) {
-    return next(new AppError('Accept unauthorized', 401));
-  }
-
-  const updatedDate = await doc.updateOne(
+  let updatedDate = await date.findOneAndUpdate(
+    {
+      receiverId: userId,
+      senderId: senderId,
+      status: 'pending',
+    },
     {
       status: 'accepted',
     },
@@ -76,6 +78,14 @@ exports.acceptDate = catchAsync(async (req, res, next) => {
     }
   );
 
+  if (!updatedDate) {
+    return next(new AppError('Accept unauthorized', 401));
+  }
+  updatedDate = await updatedDate
+    .populate('senderId')
+    .populate('receiverId')
+    .execPopulate();
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -84,78 +94,111 @@ exports.acceptDate = catchAsync(async (req, res, next) => {
   });
 });
 
+// Get all the scheduled date of the currently logged in user
+// Tested
 exports.getAllScheduledDates = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
-  const allConfirmedDates = await date.find({
-    $or: [
-      {
-        senderId: userId,
+  const allConfirmedDates = await date
+    .find({
+      $or: [
+        {
+          senderId: userId,
+        },
+        {
+          receiverId: userId,
+        },
+      ],
+      scheduledAt: {
+        $gte: Date.now(),
       },
-      {
-        receiverId: userId,
-      },
-    ],
-    scheduledAt: {
-      $gte: Date.now(),
-    },
-    status: 'accepted',
-  });
+      status: 'accepted',
+    })
+    .populate('senderId')
+    .populate('receiverId');
   res.status(200).json({
     status: 'success',
     data: {
-      allConfirmedDates,
+      data: allConfirmedDates,
     },
   });
 });
 
+// Get all sent date requests
+// Tested
 exports.getAllSentDates = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
-  const status = req.params.status;
-  const allPendingsentDates = await date.find({
-    senderId: userId,
-    scheduledAt: {
-      $gte: Date.now(),
-    },
-    status,
-  });
+  const allPendingsentDates = await date
+    .find({
+      senderId: userId,
+      status: 'pending',
+    })
+    .populate('senderId')
+    .populate('receiverId');
   res.status(200).json({
     status: 'success',
     data: {
-      allPendingsentDates,
+      data: allPendingsentDates,
     },
   });
 });
 
+// Get all sent date requests
+// Tested
 exports.getAllReceivedDates = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
-  const status = req.params.status;
-  const allPendingreceivedDates = await date.find({
-    $or: [
-      {
-        receiverId: userId,
-      },
-    ],
-    scheduledAt: {
-      $gte: Date.now(),
-    },
-    status,
-  });
+  const allPendingreceivedDates = await date
+    .find({
+      $or: [
+        {
+          receiverId: userId,
+        },
+      ],
+      status: 'pending',
+    })
+    .populate('senderId')
+    .populate('receiverId');
   res.status(200).json({
     status: 'success',
     data: {
-      allPendingreceivedDates,
+      data: allPendingreceivedDates,
     },
   });
 });
 
 // Postpone date
+// Tested
 exports.postponeDate = catchAsync(async (req, res, next) => {
-  const postDate = await date.findById(req.params.id);
-  postDate.scheduledAt = req.body.scheduledAt || Date.now();
-  postDate.save({
-    validateBeforeSave: false,
-  });
+  const userId = req.user._id;
+  const receiverId = req.params.id;
+  const postDate = await date.findOneAndUpdate(
+    {
+      $or: [
+        {
+          senderId: userId,
+          receiverId: receiverId,
+        },
+        {
+          senderId: receiverId,
+          receiverId: userId,
+        },
+      ],
+      scheduledAt: {
+        $gte: Date.now(),
+      },
+      status: 'accepted',
+    },
+    {
+      scheduledAt: new Date(req.body.scheduledAt),
+    },
+    {
+      validateBeforeSave: true,
+      new: true,
+    }
+  );
 
+  if (!postDate) {
+    return next(new AppError('Request failed', 500));
+  }
   res.status(200).json({
     status: 'success',
     data: {
@@ -165,16 +208,23 @@ exports.postponeDate = catchAsync(async (req, res, next) => {
 });
 
 // Cancel Scheduled Date
-
+// Tested
 exports.removeDate = catchAsync(async (req, res, next) => {
-  const id = req.params.id;
-
-  const doc = await date.findById(id);
-
-  if (!doc) {
-    return next(new AppError('No date found', 404));
-  }
-  await doc.deleteOne();
+  const userId = req.user._id;
+  const receiverId = req.params.id;
+  await date.findOneAndDelete({
+    $or: [
+      {
+        senderId: userId,
+        receiverId: receiverId,
+      },
+      {
+        senderId: receiverId,
+        receiverId: userId,
+      },
+    ],
+    status: 'accepted',
+  });
 
   res.status(200).json({
     status: 'success',
@@ -183,10 +233,11 @@ exports.removeDate = catchAsync(async (req, res, next) => {
 });
 
 // Cancel Date Request
+// Tested
 exports.cancelDateInvite = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const removeUserId = req.params.id;
-  const doc = await date.findOne({
+  await date.findOneAndDelete({
     $or: [
       {
         senderId: userId,
@@ -199,12 +250,6 @@ exports.cancelDateInvite = catchAsync(async (req, res, next) => {
     ],
     status: 'pending',
   });
-
-  if (!doc) {
-    return next(new AppError('Cancel date request unauthorized', 401));
-  }
-
-  await doc.deleteOne();
 
   res.status(200).json({
     status: 'success',

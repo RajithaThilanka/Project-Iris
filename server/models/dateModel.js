@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const dateSchema = new mongoose.Schema(
   {
     senderId: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
     receiverId: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
     scheduledAt: {

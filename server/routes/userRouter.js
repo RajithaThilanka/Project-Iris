@@ -2,11 +2,10 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const aiController = require('../controllers/aiController');
+const answerController = require('../controllers/answerController');
 const connectionsRouter = require('./connectionsRouter');
 const friendsRouter = require('./friendsRouter');
 const dateRouter = require('./dateRouter');
-const uploadRouter = require('./uploadRouter');
-const reportController = require('../controllers/reportController');
 const router = express.Router();
 
 // user routes
@@ -32,45 +31,40 @@ router
   .patch(authController.protect, userController.updateMe);
 router
   .route('/me/suggestions')
-  .get(authController.protect, aiController.generateSuggestions);
-
+  .get(
+    authController.protect,
+    authController.checkManualVerification,
+    aiController.generateUserSuggestions
+  );
+router
+  .route('/me/manual-verify')
+  .post(authController.protect, authController.requestManualVerify);
 router.use('/me/connections', connectionsRouter);
 router.use('/me/friends', friendsRouter);
 router.use('/me/dates', dateRouter);
-
+router
+  .route('/me/submit-answer/:id')
+  .patch(authController.protect, answerController.addAnswer);
 router
   .route('/me')
   .get(authController.protect, userController.getMe, userController.getUser);
 
 // admin routes
 
+router.route('/admin/login').post(authController.adminLogin);
+router
+  .route('/verify-requests')
+  .get(authController.adminProtect, authController.getAllVerificationRequests);
 router
   .route('/verify-account/:id')
-  .patch(
-    authController.protect,
-    authController.restrictTo('admin'),
-    authController.verifyAccount
-  );
-router
-  .route('/')
-  .get(
-    authController.protect,
-    authController.restrictTo('admin'),
-    userController.getUsers
-  );
+  .patch(authController.adminProtect, authController.verifyAccount);
+
+router.route('/').get(userController.getUsers);
 
 router
   .route('/:id')
-  .get(authController.protect, userController.getUser)
-  .patch(
-    authController.protect,
-    authController.restrictTo('admin'),
-    userController.updateUser
-  )
-  .delete(
-    authController.protect,
-    authController.restrictTo('admin'),
-    userController.deleteUser
-  );
+  .get(userController.getUser)
+  .patch(authController.adminProtect, userController.updateUser)
+  .delete(authController.adminProtect, userController.deleteUser);
 
 module.exports = router;

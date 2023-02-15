@@ -1,0 +1,16 @@
+[
+  {
+    "firstname": "sheldon",
+    "lastname": "cooper",
+    "username": "admin1",
+    "email": "admin1@iristeam.com",
+    "password": "$2a$12$ASEIf89n9.LXzb08XZHjMO4KS0.gK/x8zczrvBfiqX/S/InaI7Jz6"
+  },
+  {
+    "firstname": "linda",
+    "lastname": "cotrell",
+    "username": "admin2",
+    "email": "admin2@iristeam.com",
+    "password": "$2a$12$ASEIf89n9.LXzb08XZHjMO4KS0.gK/x8zczrvBfiqX/S/InaI7Jz6"
+  }
+]
