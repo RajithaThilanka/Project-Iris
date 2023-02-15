@@ -9,6 +9,7 @@ import Signup from './pages/SIgnup/signup';
 import Lookingfor from './pages/SIgnup/Lookinfor/lookingfor';
 
 
+
 import{
 createBrowserRouter,
 RouterProvider,
@@ -38,7 +39,7 @@ const router=createBrowserRouter([
  {
   path:"lookingfor", 
   element:<Lookingfor />
- }
+ },
 
 
 ]);

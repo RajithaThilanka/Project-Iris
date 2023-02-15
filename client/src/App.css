@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+.Login-page{
+  text-align: center ;
+  justify-content: center ; 
+  display: flex;
+  padding: 90px 0 90px 0 ;
+  background-color: rgb(233, 199, 199);
+}
+
+.subLogin-page{
+  display: flex;
+  justify-content: center;
+  height: 600px;
+  width: 450px;
+ /* box-shadow: 11px 12px 13px 12px rgb(207,207,207);*/
+  padding-top: px;
+  border-radius:12px;
+  background-color: white;
+}
+
+
+
+
