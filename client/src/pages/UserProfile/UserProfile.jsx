@@ -14,7 +14,7 @@ function UserProfile() {
             <ProfilHeader />
             <Buttonbar />
             <Content />
-        </div
+        </div>
     )
 }
 
