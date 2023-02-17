@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.0",
+    "@mui/joy": "^5.0.0-alpha.67",
     "@mui/material": "^5.11.7",
     "@mui/styled-engine-sc": "^5.11.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -23,6 +24,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "styled-components": "^5.3.6",
+    "swiper": "^9.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
