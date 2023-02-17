@@ -1,52 +1,58 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import Login from "./pages/Login/login";
-import Registration from "./pages/Login/registration";
-import Signup from "./pages/SIgnup/signup";
-import Lookingfor from "./pages/SIgnup/Lookinfor/lookingfor";
 import { Provider } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import store from "./store/ReduxStore";
+import App from "./App";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <App />,
+//   },
 
-  {
-    path: "login",
-    element: <Login />,
-  },
+//   {
+//     path: "login",
+//     element: <Login />,
+//   },
 
-  {
-    path: "registration",
-    element: <Registration />,
-  },
+//   {
+//     path: "registration",
+//     element: <Registration />,
+//   },
 
-  {
-    path: "signup",
-    element: <Signup />,
-  },
+//   {
+//     path: "signup",
+//     element: <Signup />,
+//   },
 
-  {
-    path: "lookingfor",
-    element: <Lookingfor />,
-  },
-]);
+//   {
+//     path: "lookingfor",
+//     element: <Lookingfor />,
+//   },
+// ]);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+// ReactDOM.render(
+//   <Provider store={store}>
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path="*" element={<App />} />
+//       </Routes>
+//     </BrowserRouter>
+//   </Provider>,
+//   document.getElementById("root")
+// );
+
+const el = document.getElementById("root");
+const root = ReactDOM.createRoot(el);
 root.render(
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<App />} />
+      </Routes>
+    </BrowserRouter>
   </Provider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
