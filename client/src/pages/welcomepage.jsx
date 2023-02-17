@@ -1,12 +1,12 @@
 import React from 'react'
-import Bar from '../UIComponents/appBar'
+import Bar from '../components/Appbar/MainAppbar'
 import {Box , Grid, Stack,Typography,Button } from '@mui/material'
 import { Link } from "react-router-dom";
+import Slider from '../components/IndexSlider/ImageSlider';
 
 function welcomepage() {
   return (
     <div>
-        <Bar />
 
 <Grid container my={5}
   
@@ -16,11 +16,11 @@ function welcomepage() {
   
 >
 	<Grid item xs={12} >
-	      <Box>
-           
+      <Bar />
+	</Grid>
 
-
-        </Box>
+	<Grid item xs={12} >
+        <Slider />
 	</Grid>
 
 	<Grid item xs={12} marginBottom='10' my={4} >
