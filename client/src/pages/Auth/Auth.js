@@ -2,7 +2,7 @@ import { Button, FormLabel, Grid, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Login from "../../components/Login/Login";
-import SignUp from "../../components/SignUp/SignUp";
+import SignUp from "../../components/SignUp/Signup";
 
 import "./Auth.css";
 

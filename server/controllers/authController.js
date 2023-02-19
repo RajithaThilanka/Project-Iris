@@ -62,7 +62,7 @@ const setupAnswerModel = async user => {
 
 const setupLookingFor = async (user, req) => {
   const { lookingFor } = req.body;
-  delete req.body.lookingFor;
+  delete req.body?.lookingFor;
   const newLookingFor = await LookingFor.create({
     userId: user._id,
     ...lookingFor,

@@ -1,7 +1,11 @@
 import React from "react";
 
 function ProfilHeader() {
-  return <div>Header</div>;
+  return <div>
+    
+    
+    
+    </div>;
 }
 
 export default ProfilHeader;

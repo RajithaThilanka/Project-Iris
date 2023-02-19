@@ -1,4 +1,6 @@
 import React from "react";
+import ProComplete from '../../../components/Profile/ProfileComplete/profilecomplete';
+import SaveIcon from '@mui/icons-material/Save';
 import {
   Card,
   CardContent,
@@ -7,6 +9,7 @@ import {
   Button,
   CardActions,
   Stack,
+  Paper,
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Grid } from "@mui/material";
@@ -32,36 +35,35 @@ function ProfileContent() {
             <CardContent>
               <FormControl>
                 <FormLabel>Introduce Yourself</FormLabel>
-                <Textarea minRows={5} />
+                <Textarea minRows={3} >   </Textarea>
               </FormControl>
             </CardContent>
 
-            <CardActions alignItems="center">
+            <CardActions>
               <Stack direction="row" spacing={2} justifyContent="right">
                 <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
                   Edit
                 </Button>
+                <Button variant="outlined" endIcon={<SaveIcon />}>
+                 Save
+                </Button>
+
               </Stack>
             </CardActions>
           </Card>
         </Grid>
 
         <Grid item xs={4}>
-          <Card>
+      
+          <Card sx={{width:'100'}}>
             <CardContent>
-              <FormControl>
-                <FormLabel> Profile Completetion </FormLabel>
-                <Textarea minRows={5} />
-              </FormControl>
+              <ProComplete /> 
+              <Typography>
+              Profile Completetion
+              </Typography>
+
             </CardContent>
 
-            <CardActions alignItems="center">
-              <Stack direction="row" spacing={2} justifyContent="right">
-                <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
-                  Edit
-                </Button>
-              </Stack>
-            </CardActions>
           </Card>
         </Grid>
 
@@ -70,7 +72,7 @@ function ProfileContent() {
             <CardContent>
               <FormControl>
                 <FormLabel>About me</FormLabel>
-                <Textarea minRows={5} />
+                <Textarea minRows={3} > </Textarea>
               </FormControl>
             </CardContent>
 
@@ -79,6 +81,10 @@ function ProfileContent() {
                 <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
                   Edit
                 </Button>
+                <Button variant="outlined" endIcon={<SaveIcon />}>
+                 Save
+                </Button>
+                
               </Stack>
             </CardActions>
           </Card>
@@ -89,7 +95,7 @@ function ProfileContent() {
             <CardContent>
               <FormControl>
                 <FormLabel>Introduce Yourself</FormLabel>
-                <Textarea minRows={5} />
+                <Textarea minRows={3} > </Textarea>
               </FormControl>
             </CardContent>
 
@@ -98,24 +104,23 @@ function ProfileContent() {
                 <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
                   Edit
                 </Button>
+                <Button variant="outlined" endIcon={<SaveIcon />}>
+                 Save
+                </Button>
               </Stack>
             </CardActions>
           </Card>
         </Grid>
 
-        <Grid
-          item
-          xs={8}
-          justifyContent="left"
-          container
-          justifyContent="flex-start"
-          alignItems="flex-end"
-        >
-          <Card>
+        <Grid item xs={8} justifyContent={'left'} >
+          <Paper elevation={0} sx={{ p: 3 }}>
+
+          <Stack direction='column' spacing={2} xs={{width:'100' }}>
+             <Card sx={{ width: 'auto' }}>
             <CardContent>
               <FormControl>
                 <FormLabel>Lifestytle</FormLabel>
-                <Textarea minRows={5} />
+                <Textarea minRows={3} />
               </FormControl>
             </CardContent>
 
@@ -123,6 +128,9 @@ function ProfileContent() {
               <Stack direction="row" spacing={2} justifyContent="right">
                 <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
                   Edit
+                </Button>
+               <Button variant="outlined" endIcon={<SaveIcon />}>
+                 Save
                 </Button>
               </Stack>
             </CardActions>
@@ -132,7 +140,7 @@ function ProfileContent() {
             <CardContent>
               <FormControl>
                 <FormLabel>Sports</FormLabel>
-                <Textarea minRows={5} />
+                <Textarea minRows={3} />
               </FormControl>
             </CardContent>
 
@@ -140,6 +148,9 @@ function ProfileContent() {
               <Stack direction="row" spacing={2} justifyContent="right">
                 <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
                   Edit
+                </Button>
+               <Button variant="outlined" endIcon={<SaveIcon />}>
+                 Save
                 </Button>
               </Stack>
             </CardActions>
@@ -149,7 +160,7 @@ function ProfileContent() {
             <CardContent>
               <FormControl>
                 <FormLabel>Food and Drink</FormLabel>
-                <Textarea minRows={5} />
+                <Textarea minRows={3} />
               </FormControl>
             </CardContent>
 
@@ -158,10 +169,43 @@ function ProfileContent() {
                 <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
                   Edit
                 </Button>
+               <Button variant="outlined" endIcon={<SaveIcon />}>
+                 Save
+                </Button>
               </Stack>
             </CardActions>
-          </Card>
+          </Card>  
+          </Stack>
+        </Paper>
         </Grid>
+        <Grid item xs={4}>
+          
+          <Paper elevation={0} sx={{ p: 3,height:'100' }}>
+          <Stack direction="row"> 
+          <Card>
+            <CardContent>
+              <FormControl>
+                <FormLabel>Factfile</FormLabel>
+                
+              </FormControl>
+            </CardContent>
+
+            <CardActions alignItems="center">
+              <Stack direction="row" spacing={2} justifyContent="right">
+                <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
+                  Edit
+                </Button>
+                <Button variant="outlined" endIcon={<SaveIcon />}>
+                 Save
+                </Button>
+              </Stack>
+            </CardActions>
+            </Card>
+
+            </Stack>
+            </Paper>
+        </Grid>
+
       </Grid>
     </div>
   );
