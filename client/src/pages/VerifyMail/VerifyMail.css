@@ -1,0 +1,33 @@
+.verify-mail-container {
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(
+    to right bottom,
+    var(--color-primary),
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.verify-mail-container h2 {
+  font-size: 4rem;
+  background-color: #fff;
+  padding: 1.2rem 2rem;
+  box-shadow: 0px 0px 5rem rgba(0, 0, 0, 0.5);
+  border-radius: 4rem;
+  width: 75vw;
+  text-align: center;
+}
+.loader-container {
+  text-align: center;
+}
+.verify-mail-container p {
+  background-color: #fff;
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+  color: red;
+  padding: 3rem 2rem;
+}

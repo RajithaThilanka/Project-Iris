@@ -38,7 +38,6 @@ export default function HorizontalNonLinearStepper() {
     languages: [],
     occupation: "",
     educationLevel: "",
-    maritalStatus: "",
     monthlyIncome: "",
     hasChildren: false,
     religion: "",
@@ -54,7 +53,6 @@ export default function HorizontalNonLinearStepper() {
     maxHeight: 0,
   });
 
-  console.log(data);
   const totalSteps = () => {
     return steps.length;
   };
@@ -96,9 +94,13 @@ export default function HorizontalNonLinearStepper() {
 
     handleNext();
     if (allStepsCompleted()) {
-      data.password === data.passwordConfirm
-        ? dispatch(signUp(data, navigate))
-        : setConfirmPass(false);
+      if (data.password === data.passwordConfirm) {
+        setData({ ...data, height: data.ft + data.in * 0.0833333 });
+        setData({ ...data, lookingFor: {} });
+        dispatch(signUp(data, navigate));
+      } else {
+        setConfirmPass(false);
+      }
     }
   };
 

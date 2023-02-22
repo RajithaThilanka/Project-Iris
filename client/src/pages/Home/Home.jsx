@@ -1,8 +1,7 @@
 import React from "react";
-import Bar from "../../components/Appbar/MainAppbar";
+// import Bar from "../../components/Appbar/MainAppbar";
 import { Box, Grid, Stack, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import Slider from "../../components/IndexSlider/ImageSlider";
 
 function welcomepage() {
   return (
@@ -15,12 +14,10 @@ function welcomepage() {
         alignItems="center"
       >
         <Grid item xs={12}>
-          <Bar />
+          {/* <Bar /> */}
         </Grid>
 
-        <Grid item xs={12}>
-          <Slider />
-        </Grid>
+        <Grid item xs={12}></Grid>
 
         <Grid item xs={12} marginBottom="10" my={4}>
           <Stack

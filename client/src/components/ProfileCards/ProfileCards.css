@@ -1,0 +1,8 @@
+.profile-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, min-content));
+  column-gap: 2rem;
+  row-gap: 2rem;
+  padding: 2rem 0;
+  justify-items: center;
+}

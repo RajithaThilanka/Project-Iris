@@ -2,11 +2,14 @@ import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import { useSelector } from "react-redux";
-
 import Auth from "./pages/Auth/Auth";
-import SignUp from "./components/SignUp/Signup";
+
 import { createTheme, ThemeProvider } from "@mui/material";
 
+import Feed from "./pages/Feed/Feed";
+
+import VerifyMail from "./pages/VerifyMail/VerifyMail";
+import Error from "./pages/Error/Error";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -47,22 +50,31 @@ const theme = createTheme({
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
   return (
-    <ThemeProvider theme={theme}>
-      <div>
+    <>
+      <ThemeProvider theme={theme}>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/home" element={<Home />} />
+          <Route path="/me" element={user ? <Feed /> : <Navigate to="/auth" />}>
+            <Route path="match" element={<Feed />}></Route>
+            <Route path="connections" element={<Feed />}></Route>
+          </Route>
           <Route
-            path="/signup"
-            element={user ? <Navigate to="/home" /> : <SignUp />}
-          />
+            path="/"
+            element={user ? <Navigate to="/me" /> : <Navigate to="/auth" />}
+          ></Route>
           <Route
             path="/auth"
-            element={user ? <Navigate to="/home" /> : <Auth />}
-          />
+            element={user ? <Navigate to="/me" /> : <Auth />}
+          ></Route>
+          <Route path="/error/:msg" element={<Error />}></Route>
+
+          <Route
+            path="/users/verify/:userId/:token"
+            element={<VerifyMail />}
+          ></Route>
+          <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </>
   );
 }
 
