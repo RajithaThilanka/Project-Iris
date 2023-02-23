@@ -7,7 +7,7 @@ import SignUp from "../../components/SignUp/Signup";
 import "./Auth.css";
 
 function Auth() {
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
 
   const handleClick = () => {

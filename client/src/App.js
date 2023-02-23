@@ -10,6 +10,8 @@ import Feed from "./pages/Feed/Feed";
 
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
+import DateCard from "./components/DateCard/DateCard";
+import Request from "./components/Request/Request";
 const theme = createTheme({
   palette: {
     type: "light",

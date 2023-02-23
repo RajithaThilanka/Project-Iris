@@ -9,6 +9,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Connections from "../pages/Connections/Connections";
 import Friends from "../pages/Friends/Friends";
 import { Divider } from "@mui/material";
+import Dates from "../pages/Dates/Dates";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -103,7 +104,7 @@ export default function Tabbar() {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <div style={{ width: "70vw" }}>
-          <p>My dates</p>
+          <Dates />
         </div>
       </TabPanel>
       <TabPanel value={value} index={4}>

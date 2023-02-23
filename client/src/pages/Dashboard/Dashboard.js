@@ -169,6 +169,7 @@ function Advanced() {
       <Box className="card-container">
         {db.map((character, index) => (
           <TinderCard
+            swipeThreshold={2000}
             ref={childRefs[index]}
             className="swipe"
             key={character.name}
