@@ -2,12 +2,14 @@ import React from 'react'
 import ImageSlider from "./ImageSlider";
 import { Link } from "react-router-dom";
 import { Button } from '@mui/material';
-import '../../styleComponents/slider.css';
+import '../../styleComponents/slider.css'
 
-import image1 from "../../images/Indexslider/slide_1.jpeg";
-import image2 from "../../images/Indexslider/slide_2.jpeg";
-import image3 from "../../images/Indexslider/slide_3.jpeg";
-import image4 from "../../images/Indexslider/slide_4.jpeg";
+import image1 from "../../images/slider/slide_1.jpg";
+import image2 from "../../images/slider/slide_2.jpg";
+import image3 from "../../images/slider/slide_3.jpg";
+import image4 from "../../images/slider/slide_4.jpg"
+import image5 from "../../images/slider/slide_5.jpg";
+import image6 from "../../images/slider/slide_6.jpeg";
 
 
 function Slider() {
@@ -15,7 +17,7 @@ function Slider() {
         <div>
             
             
-  <ImageSlider images={[image1, image2, image3, image4]}>
+  <ImageSlider images={[image1, image2, image3, image4, image5, image6]}>
           <div
             style={{
               display: "flex",

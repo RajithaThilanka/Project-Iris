@@ -15,11 +15,14 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
+import { Routes, Route, Navigate,useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = ['HOME','LOGIN', 'About'];
+const navItems = ['HOME', 'LOGIN', 'About'];
+
 
 function DrawerAppBar(props) {
+  const navigate = useNavigate();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -29,7 +32,7 @@ function DrawerAppBar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h5" sx={{ my: 1 }}>
         IRIS
       </Typography>
       <Divider />
@@ -48,18 +51,20 @@ function DrawerAppBar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box   sx={{ display: 'flex' }}  >
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
+
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+             color="inherit"
+             aria-label="open drawer"
+             edge="start"
+             onClick={handleDrawerToggle}
+             sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            <MenuIcon />
+
+        <MenuIcon />
           </IconButton>
           <Typography
             variant="h6"
@@ -69,11 +74,13 @@ function DrawerAppBar(props) {
             IRIS
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>
-                {item}
+                 {item}
               </Button>
             ))}
+
           </Box>
         </Toolbar>
       </AppBar>
@@ -86,23 +93,26 @@ function DrawerAppBar(props) {
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
+        
           sx={{
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
+ 
         >
-          {drawer}
+          {drawer} 
         </Drawer>
       </Box>
-      <Box component="main" sx={{ p: 3 }}>
+      <Box component="main" >
         <Toolbar />
  
       </Box>
     </Box>
-  );
-}
 
-DrawerAppBar.propTypes = {
+  );
+ }
+
+ DrawerAppBar.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.

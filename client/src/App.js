@@ -6,6 +6,14 @@ import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import Userfeed from "./pages/UserFeed/Userfeed";
 import Profile from './pages/UserProfile/UserProfile';
+import ProfileSettings from './pages/UserProfile/ProfileSettings/ProfileSettings'
+import ProfileConnection from './pages/UserProfile/ProfileConnection/Profileconnection'
+import personalityprofile from './pages/UserProfile/PersonallityProfile/Personalityprofile'
+import Personalityprofile from "./pages/UserProfile/PersonallityProfile/Personalityprofile";
+import AdminPage from "./pages/Admin/AdminPage";
+
+
+
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
   return (
@@ -33,9 +41,29 @@ function App() {
           path="/profile"
           element={ <Profile />}
         />
+
+       <Route
+          path="/profilesettings"
+          element={ <ProfileSettings />}
+        />
+
+        <Route
+          path="/profileconnection"
+          element={ <ProfileConnection/>}
+        />
+
+       <Route
+          path="/personalityprofile"
+          element={ <Personalityprofile />}
+        />
+
+       <Route
+          path="/admin"
+          element={ <AdminPage />}
+        />
+       
       </Routes>
       
-
     </div>
   );
 }
