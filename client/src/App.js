@@ -3,69 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
-<<<<<<< HEAD
-import Userfeed from "./pages/UserFeed/Userfeed";
-import Profile from './pages/UserProfile/UserProfile';
-import ProfileSettings from './pages/UserProfile/ProfileSettings/ProfileSettings'
-import ProfileConnection from './pages/UserProfile/ProfileConnection/Profileconnection'
-import personalityprofile from './pages/UserProfile/PersonallityProfile/Personalityprofile'
-import Personalityprofile from "./pages/UserProfile/PersonallityProfile/Personalityprofile";
-import AdminPage from "./pages/Admin/AdminPage";
-
-
-
-function App() {
-  const user = useSelector((state) => state.authReducer.authData);
-  return (
-    <div>
-      <Routes>
-        <Route
-          path="/"
-          element={<Home/>}
-        ></Route>
-        <Route
-          path="/home"
-          element={<Home />}
-        />
-        <Route
-          path="/auth"
-          element={user ? <Navigate to="/home" /> : <Auth />}
-        />
-        
-        <Route
-          path="/feed"
-          element={ < Userfeed/>}
-        />
-     
-        <Route
-          path="/profile"
-          element={ <Profile />}
-        />
-
-       <Route
-          path="/profilesettings"
-          element={ <ProfileSettings />}
-        />
-
-        <Route
-          path="/profileconnection"
-          element={ <ProfileConnection/>}
-        />
-
-       <Route
-          path="/personalityprofile"
-          element={ <Personalityprofile />}
-        />
-
-       <Route
-          path="/admin"
-          element={ <AdminPage />}
-        />
-       
-      </Routes>
-      
-    </div>
-=======
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
 
@@ -140,7 +77,6 @@ function App() {
         </Routes>
       </ThemeProvider>
     </>
->>>>>>> f869dd6ba7685cfca5c50b509966910a0f4c7cf6
   );
 }
 
