@@ -1,0 +1,19 @@
+input[type="file"] {
+  display: none;
+}
+
+input[type="file"] + label {
+  color: white;
+  height: auto;
+  width: auto;
+  padding: 0.5rem 4rem;
+  background-color: var(--color-grey-light-4);
+  border-radius: 5rem;
+
+  margin: auto;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+}

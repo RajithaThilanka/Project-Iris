@@ -62,7 +62,7 @@ const setupAnswerModel = async user => {
 
 const setupLookingFor = async (user, req) => {
   const { lookingFor } = req.body;
-  delete req.body.lookingFor;
+  delete req.body?.lookingFor;
   const newLookingFor = await LookingFor.create({
     userId: user._id,
     ...lookingFor,
@@ -103,7 +103,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   newUserVerification.save({ validateBeforeSave: false });
   const message = `<p>Verify your email address to complete the signup and login into your account.</p><p>This link <b>expires in 2 days</b></p><p>Press <a href=${
-    process.env.CURRENT_URL +
+    process.env.FRONT_END_BASE_URL +
     'users/verify/' +
     newUser._id +
     '/' +

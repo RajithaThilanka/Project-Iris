@@ -39,43 +39,19 @@ const userSchema = new mongoose.Schema(
     },
     occupation: {
       type: String,
-      required: [true, 'Please provide your occupation'],
+    },
+    country: {
+      type: String,
     },
     height: {
       type: Number,
-      required: [true, 'Please provide your height'],
     },
-    maritalStatus: {
-      type: String,
-      enum: {
-        values: [
-          'single',
-          'married',
-          'widowed',
-          'separated',
-          'divorced',
-          'complicated',
-        ],
-        message:
-          'Marital status must be either single, in a relationship, married, widowed, separated, divorced, or complicated',
-      },
-      default: 'single',
-    },
+
     educationLevel: {
       type: String,
     },
     monthlyIncome: {
       type: String,
-      enum: {
-        values: [
-          'less than Rs.25,000',
-          'between Rs.25,000 & Rs.50,000',
-          'between Rs.50,000 & Rs.100,000',
-          'between Rs.100,000 & Rs.150,000',
-          'more than Rs.150,000',
-        ],
-        message: 'Please provide a valid monthly income',
-      },
     },
     hasChildren: {
       type: Boolean,
