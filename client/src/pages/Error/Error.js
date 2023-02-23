@@ -7,9 +7,9 @@ import { useParams } from "react-router-dom";
 function Error() {
   const { msg } = useParams();
   return (
-    <div className="error-container">
+    <div className="global-error-container">
       <Zoom>
-        <div className="error-msg">
+        <div className="global-error-msg">
           {msg}
           <SentimentVeryDissatisfiedIcon fontSize="large" />
         </div>

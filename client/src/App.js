@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
-
+import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 import Feed from "./pages/Feed/Feed";
@@ -66,7 +66,7 @@ function App() {
             element={user ? <Navigate to="/me" /> : <Auth />}
           ></Route>
           <Route path="/error/:msg" element={<Error />}></Route>
-
+          <Route path="/confirm-email" element={<ConfirmMail />}></Route>
           <Route
             path="/users/verify/:userId/:token"
             element={<VerifyMail />}

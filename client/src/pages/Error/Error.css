@@ -1,4 +1,4 @@
-.error-container {
+.global-error-container {
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(
@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
 }
-.error-msg {
+.global-error-msg {
   background-color: #fff;
   font-size: 2rem;
   margin-top: 2rem;
