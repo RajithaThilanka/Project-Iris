@@ -8,28 +8,27 @@ import { IconButton } from '@mui/material';
 
 
 
+
 export default function ConGrid() {
     return (
         <div>
+
             <Box borderRadius='1' sx={{justifyContent:"center"}}>
-                <Stack direction="raw" spacing={2}>
-                                        
-                 <IconButton color="primary" aria-label="ProfilePicture" >
-                     <AccountCircleIcon />
-                 </IconButton>
-                <Typography variant="h6">
-                      Name:
-                </Typography>  
-               
-                <FiberManualRecordIcon  />
+                                             
+                <IconButton color="primary" aria-label="ProfilePicture" >
+                    <AccountCircleIcon />
+                  </IconButton>
+                
+                <Typography variant="h6" > Name </Typography>  
+                
+                  <FiberManualRecordIcon  />
 
-               
-               <Button sx={{ fontSiz: "50px" }}>
-                      <MessageIcon />
+                  <Button sx={{ fontSiz: "50px" }}>
+                     <MessageIcon />
                 </Button>
-
-                </Stack>
+                
             </Box>
+       
         </div>
     )
 }

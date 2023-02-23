@@ -16,8 +16,11 @@ import { Grid } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
+import Factfile from   '../ProfileFactfiles/Factfile'
 
 function ProfileContent() {
+
+  
   return (
     <div>
       <Grid
@@ -47,10 +50,10 @@ function ProfileContent() {
                 <Button variant="outlined" endIcon={<SaveIcon />}>
                  Save
                 </Button>
-
               </Stack>
             </CardActions>
           </Card>
+          
         </Grid>
 
         <Grid item xs={4}>
@@ -113,13 +116,13 @@ function ProfileContent() {
         </Grid>
 
         <Grid item xs={8} justifyContent={'left'} >
-          <Paper elevation={0} sx={{ p: 3 }}>
+          <Paper elevation={0} sx={{ p: 2 }}>
 
           <Stack direction='column' spacing={2} xs={{width:'100' }}>
              <Card sx={{ width: 'auto' }}>
             <CardContent>
               <FormControl>
-                <FormLabel>Lifestytle</FormLabel>
+                <FormLabel>Lifestytle</FormLabel> 
                 <Textarea minRows={3} />
               </FormControl>
             </CardContent>
@@ -179,31 +182,12 @@ function ProfileContent() {
         </Paper>
         </Grid>
         <Grid item xs={4}>
-          
-          <Paper elevation={0} sx={{ p: 3,height:'100' }}>
-          <Stack direction="row"> 
-          <Card>
-            <CardContent>
-              <FormControl>
-                <FormLabel>Factfile</FormLabel>
-                
-              </FormControl>
-            </CardContent>
+          <Paper elevation={0} sx={{ p: 3 }}>
 
-            <CardActions alignItems="center">
-              <Stack direction="row" spacing={2} justifyContent="right">
-                <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
-                  Edit
-                </Button>
-                <Button variant="outlined" endIcon={<SaveIcon />}>
-                 Save
-                </Button>
-              </Stack>
-            </CardActions>
-            </Card>
+               <Factfile />
 
-            </Stack>
-            </Paper>
+          </Paper>
+           
         </Grid>
 
       </Grid>

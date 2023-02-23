@@ -1,14 +1,22 @@
+
 import React from "react";
 // import Bar from "../../components/Appbar/MainAppbar";
 import { Box, Grid, Stack, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
+import Slider from "../../components/IndexSlider/Slider";
+
+import './homeStyle.css';
+
+=======
+>>>>>>> f869dd6ba7685cfca5c50b509966910a0f4c7cf6
 
 function welcomepage() {
   return (
     <div>
       <Grid
         container
-        my={5}
+        my={0}
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -43,12 +51,17 @@ function welcomepage() {
                   backgroundColor: "#C81172",
                   opacity: [0.9, 0.8, 0.7],
                 },
+
               }}
+
             >
-              High Quality Matching algorithm
+
+                High Quality Matching algorithm
+                
             </Box>
 
             <Box
+              
               marginBottom="10"
               sx={{
                 backgroundColor: "#C81172",
@@ -95,15 +108,18 @@ function welcomepage() {
           height="150px"
         >
           <Box className="IndexIntro">
+
             <Typography variant="h6">
               {" "}
               Introducing: A new Iris experience{" "}
             </Typography>
+
             <Typography variant="h8">
               {" "}
               We suggest you the best fit person on our platform for a long
               lasting relationship with having better privacy.
             </Typography>
+
           </Box>
           <Link to="/login">
             <Button variant="contained">Join Now</Button>
@@ -146,7 +162,7 @@ function welcomepage() {
           </Link>
         </Grid>
 
-        <Grid item xs={12} textAlign="center" height="150px">
+        <Grid item xs={12} textAlign="center" height="150px" >
           <Box className="IndexIntro">
             <Typography variant="h6"> Service </Typography>
             <Typography variant="h8">
@@ -157,19 +173,23 @@ function welcomepage() {
           <Link to="/login">
             <Button variant="contained">Join Now</Button>
           </Link>
+
         </Grid>
 
         <Grid item xs={12} textAlign="center" height="150px">
-          <Box className="IndexIntro">
-            <Typography variant="h6">
-              {" "}
-              © 2023 Project Iris. All Rights Reserved{" "}
-            </Typography>
+          
+          <Box className="Footer" >
+             <Typography variant="h6">
+                © 2023 Project Iris. All Rights Reserved{" "}
+             </Typography>
           </Box>
+
         </Grid>
+      
       </Grid>
+   
     </div>
-  );
+  ); 
 }
 
 export default welcomepage;
