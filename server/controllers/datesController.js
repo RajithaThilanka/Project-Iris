@@ -111,7 +111,6 @@ exports.getAllScheduledDates = catchAsync(async (req, res, next) => {
       scheduledAt: {
         $gte: Date.now(),
       },
-      status: 'accepted',
     })
     .populate('senderId')
     .populate('receiverId');

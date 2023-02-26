@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import store from "./store/ReduxStore";
 import App from "./App";
+import { ContextProvider } from "./context/matches";
 import "./index.css";
 // import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -49,10 +50,12 @@ const el = document.getElementById("root");
 const root = ReactDOM.createRoot(el);
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<App />} />
-      </Routes>
-    </BrowserRouter>
+    <ContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="*" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </ContextProvider>
   </Provider>
 );

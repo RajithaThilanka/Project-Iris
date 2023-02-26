@@ -88,3 +88,17 @@ exports.addAnswer = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getAnswers = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const answers = await Answer.findOne({
+    userId: userId,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: answers,
+    },
+  });
+});

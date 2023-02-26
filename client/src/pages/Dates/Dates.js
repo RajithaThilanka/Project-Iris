@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import DateCards from "../../components/DateCards/DateCards";
 import "./Dates.css";
 import Pulse from "react-reveal/Pulse";

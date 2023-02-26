@@ -44,9 +44,9 @@ function a11yProps(index) {
   };
 }
 
-export default function Tabbar() {
+export default function Tabbar({ user }) {
   const [value, setValue] = React.useState(0);
-  console.log(value);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

@@ -21,16 +21,23 @@ import { BsFillPersonFill } from "react-icons/bs";
 import "./Navbar.css";
 import { Divider } from "@mui/material";
 import Requests from "../Requests/Requests";
+import FriendRequests from "../FriendRequests/FriendRequests";
+import DateRequests from "../DateRequests/DateRequests";
+
 const pages = ["Explore", "Safety Tips", "About Us"];
 const settings = ["Profile", "Account", "Dashboard"];
 
-function Navbar() {
+function Navbar({ user }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElFriend, setAnchorElFriend] = React.useState(null);
   const [anchorElConnection, setAnchorElConnection] = React.useState(null);
   const [anchorElDate, setAnchorElDate] = React.useState(null);
+  const [conRequests, setConRequests] = React.useState();
+  const [friendRequests, setFriendRequests] = React.useState();
+  const [dateRequests, setDateRequests] = React.useState();
   const dispatch = useDispatch();
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -63,6 +70,7 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <AppBar position="static">
       <Container
@@ -164,7 +172,7 @@ function Navbar() {
             sx={{
               flexGrow: 0,
               display: "flex",
-              gap: "20px",
+              gap: "4rem",
               flexDirection: "row",
               justifyContent: "space-around",
               alignItems: "center",
@@ -173,8 +181,12 @@ function Navbar() {
             }}
           >
             <Tooltip title="Open Connection Requests">
-              <IconButton onClick={handleOpenConnectionMenu} sx={{ p: 0 }}>
+              <IconButton
+                onClick={handleOpenConnectionMenu}
+                sx={{ p: 0, position: "relative" }}
+              >
                 <BsFillPersonFill fill="#fff" />
+                <div className="num-req-count">{conRequests}</div>
               </IconButton>
             </Tooltip>
             <Menu
@@ -201,7 +213,7 @@ function Navbar() {
               onClose={handleCloseConnectionMenu}
             >
               <div>
-                <Requests />
+                <Requests setNumRequests={(num) => setConRequests(num)} />
               </div>
               {/* </MenuItem> */}
             </Menu>
@@ -209,6 +221,7 @@ function Navbar() {
             <Tooltip title="Open friend requests">
               <IconButton onClick={handleOpenFriendMenu} sx={{ p: 0 }}>
                 <BsFillPersonCheckFill fill="#fff" />
+                <div className="num-req-count">{friendRequests}</div>
               </IconButton>
             </Tooltip>
             <Menu
@@ -235,13 +248,16 @@ function Navbar() {
               onClose={handleCloseFriendMenu}
             >
               <div>
-                <Requests />
+                <FriendRequests
+                  setNumRequests={(num) => setFriendRequests(num)}
+                />
               </div>
             </Menu>
             {/* Dates */}
             <Tooltip title="Open date invitations">
               <IconButton onClick={handleOpenDateMenu} sx={{ p: 0 }}>
                 <CoffeeIcon sx={{ color: "#fff", marginTop: "0.4rem" }} />
+                <div className="num-req-count">{dateRequests}</div>
               </IconButton>
             </Tooltip>
             <Menu
@@ -268,14 +284,24 @@ function Navbar() {
               onClose={handleCloseDateMenu}
             >
               <div>
-                <Requests />
+                <DateRequests setNumRequests={(num) => setDateRequests(num)} />
               </div>
             </Menu>
 
             {/* Settings */}
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0, objectFit: "cover" }}
+              >
+                <Avatar
+                  src={
+                    user.profilePhoto
+                      ? serverPublic + user.profilePhoto
+                      : serverPublic + "defaultProfile.png"
+                  }
+                  alt="lgo"
+                />
               </IconButton>
             </Tooltip>
             <Menu

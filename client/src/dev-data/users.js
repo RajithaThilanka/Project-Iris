@@ -1,10 +1,24 @@
 export const users = [
   {
     callTag: "Dinitha W.",
+    firstname: "Dinitha",
+    lastname: "Wijewardhana",
     gender: "male",
     status: "online",
     languages: ["French", "Portuguese"],
-    email: "Karapuzzled@yahoo.com.au",
+    lookingFor: {
+      gender: "female",
+      ageRange: {
+        minAge: 20,
+        maxAge: 30,
+      },
+      height: {
+        minHeight: 6.2,
+        maxHeight: 7.0,
+      },
+    },
+    email: "dini2040gh@gmail.com",
+    dob: "1999-08-09",
     age: 19,
     country: "India",
     occupation: "Driver",
@@ -14,27 +28,12 @@ export const users = [
     monthlyIncome: "between Rs.25,000 & Rs.50,000",
     hasChildren: false,
     religion: "Buddhist",
-    ethnicity: "English",
-    profilePhoto: "./img/dinesh.jpg",
-    profileDescription:
-      "Typical twitter fanatic. Infuriatingly humble thinker. Lifelong coffee practitioner. Organizer.",
-    movies: ["Thriller", "Action"],
-    music: ["Gospel", "Pop", "Rock"],
-    politics: "Progressive",
-    socialMedia: ["Twitter", "Reddit", "Instagram"],
-    sports: ["Basketball", "Football", "Hockey"],
-    userDescription: "Some random description",
-    lookingFor: {
-      gender: "male",
-      ageRange: {
-        minAge: 15,
-        maxAge: 20,
-      },
-      height: {
-        minHeight: 1.2,
-        maxHeight: 3.4,
-      },
-    },
+    ethnicity: "Sinhalese",
+    profilePhoto: "dinesh.jpg",
+    password: "dinitha123",
+    passwordConfirm: "dinitha123",
+    userDescription:
+      "Hello I'm dinitha from Sri Lanka. Feel free to send me a message. I won't bite. See you all",
   },
   {
     callTag: "Jennifer H.",

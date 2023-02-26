@@ -2,25 +2,70 @@ import { Button } from "@mui/material";
 import React from "react";
 import "./Request.css";
 import { AiFillStar } from "react-icons/ai";
-function Request() {
+import TimeAgo from "react-timeago";
+function Request({ data, reqType, handleAcceptClick, handleCancelClick }) {
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
   return (
     <div className="request-container">
       <div className="req-user-img">
-        <img src="./img/dinesh.jpg" alt="dinesh" />
+        {reqType === "received" ? (
+          <img
+            src={
+              data?.senderId?.profilePhoto
+                ? serverPublic + data?.senderId?.profilePhoto
+                : serverPublic + "defaultProfile.png"
+            }
+            alt={data?.senderId?.callTag}
+          />
+        ) : (
+          <img
+            src={
+              data?.receiverId?.profilePhoto
+                ? serverPublic + data?.receiverId?.profilePhoto
+                : serverPublic + "defaultProfile.png"
+            }
+            alt={data?.receiverId?.callTag}
+          />
+        )}
       </div>
       <div className="req-user-container">
         <div className="user-type">{<AiFillStar />}</div>
         <div className="req-user-info">
-          <h7>Dinesh Kaushan</h7>
-          <p>3 days ago</p>
+          <h7>
+            {reqType === "sent"
+              ? data?.receiverId?.callTag
+              : data?.senderId?.callTag}
+          </h7>
+          <p>
+            <TimeAgo date={data?.createdAt} />
+          </p>
         </div>
         <div className="req-user-options">
-          <Button variant="contained" size="small">
-            Accept
-          </Button>
-          <Button variant="contained" size="small" color="otherColors">
-            Decline
-          </Button>
+          {reqType === "received" ? (
+            <>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={handleAcceptClick}
+              >
+                Accept
+              </Button>
+              <Button variant="contained" size="small" color="otherColors">
+                Decline
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="contained"
+              size="small"
+              fullWidth={false}
+              color="otherColors"
+              onClick={handleCancelClick}
+            >
+              Cancel
+            </Button>
+          )}
         </div>
       </div>
     </div>
