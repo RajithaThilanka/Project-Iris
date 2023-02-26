@@ -48,4 +48,5 @@ export const cancelDateRequest = (id) =>
 export const getReceivedDateRequests = () =>
   API.get(`/users/me/dates/received`);
 export const getSentDateRequests = () => API.get(`/users/me/dates/sent`);
-export const sendDateRequest = (id) => API.post(`/users/me/dates/invite/${id}`);
+export const sendDateRequest = (id, data) =>
+  API.post(`/users/me/dates/invite/${id}`, data);

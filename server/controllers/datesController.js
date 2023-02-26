@@ -130,6 +130,9 @@ exports.getAllSentDates = catchAsync(async (req, res, next) => {
     .find({
       senderId: userId,
       status: 'pending',
+      scheduledAt: {
+        $gte: Date.now(),
+      },
     })
     .populate('senderId')
     .populate('receiverId');
@@ -153,6 +156,9 @@ exports.getAllReceivedDates = catchAsync(async (req, res, next) => {
         },
       ],
       status: 'pending',
+      scheduledAt: {
+        $gte: Date.now(),
+      },
     })
     .populate('senderId')
     .populate('receiverId');

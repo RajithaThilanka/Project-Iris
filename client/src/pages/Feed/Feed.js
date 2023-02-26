@@ -13,18 +13,7 @@ function Feed() {
   } = useSelector((state) => state.authReducer.authData);
 
   const { dates, setDates } = useContext(MatchesContext);
-  useEffect(() => {
-    const fetchDates = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getAllDates();
-      console.log(data);
-      setDates(data);
-    };
-    fetchDates();
-  }, []);
+
   return (
     <>
       <Grid container rowSpacing={4}>

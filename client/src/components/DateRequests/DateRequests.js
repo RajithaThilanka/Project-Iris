@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import {
   acceptDate,
   cancelDateRequest,
+  getAllDates,
   getReceivedDateRequests,
   getSentDateRequests,
   sendDateRequest,
@@ -17,7 +18,24 @@ function DateRequests({ setNumRequests }) {
     setsentDateRequests,
     receivedDateRequests,
     setreceivedDateRequests,
+    dates,
+    setDates,
   } = useContext(MatchesContext);
+
+  useEffect(() => {
+    const fetchDates = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getAllDates();
+      //   console.log(data);
+      setDates([...dates, ...data]);
+      //   console.log(dates);
+    };
+    fetchDates();
+  }, []);
+
   React.useEffect(() => {
     const fetchsentDateRequests = async () => {
       const {
@@ -56,10 +74,15 @@ function DateRequests({ setNumRequests }) {
 
   const handleCancel = async (id) => {
     try {
-      await cancelDateRequest(id);
       setsentDateRequests(
         sentDateRequests.filter((req) => req.receiverId._id !== id)
       );
+
+      console.log(dates);
+      console.log(dates.filter((date) => date.receiverId._id !== id));
+      setDates(dates.filter((date) => date.receiverId._id !== id));
+      console.log(dates);
+      await cancelDateRequest(id);
     } catch (err) {
       console.log(err);
     }

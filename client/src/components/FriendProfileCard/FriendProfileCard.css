@@ -73,3 +73,14 @@
   text-align: center;
   width: 100%;
 }
+.date-invite-container {
+  /* background-color: var(--color-secondary); */
+  padding: 1rem 1.2rem;
+}
+
+.date-invite-container h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--color-primary-light);
+}

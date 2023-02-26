@@ -1,4 +1,15 @@
-import { Button, IconButton, Tooltip } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormHelperText,
+  IconButton,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React, { useContext, useState } from "react";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -18,11 +29,37 @@ import {
 } from "../../api/UserRequests";
 import { useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
+import { Stack } from "@mui/system";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 function FriendProfileCard({ conUser, cardType }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const initialDate = {
+    scheduledAt: "",
+    dateType: "coffee",
+  };
+  const [dateData, setDateData] = useState(initialDate);
+  const handleDateData = (event) => {
+    setDateData({ ...dateData, [event.target.name]: event.target.value });
+  };
   const {
     dates,
     setDates,
@@ -30,6 +67,7 @@ function FriendProfileCard({ conUser, cardType }) {
     setreceivedDateRequests,
     sentDateRequests,
     setsentDateRequests,
+    addDate,
   } = useContext(MatchesContext);
 
   const otherUser =
@@ -49,20 +87,24 @@ function FriendProfileCard({ conUser, cardType }) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const handleSendDateRequest = async (id) => {
     try {
-      if (inviteBtnVisible) {
-        setInviteBtnVisible(false);
-        await sendDateRequest(id);
-      } else {
-        setInviteBtnVisible(true);
-        await cancelDateRequest(id);
-      }
+      setInviteBtnVisible(false);
+
+      const {
+        data: {
+          data: { data },
+        },
+      } = await sendDateRequest(id, dateData);
+      setsentDateRequests([...sentDateRequests, data]);
+      handleClose();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleRemoveConnection = async (id) => {
+  const handleCancelDate = async (id) => {
     try {
+      setInviteBtnVisible(true);
+      await cancelDateRequest(id);
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +116,69 @@ function FriendProfileCard({ conUser, cardType }) {
       onMouseOver={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
     >
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className="date-invite-container">
+            <h2>Invite {otherUser.firstname} for a date</h2>
+
+            <Stack spacing={2} direction="column">
+              <div>
+                <FormHelperText sx={{ marginLeft: "8px" }}>
+                  Schedule your date
+                </FormHelperText>
+                <TextField
+                  id="date"
+                  name="scheduledAt"
+                  type="date"
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={dateData.scheduledAt}
+                  onChange={handleDateData}
+                />
+              </div>
+              <div>
+                <FormHelperText sx={{ marginLeft: "8px" }}>
+                  How would you like to be your date?
+                </FormHelperText>
+                <Select
+                  name="dateType"
+                  fullWidth
+                  size="small"
+                  value={dateData.dateType}
+                  onChange={handleDateData}
+                >
+                  <MenuItem key="coffee" value="coffee">
+                    Coffee
+                  </MenuItem>
+                  <MenuItem key="rainy" value="rainy">
+                    Rainy
+                  </MenuItem>
+                  <MenuItem key="summer" value="summer">
+                    Summer
+                  </MenuItem>
+                  <MenuItem key="winter" value="winter">
+                    Winter
+                  </MenuItem>
+                </Select>
+              </div>
+              <Button
+                type="contained"
+                onClick={() => handleSendDateRequest(otherUser._id)}
+              >
+                Invite
+              </Button>
+            </Stack>
+          </div>
+        </Box>
+      </Modal>
+
       <img
         src={
           otherUser?.profilePhoto
@@ -100,7 +205,15 @@ function FriendProfileCard({ conUser, cardType }) {
           title={inviteBtnVisible ? "Invite date" : "Cancel date invite"}
           placement="bottom"
         >
-          <IconButton onClick={() => handleSendDateRequest(otherUser._id)}>
+          <IconButton
+            onClick={
+              inviteBtnVisible
+                ? handleOpen
+                : () => {
+                    handleCancelDate(otherUser._id);
+                  }
+            }
+          >
             {inviteBtnVisible ? <CoffeeIcon /> : <CancelIcon />}
           </IconButton>
         </Tooltip>
@@ -118,11 +231,7 @@ function FriendProfileCard({ conUser, cardType }) {
         )}
 
         <Tooltip title="Demote" placement="bottom">
-          <IconButton
-            onClick={() => {
-              handleRemoveConnection(otherUser._id);
-            }}
-          >
+          <IconButton>
             <PersonRemoveAlt1Icon />
           </IconButton>
         </Tooltip>

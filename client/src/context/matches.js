@@ -35,14 +35,8 @@ function ContextProvider({ children }) {
     },
     friends,
     setFriends,
-    addFriend: (newFriend) => {
-      setConnections([...friends, newFriend]);
-    },
     dates,
     setDates,
-    addDate: (newDate) => {
-      setDates([...dates, newDate]);
-    },
   };
   return (
     <MatchesContext.Provider value={valueToShare}>
