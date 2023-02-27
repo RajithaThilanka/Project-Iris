@@ -38,29 +38,28 @@ function DateCard({ dateInfo }) {
         }}
       ></div>
 
-      <div className="date-time-remaining">
-        {
-          // <Countdown
-          //   date={
-          //     Date.now() +
-          //     new Date(dateInfo.scheduledAt).toUTCString().getTime() -
-          //     Date.now()
-          //   }
-          // />
-          9
-        }
-      </div>
+      <div className="date-time-remaining">3 days reamaining</div>
       <div className="date-partners">
         <div className="partner">
-          <img src="./img/dinesh.jpg" alt="" className="partner-img" />
-          <h3 className="partner-name">Sender</h3>
+          <img
+            src={serverPublic + dateInfo.senderId.profilePhoto}
+            alt=""
+            className="partner-img"
+          />
+          <h3 className="partner-name">{dateInfo.senderId.callTag}</h3>
         </div>
         <div className="partner">
-          <img src="./img/dinesh.jpg" alt="" className="partner-img" />
-          <h3 className="partner-name">Receiver</h3>
+          <img
+            src={serverPublic + dateInfo.receiverId.profilePhoto}
+            alt=""
+            className="partner-img"
+          />
+          <h3 className="partner-name">{dateInfo.receiverId.callTag}</h3>
         </div>
       </div>
-      <div className="date-scheduled-at">{new Date().toLocaleString()}</div>
+      <div className="date-scheduled-at">
+        {new Date(dateInfo.scheduledAt).toLocaleString()}
+      </div>
       <div className="date-btn-container">
         <Button variant="contained" className="go-to-date-btn">
           Go to date
