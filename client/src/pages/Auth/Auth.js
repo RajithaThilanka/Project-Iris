@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import Login from "../../components/Login/Login";
-import SignUp from "../../components/SignUp/Signup";
+import SignUp from "../../components/SignUp/SignUp.js";
 
 import "./Auth.css";
 
