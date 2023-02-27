@@ -74,6 +74,7 @@ function App() {
             path="/users/verify/:userId/:token"
             element={<VerifyMail />}
           ></Route>
+          <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}

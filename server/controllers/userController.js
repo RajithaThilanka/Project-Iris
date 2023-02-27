@@ -154,14 +154,41 @@ exports.getUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getUsers = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(User.find({}), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+// exports.getUsers = catchAsync(async (req, res, next) => {
+//   const features = new APIFeatures(User.find({}), req.query)
+//     .filter()
+//     .sort()
+//     .limitFields()
+//     .paginate();
 
-  const users = await features.query;
+//   const users = await features.query;
+
+//   res.status(200).json({
+//     status: 'success',
+//     results: users.length,
+//     data: {
+//       data: users,
+//     },
+//   });
+// });
+
+exports.getUsers = catchAsync(async (req, res, next) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          {
+            firstname: {
+              $regex: req.query.search,
+              $options: 'i',
+            },
+          },
+          {
+            email: { $regex: req.query.search, $options: 'i' },
+          },
+        ],
+      }
+    : {};
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
 
   res.status(200).json({
     status: 'success',

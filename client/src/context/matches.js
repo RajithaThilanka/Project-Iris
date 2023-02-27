@@ -12,6 +12,8 @@ function ContextProvider({ children }) {
   const [connections, setConnections] = useState([]);
   const [friends, setFriends] = useState([]);
   const [dates, setDates] = useState([]);
+  const [selectedChat, setSelectedChat] = useState();
+  const [chats, setChats] = useState([]);
   const valueToShare = {
     sentConRequests,
     addRequest: (newRequest) => {
@@ -30,6 +32,10 @@ function ContextProvider({ children }) {
     setreceivedConRequests,
     connections,
     setConnections,
+    selectedChat,
+    setSelectedChat,
+    chats,
+    setChats,
     addConnection: (newConnection) => {
       setConnections([...connections, newConnection]);
     },

@@ -13,7 +13,7 @@ function FacebookCircularProgress(props) {
       disableShrink
       sx={{
         color: (theme) =>
-          theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
+          theme.palette.mode === "light" ? "#c81172" : "##c81172",
         animationDuration: "550ms",
 
         left: 0,

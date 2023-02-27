@@ -50,3 +50,9 @@ export const getReceivedDateRequests = () =>
 export const getSentDateRequests = () => API.get(`/users/me/dates/sent`);
 export const sendDateRequest = (id, data) =>
   API.post(`/users/me/dates/invite/${id}`, data);
+
+export const searchUser = (username) => API.get(`/users?search=${username}`);
+
+export const createChat = (userId) => API.post(`/chat`, { userId });
+
+export const fetchUserChats = () => API.get(`/chat`);
