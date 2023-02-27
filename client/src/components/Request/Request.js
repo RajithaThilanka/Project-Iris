@@ -38,7 +38,7 @@ function Request({ data, reqType, handleAcceptClick, handleCancelClick }) {
               : data?.senderId?.callTag}
           </h7>
           <p>
-            <TimeAgo date={data?.createdAt} />
+            <TimeAgo date={data?.updatedAt} />
           </p>
         </div>
         <div className="req-user-options">

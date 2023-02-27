@@ -53,22 +53,15 @@ function FriendProfileCard({ conUser, cardType }) {
   const handleClose = () => setOpen(false);
 
   const initialDate = {
-    scheduledAt: "",
+    scheduledAt: new Date().toDateString(),
     dateType: "coffee",
   };
   const [dateData, setDateData] = useState(initialDate);
   const handleDateData = (event) => {
     setDateData({ ...dateData, [event.target.name]: event.target.value });
   };
-  const {
-    dates,
-    setDates,
-    receivedDateRequests,
-    setreceivedDateRequests,
-    sentDateRequests,
-    setsentDateRequests,
-    addDate,
-  } = useContext(MatchesContext);
+  const { dates, setDates, sentDateRequests, setsentDateRequests } =
+    useContext(MatchesContext);
 
   const otherUser =
     conUser.senderId._id === user._id ? conUser.receiverId : conUser.senderId;
@@ -95,6 +88,7 @@ function FriendProfileCard({ conUser, cardType }) {
         },
       } = await sendDateRequest(id, dateData);
       setsentDateRequests([...sentDateRequests, data]);
+      setDates([...dates, data]);
       handleClose();
     } catch (error) {
       console.log(error);
@@ -104,6 +98,16 @@ function FriendProfileCard({ conUser, cardType }) {
   const handleCancelDate = async (id) => {
     try {
       setInviteBtnVisible(true);
+      setsentDateRequests(
+        sentDateRequests.filter((dt) => {
+          return dt.receiverId._id != otherUser._id;
+        })
+      );
+      setDates(
+        dates.filter((dt) => {
+          return dt.receiverId._id != otherUser._id;
+        })
+      );
       await cancelDateRequest(id);
     } catch (error) {
       console.log(error);
@@ -134,7 +138,7 @@ function FriendProfileCard({ conUser, cardType }) {
                 <TextField
                   id="date"
                   name="scheduledAt"
-                  type="date"
+                  type="datetime-local"
                   size="small"
                   InputLabelProps={{
                     shrink: true,

@@ -6,13 +6,6 @@
   box-shadow: 1rem 1rem 30px rgba(0, 0, 0, 0.5);
 }
 .date-card-img {
-  background-image: linear-gradient(
-      to right bottom,
-      var(--color-grey-light-1),
-      transparent
-    ),
-    url("../../../public/img/winterdate.jpg");
-
   background-position: top;
   background-size: cover;
   width: 100%;

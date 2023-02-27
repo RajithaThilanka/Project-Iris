@@ -1,17 +1,22 @@
-import { Button, IconButton, Tooltip } from "@mui/material";
-import React, { useState } from "react";
+import { IconButton, Tooltip } from "@mui/material";
+import React, { useContext, useState } from "react";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import BlockIcon from "@mui/icons-material/Block";
-import FlagIcon from "@mui/icons-material/Flag";
+
 import ChatIcon from "@mui/icons-material/Chat";
 import "./ProfileCard.css";
 import CancelIcon from "@mui/icons-material/Cancel";
-import LocationOn from "@mui/icons-material/LocationOn";
+
 import CoffeeIcon from "@mui/icons-material/Coffee";
-import { cancelFriendRequest, sendFriendRequest } from "../../api/UserRequests";
+import {
+  cancelFriendRequest,
+  removeConnection,
+  sendFriendRequest,
+} from "../../api/UserRequests";
 import { useSelector } from "react-redux";
+import MatchesContext from "../../context/matches";
 
 function ProfileCard({ conUser, cardType }) {
   const {
@@ -19,6 +24,13 @@ function ProfileCard({ conUser, cardType }) {
   } = useSelector((state) => state.authReducer.authData);
   const otherUser =
     conUser.senderId._id === user._id ? conUser.receiverId : conUser.senderId;
+
+  const {
+    sentFriendRequests,
+    setsentFriendRequests,
+    connections,
+    setConnections,
+  } = useContext(MatchesContext);
 
   const [visible, setVisible] = useState(false);
   const [requestSent, setRequestSent] = useState(
@@ -30,10 +42,21 @@ function ProfileCard({ conUser, cardType }) {
     try {
       if (!requestSent) {
         setRequestSent(true);
-        await sendFriendRequest(id);
+
+        const {
+          data: {
+            data: { data },
+          },
+        } = await sendFriendRequest(id);
+        setsentFriendRequests([...sentFriendRequests, data]);
       } else if (requestSent && conUser.senderId._id === user._id) {
         setRequestSent(false);
         await cancelFriendRequest(id);
+        setsentFriendRequests(
+          sentFriendRequests.filter(
+            (req) => req.receiverId._id != otherUser._id
+          )
+        );
       }
     } catch (error) {
       console.log(error);
@@ -42,6 +65,12 @@ function ProfileCard({ conUser, cardType }) {
 
   const handleRemoveConnection = async (id) => {
     try {
+      setConnections(
+        connections.filter((con) => {
+          return con._id !== conUser._id;
+        })
+      );
+      await removeConnection(id);
     } catch (error) {
       console.log(error);
     }
