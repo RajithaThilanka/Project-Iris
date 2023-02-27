@@ -1,0 +1,8 @@
+.dates-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  text-align: center;
+  width: 61vw;
+  padding: 1rem 1.2rem;
+}

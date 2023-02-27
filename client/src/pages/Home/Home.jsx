@@ -8,7 +8,7 @@ function welcomepage() {
     <div>
       <Grid
         container
-        my={5}
+        my={0}
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -99,6 +99,7 @@ function welcomepage() {
               {" "}
               Introducing: A new Iris experience{" "}
             </Typography>
+
             <Typography variant="h8">
               {" "}
               We suggest you the best fit person on our platform for a long
@@ -160,9 +161,8 @@ function welcomepage() {
         </Grid>
 
         <Grid item xs={12} textAlign="center" height="150px">
-          <Box className="IndexIntro">
+          <Box className="Footer">
             <Typography variant="h6">
-              {" "}
               © 2023 Project Iris. All Rights Reserved{" "}
             </Typography>
           </Box>

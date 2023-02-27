@@ -1,0 +1,63 @@
+.request-container {
+  width: 28rem;
+  height: 9rem;
+  background-color: var(--color-grey-light-2);
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-radius: 30px;
+}
+
+.user-type {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.5rem;
+  color: gold;
+
+  font-weight: 600;
+}
+.req-user-img {
+  flex: 0.5;
+  height: 100%;
+}
+
+.req-user-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.req-user-container {
+  flex: 1;
+  position: relative;
+}
+.req-user-info h7 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.req-user-info p {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.req-user-options {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+}
+
+.req-user-options button {
+  font-size: 1rem;
+  flex: 1;
+  margin-left: -0.2rem;
+}
+
+.postpone-btn {
+  background-color: var(--color-grey-light-3) !important;
+  color: #000 !important;
+}

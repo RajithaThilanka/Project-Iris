@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const request = require('request-promise');
 const LookingFor = require('../models/lookingForModel');
-
+const Answer = require('../models/answerModel');
 const getUsersByIndex = async users => {
   const suggestedUserPromises = users.map(async user => {
     const u = await User.findOne({ index: user.index });
@@ -71,6 +71,7 @@ exports.generateUserSuggestions = catchAsync(async (req, res, next) => {
   });
 
   const { minHeight, maxHeight } = lookingFor.height;
+
   const { minAge, maxAge } = lookingFor.ageRange;
   const maxYear = new Date(new Date().getFullYear() - minAge, 0);
   const minYear = new Date(new Date().getFullYear() - maxAge, 0);
@@ -88,11 +89,22 @@ exports.generateUserSuggestions = catchAsync(async (req, res, next) => {
     },
     active: true,
   });
+
+  const updatedSuggestionsPromises = suggestions.map(async user => {
+    const l = await LookingFor.findOne({ userId: user._id });
+    const p = await Answer.findOne({ userId: user._id });
+    return { ...user, lookingFor: l, interests: p };
+  });
+  let updatedSuggestions = await Promise.all(updatedSuggestionsPromises);
+  updatedSuggestions = updatedSuggestions.map(sug => {
+    const { _doc, lookingFor, interests } = sug;
+    return { ..._doc, lookingFor: lookingFor, interests: interests };
+  });
   res.status(200).json({
     status: 'success',
     results: suggestions.length,
     data: {
-      data: suggestions,
+      data: updatedSuggestions,
     },
   });
 });

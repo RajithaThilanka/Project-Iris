@@ -256,16 +256,16 @@ exports.getFriends = catchAsync(async (req, res, next) => {
     .populate('senderId')
     .populate('receiverId');
 
-  const finalFriends = friends.map(con => {
-    const { senderId } = con;
+  // const finalFriends = friends.map(con => {
+  //   const { senderId } = con;
 
-    return senderId._id + '' != userId ? con.senderId : con.receiverId;
-  });
+  //   return senderId._id + '' != userId ? con.senderId : con.receiverId;
+  // });
   res.status(200).json({
     status: 'success',
-    nConnections: finalFriends.length,
+    nConnections: friends.length,
     data: {
-      data: finalFriends,
+      data: friends,
     },
   });
 });

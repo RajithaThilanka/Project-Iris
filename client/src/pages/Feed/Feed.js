@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Navbar from "../../components/Appbar/Navbar";
 import Tabbar from "../../components/Tabbar";
 import { Outlet } from "react-router-dom";
 import Zoom from "react-reveal/Zoom";
+import { useSelector } from "react-redux";
+import MatchesContext from "../../context/matches";
+import { getAllDates } from "../../api/UserRequests";
 function Feed() {
+  const {
+    data: { user },
+  } = useSelector((state) => state.authReducer.authData);
+
+  const { dates, setDates } = useContext(MatchesContext);
+
   return (
     <>
       <Grid container rowSpacing={4}>
         <Grid sm={4}>
-          <Navbar />
+          <Navbar user={user} />
         </Grid>
         <Zoom>
           <Grid sm={12}>

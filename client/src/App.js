@@ -10,6 +10,9 @@ import Feed from "./pages/Feed/Feed";
 
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
+import DateCard from "./components/DateCard/DateCard";
+import Request from "./components/Request/Request";
+import Chat from "./pages/Chat/Chat";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -53,10 +56,10 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path="/me" element={user ? <Feed /> : <Navigate to="/auth" />}>
-            <Route path="match" element={<Feed />}></Route>
-            <Route path="connections" element={<Feed />}></Route>
-          </Route>
+          <Route
+            path="/me"
+            element={user ? <Feed /> : <Navigate to="/auth" />}
+          ></Route>
           <Route
             path="/"
             element={user ? <Navigate to="/me" /> : <Navigate to="/auth" />}
@@ -73,6 +76,7 @@ function App() {
           ></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
+        {/* <Chat /> */}
       </ThemeProvider>
     </>
   );
