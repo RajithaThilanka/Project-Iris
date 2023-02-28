@@ -37,6 +37,7 @@ app.use('/api/v1/upload', uploadRouter);
 app.use('/api/v1/questions', questionRouter);
 app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/message', messageRouter);
+
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
