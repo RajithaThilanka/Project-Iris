@@ -77,3 +77,11 @@ export const removeUser = (chatId, userId) =>
     chatId,
     userId,
   });
+
+export const sendAMessage = (content, chatId) =>
+  API.post(`/message`, {
+    content,
+    chatId,
+  });
+
+export const getAllMessages = (chatId) => API.get(`/message/${chatId}`);

@@ -33,6 +33,7 @@ export default function UpdatedGroupChatModel({
   children,
   fetchAgain,
   setFetchAgain,
+  fetchMessages,
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -119,6 +120,7 @@ export default function UpdatedGroupChatModel({
       user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
 
       setFetchAgain(!fetchAgain);
+      fetchMessages();
       setLoading(false);
     } catch (error) {
       console.log(error);
