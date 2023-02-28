@@ -14,18 +14,10 @@ import Logout from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "@mui/material";
 import { logout } from "../../actions/AuthActions";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import ProfileModal from "./UserAvatar/ProfileModal";
+
 export default function ProfileMenu() {
+  const [modalOpen, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
@@ -39,51 +31,17 @@ export default function ProfileMenu() {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  const [modalOpen, setOpen] = React.useState(false);
-  const handleOpenModal = () => setOpen(true);
-  const handleModalClose = () => setOpen(false);
+  console.log(modalOpen);
+  // const [modalOpen, setOpen] = React.useState(false);
+  // const handleOpenModal = () => setOpen(true);
+  // const handleModalClose = () => setOpen(false);
   return (
     <React.Fragment>
-      <div>
-        <Modal
-          open={modalOpen}
-          onClose={handleModalClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              style={{
-                fontSize: "40px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              {user.firstname}
-            </Typography>
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <img
-                style={{ width: "10rem", height: "10rem", borderRadius: "50%" }}
-                src={serverPublic + user.profilePhoto}
-                alt={user.callTag}
-              />
-              <h3>Email: {user.email}</h3>
-            </div>
-          </Box>
-        </Modal>
-      </div>
+      <ProfileModal
+        modalOpen={modalOpen}
+        handleCloseModal={() => setOpen(false)}
+        user={user}
+      />
 
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Account settings">
@@ -137,7 +95,11 @@ export default function ProfileMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleOpenModal}>
+        <MenuItem
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
           <Avatar />
           My Profile
         </MenuItem>

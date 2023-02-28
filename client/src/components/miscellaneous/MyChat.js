@@ -7,7 +7,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Loader from "../Loading/Loading";
 import { Stack } from "@mui/system";
 import { getSender } from "../../config/ChatLogics";
-function MyChat() {
+import GroupChatModal from "./GroupChatModal";
+function MyChat({ fetchAgain, setFetchAgain }) {
   const [loggedUser, setLoggedUser] = useState();
   const {
     data: { user },
@@ -30,7 +31,7 @@ function MyChat() {
   useEffect(() => {
     setLoggedUser(user);
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <div
@@ -56,9 +57,11 @@ function MyChat() {
         }}
       >
         My chats
-        <Button style={{ display: "flex", fontSize: "12px" }}>
-          New group chat <AddCircleIcon />
-        </Button>
+        <GroupChatModal>
+          <Button style={{ display: "flex", fontSize: "12px" }}>
+            New group chat <AddCircleIcon />
+          </Button>
+        </GroupChatModal>
       </div>
       <div
         style={{

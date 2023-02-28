@@ -11,7 +11,7 @@ function Chat() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-
+  const [fetchAgain, setFetchAgain] = useState(false);
   return (
     <div className="Chat" style={{ width: "100%" }}>
       <Sidedrawer />
@@ -24,8 +24,8 @@ function Chat() {
           padding: "10px",
         }}
       >
-        <MyChat />
-        <ChatBox />
+        <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
       </Box>
     </div>
   );

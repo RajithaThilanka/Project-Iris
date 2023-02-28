@@ -56,3 +56,24 @@ export const searchUser = (username) => API.get(`/users?search=${username}`);
 export const createChat = (userId) => API.post(`/chat`, { userId });
 
 export const fetchUserChats = () => API.get(`/chat`);
+
+export const createGroup = (name, users) =>
+  API.post(`/chat/group`, {
+    name,
+    users,
+  });
+
+export const renameGroup = (chatId, chatName) =>
+  API.patch("/chat/rename", { chatId, chatName });
+
+export const adduser = (chatId, userId) =>
+  API.patch(`/chat/groupadd`, {
+    chatId,
+    userId,
+  });
+
+export const removeUser = (chatId, userId) =>
+  API.patch(`/chat/groupremove`, {
+    chatId,
+    userId,
+  });
