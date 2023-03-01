@@ -15,11 +15,10 @@ function Welcome() {
 
         <nav className="navigation__nav">
             <ul className="navigation__list">
-                <li className="navigation__item"><a href="#" className="navigation__link"><span>01</span>About Natous</a></li>
+                <li className="navigation__item"><a href="#" className="navigation__link"><span>01</span>About US</a></li>
                 <li className="navigation__item"><a href="#" className="navigation__link"><span>02</span>Your benfits</a></li>
-                <li className="navigation__item"><a href="#" className="navigation__link"><span>03</span>Popular tours</a></li>
-                <li className="navigation__item"><a href="#" className="navigation__link"><span>04</span>Stories</a></li>
-                <li className="navigation__item"><a href="#" className="navigation__link"><span>05</span>Book now</a></li>
+                <li className="navigation__item"><a href="#" className="navigation__link"><span>03</span>reviwes</a></li>
+                <li className="navigation__item"><a href="#" className="navigation__link"><span>04</span>Join now</a></li>
                 </ul>
         </nav>
     </div>
@@ -31,33 +30,32 @@ function Welcome() {
 
         <div className="header__text-box">
             <h1 className="heading-primary">
-                <span className="heading-primary--main">Outdoors</span>
-                <span className="heading-primary--sub">is where life happens</span>
+                <span className="heading-primary--main">Soulmate</span>
+                <span className="heading-primary--sub">is waiting for you</span>
             </h1>
 
-            <a href="#section-tours" className="btn btn--white btn--animated">Discover our tours</a>
+            <a href="#section-tours" className="btn btn--white btn--animated">Join Now</a>
         </div>
     </header>
 
-    <main/>
+    <main>
         <section className="section-about">
             <div className="u-center-text u-margin-bottom-big">
                 <h2 className="heading-secondary">
-                    Exciting tours for adventurous people
+                     A new Iris experience
                 </h2>
             </div>
 
             <div className="row">
                 <div className="col-1-of-2">
-                    <h3 className="heading-tertiary u-margin-bottom-small">You're going to fall in love with nature</h3>
+                    <h3 className="heading-tertiary u-margin-bottom-small">Best Matching Algorithm</h3>
                     <p className="paragraph">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, ipsum sapiente aspernatur libero repellat quis consequatur
-                        ducimus quam nisi exercitationem omnis earum qui.
+                    We suggest you the best fit person on our platform for a long lasting relationship with having better privacy.
                     </p>
 
-                    <h3 className="heading-tertiary u-margin-bottom-small">Live adventures like you never have before</h3>
+                    <h3 className="heading-tertiary u-margin-bottom-small">Matching with 90% Acurate</h3>
                     <p className="paragraph">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores nulla deserunt voluptatum nam.
+                    AI algorithm gives the best fit compared to other matching platforms
                     </p>
 
                     <a href="#" className="btn-text">Learn more &rarr;</a>
@@ -93,32 +91,32 @@ function Welcome() {
         <section className="section-features">
             
             <div className="row">
-                <div className="col-1-of-4">
+                 <div className="col-1-of-4">
                     <div className="feature-box">
                         <i className="feature-box__icon icon-basic-world"></i>
-                        <h3 className="heading-tertiary u-margin-bottom-small">Explore the world</h3>
+                        <h3 className="heading-tertiary u-margin-bottom-small">Less Fake Accounts</h3>
                         <p className="feature-box__text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, ipsum sapiente aspernatur.
+                            Accounts should be verified within few months
                         </p>
                     </div>
-                </div>
+                </div> 
 
-                <div className="col-1-of-4">
+                 <div className="col-1-of-4">
                     <div className="feature-box">
                         <i className="feature-box__icon icon-basic-compass"></i>
-                        <h3 className="heading-tertiary u-margin-bottom-small">Meet nature</h3>
+                        <h3 className="heading-tertiary u-margin-bottom-small">Virtual Dates</h3>
                         <p className="feature-box__text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, ipsum sapiente aspernatur.
+                            You can make virutal dates with connected friends
                         </p>
                     </div>
-                </div>
+                </div> 
 
                 <div className="col-1-of-4">
                     <div className="feature-box">
                         <i className="feature-box__icon icon-basic-map"></i>
-                        <h3 className="heading-tertiary u-margin-bottom-small">Find your way</h3>
+                        <h3 className="heading-tertiary u-margin-bottom-small">Acurate Matching</h3>
                          <p className="feature-box__text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, ipsum sapiente aspernatur.
+                         Matching is done based on your personal interests and characteristics
                         </p>
                     </div>
                 </div>
@@ -126,9 +124,10 @@ function Welcome() {
                 <div className="col-1-of-4">
                     <div className="feature-box">
                         <i className="feature-box__icon icon-basic-heart"></i>
-                        <h3 className="heading-tertiary u-margin-bottom-small">Live a healthier life</h3>
+                        <h3 className="heading-tertiary u-margin-bottom-small">High Security</h3>
                         <p className="feature-box__text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, ipsum sapiente aspernatur.
+                            High protection for Private details 
+
                         </p>
                     </div>
                 </div>
@@ -138,7 +137,7 @@ function Welcome() {
         <section className="section-tours" id="section-tours">
             <div className="u-center-text u-margin-bottom-big">
                 <h2 className="heading-secondary">
-                    Most popular tours
+                    Most popular feactures
                 </h2>
             </div>
 
@@ -150,25 +149,23 @@ function Welcome() {
                                 &nbsp;
                             </div>
                             <h4 className="card__heading">
-                                <span className="card__heading-span card__heading-span--1">The Sea Explorer</span>
+                                <span className="card__heading-span card__heading-span--1">Virtual Date</span>
                             </h4>
                             <div className="card__details">
                                 <ul>
-                                    <li>3 day tours</li>
-                                    <li>Up to 30 people</li>
-                                    <li>2 tour guides</li>
-                                    <li>Sleep in cozy hotels</li>
-                                    <li>Difficulty: easy</li>
+                                    <li>Set a Dates</li>
+                                     <li>Virtual Effects</li>
+                                    <li>Make Friends</li>
                                 </ul>
                             </div>
                        </div>
                        <div className="card__side card__side--back card__side--back-1">
                             <div className="card__cta">
                                 <div className="card__price-box">
-                                    <p className="card__price-only">Only</p>
-                                    <p className="card__price-value">$297</p>
+                                    <p className="card__price-only">Register</p>
+                                    <p className="card__price-value">Free</p>
                                 </div>
-                                <a href="#popup" className="btn btn--white">Book now!</a>
+                                <a href="#popup" className="btn btn--white">Join Now</a>
                             </div>
                         </div>
                    </div>
@@ -182,15 +179,13 @@ function Welcome() {
                                 &nbsp;
                             </div>
                             <h4 className="card__heading">
-                                <span className="card__heading-span card__heading-span--2">The Forest Hiker</span>
+                                <span className="card__heading-span card__heading-span--2">Make Connections</span>
                             </h4>
                             <div className="card__details">
                                 <ul>
-                                    <li>7 day tours</li>
-                                    <li>Up to 40 people</li>
-                                    <li>6 tour guides</li>
-                                    <li>Sleep in provided tents</li>
-                                    <li>Difficulty: medium</li>
+                                    <li>make new connections</li>
+                                    <li>remove connections</li>
+                                    <li>meet new friends</li>
                                 </ul>
                             </div>
 
@@ -198,10 +193,10 @@ function Welcome() {
                         <div className="card__side card__side--back card__side--back-2">
                             <div className="card__cta">
                                 <div className="card__price-box">
-                                    <p className="card__price-only">Only</p>
-                                    <p className="card__price-value">$497</p>
+                                    <p className="card__price-only">Register</p>
+                                    <p className="card__price-value">Free</p>
                                 </div>
-                                <a href="#popup" className="btn btn--white">Book now!</a>
+                                <a href="#popup" className="btn btn--white">Join Now</a>
                             </div>
                         </div>
                     </div>
@@ -215,15 +210,13 @@ function Welcome() {
                                 &nbsp;
                             </div>
                             <h4 className="card__heading">
-                                <span className="card__heading-span card__heading-span--3">The Snow Adventurer</span>
+                                <span className="card__heading-span card__heading-span--3">Private Chat</span>
                             </h4>
                             <div className="card__details">
                                 <ul>
-                                    <li>5 day tours</li>
-                                    <li>Up to 15 people</li>
-                                    <li>3 tour guides</li>
-                                    <li>Sleep in provided tents</li>
-                                    <li>Difficulty: hard</li>
+                                    <li>hate speech detection</li>
+                                    <li>report users</li>
+                                    <li> block users</li>
                                 </ul>
                             </div>
 
@@ -231,10 +224,10 @@ function Welcome() {
                         <div className="card__side card__side--back card__side--back-3">
                             <div className="card__cta">
                                 <div className="card__price-box">
-                                    <p className="card__price-only">Only</p>
-                                    <p className="card__price-value">$897</p>
+                                    <p className="card__price-only">Register</p>
+                                    <p className="card__price-value">Free</p>
                                 </div>
-                                <a href="#popup" className="btn btn--white">Book now!</a>
+                                <a href="#popup" className="btn btn--white">Join Now</a>
                             </div>
                         </div>
                     </div>
@@ -242,11 +235,11 @@ function Welcome() {
             </div>
 
             <div className="u-center-text u-margin-top-huge">
-                <a href="#" className="btn btn--green">Discover all tours</a>
+                <a href="#" className="btn btn--green">Create an Account</a>
             </div>
         </section>
 
-        <section className="section-stories"/>
+        <section className="section-stories">
             <div className="bg-video">
                 <video className="bg-video__content" autoplay muted loop/>
                     <source src="img/video.mp4" type="video/mp4"/>
@@ -268,11 +261,11 @@ function Welcome() {
                         <figcaption className="story__caption">Mary Smith</figcaption>
                     </figure>
                     <div className="story__text">
-                        <h3 className="heading-tertiary u-margin-bottom-small">I had the best week ever with my family</h3>
+                        <h3 className="heading-tertiary u-margin-bottom-small">I Founded my soulmate from IRIS</h3>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, ipsum sapiente aspernatur libero repellat quis consequatur
-                            ducimus quam nisi exercitationem omnis earum qui. Aperiam, ipsum sapiente aspernatur libero
-                            repellat quis consequatur ducimus quam nisi exercitationem omnis earum qui.
+                        To be fully transparent, when I first heard “Elite Singles”, I thought it was going to be some private meeting of a bunch of snobby 
+                        socialites who were “too good and too elite for the rest of the world”. Thankfully, my parents taught me to never judge a book by 
+                        it  cover because that is not the case.
                         </p>
                     </div>
                 </div>
@@ -286,11 +279,11 @@ function Welcome() {
                     </figure>
                     <div className="story__text">
                         <h3 className="heading-tertiary u-margin-bottom-small">WOW! My life is completely different now</h3>
-                        <p/>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, ipsum sapiente aspernatur libero repellat quis consequatur
-                            ducimus quam nisi exercitationem omnis earum qui. Aperiam, ipsum sapiente aspernatur libero
-                            repellat quis consequatur ducimus quam nisi exercitationem omnis earum qui.
-                        {/* </p> */}
+                        <p>
+                        To be fully transparent, when I first heard “Elite Singles”, I thought it was going to be some private meeting of a bunch of snobby 
+                        socialites who were “too good and too elite for the rest of the world”. Thankfully, my parents taught me to never judge a book by 
+                        it  cover because that is not the case.
+                        </p> 
                     </div>
                 </div>
             </div>
@@ -298,7 +291,7 @@ function Welcome() {
             <div className="u-center-text u-margin-top-huge">
                 <a href="#" className="btn-text">Read all stories &rarr;</a>
             </div>
-        {/* </section> */}
+         </section> 
 
         <section className="section-book">
             <div className="row">
@@ -307,7 +300,7 @@ function Welcome() {
                         <form action="#" className="form">
                             <div className="u-margin-bottom-medium">
                                 <h2 className="heading-secondary">
-                                    Start booking now
+                                    Join With Us
                                 </h2>
                             </div>
 
@@ -326,7 +319,7 @@ function Welcome() {
                                     <input type="radio" className="form__radio-input" id="small" name="size"/>
                                     <label for="small" className="form__radio-label">
                                         <span className="form__radio-button"></span>
-                                        Small tour group
+                                        i am a man
                                     </label>
                                 </div>
 
@@ -334,7 +327,7 @@ function Welcome() {
                                     <input type="radio" className="form__radio-input" id="large" name="size"/>
                                     <label for="large" className="form__radio-label">
                                         <span className="form__radio-button"></span>
-                                        Large tour group
+                                        i am a woman
                                     </label>
                                 </div>
                             </div>
@@ -347,9 +340,9 @@ function Welcome() {
                 </div>
             </div>
         </section>
-    {/* </main> */}
+    </main> 
 
-    <footer className="footer"/>
+    <footer className="footer">
         <div className="footer__logo-box">
 
             <picture className="footer__logo"/>
@@ -362,54 +355,25 @@ function Welcome() {
             
         </div>
         <div className="row">
-            <div className="col-1-of-2">
+            <div className="col-1-of-2"> 
                 <div className="footer__navigation">
                     <ul className="footer__list">
-                        <li className="footer__item"><a href="#" className="footer__link">Company</a></li>
                         <li className="footer__item"><a href="#" className="footer__link">Contact us</a></li>
-                        <li className="footer__item"><a href="#" className="footer__link">Carrers</a></li>
+                        <li className="footer__item"><a href="#" className="footer__link">About Us</a></li>
                         <li className="footer__item"><a href="#" className="footer__link">Privacy policy</a></li>
                         <li className="footer__item"><a href="#" className="footer__link">Terms</a></li>
                     </ul>
-                </div>
+                </div> 
             </div>
+
             <div className="col-1-of-2">
                 <p className="footer__copyright"/>
-                    Built by <a href="#" className="footer__link">Jonas Schmedtmann</a> for his online course <a href="#" className="footer__link">Advanced CSS and Sass</a>.
-                    Copyright &copy; by Jonas Schmedtmann. You are 100% allowed to use this webpage for both personal
-                    and commercial use, but NOT to claim it as your own design. A credit to the original author, Jonas
-                    Schmedtmann, is of course highly appreciated!
+                    Built by <a href="#" className="footer__link">IRIS Project</a><tr/>
+                    Copyright &copy;
                 
             </div>
-        </div>
-    {/* </footer> */}
-
-    <div className="popup" id="popup">
-        <div className="popup__content">
-            <div className="popup__left">
-                <img src="img/nat-8.jpg" alt="Tour photo" className="popup__img"/>
-                <img src="img/nat-9.jpg" alt="Tour photo" className="popup__img"/>
-            </div>
-            <div className="popup__right">
-                <a href="#section-tours" className="popup__close">&times;</a>
-                <h2 className="heading-secondary u-margin-bottom-small">Start booking now</h2>
-                <h3 className="heading-tertiary u-margin-bottom-small">Important &ndash; Please read these terms before booking</h3>
-                <p className="popup__text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Sed sed risus pretium quam. Aliquam sem et tortor consequat id. Volutpat odio facilisis mauris sit
-                    amet massa vitae. Mi bibendum neque egestas congue. Placerat orci nulla pellentesque dignissim enim
-                    sit. Vitae semper quis lectus nulla at volutpat diam ut venenatis. Malesuada pellentesque elit eget
-                    gravida cum sociis natoque penatibus et. Proin fermentum leo vel orci porta non pulvinar neque laoreet.
-                    Gravida neque convallis a cras semper. Molestie at elementum eu facilisis sed odio morbi quis. Faucibus
-                    vitae aliquet nec ullamcorper sit amet risus nullam eget. Nam libero justo laoreet sit. Amet massa
-                    vitae tortor condimentum lacinia quis vel eros donec. Sit amet facilisis magna etiam. Imperdiet sed
-                    euismod nisi porta.
-                </p>
-                <a href="#" className="btn btn--green">Book now</a>
-            </div>
-        </div>
-    </div>
-
+        </div> 
+     </footer> 
   
 
 </div>
