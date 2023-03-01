@@ -22,18 +22,34 @@ const server = app.listen(port, () => {
   console.log('Listening to port ' + port);
 });
 
+let activeUsers = [];
 const io = require('socket.io')(server, {
-  pingTimeout: 60000,
+  pingTimeout: 1000,
   cors: {
     origin: 'http://localhost:3000',
   },
 });
+
 io.on('connection', socket => {
   console.log('connected to socket.io');
   socket.on('setup', userData => {
     socket.join(userData._id);
     console.log(userData._id);
+    if (!activeUsers.some(user => user.userId === userData._id)) {
+      activeUsers.push({ userId: userData._id, socketId: socket.id });
+      console.log('New User Connected', activeUsers);
+    }
+    console.log('dfgdfsdf', activeUsers);
     socket.emit('connected');
+    io.emit('active-users', activeUsers);
+  });
+
+  socket.on('disconnect', () => {
+    // remove user from active users
+    activeUsers = activeUsers.filter(user => user.socketId !== socket.id);
+    console.log('User Disconnected', activeUsers);
+    // send all active users to all users
+    io.emit('active-users', activeUsers);
   });
 
   socket.on('join chat', room => {
@@ -55,6 +71,7 @@ io.on('connection', socket => {
 
   socket.off('setup', () => {
     console.log('USER DISCONNECTED');
+    console.log('leave now', activeUsers);
     socket.leave(userData._id);
   });
 });

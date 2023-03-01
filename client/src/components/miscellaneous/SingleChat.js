@@ -45,6 +45,9 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
+    socket.on("active-users", (activeUsers) => {
+      console.log(activeUsers);
+    });
   }, []);
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -77,6 +80,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
         // give notification
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
+
           setFetchAgain(!fetchAgain);
         }
       } else {

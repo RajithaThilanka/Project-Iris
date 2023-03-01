@@ -21,14 +21,30 @@ import ChurchIcon from "@mui/icons-material/Church";
 import LanguageIcon from "@mui/icons-material/Language";
 import MatchesContext from "../../context/matches";
 import { useContext } from "react";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000";
+let socket;
+
 function Advanced() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-  const { sentConRequests, setsentConRequests, addRequest } =
+  const { setSocketConnected, activeUsers, setActiveUsers } =
     useContext(MatchesContext);
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("active-users", (activeUsers) => {
+      console.log("hey");
+      setActiveUsers(activeUsers);
+    });
+  }, [user]);
+
+  const { sentConRequests, setsentConRequests } = useContext(MatchesContext);
   const [matches, setMatches] = useState([]);
-  // let { matches, loading } = useSelector((state) => state.matchReducer);
+
   const [currentIndex, setCurrentIndex] = useState(matches?.length - 1);
   const [lastDirection, setLastDirection] = useState();
   const currentIndexRef = useRef(currentIndex);
@@ -89,7 +105,7 @@ function Advanced() {
           data: { data },
         },
       } = response;
-      addRequest(data);
+      setsentConRequests([data, ...sentConRequests]);
     }
     updateCurrentIndex(index - 1);
   };
@@ -144,7 +160,12 @@ function Advanced() {
                   {character.country}
                 </div>
                 <div className="suggestion-status-container">
-                  <div className="suggestion-online--dot"></div>
+                  {activeUsers.some((user) => user.userId === character._id) ? (
+                    <div className="suggestion-online--dot"></div>
+                  ) : (
+                    <div className="suggestion-offline--dot"></div>
+                  )}
+
                   <div className="suggestion-status">Online</div>
                 </div>
               </div>

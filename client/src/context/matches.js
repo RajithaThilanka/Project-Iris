@@ -15,11 +15,10 @@ function ContextProvider({ children }) {
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState([]);
   const [notification, setNotification] = useState([]);
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [activeUsers, setActiveUsers] = useState([]);
   const valueToShare = {
     sentConRequests,
-    addRequest: (newRequest) => {
-      setsentConRequests([...sentConRequests, newRequest]);
-    },
     receivedDateRequests,
     setreceivedDateRequests,
     sentDateRequests,
@@ -37,6 +36,10 @@ function ContextProvider({ children }) {
     setSelectedChat,
     chats,
     setChats,
+    socketConnected,
+    setSocketConnected,
+    activeUsers,
+    setActiveUsers,
     addConnection: (newConnection) => {
       setConnections([...connections, newConnection]);
     },

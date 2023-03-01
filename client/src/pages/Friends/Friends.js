@@ -27,6 +27,7 @@ function Friends() {
           data: { data },
         },
       } = await getAllFriends();
+      // console.log(data);
       setFriends(data);
     };
     fetchFriends();

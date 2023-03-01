@@ -9,6 +9,7 @@ exports.inviteFriend = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
 
+  console.log('hey');
   if (userId === receiverId) {
     return next(new AppError('Request to yourself unauthorized', 401));
   }
@@ -38,6 +39,9 @@ exports.inviteFriend = catchAsync(async (req, res, next) => {
     return next(new AppError('Friend Request unauthorized', 401));
   }
 
+  updatedConnection.senderId = userId;
+  updatedConnection.receiverId = receiverId;
+  await updatedConnection.save();
   updatedConnection = await updatedConnection
     .populate({
       path: 'senderId',
@@ -89,7 +93,7 @@ exports.acceptFriend = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      connection: updatedConnection,
+      data: updatedConnection,
     },
   });
 });

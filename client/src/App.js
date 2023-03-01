@@ -13,6 +13,8 @@ import Error from "./pages/Error/Error";
 import DateCard from "./components/DateCard/DateCard";
 import Request from "./components/Request/Request";
 import Chat from "./pages/Chat/Chat";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -79,6 +81,12 @@ function App() {
         </Routes>
         {/* <Chat /> */}
       </ThemeProvider>
+      <ToastContainer
+        style={{
+          fontSize: "1.3rem",
+          fontFamily: "Poppins, sans-serif",
+        }}
+      />
     </>
   );
 }

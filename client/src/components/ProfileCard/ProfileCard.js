@@ -8,9 +8,11 @@ import BlockIcon from "@mui/icons-material/Block";
 import ChatIcon from "@mui/icons-material/Chat";
 import "./ProfileCard.css";
 import CancelIcon from "@mui/icons-material/Cancel";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import {
+  acceptFriend,
   cancelFriendRequest,
   removeConnection,
   sendFriendRequest,
@@ -30,6 +32,10 @@ function ProfileCard({ conUser, cardType }) {
     setsentFriendRequests,
     connections,
     setConnections,
+    setreceivedFriendRequests,
+    receivedFriendRequests,
+    friends,
+    setFriends,
   } = useContext(MatchesContext);
 
   const [visible, setVisible] = useState(false);
@@ -40,39 +46,168 @@ function ProfileCard({ conUser, cardType }) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const handleSendFriendRequest = async (id) => {
     try {
-      if (!requestSent) {
-        setRequestSent(true);
-
-        const {
+      setRequestSent(true);
+      const {
+        data: {
+          data: { data },
+        },
+      } = await sendFriendRequest(id);
+      setsentFriendRequests([...sentFriendRequests, data]);
+      toast.success("Friend request sent", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (err) {
+      const {
+        response: {
           data: {
-            data: { data },
+            error: { name },
           },
-        } = await sendFriendRequest(id);
-        setsentFriendRequests([...sentFriendRequests, data]);
-      } else if (requestSent && conUser.senderId._id === user._id) {
-        setRequestSent(false);
-        await cancelFriendRequest(id);
-        setsentFriendRequests(
-          sentFriendRequests.filter(
-            (req) => req.receiverId._id != otherUser._id
-          )
-        );
-      }
-    } catch (error) {
-      console.log(error);
+        },
+      } = err;
+
+      toast.error(name, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 
   const handleRemoveConnection = async (id) => {
     try {
+      await removeConnection(id);
       setConnections(
         connections.filter((con) => {
           return con._id !== conUser._id;
         })
       );
-      await removeConnection(id);
-    } catch (error) {
-      console.log(error);
+      toast.success("Connection removed", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (err) {
+      const {
+        response: {
+          data: {
+            error: { name },
+          },
+        },
+      } = err;
+
+      toast.error(name, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
+  const handleAcceptFriendRequest = async (id) => {
+    try {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await acceptFriend(id);
+      setreceivedFriendRequests(
+        receivedFriendRequests.filter((req) => req.senderId._id !== id)
+      );
+      setConnections(connections.filter((u) => u.senderId._id !== id));
+      setFriends([...friends, data]);
+      setRequestSent(true);
+      toast.success("Friend request accepted", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (err) {
+      const {
+        response: {
+          data: {
+            error: { name },
+          },
+        },
+      } = err;
+
+      toast.error(name, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+  const handleCancelFriendRequest = async (id) => {
+    try {
+      await cancelFriendRequest(id);
+      setsentFriendRequests(
+        sentFriendRequests.filter((req) => req.receiverId._id !== id)
+      );
+      setreceivedFriendRequests(
+        receivedFriendRequests.filter((req) => req.senderId._id !== id)
+      );
+      setRequestSent(false);
+      toast.success("Friend request cancelled", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (err) {
+      const {
+        response: {
+          data: {
+            error: { name },
+          },
+        },
+      } = err;
+
+      toast.error(name, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
   // add friend btn => friend-req not pending
@@ -106,29 +241,27 @@ function ProfileCard({ conUser, cardType }) {
             <AccountCircleIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip
-          title={
-            !requestSent
-              ? "Add friend"
-              : requestSent && conUser.senderId._id === user._id
-              ? "Cancel request"
-              : null
-          }
-          placement="bottom"
-        >
-          <IconButton
-            onClick={() => handleSendFriendRequest(otherUser._id)}
-            disabled={requestSent && conUser.senderId._id !== user._id}
-          >
-            {!requestSent ? (
+
+        {!requestSent ? (
+          <IconButton onClick={() => handleSendFriendRequest(otherUser._id)}>
+            <Tooltip title="add friend">
               <PersonAddIcon />
-            ) : requestSent && conUser.senderId._id === user._id ? (
-              <CancelIcon />
-            ) : (
-              <PersonAddIcon />
-            )}
+            </Tooltip>
           </IconButton>
-        </Tooltip>
+        ) : requestSent && conUser.senderId._id === user._id ? (
+          <IconButton onClick={() => handleCancelFriendRequest(otherUser._id)}>
+            <Tooltip title="cancel request">
+              <CancelIcon />
+            </Tooltip>
+          </IconButton>
+        ) : (
+          <IconButton onClick={() => handleAcceptFriendRequest(otherUser._id)}>
+            <Tooltip title="accept request">
+              <PersonAddIcon />
+            </Tooltip>
+          </IconButton>
+        )}
+
         <Tooltip title="Message" placement="bottom">
           <IconButton>
             <ChatIcon />

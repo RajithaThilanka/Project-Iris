@@ -7,23 +7,23 @@ import "./ProfileCards.css";
 function ProfileCards({ cardType }) {
   const { connections } = useContext(MatchesContext);
   const { friends } = useContext(MatchesContext);
+
   let renderedCards = null;
   cardType === "connection"
-    ? (renderedCards = connections.map((user) => {
+    ? (renderedCards = connections?.map((user) => {
         return (
           <ProfileCard conUser={user} cardType={cardType} key={user._id} />
         );
       }))
-    : (renderedCards = renderedCards =
-        friends.map((user) => {
-          return (
-            <FriendProfileCard
-              conUser={user}
-              cardType={cardType}
-              key={user._id}
-            />
-          );
-        }));
+    : (renderedCards = friends?.map((user) => {
+        return (
+          <FriendProfileCard
+            conUser={user}
+            cardType={cardType}
+            key={user._id}
+          />
+        );
+      }));
   return <div className="profile-cards">{renderedCards}</div>;
 }
 
