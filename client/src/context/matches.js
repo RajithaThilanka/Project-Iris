@@ -14,6 +14,7 @@ function ContextProvider({ children }) {
   const [dates, setDates] = useState([]);
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState([]);
+  const [notification, setNotification] = useState([]);
   const valueToShare = {
     sentConRequests,
     addRequest: (newRequest) => {
@@ -43,6 +44,8 @@ function ContextProvider({ children }) {
     setFriends,
     dates,
     setDates,
+    notification,
+    setNotification,
   };
   return (
     <MatchesContext.Provider value={valueToShare}>

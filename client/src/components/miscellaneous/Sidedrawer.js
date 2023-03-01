@@ -10,8 +10,14 @@ import UserListItem from "./UserAvatar/UserListItem";
 import MatchesContext from "../../context/matches";
 function Sidedrawer() {
   const anchor = "left";
-  const { chats, setChats, selectedChat, setSelectedChat } =
-    useContext(MatchesContext);
+  const {
+    chats,
+    setChats,
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+  } = useContext(MatchesContext);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);

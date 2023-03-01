@@ -13,8 +13,21 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useSelector } from "react-redux";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import MatchesContext from "../../context/matches";
+import { getSender } from "../../config/ChatLogics";
+import { Effect } from "react-notification-badge";
+import NotificationBadge from "react-notification-badge";
 export default function NotificationMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const {
+    chats,
+    setChats,
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+  } = React.useContext(MatchesContext);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,6 +50,10 @@ export default function NotificationMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
+            <NotificationBadge
+              count={notification.length}
+              effect={Effect.SCALE}
+            />
             <NotificationsIcon />
           </IconButton>
         </Tooltip>
@@ -76,7 +93,23 @@ export default function NotificationMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem>
+          {!notification.length && "No new messages"}
+          {notification.map((notif) => (
+            <MenuItem
+              onClick={() => {
+                setSelectedChat(notif.chat);
+                setNotification(notification.filter((n) => n !== notif));
+              }}
+              key={notif._id}
+            >
+              {notif.chat.isGroupChat
+                ? `New message in ${notif.chat.chatName}`
+                : `New message from ${getSender(user, notif.chat.users)}`}
+            </MenuItem>
+          ))}
+        </MenuItem>
+        {/* <MenuItem onClick={handleClose}>
           <Avatar /> Profile
         </MenuItem>
         <MenuItem onClick={handleClose}>
@@ -100,7 +133,7 @@ export default function NotificationMenu() {
             <Logout fontSize="small" />
           </ListItemIcon>
           Logout
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </React.Fragment>
   );
