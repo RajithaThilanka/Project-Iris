@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Connection = require('../models/connectionsModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -96,20 +97,6 @@ exports.getConnections = catchAsync(async (req, res, next) => {
 });
 
 // Returns populated friends of the logged in user
-exports.getFriends = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.user._id).populate({
-    path: 'friends',
-    select: '-__v -flaggedCount',
-  });
-  const friends = user.friends;
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      friends,
-    },
-  });
-});
 
 //admin controllers
 
@@ -154,20 +141,125 @@ exports.getUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getUsers = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(User.find({}), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+// exports.getUsers = catchAsync(async (req, res, next) => {
+//   const features = new APIFeatures(User.find({}), req.query)
+//     .filter()
+//     .sort()
+//     .limitFields()
+//     .paginate();
 
-  const users = await features.query;
+//   const users = await features.query;
+
+//   res.status(200).json({
+//     status: 'success',
+//     results: users.length,
+//     data: {
+//       data: users,
+//     },
+//   });
+// });
+
+exports.getUsers = catchAsync(async (req, res, next) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          {
+            firstname: {
+              $regex: req.query.search,
+              $options: 'i',
+            },
+          },
+          {
+            email: { $regex: req.query.search, $options: 'i' },
+          },
+        ],
+      }
+    : {};
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
 
   res.status(200).json({
     status: 'success',
     results: users.length,
     data: {
       data: users,
+    },
+  });
+});
+
+exports.fetchConnections = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  console.log(userId);
+  // const keyword = req.query.search
+  //   ? {
+  //       $or: [
+  //         {
+  //           firstname: {
+  //             $regex: req.query.search,
+  //             $options: 'i',
+  //           },
+  //         },
+  //         {
+  //           email: { $regex: req.query.search, $options: 'i' },
+  //         },
+  //       ],
+  //     }
+  //   : {};
+
+  const connections = await Connection.find({
+    $and: [
+      {
+        $or: [
+          {
+            senderId: userId,
+          },
+          {
+            receiverId: userId,
+          },
+        ],
+      },
+      {
+        $or: [
+          {
+            status: 'connected',
+          },
+          {
+            status: 'friend-req-pending',
+          },
+        ],
+      },
+    ],
+  })
+
+    .populate('senderId')
+    .populate('receiverId');
+
+  const temp = connections.map(con => {
+    const { senderId } = con;
+
+    senderId?._id + '' != userId
+      ? (con.receiverId = undefined)
+      : (con.senderId = undefined);
+
+    return con;
+  });
+
+  let finalConnections = temp.map(c => {
+    const { senderId, receiverId } = c;
+    return senderId ? senderId : receiverId;
+  });
+
+  const keyword = req.query.search;
+  if (keyword) {
+    const expr = new RegExp(keyword, 'i');
+
+    finalConnections = finalConnections.filter(con => {
+      return expr.test(con.firstname);
+    });
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: finalConnections,
     },
   });
 });

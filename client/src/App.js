@@ -7,13 +7,14 @@ import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 import Feed from "./pages/Feed/Feed";
-import Admin from "./pages/Admin/AdminPage"
-
+import Welcome from './pages/Home/Welcome';
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
-
-import UProfile from './pages/UProfile/UserProfile'
-
+import DateCard from "./components/DateCard/DateCard";
+import Request from "./components/Request/Request";
+import Chat from "./pages/Chat/Chat";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -66,11 +67,10 @@ function App() {
   
       <>
         <Routes>
-          <Route path="/me" element={user ? <Feed /> : <Navigate to="/auth" />}>
-            <Route path="match" element={<Feed />}></Route>
-            <Route path="connections" element={<Feed />}></Route>
-          </Route>
- 
+          <Route
+            path="/me"
+            element={user ? <Feed /> : <Navigate to="/auth" />}
+          ></Route>
           <Route
             path="/"
             element={user ? <Navigate to="/me" /> : <Navigate to="/auth" />}
@@ -84,14 +84,23 @@ function App() {
           <Route path="/users/verify/:userId/:token"
             element={<VerifyMail />}
           ></Route>
+
+          <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
 
-          <Route path="/profile" element={<UProfile />}> </Route> 
-          <Route path="/admin" element={<Admin />}> </Route>
         </Routes>
-        
+        {/* <Chat /> */}
+    
+      
+      <ToastContainer
+        style={{
+          fontSize: "1.3rem",
+          fontFamily: "Poppins, sans-serif",
+        }}
+
+      />
       </>
-       </ThemeProvider>
+        </ThemeProvider>
   );
 }
 

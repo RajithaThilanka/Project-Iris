@@ -213,29 +213,48 @@ exports.getConnectionRequestsSent = catchAsync(async (req, res, next) => {
 exports.getConnections = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const connections = await Connection.find({
-    $or: [
+    $and: [
       {
-        senderId: userId,
+        $or: [
+          {
+            senderId: userId,
+          },
+          {
+            receiverId: userId,
+          },
+        ],
       },
       {
-        receiverId: userId,
+        $or: [
+          {
+            status: 'connected',
+          },
+          {
+            status: 'friend-req-pending',
+          },
+        ],
       },
     ],
-    status: 'connected',
   })
     .populate('senderId')
     .populate('receiverId');
 
-  const finalConnections = connections.map(con => {
-    const { senderId } = con;
+  // const finalConnections = connections.map(con => {
+  //   const { senderId } = con;
 
-    return senderId?._id + '' != userId ? con.senderId : con.receiverId;
-  });
+  //   senderId?._id + '' != userId
+  //     ? (con.receiverId = undefined)
+  //     : (con.senderId = undefined);
+
+  //   con.senderId ? (con.user = con.senderId) : (con.user = con.receiverId);
+
+  //   return con;
+  // });
   res.status(200).json({
     status: 'success',
-    nConnections: finalConnections.length,
+    nConnections: connections.length,
     data: {
-      data: finalConnections,
+      data: connections,
     },
   });
 });

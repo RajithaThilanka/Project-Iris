@@ -46,6 +46,9 @@ router
   .route('/me/submit-answer/:id')
   .patch(authController.protect, answerController.addAnswer);
 router
+  .route('/me/answers')
+  .get(authController.protect, answerController.getAnswers);
+router
   .route('/me')
   .get(authController.protect, userController.getMe, userController.getUser);
 
@@ -59,7 +62,10 @@ router
   .route('/verify-account/:id')
   .patch(authController.adminProtect, authController.verifyAccount);
 
-router.route('/').get(userController.getUsers);
+router.route('/').get(authController.protect, userController.getUsers);
+router
+  .route('/con')
+  .get(authController.protect, userController.fetchConnections);
 
 router
   .route('/:id')

@@ -9,7 +9,8 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Connections from "../pages/Connections/Connections";
 import Friends from "../pages/Friends/Friends";
 import { Divider } from "@mui/material";
-
+import Dates from "../pages/Dates/Dates";
+import Chat from "../pages/Chat/Chat";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -43,9 +44,9 @@ function a11yProps(index) {
   };
 }
 
-export default function Tabbar() {
+export default function Tabbar({ user }) {
   const [value, setValue] = React.useState(0);
-  console.log(value);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -103,12 +104,12 @@ export default function Tabbar() {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <div style={{ width: "70vw" }}>
-          <p>My dates</p>
+          <Dates />
         </div>
       </TabPanel>
       <TabPanel value={value} index={4}>
         <div style={{ width: "70vw" }}>
-          <p>Messages</p>
+          <Chat />
         </div>
       </TabPanel>
     </Box>
