@@ -8,15 +8,15 @@ import Avatar from '@mui/material/Avatar';
 function ProfilHeader() {
   return <div>
     
-    <Paper elevation={3}  sx={{   
+    <Paper elevation={1}  sx={{   
       display: 'flex',
       height: 300,
-      padding: '2'
+      padding: '1'
 
     }} >
 
-      
-    <Grid container justifyContent="center" padding={4} marginTop={6} >
+    
+    <Grid container justifyContent="center" marginTop={6} >
       <Grid item>  
        
        <Stack direction='column' justifyContent="center" >  

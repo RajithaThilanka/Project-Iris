@@ -28,6 +28,7 @@
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.20",
     "python-shell": "^3.0.1",
+    "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "superagent": "^8.0.6",
     "uuid": "^9.0.0",

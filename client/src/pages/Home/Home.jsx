@@ -3,13 +3,6 @@ import React from "react";
 // import Bar from "../../components/Appbar/MainAppbar";
 import { Box, Grid, Stack, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-import Slider from "../../components/IndexSlider/Slider";
-
-import './homeStyle.css';
-
-=======
->>>>>>> f869dd6ba7685cfca5c50b509966910a0f4c7cf6
 
 function welcomepage() {
   return (

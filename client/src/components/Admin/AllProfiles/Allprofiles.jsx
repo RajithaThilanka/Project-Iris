@@ -4,11 +4,11 @@ import { DataGrid } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DoneIcon from '@mui/icons-material/Done';
-import { Stack,Button, Typography } from '@mui/material';
+import { Stack,Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { IconButton } from '@mui/material';
-
-
+import { IconButton, Typography } from '@mui/material';
+import MessageIcon from '@mui/icons-material/Message';
+import BlockIcon from '@mui/icons-material/Block';
 
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
@@ -27,7 +27,7 @@ const columns = [
   {
     field: "status",
     headerName: "Status",
-    type: "number",
+    type: "string",
     width: 110,
     editable: false
   },
@@ -48,7 +48,7 @@ const columns = [
       
       return (
         <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick}><DoneIcon /></IconButton>
+          <IconButton size="small" onClick={onClick}><BlockIcon /></IconButton>
           <IconButton size="small" onClick={onClick}><VisibilityIcon /></IconButton>
           <IconButton size="small" onClick={onClick}><DeleteIcon /></IconButton>
         </Stack>
@@ -61,23 +61,23 @@ const columns = [
 ];
 
 const rows = [
-  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "Verified"},
+  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "unverified"},
   
   {
     id: 2,
     fullName: "Lannister",
     email: "Cersei@gmail.com",
-    status: "Verified",
+    status: "verified",
     
   }
 
 ];
 
-export default function DataGridDemo() {
+export default function Profilereports() {
   return (
     
-    <Box sx={{ height: 400, width: 800, justifyContent: 'center', textAlign:'center' }}>
-      <Typography variant='h6'> Approval Requests</Typography>
+    <Box sx={{ height: 400, width: 800,justifyContent: 'center', textAlign:'center'  }}>
+    <Typography variant='h6'>All profiles </Typography>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -87,8 +87,6 @@ export default function DataGridDemo() {
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
       />
-
     </Box>
-    
   );
 }

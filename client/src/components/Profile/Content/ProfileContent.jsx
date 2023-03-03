@@ -1,6 +1,8 @@
 import React from "react";
 import ProComplete from '../../../components/Profile/ProfileComplete/profilecomplete';
 import SaveIcon from '@mui/icons-material/Save';
+
+
 import {
   Card,
   CardContent,
@@ -11,16 +13,18 @@ import {
   Stack,
   Paper,
 } from "@mui/material";
+
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Grid } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import Factfile from   '../ProfileFactfiles/Factfile'
+import { useTheme } from "@emotion/react";
 
 function ProfileContent() {
 
-  
+  const theme = useTheme();
   return (
     <div>
       <Grid
