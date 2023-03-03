@@ -7,7 +7,7 @@ import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 import Feed from "./pages/Feed/Feed";
-
+import Welcome from './pages/Home/Welcome';
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import DateCard from "./components/DateCard/DateCard";
@@ -76,8 +76,10 @@ function App() {
             path="/users/verify/:userId/:token"
             element={<VerifyMail />}
           ></Route>
+
           <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
+
         </Routes>
         {/* <Chat /> */}
       </ThemeProvider>
