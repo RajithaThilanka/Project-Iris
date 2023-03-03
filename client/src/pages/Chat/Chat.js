@@ -1,58 +1,32 @@
+import { Box } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { userChats } from "../../api/ChatRequests";
 import Conversation from "../../components/Conversation/Conversation";
-
-import "./Chat.css";
+import ChatBox from "../../components/miscellaneous/ChatBox";
+import MyChat from "../../components/miscellaneous/MyChat";
+import Sidedrawer from "../../components/miscellaneous/Sidedrawer";
 
 function Chat() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-  const [chats, setChats] = useState(null);
-  useEffect(() => {
-    const getChats = async () => {
-      try {
-        const {
-          data: {
-            data: { data },
-          },
-        } = await userChats(user._id);
-        setChats(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getChats();
-  }, [user]);
+  const [fetchAgain, setFetchAgain] = useState(false);
   return (
-    <div className="Chat">
-      {/* Left Side */}
-      <div className="Left-side-chat">
-        Search
-        <div className="Chat-container">
-          <h2>Chats</h2>
-          <div className="Chat-list">
-            {chats?.map((chat, index) => {
-              return (
-                <div>
-                  <Conversation
-                    data={chat}
-                    key={index}
-                    currentUser={user._id}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Right Side */}
-
-      <div className="Right-side-chat">
-        <div style={{ width: "20rem", alignSelf: "flex-end" }}></div>
-      </div>
+    <div className="Chat" style={{ width: "100%" }}>
+      <Sidedrawer />
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          height: "91.5vh",
+          padding: "10px",
+        }}
+      >
+        <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+      </Box>
     </div>
   );
 }

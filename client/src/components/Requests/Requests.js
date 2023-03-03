@@ -1,59 +1,56 @@
 import { Chip, Divider } from "@mui/material";
-import React, { useContext, useEffect } from "react";
-import {
-  acceptConnection,
-  cancelConRequest,
-  getReceivedConRequests,
-  getSentConRequests,
-  sendConRequest,
-} from "../../api/UserRequests";
+import React, { useContext } from "react";
+import { acceptConnection, cancelConRequest } from "../../api/UserRequests";
 import Request from "../Request/Request";
 import "./Requests.css";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import MatchesContext from "../../context/matches";
-function Requests({ setNumRequests }) {
-  // const [sentConRequests, setsentConRequests] = React.useState([]);
-  // const [receivedConRequests, setreceivedConRequests] = React.useState([]);
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+function Requests() {
   const {
     sentConRequests,
     setsentConRequests,
     receivedConRequests,
     setreceivedConRequests,
+    connections,
+    setConnections,
   } = useContext(MatchesContext);
-  React.useEffect(() => {
-    const fetchsentConRequests = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getSentConRequests();
-      setsentConRequests(data);
-      console.log(sentConRequests);
-    };
-    fetchsentConRequests();
-  }, []);
-
-  React.useEffect(() => {
-    const fetchreceivedConRequests = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getReceivedConRequests();
-      setreceivedConRequests(data);
-    };
-    fetchreceivedConRequests();
-  }, []);
 
   const handleAccept = async (id) => {
     try {
-      await acceptConnection(id);
+      const {
+        data: {
+          data: { data },
+        },
+      } = await acceptConnection(id);
       setreceivedConRequests(
         receivedConRequests.filter((req) => req.senderId._id !== id)
       );
-      console.log(receivedConRequests);
+      setConnections([...connections, data]);
+      toast.success(`Connected`, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch (err) {
-      console.log(err);
+      const { message } = err;
+
+      toast.error(message, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 
@@ -63,13 +60,35 @@ function Requests({ setNumRequests }) {
       setsentConRequests(
         sentConRequests.filter((req) => req.receiverId._id !== id)
       );
+      setreceivedConRequests(
+        receivedConRequests.filter((req) => req.senderId._id !== id)
+      );
+      toast.success(`Friend Invitation Cancelled`, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch (err) {
-      console.log(err);
+      const { message } = err;
+
+      toast.error(message, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
-  useEffect(() => {
-    setNumRequests(sentConRequests.length + receivedConRequests.length);
-  }, [sentConRequests, receivedConRequests]);
+
   return (
     <div className="requests-container">
       <Divider>
@@ -111,6 +130,7 @@ function Requests({ setNumRequests }) {
               data={req}
               reqType="received"
               handleAcceptClick={() => handleAccept(req?.senderId?._id)}
+              handleCancelClick={() => handleCancel(req?.senderId?._id)}
             />
           ))
         ) : (

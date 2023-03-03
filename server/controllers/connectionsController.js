@@ -213,20 +213,26 @@ exports.getConnectionRequestsSent = catchAsync(async (req, res, next) => {
 exports.getConnections = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const connections = await Connection.find({
-    $or: [
+    $and: [
       {
-        senderId: userId,
+        $or: [
+          {
+            senderId: userId,
+          },
+          {
+            receiverId: userId,
+          },
+        ],
       },
       {
-        receiverId: userId,
-      },
-    ],
-    $or: [
-      {
-        status: 'connected',
-      },
-      {
-        status: 'friend-req-pending',
+        $or: [
+          {
+            status: 'connected',
+          },
+          {
+            status: 'friend-req-pending',
+          },
+        ],
       },
     ],
   })

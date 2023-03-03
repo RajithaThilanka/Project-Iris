@@ -50,3 +50,39 @@ export const getReceivedDateRequests = () =>
 export const getSentDateRequests = () => API.get(`/users/me/dates/sent`);
 export const sendDateRequest = (id, data) =>
   API.post(`/users/me/dates/invite/${id}`, data);
+
+export const searchUser = (username) =>
+  API.get(`/users/con?search=${username}`);
+
+export const createChat = (userId) => API.post(`/chat`, { userId });
+
+export const fetchUserChats = () => API.get(`/chat`);
+
+export const createGroup = (name, users) =>
+  API.post(`/chat/group`, {
+    name,
+    users,
+  });
+
+export const renameGroup = (chatId, chatName) =>
+  API.patch("/chat/rename", { chatId, chatName });
+
+export const adduser = (chatId, userId) =>
+  API.patch(`/chat/groupadd`, {
+    chatId,
+    userId,
+  });
+
+export const removeUser = (chatId, userId) =>
+  API.patch(`/chat/groupremove`, {
+    chatId,
+    userId,
+  });
+
+export const sendAMessage = (content, chatId) =>
+  API.post(`/message`, {
+    content,
+    chatId,
+  });
+
+export const getAllMessages = (chatId) => API.get(`/message/${chatId}`);

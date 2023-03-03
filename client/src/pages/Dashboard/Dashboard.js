@@ -21,14 +21,44 @@ import ChurchIcon from "@mui/icons-material/Church";
 import LanguageIcon from "@mui/icons-material/Language";
 import MatchesContext from "../../context/matches";
 import { useContext } from "react";
+import io from "socket.io-client";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const ENDPOINT = "http://localhost:5000";
+let socket;
+
 function Advanced() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-  const { sentConRequests, setsentConRequests, addRequest } =
-    useContext(MatchesContext);
+  const {
+    setSocketConnected,
+    activeUsers,
+    setActiveUsers,
+    receivedConRequests,
+    setreceivedConRequests,
+  } = useContext(MatchesContext);
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("active-users", (activeUsers) => {
+      setActiveUsers(activeUsers);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    socket.on("new-con-req-received", (newConReq) => {
+      if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedConRequests([newConReq, ...receivedConRequests]);
+      }
+    });
+  });
+
+  const { sentConRequests, setsentConRequests } = useContext(MatchesContext);
   const [matches, setMatches] = useState([]);
-  // let { matches, loading } = useSelector((state) => state.matchReducer);
+
   const [currentIndex, setCurrentIndex] = useState(matches?.length - 1);
   const [lastDirection, setLastDirection] = useState();
   const currentIndexRef = useRef(currentIndex);
@@ -53,11 +83,31 @@ function Advanced() {
         response = await sendConRequest(id);
         return response;
       } else if (direction === "left") {
-        console.log("disliked");
+        toast.success("Disliked", {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
       return response;
     } catch (error) {
-      console.log(error);
+      const { message } = error;
+
+      toast.error(message, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       return null;
     }
   };
@@ -89,15 +139,27 @@ function Advanced() {
           data: { data },
         },
       } = response;
-      addRequest(data);
+
+      socket.emit("new-con-request-sent", data);
+      toast.success("Connection request sent", {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setsentConRequests([data, ...sentConRequests]);
     }
     updateCurrentIndex(index - 1);
+    console.log(currentIndex);
   };
 
   const outOfFrame = (name, idx) => {
-    console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
-
-    currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
+    // console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
+    // currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
   };
 
   const swipe = async (dir) => {
@@ -144,8 +206,17 @@ function Advanced() {
                   {character.country}
                 </div>
                 <div className="suggestion-status-container">
-                  <div className="suggestion-online--dot"></div>
-                  <div className="suggestion-status">Online</div>
+                  {activeUsers.some((user) => user.userId === character._id) ? (
+                    <div className="suggestion-online--dot"></div>
+                  ) : (
+                    <div className="suggestion-offline--dot"></div>
+                  )}
+
+                  <div className="suggestion-status">
+                    {activeUsers.some((user) => user.userId === character._id)
+                      ? "Online"
+                      : "Offline"}
+                  </div>
                 </div>
               </div>
             </TinderCard>
@@ -156,6 +227,7 @@ function Advanced() {
             <Divider>
               <Chip label="Basic Info"></Chip>
             </Divider>
+
             <div className="basic-info">
               {matches[currentIndex] === "male" ? (
                 <div className="profile--basic-info">

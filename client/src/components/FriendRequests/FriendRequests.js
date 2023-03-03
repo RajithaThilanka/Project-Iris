@@ -1,5 +1,7 @@
 import { Chip, Divider } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   acceptFriend,
   cancelFriendRequest,
@@ -11,46 +13,49 @@ import "./FriendRequests.css";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import FriendRequest from "../FriendRequest/FriendRequest";
 import MatchesContext from "../../context/matches";
-function FriendRequests({ setNumRequests }) {
+function FriendRequests() {
   const {
     sentFriendRequests,
     setsentFriendRequests,
     receivedFriendRequests,
     setreceivedFriendRequests,
+    friends,
+    setFriends,
+    connections,
+    setConnections,
   } = useContext(MatchesContext);
-
-  React.useEffect(() => {
-    const fetchsentFriendRequests = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getSentFriendRequests();
-      setsentFriendRequests(data);
-    };
-    fetchsentFriendRequests();
-  }, []);
-
-  React.useEffect(() => {
-    const fetchreceivedFriendRequests = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getReceivedFriendRequests();
-      setreceivedFriendRequests(data);
-    };
-    fetchreceivedFriendRequests();
-  }, []);
 
   const handleAccept = async (id) => {
     try {
-      await acceptFriend(id);
+      const {
+        data: {
+          data: { data },
+        },
+      } = await acceptFriend(id);
       setreceivedFriendRequests(
         receivedFriendRequests.filter((req) => req.senderId._id !== id)
       );
+      setConnections(connections.filter((u) => u.senderId._id !== id));
+      setFriends([...friends, data]);
     } catch (err) {
-      console.log(err);
+      const {
+        response: {
+          data: {
+            error: { name },
+          },
+        },
+      } = err;
+
+      toast.error(name, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 
@@ -60,13 +65,30 @@ function FriendRequests({ setNumRequests }) {
       setsentFriendRequests(
         sentFriendRequests.filter((req) => req.receiverId._id !== id)
       );
+      setreceivedFriendRequests(
+        receivedFriendRequests.filter((req) => req.senderId._id !== id)
+      );
     } catch (err) {
-      console.log(err);
+      const {
+        response: {
+          data: {
+            error: { name },
+          },
+        },
+      } = err;
+
+      toast.error(name, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
-  useEffect(() => {
-    setNumRequests(sentFriendRequests.length + receivedFriendRequests.length);
-  }, [sentFriendRequests, receivedFriendRequests]);
 
   return (
     <div className="requests-container">

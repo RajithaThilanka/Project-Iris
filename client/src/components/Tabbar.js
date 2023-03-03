@@ -10,7 +10,7 @@ import Connections from "../pages/Connections/Connections";
 import Friends from "../pages/Friends/Friends";
 import { Divider } from "@mui/material";
 import Dates from "../pages/Dates/Dates";
-
+import Chat from "../pages/Chat/Chat";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -109,7 +109,7 @@ export default function Tabbar({ user }) {
       </TabPanel>
       <TabPanel value={value} index={4}>
         <div style={{ width: "70vw" }}>
-          <p>Messages</p>
+          <Chat />
         </div>
       </TabPanel>
     </Box>

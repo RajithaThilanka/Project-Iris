@@ -60,8 +60,13 @@ function FriendProfileCard({ conUser, cardType }) {
   const handleDateData = (event) => {
     setDateData({ ...dateData, [event.target.name]: event.target.value });
   };
-  const { dates, setDates, sentDateRequests, setsentDateRequests } =
-    useContext(MatchesContext);
+  const {
+    dates,
+    setDates,
+    sentDateRequests,
+    setsentDateRequests,
+    activeUsers,
+  } = useContext(MatchesContext);
 
   const otherUser =
     conUser.senderId._id === user._id ? conUser.receiverId : conUser.senderId;
@@ -248,13 +253,16 @@ function FriendProfileCard({ conUser, cardType }) {
       </div>
       <div className="profile-header">
         <div className="profile-status-container">
-          <div
-            className="online--dot"
-            style={{
-              backgroundColor: "#66e2b3",
-            }}
-          ></div>
-          <div className="profile-status">Online</div>
+          {activeUsers.some((user) => user.userId === otherUser._id) ? (
+            <div className="suggestion-online--dot"></div>
+          ) : (
+            <div className="suggestion-offline--dot"></div>
+          )}
+          <div className="profile-status">
+            {activeUsers.some((user) => user.userId === otherUser._id)
+              ? "Online"
+              : "Offline"}
+          </div>
         </div>
       </div>
     </div>

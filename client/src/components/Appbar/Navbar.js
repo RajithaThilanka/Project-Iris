@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,30 +11,68 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "react-router-dom";
 import { logout } from "../../actions/AuthActions";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import { useDispatch } from "react-redux";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 import { BsFillPersonFill } from "react-icons/bs";
 import "./Navbar.css";
-import { Divider } from "@mui/material";
 import Requests from "../Requests/Requests";
 import FriendRequests from "../FriendRequests/FriendRequests";
 import DateRequests from "../DateRequests/DateRequests";
+import { useContext, useEffect, useState } from "react";
+import { styled } from "@mui/material/styles";
+import Badge from "@mui/material/Badge";
+import MatchesContext from "../../context/matches";
+import {
+  getAllFriends,
+  getReceivedConRequests,
+  getReceivedDateRequests,
+  getReceivedFriendRequests,
+  getSentConRequests,
+  getSentDateRequests,
+  getSentFriendRequests,
+} from "../../api/UserRequests";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
 const settings = ["Profile", "Account", "Dashboard"];
 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#44b700",
+    color: "#44b700",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    "&::after": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "1px solid currentColor",
+      content: '""',
+    },
+  },
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
+      opacity: 1,
+    },
+    "100%": {
+      transform: "scale(2.4)",
+      opacity: 0,
+    },
+  },
+}));
 function Navbar({ user }) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [anchorElFriend, setAnchorElFriend] = React.useState(null);
-  const [anchorElConnection, setAnchorElConnection] = React.useState(null);
-  const [anchorElDate, setAnchorElDate] = React.useState(null);
-  const [conRequests, setConRequests] = React.useState();
-  const [friendRequests, setFriendRequests] = React.useState();
-  const [dateRequests, setDateRequests] = React.useState();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElFriend, setAnchorElFriend] = useState(null);
+  const [anchorElConnection, setAnchorElConnection] = useState(null);
+  const [anchorElDate, setAnchorElDate] = useState(null);
+
+  const [dateRequests, setDateRequests] = useState();
   const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
@@ -69,18 +106,109 @@ function Navbar({ user }) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const {
+    sentConRequests,
+    setsentConRequests,
+    receivedConRequests,
+    setreceivedConRequests,
+    receivedFriendRequests,
+    setreceivedFriendRequests,
+    sentFriendRequests,
+    setsentFriendRequests,
+    setFriends,
+    socketConnected,
+    setSocketConnected,
+    sentDateRequests,
+    receivedDateRequests,
+    setsentDateRequests,
+    setreceivedDateRequests,
+  } = useContext(MatchesContext);
+  useEffect(() => {
+    const fetchsentConRequests = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getSentConRequests();
+      setsentConRequests(data);
+    };
+    fetchsentConRequests();
+  }, []);
 
+  useEffect(() => {
+    const fetchreceivedConRequests = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getReceivedConRequests();
+      setreceivedConRequests(data);
+    };
+    fetchreceivedConRequests();
+  }, []);
+  useEffect(() => {
+    const fetchsentFriendRequests = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getSentFriendRequests();
+      setsentFriendRequests(data);
+    };
+    fetchsentFriendRequests();
+  }, []);
+
+  useEffect(() => {
+    const fetchreceivedFriendRequests = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getReceivedFriendRequests();
+      setreceivedFriendRequests(data);
+    };
+    fetchreceivedFriendRequests();
+  }, []);
+  useEffect(() => {
+    const fetchsentDateRequests = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getSentDateRequests();
+      setsentDateRequests(data);
+      //   console.log(sentConRequests);
+    };
+    fetchsentDateRequests();
+  }, []);
+
+  useEffect(() => {
+    const fetchreceivedDateRequests = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getReceivedDateRequests();
+      setreceivedDateRequests(data);
+    };
+    fetchreceivedDateRequests();
+  }, []);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ width: "100vw" }}>
       <Container
-        maxWidth="xl"
-        sx={{ width: "100vw", backgroundColor: "primary.main" }}
+        sx={{
+          width: "100%",
+          backgroundColor: "primary.main",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <Toolbar disableGutters>
-          <div className="navbar-logo">
-            <img src="./irislogo.png" alt="iris-logo" />
-          </div>
+        <div className="navbar-logo">
+          <img src="./irislogo.png" alt="iris-logo" />
+        </div>
+        <Toolbar disableGutters sx={{ width: "100%" }}>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <Typography
             variant="h6"
@@ -186,7 +314,9 @@ function Navbar({ user }) {
                 sx={{ p: 0, position: "relative" }}
               >
                 <BsFillPersonFill fill="#fff" />
-                <div className="num-req-count">{conRequests}</div>
+                <div className="num-req-count">
+                  {sentConRequests.length + receivedConRequests.length}
+                </div>
               </IconButton>
             </Tooltip>
             <Menu
@@ -213,7 +343,7 @@ function Navbar({ user }) {
               onClose={handleCloseConnectionMenu}
             >
               <div>
-                <Requests setNumRequests={(num) => setConRequests(num)} />
+                <Requests />
               </div>
               {/* </MenuItem> */}
             </Menu>
@@ -221,7 +351,9 @@ function Navbar({ user }) {
             <Tooltip title="Open friend requests">
               <IconButton onClick={handleOpenFriendMenu} sx={{ p: 0 }}>
                 <BsFillPersonCheckFill fill="#fff" />
-                <div className="num-req-count">{friendRequests}</div>
+                <div className="num-req-count">
+                  {sentFriendRequests.length + receivedFriendRequests.length}
+                </div>
               </IconButton>
             </Tooltip>
             <Menu
@@ -248,16 +380,16 @@ function Navbar({ user }) {
               onClose={handleCloseFriendMenu}
             >
               <div>
-                <FriendRequests
-                  setNumRequests={(num) => setFriendRequests(num)}
-                />
+                <FriendRequests />
               </div>
             </Menu>
             {/* Dates */}
             <Tooltip title="Open date invitations">
               <IconButton onClick={handleOpenDateMenu} sx={{ p: 0 }}>
                 <CoffeeIcon sx={{ color: "#fff", marginTop: "0.4rem" }} />
-                <div className="num-req-count">{dateRequests}</div>
+                <div className="num-req-count">
+                  {receivedDateRequests.length + sentDateRequests.length}
+                </div>
               </IconButton>
             </Tooltip>
             <Menu
@@ -284,7 +416,7 @@ function Navbar({ user }) {
               onClose={handleCloseDateMenu}
             >
               <div>
-                <DateRequests setNumRequests={(num) => setDateRequests(num)} />
+                <DateRequests />
               </div>
             </Menu>
 
@@ -294,14 +426,20 @@ function Navbar({ user }) {
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, objectFit: "cover" }}
               >
-                <Avatar
-                  src={
-                    user.profilePhoto
-                      ? serverPublic + user.profilePhoto
-                      : serverPublic + "defaultProfile.png"
-                  }
-                  alt="lgo"
-                />
+                <StyledBadge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                  variant={socketConnected ? "dot" : ""}
+                >
+                  <Avatar
+                    alt="user avatar"
+                    src={
+                      user.profilePhoto
+                        ? serverPublic + user.profilePhoto
+                        : serverPublic + "defaultProfile.png"
+                    }
+                  />
+                </StyledBadge>
               </IconButton>
             </Tooltip>
             <Menu

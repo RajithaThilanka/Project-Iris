@@ -62,7 +62,10 @@ router
   .route('/verify-account/:id')
   .patch(authController.adminProtect, authController.verifyAccount);
 
-router.route('/').get(userController.getUsers);
+router.route('/').get(authController.protect, userController.getUsers);
+router
+  .route('/con')
+  .get(authController.protect, userController.fetchConnections);
 
 router
   .route('/:id')
