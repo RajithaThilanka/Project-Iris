@@ -1,6 +1,6 @@
 import { Box, Button, Drawer, TextField, Tooltip } from "@mui/material";
 import { createChat, searchUser } from "../../api/UserRequests";
-
+import "./Sidedrawer.css";
 import React, { useContext, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ProfileMenu from "./ProfileMenu";
@@ -8,6 +8,7 @@ import NotificationMenu from "./NotificationMenu";
 import Loader from "../Loading/Loading";
 import UserListItem from "./UserAvatar/UserListItem";
 import MatchesContext from "../../context/matches";
+import { useNavigate } from "react-router-dom";
 function Sidedrawer() {
   const anchor = "left";
   const {
@@ -18,6 +19,7 @@ function Sidedrawer() {
     notification,
     setNotification,
   } = useContext(MatchesContext);
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,6 +30,7 @@ function Sidedrawer() {
     bottom: false,
     right: false,
   });
+
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -39,7 +42,8 @@ function Sidedrawer() {
     setState({ ...state, [anchor]: open });
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (event) => {
+    event.preventDefault();
     setLoading(true);
     try {
       const {
@@ -72,8 +76,18 @@ function Sidedrawer() {
     }
   };
   const list = (anchor) => (
-    <Box sx={{ width: 400, padding: "3rem" }} role="presentation">
-      <div
+    <Box
+      sx={{
+        width: 400,
+        padding: "3rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "2rem",
+      }}
+      role="presentation"
+    >
+      <form
+        onSubmit={handleSearch}
         style={{
           display: "flex",
           justifyContent: "space-around",
@@ -81,64 +95,54 @@ function Sidedrawer() {
         }}
       >
         <TextField
-          required
-          placeholder="Search by name or email"
+          placeholder="Search by name"
           sx={{ mr: "16px", flex: 1 }}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           size="small"
           fullWidth
         />
-        <Button onClick={handleSearch}>Go</Button>
+        <Button variant="contained" onClick={handleSearch}>
+          Go
+        </Button>
+      </form>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        {loading ? (
+          <Loader />
+        ) : (
+          searchResult?.map((user) => {
+            return (
+              <UserListItem
+                key={user._id}
+                user={user}
+                handleFunction={() => accessChat(user._id)}
+              />
+            );
+          })
+        )}
+        {loadingChat && <Loader />}
       </div>
-      {loading ? (
-        <Loader />
-      ) : (
-        searchResult?.map((user) => {
-          return (
-            <UserListItem
-              key={user._id}
-              user={user}
-              handleFunction={() => accessChat(user._id)}
-            />
-          );
-        })
-      )}
-      {loadingChat && <Loader />}
     </Box>
   );
 
   return (
     <>
-      <Box
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          backgroundColor: "white",
-          width: "100%",
-          padding: "5px 10px 5px 10px",
-          borderWidth: "5px",
-        }}
-      >
-        <Tooltip title="Search users to chat" placement="bottom-end">
+      <Box style={{}} className="chat-appbar">
+        <Tooltip title="Search Friends" placement="bottom-end">
           <Button variant="ghost" onClick={toggleDrawer(anchor, true)}>
-            <SearchIcon />
-            <span style={{ padding: "2px" }}>Search User</span>
+            <SearchIcon className="friend-search-icon" />
           </Button>
         </Tooltip>
-        <h3>Iris</h3>
-        <div
-          style={{
-            display: "flex",
-            gap: "5px",
-            justifyContent: "space-around",
-            alignItems: "center",
-            wrap: "no-wrap",
-          }}
-        >
-          <NotificationMenu />
-          <ProfileMenu />
+
+        <div className="notification-container" style={{}}>
+          <NotificationMenu className="bell-icon" />
         </div>
       </Box>
       <div>

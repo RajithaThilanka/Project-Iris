@@ -28,16 +28,20 @@ function Requests() {
         receivedConRequests.filter((req) => req.senderId._id !== id)
       );
       setConnections([...connections, data]);
+      toast.success(`Connected`, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch (err) {
-      const {
-        response: {
-          data: {
-            error: { name },
-          },
-        },
-      } = err;
+      const { message } = err;
 
-      toast.error(name, {
+      toast.error(message, {
         position: "bottom-left",
         autoClose: 4000,
         hideProgressBar: false,
@@ -59,16 +63,20 @@ function Requests() {
       setreceivedConRequests(
         receivedConRequests.filter((req) => req.senderId._id !== id)
       );
+      toast.success(`Friend Invitation Cancelled`, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch (err) {
-      const {
-        response: {
-          data: {
-            error: { name },
-          },
-        },
-      } = err;
+      const { message } = err;
 
-      toast.error(name, {
+      toast.error(message, {
         position: "bottom-left",
         autoClose: 4000,
         hideProgressBar: false,
@@ -122,6 +130,7 @@ function Requests() {
               data={req}
               reqType="received"
               handleAcceptClick={() => handleAccept(req?.senderId?._id)}
+              handleCancelClick={() => handleCancel(req?.senderId?._id)}
             />
           ))
         ) : (

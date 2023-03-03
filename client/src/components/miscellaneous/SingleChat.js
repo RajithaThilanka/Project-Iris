@@ -1,4 +1,11 @@
-import { FormControl, Icon, IconButton, TextField } from "@mui/material";
+import {
+  Avatar,
+  Badge,
+  FormControl,
+  Icon,
+  IconButton,
+  TextField,
+} from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
@@ -14,7 +21,8 @@ import Lottie from "react-lottie";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import animationData from "../../animations/typing.json";
-
+import styled from "@emotion/styled";
+import InputEmoji from "react-input-emoji";
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
 
@@ -22,6 +30,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+  const { activeUsers } = useContext(MatchesContext);
+
   const { selectedChat, setSelectedChat, notification, setNotification } =
     useContext(MatchesContext);
   const [modalOpen, setOpen] = React.useState(false);
@@ -45,9 +55,9 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
-    socket.on("active-users", (activeUsers) => {
-      console.log(activeUsers);
-    });
+    // socket.on("active-users", (activeUsers) => {
+    //   setActiveUsers(activeUsers);
+    // });
   }, []);
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -128,32 +138,88 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       }
     }, timerLength);
   };
+
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      backgroundColor: "#44b700",
+      color: "#44b700",
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+      "&::after": {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        borderRadius: "50%",
+        animation: "ripple 1.2s infinite ease-in-out",
+        border: "1px solid currentColor",
+        content: '""',
+      },
+    },
+    "@keyframes ripple": {
+      "0%": {
+        transform: "scale(.8)",
+        opacity: 1,
+      },
+      "100%": {
+        transform: "scale(2.4)",
+        opacity: 0,
+      },
+    },
+  }));
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <>
       {selectedChat ? (
         <>
-          <span
-            style={{
-              fontSize: "28px",
-              padding: "0 18px 12px 12px",
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <span className="chat-user-header">
             <IconButton
               style={{ display: "flex" }}
               onClick={() => setSelectedChat("")}
             >
-              <ArrowBackIosIcon />
+              <ArrowBackIosIcon style={{ color: "#fff" }} />
             </IconButton>
             {!selectedChat.isGroupChat ? (
               <>
-                <IconButton onClick={() => setOpen(true)}>
-                  <PreviewIcon />
-                </IconButton>
-                {getSender(user, selectedChat.users)}
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "1.5rem",
+                  }}
+                >
+                  <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    variant={
+                      activeUsers.some(
+                        (u) =>
+                          u.userId ===
+                          getSenderFull(user, selectedChat.users)._id
+                      )
+                        ? "dot"
+                        : ""
+                    }
+                  >
+                    <Avatar
+                      alt="user avatar"
+                      src={
+                        user.profilePhoto
+                          ? serverPublic +
+                            getSenderFull(user, selectedChat.users).profilePhoto
+                          : serverPublic + "defaultProfile.png"
+                      }
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setOpen(true)}
+                    />
+                  </StyledBadge>
+                  <h6 style={{ fontSize: "1.5rem", fontWeight: "400" }}>
+                    {getSender(user, selectedChat.users)}
+                  </h6>
+                </div>
+
                 <ProfileModal
                   user={getSenderFull(user, selectedChat.users)}
                   modalOpen={modalOpen}
@@ -171,19 +237,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
               </>
             )}
           </span>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              padding: "18px",
-              backgroundColor: "#E8E8E8",
-              width: "100%",
-              height: "100%",
-              borderRadius: "15px",
-              overflow: "hidden",
-            }}
-          >
+          <div className="chat-container">
             {loading ? (
               <div
                 style={{
@@ -218,6 +272,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 onChange={typingHandler}
                 value={newMessage}
               />
+              {/* <InputEmoji onChange={typingHandler} value={newMessage} /> */}
             </form>
           </div>
         </>

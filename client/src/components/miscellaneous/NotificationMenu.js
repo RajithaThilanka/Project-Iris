@@ -17,6 +17,7 @@ import MatchesContext from "../../context/matches";
 import { getSender } from "../../config/ChatLogics";
 import { Effect } from "react-notification-badge";
 import NotificationBadge from "react-notification-badge";
+import "./NotifcationMenu.css";
 export default function NotificationMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {
@@ -40,8 +41,8 @@ export default function NotificationMenu() {
   } = useSelector((state) => state.authReducer.authData);
   return (
     <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Account settings">
+      <Box className="not-container" sx={{}}>
+        <Tooltip title="Notifications">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -50,11 +51,19 @@ export default function NotificationMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <NotificationBadge
-              count={notification.length}
-              effect={Effect.SCALE}
-            />
-            <NotificationsIcon />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "3.5rem",
+              }}
+            >
+              <NotificationsIcon style={{ color: "#fff", marginTop: "3px" }} />
+              <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              />
+            </div>
           </IconButton>
         </Tooltip>
       </Box>
@@ -93,7 +102,7 @@ export default function NotificationMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <div>
           {!notification.length && "No new messages"}
           {notification.map((notif) => (
             <MenuItem
@@ -108,32 +117,7 @@ export default function NotificationMenu() {
                 : `New message from ${getSender(user, notif.chat.users)}`}
             </MenuItem>
           ))}
-        </MenuItem>
-        {/* <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem> */}
+        </div>
       </Menu>
     </React.Fragment>
   );

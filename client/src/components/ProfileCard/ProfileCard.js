@@ -26,7 +26,7 @@ function ProfileCard({ conUser, cardType }) {
   } = useSelector((state) => state.authReducer.authData);
   const otherUser =
     conUser.senderId._id === user._id ? conUser.receiverId : conUser.senderId;
-
+  const { activeUsers } = useContext(MatchesContext);
   const {
     sentFriendRequests,
     setsentFriendRequests,
@@ -64,15 +64,9 @@ function ProfileCard({ conUser, cardType }) {
         theme: "dark",
       });
     } catch (err) {
-      const {
-        response: {
-          data: {
-            error: { name },
-          },
-        },
-      } = err;
+      const { message } = err;
 
-      toast.error(name, {
+      toast.error(message, {
         position: "bottom-left",
         autoClose: 4000,
         hideProgressBar: false,
@@ -293,13 +287,17 @@ function ProfileCard({ conUser, cardType }) {
       </div>
       <div className="profile-header">
         <div className="profile-status-container">
-          <div
-            className="online--dot"
-            style={{
-              backgroundColor: "#66e2b3",
-            }}
-          ></div>
-          <div className="profile-status">Online</div>
+          {activeUsers.some((user) => user.userId === otherUser._id) ? (
+            <div className="suggestion-online--dot"></div>
+          ) : (
+            <div className="suggestion-offline--dot"></div>
+          )}
+          <div className="profile-status">
+            {" "}
+            {activeUsers.some((user) => user.userId === otherUser._id)
+              ? "Online"
+              : "Offline"}
+          </div>
         </div>
       </div>
     </div>

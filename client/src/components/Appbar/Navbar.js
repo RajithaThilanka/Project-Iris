@@ -27,8 +27,10 @@ import MatchesContext from "../../context/matches";
 import {
   getAllFriends,
   getReceivedConRequests,
+  getReceivedDateRequests,
   getReceivedFriendRequests,
   getSentConRequests,
+  getSentDateRequests,
   getSentFriendRequests,
 } from "../../api/UserRequests";
 
@@ -116,6 +118,10 @@ function Navbar({ user }) {
     setFriends,
     socketConnected,
     setSocketConnected,
+    sentDateRequests,
+    receivedDateRequests,
+    setsentDateRequests,
+    setreceivedDateRequests,
   } = useContext(MatchesContext);
   useEffect(() => {
     const fetchsentConRequests = async () => {
@@ -163,18 +169,46 @@ function Navbar({ user }) {
     };
     fetchreceivedFriendRequests();
   }, []);
+  useEffect(() => {
+    const fetchsentDateRequests = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getSentDateRequests();
+      setsentDateRequests(data);
+      //   console.log(sentConRequests);
+    };
+    fetchsentDateRequests();
+  }, []);
 
+  useEffect(() => {
+    const fetchreceivedDateRequests = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getReceivedDateRequests();
+      setreceivedDateRequests(data);
+    };
+    fetchreceivedDateRequests();
+  }, []);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ width: "100vw" }}>
       <Container
-        maxWidth="xl"
-        sx={{ width: "100vw", backgroundColor: "primary.main" }}
+        sx={{
+          width: "100%",
+          backgroundColor: "primary.main",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <Toolbar disableGutters>
-          <div className="navbar-logo">
-            <img src="./irislogo.png" alt="iris-logo" />
-          </div>
+        <div className="navbar-logo">
+          <img src="./irislogo.png" alt="iris-logo" />
+        </div>
+        <Toolbar disableGutters sx={{ width: "100%" }}>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <Typography
             variant="h6"
@@ -353,7 +387,9 @@ function Navbar({ user }) {
             <Tooltip title="Open date invitations">
               <IconButton onClick={handleOpenDateMenu} sx={{ p: 0 }}>
                 <CoffeeIcon sx={{ color: "#fff", marginTop: "0.4rem" }} />
-                <div className="num-req-count">{dateRequests}</div>
+                <div className="num-req-count">
+                  {receivedDateRequests.length + sentDateRequests.length}
+                </div>
               </IconButton>
             </Tooltip>
             <Menu
@@ -380,7 +416,7 @@ function Navbar({ user }) {
               onClose={handleCloseDateMenu}
             >
               <div>
-                <DateRequests setNumRequests={(num) => setDateRequests(num)} />
+                <DateRequests />
               </div>
             </Menu>
 
@@ -390,14 +426,6 @@ function Navbar({ user }) {
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, objectFit: "cover" }}
               >
-                {/* <Avatar
-                  src={
-                    user.profilePhoto
-                      ? serverPublic + user.profilePhoto
-                      : serverPublic + "defaultProfile.png"
-                  }
-                  alt="lgo"
-                /> */}
                 <StyledBadge
                   overlap="circular"
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

@@ -63,6 +63,9 @@ router
   .patch(authController.adminProtect, authController.verifyAccount);
 
 router.route('/').get(authController.protect, userController.getUsers);
+router
+  .route('/con')
+  .get(authController.protect, userController.fetchConnections);
 
 router
   .route('/:id')

@@ -9,17 +9,6 @@ function Friends() {
   const { friends, setFriends } = useContext(MatchesContext);
   const { dates, setDates } = useContext(MatchesContext);
 
-  // useEffect(() => {
-  //   const fetchDates = async () => {
-  //     const {
-  //       data: {
-  //         data: { data },
-  //       },
-  //     } = await getAllDates();
-  //     setDates([...dates, data]);
-  //   };
-  //   fetchDates();
-  // }, []);
   useEffect(() => {
     const fetchFriends = async () => {
       const {

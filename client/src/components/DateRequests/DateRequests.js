@@ -3,16 +3,16 @@ import React, { useContext, useEffect } from "react";
 import {
   acceptDate,
   cancelDateRequest,
-  getAllDates,
   getReceivedDateRequests,
   getSentDateRequests,
-  sendDateRequest,
 } from "../../api/UserRequests";
 import DateRequest from "../DateRequest/DateRequest";
 import "./DateRequests.css";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import MatchesContext from "../../context/matches";
-function DateRequests({ setNumRequests }) {
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+function DateRequests() {
   const {
     sentDateRequests,
     setsentDateRequests,
@@ -22,53 +22,35 @@ function DateRequests({ setNumRequests }) {
     setDates,
   } = useContext(MatchesContext);
 
-  useEffect(() => {
-    const fetchDates = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getAllDates();
-      //   console.log(data);
-      setDates([...dates, ...data]);
-      //   console.log(dates);
-    };
-    fetchDates();
-  }, []);
-
-  React.useEffect(() => {
-    const fetchsentDateRequests = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getSentDateRequests();
-      setsentDateRequests(data);
-      //   console.log(sentConRequests);
-    };
-    fetchsentDateRequests();
-  }, []);
-
-  React.useEffect(() => {
-    const fetchreceivedDateRequests = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getReceivedDateRequests();
-      setreceivedDateRequests(data);
-    };
-    fetchreceivedDateRequests();
-  }, []);
-
   const handleAccept = async (id) => {
     try {
       await acceptDate(id);
       setreceivedDateRequests(
         receivedDateRequests.filter((req) => req.senderId._id !== id)
       );
+      toast.success(`Date Invitation Accepted`, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch (err) {
-      console.log(err);
+      const { message } = err;
+
+      toast.error(message, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 
@@ -77,19 +59,34 @@ function DateRequests({ setNumRequests }) {
       setsentDateRequests(
         sentDateRequests.filter((req) => req.receiverId._id !== id)
       );
-
-      console.log(dates);
-      console.log(dates.filter((date) => date.receiverId._id !== id));
-      setDates(dates.filter((date) => date.receiverId._id !== id));
-      console.log(dates);
       await cancelDateRequest(id);
+      setDates(dates.filter((date) => date.receiverId._id !== id));
+      toast.success(`Date Invitation Rejected`, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch (err) {
-      console.log(err);
+      const { message } = err;
+
+      toast.error(message, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
-  useEffect(() => {
-    setNumRequests(sentDateRequests.length + receivedDateRequests.length);
-  }, [sentDateRequests, receivedDateRequests]);
+
   return (
     <div className="requests-container">
       <Divider>

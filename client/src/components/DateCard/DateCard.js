@@ -1,9 +1,11 @@
-import { Button } from "@mui/material";
+import { Button, Link } from "@mui/material";
 import React from "react";
 import { users } from "../../dev-data/users";
 import "./DateCard.css";
 import Countdown from "react-countdown";
+import { useNavigate } from "react-router-dom";
 function DateCard({ dateInfo }) {
+  const navigate = useNavigate();
   const dateImgs = [
     {
       dateType: "coffee",
@@ -61,7 +63,11 @@ function DateCard({ dateInfo }) {
         {new Date(dateInfo.scheduledAt).toLocaleString()}
       </div>
       <div className="date-btn-container">
-        <Button variant="contained" className="go-to-date-btn">
+        <Button
+          variant="contained"
+          className="go-to-date-btn"
+          onClick={() => navigate(`/chat/${dateInfo._id}`)}
+        >
           Go to date
         </Button>
         <Button variant="contained" className="postpone-btn">

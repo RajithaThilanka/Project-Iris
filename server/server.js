@@ -69,6 +69,11 @@ io.on('connection', socket => {
     });
   });
 
+  socket.on('new-con-request-sent', newConReq => {
+    console.log('sent');
+    let id = newConReq.receiverId._id;
+    socket.in(id).emit('new-con-req-received', newConReq);
+  });
   socket.off('setup', () => {
     console.log('USER DISCONNECTED');
     console.log('leave now', activeUsers);

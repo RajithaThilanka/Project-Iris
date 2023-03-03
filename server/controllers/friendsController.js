@@ -247,15 +247,19 @@ exports.checkFriend = catchAsync(async (req, res, next) => {
 exports.getFriends = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const friends = await Connection.find({
-    $or: [
+    $and: [
       {
-        senderId: userId,
+        $or: [
+          {
+            senderId: userId,
+          },
+          {
+            receiverId: userId,
+          },
+        ],
       },
-      {
-        receiverId: userId,
-      },
+      { status: 'friends' },
     ],
-    status: 'friends',
   })
     .populate('senderId')
     .populate('receiverId');

@@ -6,15 +6,15 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
+
 import Logout from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal } from "@mui/material";
+import { Badge } from "@mui/material";
 import { logout } from "../../actions/AuthActions";
 import ProfileModal from "./UserAvatar/ProfileModal";
+import styled from "@emotion/styled";
 
 export default function ProfileMenu() {
   const [modalOpen, setOpen] = React.useState(false);
@@ -31,10 +31,36 @@ export default function ProfileMenu() {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-  console.log(modalOpen);
-  // const [modalOpen, setOpen] = React.useState(false);
-  // const handleOpenModal = () => setOpen(true);
-  // const handleModalClose = () => setOpen(false);
+
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      backgroundColor: "#44b700",
+      color: "#44b700",
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+      "&::after": {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        borderRadius: "50%",
+        animation: "ripple 1.2s infinite ease-in-out",
+        border: "1px solid currentColor",
+        content: '""',
+      },
+    },
+    "@keyframes ripple": {
+      "0%": {
+        transform: "scale(.8)",
+        opacity: 1,
+      },
+      "100%": {
+        transform: "scale(2.4)",
+        opacity: 0,
+      },
+    },
+  }));
+
   return (
     <React.Fragment>
       <ProfileModal
@@ -53,10 +79,20 @@ export default function ProfileMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar
-              sx={{ width: 32, height: 32 }}
-              src={serverPublic + user.profilePhoto}
-            ></Avatar>
+            <StyledBadge
+              overlap="circular"
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              variant={"dot"}
+            >
+              <Avatar
+                alt="user avatar"
+                src={
+                  user.profilePhoto
+                    ? serverPublic + user.profilePhoto
+                    : serverPublic + "defaultProfile.png"
+                }
+              />
+            </StyledBadge>
           </IconButton>
         </Tooltip>
       </Box>

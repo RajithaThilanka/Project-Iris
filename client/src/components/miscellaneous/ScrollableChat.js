@@ -2,6 +2,9 @@ import { Avatar, Tooltip } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import ScrollableFeed from "react-scrollable-feed";
+import TimeAgo from "react-timeago";
+import { format } from "timeago.js";
+import "./ScrollableChat.css";
 import {
   isLastMessage,
   isSameSender,
@@ -27,9 +30,11 @@ function ScrollableChat({ messages }) {
               >
                 <Avatar
                   style={{
-                    marginTop: "7px",
+                    marginTop: "15px",
                     marginRight: "6px",
                     cursor: "pointer",
+                    width: "1.5rem",
+                    height: "1.5rem",
                   }}
                   src={serverPublic + m.sender.profilePhoto}
                 >
@@ -42,15 +47,27 @@ function ScrollableChat({ messages }) {
                 backgroundColor: `${
                   m.sender._id === user._id ? "#BEE3F8" : "#B9F5D0"
                 }`,
-                borderRadius: "20px",
-                padding: "5px 15px",
-                maxWidth: "75%",
+
+                borderRadius: "1rem",
+                padding: "0.2rem 1.2rem",
+
+                maxWidth: "50%",
+                minWidth: "20%",
+                fontSize: "1.2rem",
+                fontWeight: 500,
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,
                 marginBottom: "4px",
+                height: "auto",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.2rem",
               }}
             >
               {m.content}
+              <div style={{ textAlign: "right" }}>
+                <span className="chat-timeago">{format(m.createdAt)}</span>
+              </div>
             </span>
           </div>
         ))}

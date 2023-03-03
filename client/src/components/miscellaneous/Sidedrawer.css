@@ -1,0 +1,45 @@
+.chat-appbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-primary-light);
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border-width: 0.5rem;
+  border-radius: 30px;
+}
+
+.friend-search-icon {
+  color: #fff;
+  padding: 0;
+}
+.friend-search-icon:hover {
+  color: var(--color-secondary);
+}
+.logo-container {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  gap: 3rem;
+}
+
+.logo-container img {
+  width: 50%;
+  height: 100%;
+  border-radius: 50%;
+}
+.logo-container h6 {
+  font-size: 2.5rem;
+  color: #fff;
+  font-family: monospace;
+}
+
+.notification-container {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-around;
+  align-items: center;
+  wrap: no-wrap;
+}
