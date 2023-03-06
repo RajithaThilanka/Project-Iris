@@ -84,8 +84,7 @@ function DateCard({ dateInfo }) {
             navigate(`/video-date/${otherUser._id}`, { replace: true })
           }
           disabled={
-            new Date(Date.parse(dateInfo.scheduledAt)).getTime() <
-            Date.now() - 24 * 60 * 60 * 1000
+            new Date(Date.parse(dateInfo.scheduledAt)).getTime() > Date.now()
           }
         >
           Go to date

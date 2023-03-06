@@ -76,21 +76,29 @@ exports.generateUserSuggestions = catchAsync(async (req, res, next) => {
   const maxYear = new Date(new Date().getFullYear() - minAge, 0);
   const minYear = new Date(new Date().getFullYear() - maxAge, 0);
 
-  const suggestions = await User.find({
-    gender: lookingFor.gender,
-
-    dob: {
-      $gte: minYear,
-      $lte: maxYear,
-    },
-    height: {
-      $gte: minHeight,
-      $lte: maxHeight,
-    },
-    active: true,
+  let suggestions = await User.find({
+    $and: [
+      { gender: lookingFor.gender },
+      {
+        dob: {
+          $gte: minYear,
+          $lte: maxYear,
+        },
+      },
+      {
+        height: {
+          $gte: minHeight,
+          $lte: maxHeight,
+        },
+      },
+      {
+        active: true,
+      },
+    ],
   });
+  // suggestions = suggestions.slice(0, 20);
 
-  const updatedSuggestionsPromises = suggestions.map(async user => {
+  let updatedSuggestionsPromises = suggestions.map(async user => {
     const l = await LookingFor.findOne({ userId: user._id });
     const p = await Answer.findOne({ userId: user._id });
     return { ...user, lookingFor: l, interests: p };
@@ -100,6 +108,7 @@ exports.generateUserSuggestions = catchAsync(async (req, res, next) => {
     const { _doc, lookingFor, interests } = sug;
     return { ..._doc, lookingFor: lookingFor, interests: interests };
   });
+
   res.status(200).json({
     status: 'success',
     results: suggestions.length,
