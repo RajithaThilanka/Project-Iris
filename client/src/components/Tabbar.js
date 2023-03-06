@@ -55,7 +55,7 @@ export default function Tabbar({ user }) {
     <Box
       sx={{
         flexGrow: 1,
-        bgcolor: "background.paper",
+
         display: "flex",
         height: "100vh",
         width: "100vw",

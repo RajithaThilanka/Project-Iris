@@ -22,6 +22,18 @@ function Friends() {
     fetchFriends();
   }, []);
 
+  useEffect(() => {
+    const fetchDates = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await getAllDates();
+
+      setDates(data);
+    };
+    fetchDates();
+  }, []);
   return (
     <Pulse>
       <div className="friends-container">

@@ -15,7 +15,7 @@ function Feed() {
   const { dates, setDates } = useContext(MatchesContext);
 
   return (
-    <>
+    <div>
       <Grid container rowSpacing={4}>
         <Grid sm={4}>
           <Navbar user={user} />
@@ -27,7 +27,7 @@ function Feed() {
         </Zoom>
       </Grid>
       <Outlet />
-    </>
+    </div>
   );
 }
 

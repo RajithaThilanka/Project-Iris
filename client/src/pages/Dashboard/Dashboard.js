@@ -32,12 +32,14 @@ function Advanced() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+
   const {
     setSocketConnected,
     activeUsers,
     setActiveUsers,
     receivedConRequests,
     setreceivedConRequests,
+    setMe,
   } = useContext(MatchesContext);
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -196,7 +198,7 @@ function Advanced() {
                 style={{
                   backgroundImage: `url(${serverPublic}${character.profilePhoto})`,
                 }}
-                className="card"
+                className="sugg-card"
               ></Box>
               <div className="profile--header">
                 <h6 className="profile--name">{character.callTag}</h6>

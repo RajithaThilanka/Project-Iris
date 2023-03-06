@@ -1,5 +1,5 @@
 import { Avatar, Tooltip } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import ScrollableFeed from "react-scrollable-feed";
 import TimeAgo from "react-timeago";
@@ -15,12 +15,17 @@ function ScrollableChat({ messages }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+  const scroll = useRef();
+
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <ScrollableFeed>
       {messages &&
         messages.map((m, i) => (
-          <div style={{ display: "flex" }} key={m._id}>
+          <div style={{ display: "flex" }} key={m._id} ref={scroll}>
             {(isSameSender(messages, m, i, user._id) ||
               isLastMessage(messages, i, user._id)) && (
               <Tooltip

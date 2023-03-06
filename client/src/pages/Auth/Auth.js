@@ -2,24 +2,15 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import Login from "../../components/Login/Login";
-<<<<<<< HEAD
-import SignUp from "../../components/SignUp/SignUp";
-=======
-import SignUp from "../../components/SignUp/SignUp.js";
->>>>>>> 4345c2f54804f8fea8d41089436c2948f2cf6cc1
+import SignUp from "../../components/SignUp/Signup";
 
 import "./Auth.css";
 
-function Auth() {
-  const [isSignUp, setIsSignUp] = useState(false);
+function Auth({ action }) {
   const dispatch = useDispatch();
+  dispatch({ type: "AUTH_RESET" });
 
-  const handleClick = () => {
-    setIsSignUp(!isSignUp);
-    dispatch({ type: "AUTH_RESET" });
-  };
-
-  return <div>{isSignUp ? <SignUp /> : <Login />}</div>;
+  return <div>{action === "signup" ? <SignUp /> : <Login />}</div>;
 }
 
 export default Auth;

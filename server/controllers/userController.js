@@ -225,6 +225,9 @@ exports.fetchConnections = catchAsync(async (req, res, next) => {
           {
             status: 'friend-req-pending',
           },
+          {
+            status: 'friends',
+          },
         ],
       },
     ],

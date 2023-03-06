@@ -105,17 +105,23 @@ exports.removeFriend = catchAsync(async (req, res, next) => {
   const removeUserId = req.params.id;
   let updatedConnection = await Connection.findOneAndUpdate(
     {
-      $or: [
+      $and: [
         {
-          senderId: userId,
-          receiverId: removeUserId,
+          $or: [
+            {
+              senderId: userId,
+              receiverId: removeUserId,
+            },
+            {
+              senderId: removeUserId,
+              receiverId: userId,
+            },
+          ],
         },
         {
-          senderId: removeUserId,
-          receiverId: userId,
+          status: 'friends',
         },
       ],
-      status: 'friends',
     },
     {
       status: 'connected',

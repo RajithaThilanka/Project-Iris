@@ -59,6 +59,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     //   setActiveUsers(activeUsers);
     // });
   }, []);
+
   const fetchMessages = async () => {
     if (!selectedChat) return;
     try {
@@ -99,8 +100,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     });
   });
 
-  const sendMessage = async (event) => {
-    event.preventDefault();
+  const sendMessage = async () => {
+    // event.preventDefault();
     if (newMessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
@@ -119,8 +120,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       }
     }
   };
-  const typingHandler = (event) => {
-    setNewMessage(event.target.value);
+  const typingHandler = (text) => {
+    setNewMessage(text);
     // Typing indicator logic
     if (!socketConnected) return;
     if (!typing) {
@@ -132,7 +133,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     setTimeout(() => {
       let timeNow = new Date().getTime();
       let timeDiff = timeNow - lastTypingTime;
-      if (timeDiff >= timerLength && typing) {
+      if (timeDiff >= timerLength && !typing) {
         socket.emit("stop typing", selectedChat._id);
         setTyping(false);
       }
@@ -252,7 +253,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-            <form onSubmit={sendMessage}>
+            <div>
               {isTyping ? (
                 <div>
                   <Lottie
@@ -264,16 +265,21 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
               ) : (
                 <></>
               )}
-              <TextField
+              {/* <TextField
                 required
                 placeholder="Type a message"
                 size="small"
                 fullWidth
                 onChange={typingHandler}
                 value={newMessage}
+              /> */}
+              <InputEmoji
+                placeholder="Type a message"
+                onChange={typingHandler}
+                value={newMessage}
+                onEnter={sendMessage}
               />
-              {/* <InputEmoji onChange={typingHandler} value={newMessage} /> */}
-            </form>
+            </div>
           </div>
         </>
       ) : (

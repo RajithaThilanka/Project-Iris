@@ -1,7 +1,9 @@
-import { createContext, useState } from "react";
-
+import { createContext, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import Peer from "simple-peer";
+import { io } from "socket.io-client";
 const MatchesContext = createContext();
-
+const socket = io("http://localhost:5000");
 function ContextProvider({ children }) {
   const [sentConRequests, setsentConRequests] = useState([]);
   const [receivedConRequests, setreceivedConRequests] = useState([]);
@@ -13,10 +15,13 @@ function ContextProvider({ children }) {
   const [friends, setFriends] = useState([]);
   const [dates, setDates] = useState([]);
   const [selectedChat, setSelectedChat] = useState();
+  const [selectedDateChat, setSelectedDateChat] = useState();
   const [chats, setChats] = useState([]);
+  const [dateChats, setDateChats] = useState([]);
   const [notification, setNotification] = useState([]);
   const [socketConnected, setSocketConnected] = useState(false);
   const [activeUsers, setActiveUsers] = useState([]);
+
   const valueToShare = {
     sentConRequests,
     receivedDateRequests,
@@ -40,6 +45,11 @@ function ContextProvider({ children }) {
     setSocketConnected,
     activeUsers,
     setActiveUsers,
+    selectedDateChat,
+    setSelectedDateChat,
+    dateChats,
+    setDateChats,
+
     addConnection: (newConnection) => {
       setConnections([...connections, newConnection]);
     },
@@ -50,6 +60,7 @@ function ContextProvider({ children }) {
     notification,
     setNotification,
   };
+
   return (
     <MatchesContext.Provider value={valueToShare}>
       {children}

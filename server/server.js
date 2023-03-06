@@ -23,6 +23,7 @@ const server = app.listen(port, () => {
 });
 
 let activeUsers = [];
+let vidUsers = [];
 const io = require('socket.io')(server, {
   pingTimeout: 1000,
   cors: {
@@ -32,14 +33,24 @@ const io = require('socket.io')(server, {
 
 io.on('connection', socket => {
   console.log('connected to socket.io');
+
+  socket.on('vidsetup', userData => {
+    vidUsers = vidUsers.filter(user => user.userId !== userData._id);
+    vidUsers.push({ userId: userData._id, socketId: socket.id });
+    console.log(vidUsers);
+    console.log('New User Connected', vidUsers);
+
+    socket.emit('me', socket.id);
+    io.emit('vidme', vidUsers);
+  });
+
   socket.on('setup', userData => {
     socket.join(userData._id);
-    console.log(userData._id);
+
     if (!activeUsers.some(user => user.userId === userData._id)) {
       activeUsers.push({ userId: userData._id, socketId: socket.id });
-      console.log('New User Connected', activeUsers);
     }
-    console.log('dfgdfsdf', activeUsers);
+
     socket.emit('connected');
     io.emit('active-users', activeUsers);
   });
@@ -47,14 +58,25 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     // remove user from active users
     activeUsers = activeUsers.filter(user => user.socketId !== socket.id);
+    vidUsers = vidUsers.filter(user => user.socketId !== socket.id);
     console.log('User Disconnected', activeUsers);
     // send all active users to all users
     io.emit('active-users', activeUsers);
+    io.emit('vidme', vidUsers);
+    socket.broadcast.emit('callEnded');
   });
 
   socket.on('join chat', room => {
     socket.join(room);
     console.log('User joined room ' + room);
+  });
+
+  socket.on('callUser', ({ userToCall, signalData, from, name }) => {
+    io.to(userToCall).emit('callUser', { signal: signalData, from, name });
+  });
+
+  socket.on('answerCall', data => {
+    io.to(data.to).emit('callAccepted', data.signal);
   });
 
   socket.on('typing', room => socket.in(room).emit('typing'));

@@ -30,6 +30,10 @@ const dateSchema = new mongoose.Schema(
       },
       default: 'pending',
     },
+    chat: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'DateChat',
+    },
   },
   { timestamps: true }
 );

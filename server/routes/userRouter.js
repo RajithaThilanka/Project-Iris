@@ -10,7 +10,10 @@ const router = express.Router();
 
 // user routes
 
-router.route('/signup').post(authController.signup);
+router.route('/signup/account-info').post(authController.signupAccountInfo);
+router.route('/signup/user-info').post(authController.signupUserInfo);
+router.route('/signup/profile-view').post(authController.signupProfileView);
+router.route('/signup/lookingfor-info').post(authController.setupLookingFor);
 router.route('/verify/:id/:uniqueString').patch(authController.verify);
 router.route('/login').post(authController.login);
 router.route('/forgot-password').post(authController.forgotPassword);

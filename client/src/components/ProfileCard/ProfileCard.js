@@ -231,25 +231,34 @@ function ProfileCard({ conUser, cardType }) {
         }}
       >
         <Tooltip title="View Profile" placement="bottom">
-          <IconButton>
+          <IconButton style={{ color: "var(--color-primary)" }}>
             <AccountCircleIcon />
           </IconButton>
         </Tooltip>
 
         {!requestSent ? (
-          <IconButton onClick={() => handleSendFriendRequest(otherUser._id)}>
+          <IconButton
+            onClick={() => handleSendFriendRequest(otherUser._id)}
+            style={{ color: "var(--color-primary)" }}
+          >
             <Tooltip title="add friend">
               <PersonAddIcon />
             </Tooltip>
           </IconButton>
         ) : requestSent && conUser.senderId._id === user._id ? (
-          <IconButton onClick={() => handleCancelFriendRequest(otherUser._id)}>
+          <IconButton
+            onClick={() => handleCancelFriendRequest(otherUser._id)}
+            style={{ color: "var(--color-primary)" }}
+          >
             <Tooltip title="cancel request">
               <CancelIcon />
             </Tooltip>
           </IconButton>
         ) : (
-          <IconButton onClick={() => handleAcceptFriendRequest(otherUser._id)}>
+          <IconButton
+            onClick={() => handleAcceptFriendRequest(otherUser._id)}
+            style={{ color: "var(--color-primary)" }}
+          >
             <Tooltip title="accept request">
               <PersonAddIcon />
             </Tooltip>
@@ -257,13 +266,13 @@ function ProfileCard({ conUser, cardType }) {
         )}
 
         <Tooltip title="Message" placement="bottom">
-          <IconButton>
+          <IconButton style={{ color: "var(--color-primary)" }}>
             <ChatIcon />
           </IconButton>
         </Tooltip>
         {cardType === "friend" && (
           <Tooltip title="Invite for a date" placement="bottom">
-            <IconButton>
+            <IconButton style={{ color: "var(--color-primary)" }}>
               <CoffeeIcon />
             </IconButton>
           </Tooltip>
@@ -274,13 +283,14 @@ function ProfileCard({ conUser, cardType }) {
             onClick={() => {
               handleRemoveConnection(otherUser._id);
             }}
+            style={{ color: "var(--color-primary)" }}
           >
             <PersonRemoveAlt1Icon />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Block and Report" placement="bottom">
-          <IconButton>
+          <IconButton style={{ color: "var(--color-primary)" }}>
             <BlockIcon />
           </IconButton>
         </Tooltip>
