@@ -15,6 +15,8 @@ import Request from "./components/Request/Request";
 import Chat from "./pages/Chat/Chat";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import QuestionPage from "./pages/Questions/QuestionPage";
+
 const theme = createTheme({
   palette: {
     type: "light",
@@ -59,6 +61,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route
+            path="/"
+            element={<QuestionPage />}
+          ></Route>
+          {/* <Route
             path="/me"
             element={user ? <Feed /> : <Navigate to="/auth" />}
           ></Route>
@@ -78,7 +84,7 @@ function App() {
           ></Route>
 
           <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
-          <Route path="*" element={<h1>Page not found</h1>} />
+          <Route path="*" element={<h1>Page not found</h1>} /> */}
 
         </Routes>
         {/* <Chat /> */}

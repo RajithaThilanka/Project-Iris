@@ -1,0 +1,57 @@
+[
+    {
+        "question": "What you most like between tea and coffee?",
+        "optionTags": ["Tea", "Coffee"],
+        "questionType": "beverages"
+    },
+    
+    {
+        "question": "What are your favorite sports?",
+        "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "questionType": "sports"
+    },
+    
+    {
+        "question": "What are the social media platforms you mostly use?",
+        "optionTags": ["Facebook", "Youtube", "TikTok", "SnapChat", "Instagram","Twitter", "LinkedIn", "Reddit"],
+        "questionType": "socialMedia"
+    },
+    
+    {
+        "question": "What are your favorite movie genres?",
+        "optionTags": ["Action", "Comedy", "Drama", "Adventure", "Thriller"],
+        "questionType": "movies"
+    },
+    
+    {
+        "question": "What are your favorite music genres?",
+        "optionTags": ["Pop", "Country", "HipHop", "Rock"],
+        "questionType": "music"
+    },
+    
+    {
+        "question": "What is your idea about politics?",
+        "optionTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
+        "questionType": "politics"
+    },
+    
+    {
+        "question": "What are your favorite sports?",
+        "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "questionType": "sports"
+    },
+    
+    {
+        "question": "What are your favorite sports?",
+        "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "questionType": "sports"
+    },
+    
+    {
+        "question": "What are your favorite sports?",
+        "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "questionType": "sports"
+    }
+
+]
+
