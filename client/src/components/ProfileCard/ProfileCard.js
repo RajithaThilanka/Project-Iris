@@ -64,9 +64,7 @@ function ProfileCard({ conUser, cardType }) {
         theme: "dark",
       });
     } catch (err) {
-      const { message } = err;
-
-      toast.error(message, {
+      toast.error(err.response.data.message, {
         position: "bottom-left",
         autoClose: 4000,
         hideProgressBar: false,
@@ -80,6 +78,7 @@ function ProfileCard({ conUser, cardType }) {
   };
 
   const handleRemoveConnection = async (id) => {
+    console.log(id);
     try {
       await removeConnection(id);
       setConnections(

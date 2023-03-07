@@ -98,9 +98,7 @@ function Advanced() {
       }
       return response;
     } catch (error) {
-      const { message } = error;
-
-      toast.error(message, {
+      toast.error(error.response.data.message, {
         position: "bottom-left",
         autoClose: 4000,
         hideProgressBar: false,
@@ -174,15 +172,20 @@ function Advanced() {
     if (!canGoBack) return;
     const newIndex = currentIndex + 1;
     updateCurrentIndex(newIndex);
-    await childRefs[newIndex].current.restoreCard();
+    await childRefs[newIndex]?.current?.restoreCard();
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
   return (
     <Box className="container">
       <Box className="card-container">
         {matches?.length === 0 ? (
           <div className="loading-icon">
             <Loader />
+          </div>
+        ) : currentIndex < 0 ? (
+          <div className="loading-icon">
+            No suggestions at the moment. Please try again later
           </div>
         ) : (
           matches.map((character, index) => (
@@ -224,107 +227,105 @@ function Advanced() {
             </TinderCard>
           ))
         )}
-        <Box className="profileContent">
-          <Zoom>
-            <Divider>
-              <Chip label="Basic Info"></Chip>
-            </Divider>
+        {currentIndex >= 0 && (
+          <Box className="profileContent">
+            <Zoom>
+              <Divider>
+                <Chip label="Basic Info"></Chip>
+              </Divider>
 
-            <div className="basic-info">
-              {matches[currentIndex] === "male" ? (
+              <div className="basic-info">
+                {matches[currentIndex]?.gender === "male" ? (
+                  <div className="profile--basic-info">
+                    {<ManIcon fontSize="medium" />}Man
+                  </div>
+                ) : (
+                  <div className="profile--basic-info">
+                    {<WomanIcon fontSize="medium" />}Woman
+                  </div>
+                )}
+
                 <div className="profile--basic-info">
-                  {<ManIcon fontSize="medium" />}Man
+                  {<WorkIcon />}
+                  {matches[currentIndex]?.occupation}
                 </div>
-              ) : (
                 <div className="profile--basic-info">
-                  {<WomanIcon fontSize="medium" />}Woman
+                  {<HeightIcon />}
+                  {matches[currentIndex]?.height}
                 </div>
-              )}
+                <div className="profile--basic-info">
+                  {<SchoolIcon />}
+                  {matches[currentIndex]?.educationLevel}
+                </div>
+                <div className="profile--basic-info">
+                  {<ChurchIcon />}
+                  {matches[currentIndex]?.religion}
+                </div>
+                <div className="profile--basic-info">
+                  {<LanguageIcon />}
+                  {matches[currentIndex]?.ethnicity}
+                </div>
+              </div>
+              <Divider>
+                <Chip label="Looking For"></Chip>
+              </Divider>
+              <div className="looking-for">
+                <div>{matches[currentIndex]?.lookingFor?.gender}</div>
+                <div>
+                  Age between{" "}
+                  {matches[currentIndex]?.lookingFor?.ageRange?.minAge} and{" "}
+                  {matches[currentIndex]?.lookingFor?.ageRange?.maxAge}
+                </div>
+                <div>
+                  Height between{" "}
+                  {matches[currentIndex]?.lookingFor?.height?.minHeight} ft and{" "}
+                  {matches[currentIndex]?.lookingFor?.height?.maxHeight} ft
+                </div>
+              </div>
+              <Divider>
+                <Chip label="Movies"></Chip>
+              </Divider>
+              <div className="usertags">
+                {matches[currentIndex]?.interests?.movies?.map((movie) => (
+                  <div>{movie}</div>
+                ))}
+              </div>
+              <Divider>
+                <Chip label="Music"></Chip>
+              </Divider>
+              <div className="usertags">
+                {matches[currentIndex]?.interests?.music?.map((music) => (
+                  <div>{music}</div>
+                ))}
+              </div>
+              <Divider>
+                <Chip label="Social Media"></Chip>
+              </Divider>
+              <div className="usertags">
+                {matches[currentIndex]?.interests?.socialMedia?.map(
+                  (social) => (
+                    <div>{social}</div>
+                  )
+                )}
+              </div>
+              <Divider>
+                <Chip label="Sports"></Chip>
+              </Divider>
+              <div className="usertags">
+                {matches[currentIndex]?.interests?.sports?.map((s) => (
+                  <div>{s}</div>
+                ))}
+              </div>
 
-              <div className="profile--basic-info">
-                {<WorkIcon />}
-                {matches[currentIndex]?.occupation}
+              <Divider>
+                <Chip label="About me"></Chip>
+              </Divider>
+              <div className="profile--description">
+                {matches[currentIndex]?.userDescription}
               </div>
-              <div className="profile--basic-info">
-                {<HeightIcon />}
-                {matches[currentIndex]?.height}
-              </div>
-              <div className="profile--basic-info">
-                {<SchoolIcon />}
-                {matches[currentIndex]?.educationLevel}
-              </div>
-              <div className="profile--basic-info">
-                {<ChurchIcon />}
-                {matches[currentIndex]?.religion}
-              </div>
-              <div className="profile--basic-info">
-                {<LanguageIcon />}
-                {matches[currentIndex]?.ethnicity}
-              </div>
-            </div>
-            <Divider>
-              <Chip label="Looking For"></Chip>
-            </Divider>
-            <div className="looking-for">
-              <div>{matches[currentIndex]?.lookingFor?.gender}</div>
-              <div>
-                Age between{" "}
-                {matches[currentIndex]?.lookingFor?.ageRange?.minAge} and{" "}
-                {matches[currentIndex]?.lookingFor?.ageRange?.maxAge}
-              </div>
-              <div>
-                Height between{" "}
-                {matches[currentIndex]?.lookingFor?.height?.minHeight} ft and{" "}
-                {matches[currentIndex]?.lookingFor?.height?.maxHeight} ft
-              </div>
-            </div>
-            <Divider>
-              <Chip label="Movies"></Chip>
-            </Divider>
-            <div className="usertags">
-              {matches[currentIndex]?.interests?.movies?.map((movie) => (
-                <div>{movie}</div>
-              ))}
-            </div>
-            <Divider>
-              <Chip label="Music"></Chip>
-            </Divider>
-            <div className="usertags">
-              {matches[currentIndex]?.interests?.music?.map((music) => (
-                <div>{music}</div>
-              ))}
-            </div>
-            <Divider>
-              <Chip label="Social Media"></Chip>
-            </Divider>
-            <div className="usertags">
-              {matches[currentIndex]?.interests?.socialMedia?.map((social) => (
-                <div>{social}</div>
-              ))}
-            </div>
-            <Divider>
-              <Chip label="Sports"></Chip>
-            </Divider>
-            <div className="usertags">
-              {matches[currentIndex]?.interests?.sports?.map((s) => (
-                <div>{s}</div>
-              ))}
-            </div>
-
-            <Divider>
-              <Chip label="About me"></Chip>
-            </Divider>
-            <div className="profile--description">
-              {matches[currentIndex]?.userDescription}
-            </div>
-          </Zoom>
-
-          {/* <div className="slide-down-btn-container">
-            <IconButton className="slide-down-btn">
-              <ArrowDownwardIcon fontSize="large" />
-            </IconButton>
-          </div> */}
-        </Box>
+            </Zoom>
+          </Box>
+        )}
       </Box>
       <Box className="swipe-buttons">
         <IconButton

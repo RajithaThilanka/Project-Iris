@@ -173,7 +173,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                         variant={
                           activeUsers.some(
                             (u) =>
-                              u.userId === getSenderFull(user, chat.users)._id
+                              u.userId === getSenderFull(user, chat?.users)._id
                           )
                             ? "dot"
                             : ""
@@ -228,11 +228,12 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                             ""
                           )}
 
-                          {`${
-                            chat.latestMessage.sender._id === loggedUser._id
-                              ? "You :"
-                              : chat.latestMessage.sender.firstname[0] + ": "
-                          } ${chat.latestMessage.content}`}
+                          {chat.latestMessage &&
+                            `${
+                              chat.latestMessage.sender._id === loggedUser._id
+                                ? "You :"
+                                : chat.latestMessage.sender.firstname[0] + ": "
+                            } ${chat.latestMessage.content}`}
                           {notification.some(
                             (not) => not.chat._id === chat._id
                           ) ? (

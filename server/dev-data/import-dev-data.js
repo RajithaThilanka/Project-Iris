@@ -11,6 +11,9 @@ const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
+
+const Chat = require('../models/chatModel');
+const Message = require('../models/messageModel');
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -19,6 +22,16 @@ mongoose
   })
   .then(() => console.log('DB Connection successful'));
 
+const deleteDevData = async () => {
+  try {
+    await Chat.deleteMany();
+    await Message.deleteMany();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+deleteDevData();
 const generate = (min, max) => Math.floor(Math.random() * (max - min) + min);
 // const updatedUsers = users.map(user => {
 //   delete user.photos;
