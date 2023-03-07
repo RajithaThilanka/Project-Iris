@@ -33,6 +33,7 @@ import {
   getSentDateRequests,
   getSentFriendRequests,
 } from "../../api/UserRequests";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
 const settings = ["Profile", "Account", "Dashboard"];
@@ -194,6 +195,7 @@ function Navbar({ user }) {
     fetchreceivedDateRequests();
   }, []);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  const navigate = useNavigate();
   return (
     <AppBar position="static" sx={{ width: "100vw" }}>
       <Container
@@ -205,7 +207,11 @@ function Navbar({ user }) {
           alignItems: "center",
         }}
       >
-        <div className="navbar-logo">
+        <div
+          className="navbar-logo"
+          onClick={() => navigate("/home")}
+          style={{ cursor: "pointer" }}
+        >
           <img src="./irislogo.png" alt="iris-logo" />
         </div>
         <Toolbar disableGutters sx={{ width: "100%" }}>
