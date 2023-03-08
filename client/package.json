@@ -9,10 +9,7 @@
     "@mui/joy": "^5.0.0-alpha.67",
     "@mui/material": "^5.11.10",
     "@mui/styled-engine-sc": "^5.11.0",
-<<<<<<< HEAD
     "@mui/x-data-grid": "^5.17.25",
-=======
->>>>>>> 4345c2f54804f8fea8d41089436c2948f2cf6cc1
     "@react-spring/web": "^9.6.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

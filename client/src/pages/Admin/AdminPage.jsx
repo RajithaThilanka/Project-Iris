@@ -12,6 +12,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Allprofiles from '../../components/Admin/AllProfiles/Allprofiles';
 import Profilereports from '../../components/Admin/Profilereport/Profilereports'
+import UserVerificationView from '../../components/Admin/UserVerificationData/UserVerificationView';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -57,20 +58,21 @@ export default function AdminPage() {
 
     return (
         <div> 
-            <Grid container direction="row" justifyContent="center" alignItems="left" spacing={2} padding={1}>
-                <Grid item xs={12} >
+    <Grid container direction="row" justifyContent="center" alignItems="left" spacing={2} padding={1}>
+              <Grid item xs={12} >
                     <AdminSearch />
-    </Grid>
+              </Grid>
 
-<Grid item xs={9} >
-  <Box
-      sx={{
-        flexGrow: 1,
-        bgcolor: "background.paper",
-        display: "flex",
-        height: 224
+  <Grid item xs={8} >
+     <Box
+        sx={{
+         flexGrow: 1,
+         bgcolor: "background.paper",
+         display: "flex",
+         height: 224
       }}
-    >
+            >
+              
       <Tabs
         orientation="vertical"
         variant="scrollable"
@@ -93,12 +95,12 @@ export default function AdminPage() {
         <Profilereports />
       </TabPanel>
     </Box>                 
-    </Grid> 
+  </Grid> 
 
-    <Grid item xs={3} >
-        <Box sx={{ width: '400px', height: '500px', border: 1, borderRadius: 0.5 }}>              
-          Content
-        </Box>
+    <Grid item xs={4} >
+            
+        <UserVerificationView />
+
     </Grid>
                 
                 

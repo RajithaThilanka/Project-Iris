@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
+import UserProfile from './pages/UProfile/UserProfile'
 
 import Feed from "./pages/Feed/Feed";
 import Welcome from './pages/Home/Welcome';
@@ -15,6 +16,7 @@ import Request from "./components/Request/Request";
 import Chat from "./pages/Chat/Chat";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminPage from "./pages/Admin/AdminPage";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -30,7 +32,9 @@ const theme = createTheme({
     },
     otherColors: {
       light3: "#f0eeee",
+      backgroundc:"#b3e5fc",
     },
+
   },
   shape: {
     borderRadius: 20,
@@ -86,6 +90,9 @@ function App() {
           ></Route>
 
           <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
+          <Route path="/admin" element={<AdminPage /> }> </Route>
+          <Route path="/me/profile" element={<UserProfile /> }> </Route>
+          
           <Route path="*" element={<h1>Page not found</h1>} />
 
         </Routes>

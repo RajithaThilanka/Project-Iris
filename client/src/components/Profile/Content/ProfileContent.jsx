@@ -36,6 +36,7 @@ function ProfileContent() {
         paddingLeft={10}
         paddingRight={10}
         spacing={2}
+        borderRadius={0}
       >
         <Grid item xs={8}>
           <Card>
@@ -66,12 +67,12 @@ function ProfileContent() {
             <CardContent>
               <ProComplete /> 
               <Typography>
-              Profile Completetion
+                  Profile Completetion
               </Typography>
 
             </CardContent>
-
           </Card>
+          
         </Grid>
 
         <Grid item xs={8}>
@@ -187,9 +188,7 @@ function ProfileContent() {
         </Grid>
         <Grid item xs={4}>
           <Paper elevation={0} sx={{ p: 3 }}>
-
                <Factfile />
-
           </Paper>
            
         </Grid>

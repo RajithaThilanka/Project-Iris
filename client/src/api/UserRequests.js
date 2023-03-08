@@ -86,3 +86,5 @@ export const sendAMessage = (content, chatId) =>
   });
 
 export const getAllMessages = (chatId) => API.get(`/message/${chatId}`);
+
+export const getMe = () => API.get("/users/me");
