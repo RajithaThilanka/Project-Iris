@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const reportSchema = mongoose.Schema(
   {
-    userId: {
+    reportedUser: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
-    reportedUserId: {
+    reportedByUser: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
@@ -24,6 +24,10 @@ const reportSchema = mongoose.Schema(
     adminId: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
+    },
+    userNotified: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

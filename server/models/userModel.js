@@ -7,21 +7,15 @@ const userSchema = new mongoose.Schema(
   {
     firstname: {
       type: String,
-      required: [true, 'Pleasse tell us your first name!'],
     },
     lastname: {
       type: String,
-      required: [true, 'Pleasse tell us your last name!'],
     },
     callTag: {
       type: String,
     },
     gender: {
       type: String,
-      enum: {
-        values: ['male', 'female'],
-        message: 'Please tell us your gender',
-      },
     },
     languages: {
       type: [String],
@@ -55,15 +49,12 @@ const userSchema = new mongoose.Schema(
     },
     hasChildren: {
       type: Boolean,
-      required: true,
     },
     religion: {
       type: String,
-      required: true,
     },
     ethnicity: {
       type: String,
-      required: true,
     },
     profilePhoto: {
       type: String,
@@ -87,10 +78,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: {
-        values: ['user', 'admin'],
-        message: 'Role must be either user or admin',
-      },
+
       default: 'user',
     },
     createdAt: {
@@ -104,22 +92,7 @@ const userSchema = new mongoose.Schema(
     userDescription: {
       type: String,
     },
-    // movies: {
-    //   type: [String],
-    // },
-    // music: {
-    //   type: [String],
-    // },
-    // politics: {
-    //   type: [String],
-    // },
-    // socialMedia: {
-    //   type: [String],
-    // },
-    // sports: {
-    //   type: [String],
-    // },
-    // answers: [Number],
+
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,

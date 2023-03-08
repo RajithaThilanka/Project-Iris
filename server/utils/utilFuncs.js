@@ -18,3 +18,6 @@ exports.getAge = dob => {
   const Age = Math.abs(ageDate.getUTCFullYear() - 1970);
   return Age;
 };
+
+exports.generateRandom = (min, max) =>
+  Math.floor(Math.random() * (max - min) + min);

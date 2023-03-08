@@ -4,17 +4,15 @@ import Zoom from "react-reveal/Zoom";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmMail } from "../../actions/AuthActions";
-function ConfirmMail() {
+function ConfirmMail({ main, desc }) {
   return (
     <div className="confirm-mail-container">
       <div className="confirm-mail-msg">
         <Zoom>
-          <h2>Mail successfully sent</h2>
+          <h2>{main}</h2>
         </Zoom>
 
-        <p>
-          Please follow the link attached to your email to verify your account
-        </p>
+        <p>{desc}</p>
       </div>
     </div>
   );

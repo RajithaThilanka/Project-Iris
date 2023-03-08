@@ -10,7 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
@@ -24,11 +24,14 @@ import CoffeeIcon from "@mui/icons-material/Coffee";
 import {
   cancelDateRequest,
   cancelFriendRequest,
+  removeFriend,
   sendDateRequest,
   sendFriendRequest,
 } from "../../api/UserRequests";
 import { useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Stack } from "@mui/system";
 
 const style = {
@@ -66,23 +69,78 @@ function FriendProfileCard({ conUser, cardType }) {
     sentDateRequests,
     setsentDateRequests,
     activeUsers,
+    setFriends,
+    friends,
   } = useContext(MatchesContext);
 
   const otherUser =
     conUser.senderId._id === user._id ? conUser.receiverId : conUser.senderId;
 
-  const t = dates.find((date) => {
-    return (
-      date.senderId._id === otherUser._id ||
-      date.receiverId._id === otherUser._id
-    );
-  });
+  // const t = dates.find((date) => {
+  //   return (
+  //     date.senderId._id === otherUser._id ||
+  //     date.receiverId._id === otherUser._id
+  //   );
+  // });
 
-  const [inviteBtnVisible, setInviteBtnVisible] = useState(t ? false : true);
+  const [inviteBtnVisible, setInviteBtnVisible] = useState();
+  const [alreadyHasDate, setAlreadyHasDate] = useState();
 
   const [visible, setVisible] = useState(false);
 
+  const handleRemoveFriend = async (id) => {
+    try {
+      await removeFriend(id);
+      setFriends(
+        friends.filter((con) => {
+          return con._id !== conUser._id;
+        })
+      );
+      toast.success("Friend removed", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (err) {
+      const {
+        response: {
+          data: {
+            error: { name },
+          },
+        },
+      } = err;
+
+      toast.error(name, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {
+    const t = dates.find((date) => {
+      return (
+        date.senderId._id === otherUser._id ||
+        date.receiverId._id === otherUser._id
+      );
+    });
+
+    t ? setAlreadyHasDate(true) : setAlreadyHasDate(false);
+    t ? setInviteBtnVisible(false) : setInviteBtnVisible(true);
+  }, [dates]);
   const handleSendDateRequest = async (id) => {
     try {
       setInviteBtnVisible(false);
@@ -206,7 +264,7 @@ function FriendProfileCard({ conUser, cardType }) {
         }}
       >
         <Tooltip title="View Profile" placement="bottom">
-          <IconButton>
+          <IconButton style={{ color: "var(--color-primary)" }}>
             <AccountCircleIcon />
           </IconButton>
         </Tooltip>
@@ -222,31 +280,31 @@ function FriendProfileCard({ conUser, cardType }) {
                     handleCancelDate(otherUser._id);
                   }
             }
+            style={{ color: "var(--color-primary)" }}
+            disabled={alreadyHasDate}
           >
             {inviteBtnVisible ? <CoffeeIcon /> : <CancelIcon />}
           </IconButton>
         </Tooltip>
         <Tooltip title="Message" placement="bottom">
-          <IconButton>
+          <IconButton style={{ color: "var(--color-primary)" }}>
             <ChatIcon />
           </IconButton>
         </Tooltip>
-        {cardType === "friend" && (
-          <Tooltip title="Invite for a date" placement="bottom">
-            <IconButton>
-              <CoffeeIcon />
-            </IconButton>
-          </Tooltip>
-        )}
 
         <Tooltip title="Demote" placement="bottom">
-          <IconButton>
+          <IconButton
+            style={{ color: "var(--color-primary)" }}
+            onClick={() => {
+              handleRemoveFriend(otherUser._id);
+            }}
+          >
             <PersonRemoveAlt1Icon />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Block and Report" placement="bottom">
-          <IconButton>
+          <IconButton style={{ color: "var(--color-primary)" }}>
             <BlockIcon />
           </IconButton>
         </Tooltip>

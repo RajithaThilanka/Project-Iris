@@ -1,11 +1,20 @@
-import { Button, Link } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
 import { users } from "../../dev-data/users";
 import "./DateCard.css";
 import Countdown from "react-countdown";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 function DateCard({ dateInfo }) {
   const navigate = useNavigate();
+  const {
+    data: { user },
+  } = useSelector((state) => state.authReducer.authData);
+
+  const otherUser =
+    dateInfo.senderId._id === user._id
+      ? dateInfo.receiverId
+      : dateInfo.senderId;
   const dateImgs = [
     {
       dateType: "coffee",
@@ -40,7 +49,12 @@ function DateCard({ dateInfo }) {
         }}
       ></div>
 
-      <div className="date-time-remaining">3 days reamaining</div>
+      <div className="date-time-remaining">
+        <Countdown
+          date={new Date(Date.parse(dateInfo.scheduledAt)).getTime()}
+        />
+        <span style={{ marginLeft: "5px" }}> remaining</span>
+      </div>
       <div className="date-partners">
         <div className="partner">
           <img
@@ -60,16 +74,22 @@ function DateCard({ dateInfo }) {
         </div>
       </div>
       <div className="date-scheduled-at">
-        {new Date(dateInfo.scheduledAt).toLocaleString()}
+        {new Date(Date.parse(dateInfo.scheduledAt)).toUTCString()}
       </div>
       <div className="date-btn-container">
         <Button
           variant="contained"
           className="go-to-date-btn"
-          onClick={() => navigate(`/chat/${dateInfo._id}`)}
+          onClick={() =>
+            navigate(`/video-date/${otherUser._id}`, { replace: true })
+          }
+          disabled={
+            new Date(Date.parse(dateInfo.scheduledAt)).getTime() > Date.now()
+          }
         >
           Go to date
         </Button>
+
         <Button variant="contained" className="postpone-btn">
           Postpone
         </Button>

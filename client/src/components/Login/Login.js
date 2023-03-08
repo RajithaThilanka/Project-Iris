@@ -19,7 +19,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "40vw",
-  height: "50vh",
+  height: "60vh",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -45,6 +45,7 @@ function Login() {
   const handleClose = () => {
     resetForm();
     setOpen(false);
+    navigate(`/home`);
   };
   // Reset form fields
 
@@ -64,9 +65,14 @@ function Login() {
   };
 
   //
-
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div>
+    <div
+      style={{
+        boxShadow:
+          "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
+      }}
+    >
       <Modal
         open={open}
         onClose={handleClose}
@@ -79,6 +85,13 @@ function Login() {
               <IconButton onClick={handleClose} className="cancel-btn">
                 <CloseIcon fontSize="medium" />
               </IconButton>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <img
+                style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
+                src={serverPublic + "irislogo.png"}
+                alt="logo"
+              />
             </div>
             <h1 className="login-title">Login</h1>
 

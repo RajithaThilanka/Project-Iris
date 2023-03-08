@@ -8,15 +8,31 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import UserProfile from './pages/UProfile/UserProfile'
 
 import Feed from "./pages/Feed/Feed";
-import Welcome from './pages/Home/Welcome';
+import Welcome from "./pages/Home/Welcome";
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import DateCard from "./components/DateCard/DateCard";
 import Request from "./components/Request/Request";
-import Chat from "./pages/Chat/Chat";
+// import UserChat from "./pages/UserChat/UserChat";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+<<<<<<< HEAD
 import AdminPage from "./pages/Admin/AdminPage";
+=======
+import DateVideo from "./pages/DateVideo/DateVideo";
+
+import DateDummy from "./pages/DateDummy";
+import AccountInfo from "./components/SignUp/SignUpForms/AccountInfo";
+import UserInfo from "./components/SignUp/SignUpForms/UserInfo";
+import ProfileView from "./components/SignUp/SignUpForms/ProfileView";
+import LookingFor from "./components/SignUp/SignUpForms/LookingFor";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Profile from "./Profile/Profile";
+import Chat from "./pages/Chat/Chat";
+import AboutUs from "./pages/AboutUs/Aboutus";
+// import DateBox from "./pages/Date/DateBox";
+>>>>>>> a3b814aa0bc09644316878a2129186e02ae93cfd
 const theme = createTheme({
   palette: {
     type: "light",
@@ -39,7 +55,7 @@ const theme = createTheme({
   shape: {
     borderRadius: 20,
   },
-    overrides: {
+  overrides: {
     MuiAppBar: {
       colorPrimary: {
         backgroundColor: "#662E9B",
@@ -66,48 +82,89 @@ const theme = createTheme({
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
   return (
-    
-     <ThemeProvider theme={theme}> 
-  
+    <ThemeProvider theme={theme}>
       <>
         <Routes>
           <Route
             path="/me"
-            element={user ? <Feed /> : <Navigate to="/auth" />}
-          ></Route>
-          <Route
-            path="/"
-            element={user ? <Navigate to="/me" /> : <Navigate to="/auth" />}
-          ></Route>
-          <Route
-            path="/auth"
-            element={user ? <Navigate to="/me" /> : <Auth />}
-          ></Route>
-          <Route path="/error/:msg" element={<Error />}></Route>
-          <Route path="/confirm-email" element={<ConfirmMail />}></Route>
-          <Route path="/users/verify/:userId/:token"
-            element={<VerifyMail />}
+            element={user ? <Feed /> : <Navigate to="/auth/login" />}
           ></Route>
 
+          <Route
+            path="/auth/signup/account-info"
+            element={<AccountInfo />}
+          ></Route>
+          <Route
+            path="/auth/signup/user-info/:id"
+            element={<UserInfo />}
+          ></Route>
+          <Route
+            path="/auth/signup/profileview-info/:id"
+            element={<ProfileView />}
+          ></Route>
+          <Route
+            path="/auth/signup/lookingfor-info/:id"
+            element={<LookingFor />}
+          ></Route>
+          <Route
+            path="/auth/login"
+            element={user ? <Navigate to="/me" /> : <Auth action="login" />}
+          ></Route>
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/error/:msg" element={<Error />}></Route>
+          <Route
+            path="/confirm-email"
+            element={
+              <ConfirmMail
+                main="Mail successfully sent"
+                desc=" Please follow the link attached to your email to verify your account"
+              />
+            }
+          ></Route>
+          <Route
+            path="/reset-message"
+            element={
+              <ConfirmMail
+                main="Mail successfully sent"
+                desc=" Please follow the link attached to your email to reset your password"
+              />
+            }
+          ></Route>
+          <Route
+            path="/users/verify/:userId/:token"
+            element={<VerifyMail />}
+          ></Route>
+          <Route
+            path="/users/reset-password/:token"
+            element={<ResetPassword />}
+          ></Route>
+
+<<<<<<< HEAD
           <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
           <Route path="/admin" element={<AdminPage /> }> </Route>
           <Route path="/me/profile" element={<UserProfile /> }> </Route>
           
           <Route path="*" element={<h1>Page not found</h1>} />
+=======
+          <Route path="/home" element={<Welcome />}></Route>
+          <Route path="/" element={<Navigate to="/home" />}></Route>
+          <Route path="/about-us" element={<AboutUs />}></Route>
+          <Route path="/video-date/:id" element={<DateDummy />}></Route>
+          <Route path="/chat" element={<Chat />}></Route>
+>>>>>>> a3b814aa0bc09644316878a2129186e02ae93cfd
 
+          <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}
-    
-      
-      <ToastContainer
-        style={{
-          fontSize: "1.3rem",
-          fontFamily: "Poppins, sans-serif",
-        }}
 
-      />
+        <ToastContainer
+          style={{
+            fontSize: "1.3rem",
+            fontFamily: "Poppins, sans-serif",
+          }}
+        />
       </>
-        </ThemeProvider>
+    </ThemeProvider>
   );
 }
 

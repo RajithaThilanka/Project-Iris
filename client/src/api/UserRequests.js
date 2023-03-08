@@ -56,7 +56,13 @@ export const searchUser = (username) =>
 
 export const createChat = (userId) => API.post(`/chat`, { userId });
 
+export const accessDateChat = (dateId) =>
+  API.get(`/users/me/dates/chat`, { dateId });
+
 export const fetchUserChats = () => API.get(`/chat`);
+
+export const fetchDateChats = (dateId) =>
+  API.get(`/users/me/dates/chat/fetch`, { dateId });
 
 export const createGroup = (name, users) =>
   API.post(`/chat/group`, {
@@ -85,6 +91,18 @@ export const sendAMessage = (content, chatId) =>
     chatId,
   });
 
+export const sendADateMessage = (content, chatId) =>
+  API.post(`/users/me/dates/chat/message`, { content, chatId });
+
 export const getAllMessages = (chatId) => API.get(`/message/${chatId}`);
 
+<<<<<<< HEAD
 export const getMe = () => API.get("/users/me");
+=======
+export const getAllDateMessages = (chatId) =>
+  API.get(`/users/me/dates/chat/message`, { chatId });
+
+export const getMe = () => API.get("/users/me");
+
+export const removeFriend = (id) => API.patch(`/users/me/friends/remove/${id}`);
+>>>>>>> a3b814aa0bc09644316878a2129186e02ae93cfd
