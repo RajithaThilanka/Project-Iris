@@ -10,10 +10,7 @@
     "@mui/joy": "^5.0.0-alpha.67",
     "@mui/material": "^5.11.10",
     "@mui/styled-engine-sc": "^5.11.0",
-<<<<<<< HEAD
-=======
     "@mui/styles": "^5.11.11",
->>>>>>> a3b814aa0bc09644316878a2129186e02ae93cfd
     "@mui/x-data-grid": "^5.17.25",
     "@react-spring/web": "^9.6.1",
     "@testing-library/jest-dom": "^5.16.5",
