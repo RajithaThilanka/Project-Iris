@@ -53,7 +53,7 @@ function AccountInfo() {
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div className="signup-container">
+    <div className="signup-container" style={{ height: "100vh" }}>
       <form
         onSubmit={handleSubmit}
         style={{

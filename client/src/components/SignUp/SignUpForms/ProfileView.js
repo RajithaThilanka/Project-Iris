@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { uploadImage } from "../../../actions/UploadAction";
 import { signupProfileView } from "../../../api/AuthRequests";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProfileView() {
   const dispatch = useDispatch();
@@ -43,6 +45,16 @@ function ProfileView() {
         console.log(err);
       }
     } else {
+      toast.error("No image is chosen", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       return;
     }
     resetShare();
@@ -53,9 +65,9 @@ function ProfileView() {
 
   const handleChange = (event) => {
     setData({ ...formData, userDescription: event.target.value });
-    setWordCount(formData.userDescription.split(" ").length);
+    console.log(formData.userDescription);
+    setWordCount(formData.userDescription.trim().split(" ").length);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (wordCount < 50) {
@@ -110,7 +122,7 @@ function ProfileView() {
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Profile Picture
               </FormLabel>
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: "flex", gap: "20px" }}>
                 <input
                   type="file"
                   id="file"
@@ -118,9 +130,7 @@ function ProfileView() {
                   ref={imageRef}
                   onChange={onImageChange}
                 />
-                <label for="file">
-                  {<CloudUploadIcon style={{ marginRight: "1rem" }} />}
-                </label>
+                <label for="file">{<CloudUploadIcon />}</label>
                 <Button
                   variant="contained"
                   onClick={handleUpload}

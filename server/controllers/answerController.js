@@ -10,10 +10,14 @@ exports.addAnswer = catchAsync(async (req, res, next) => {
   let updatedAnswer;
 
   const answer = await Answer.findOne({
-    userId,
-    questions: {
-      $in: [req.params.id],
-    },
+    $and: [
+      { userId },
+      {
+        questions: {
+          $in: [req.params.id],
+        },
+      },
+    ],
   });
 
   if (!answer) {

@@ -16,7 +16,7 @@ exports.sendMessage = catchAsync(async (req, res, next) => {
     chat: chatId,
   };
   try {
-    let message = await await Message.create(newMessage);
+    let message = await Message.create(newMessage);
     message = await message
       .populate('sender', 'firstname profilePhoto')
       .execPopulate();
