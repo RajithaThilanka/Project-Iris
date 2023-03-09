@@ -9,6 +9,9 @@ import { styled } from '@mui/material/styles';
 import { IconButton, Typography } from '@mui/material';
 import MessageIcon from '@mui/icons-material/Message';
 import BlockIcon from '@mui/icons-material/Block';
+import { useState, useEffect } from 'react';
+
+// import { getMe } from "../../../api/UserRequests";
 
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
@@ -75,6 +78,29 @@ const rows = [
 ];
 
 export default function Profilereports() {
+
+  const [admindata, setAdminData] = useState(null);
+  
+  // useEffect(() => {
+  //   const getAdminData = async () => {
+  //     try {
+  //       const {
+  //         data: {
+  //           data: { data },
+  //         },
+  //       } = await getProfiles();
+  //       setAdminData(data);
+  //       console.log(data);
+  //       // console.log(user.userDescription)
+     
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   };
+  //   getAdminData();
+  // }, []);
+
+
   return (
     
     <Box sx={{ height: 400, width: 800,justifyContent: 'center', textAlign:'center'  }}>

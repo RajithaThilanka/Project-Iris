@@ -8,9 +8,15 @@ import About from '../../components/Profile/Content/ProfileContent'
 import PSettings from '../../components/Profile/ProfileSettings/ProfileSettings'
 import ProAbout from '../../pages/UProfile/About/ProfileAbout'
 import Profileconnection from "./ProfileConnection/Profileconnection";
+import { useSelector } from "react-redux";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+//  const {
+//     data: { user },
+//   } = useSelector((state) => state.authReducer.authData);
+
+//   console.log(user.firstname)
 
   return (
     <div
@@ -21,6 +27,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
+
+
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
         </Box>

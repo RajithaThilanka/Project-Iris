@@ -96,13 +96,9 @@ export const sendADateMessage = (content, chatId) =>
 
 export const getAllMessages = (chatId) => API.get(`/message/${chatId}`);
 
-<<<<<<< HEAD
-export const getMe = () => API.get("/users/me");
-=======
 export const getAllDateMessages = (chatId) =>
   API.get(`/users/me/dates/chat/message`, { chatId });
 
 export const getMe = () => API.get("/users/me");
 
 export const removeFriend = (id) => API.patch(`/users/me/friends/remove/${id}`);
->>>>>>> a3b814aa0bc09644316878a2129186e02ae93cfd

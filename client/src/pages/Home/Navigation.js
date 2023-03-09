@@ -28,6 +28,11 @@ function Navigation() {
               <span>04</span>Join now
             </Link>
           </li>
+          <li className="navigation__item">
+            <Link to="/admin/login" className="navigation__link">
+              <span>04</span>Admin Login
+            </Link>
+          </li>
         </ul>
       </nav>
     </>

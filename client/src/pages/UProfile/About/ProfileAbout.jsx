@@ -40,30 +40,30 @@ export default function ProfileAbout() {
   const [activeStat5, activeState5] = useState(1);
 
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
-    const getDaata = async () => {
+    const getData = async () => {
       try {
         const {
           data: {
-            data: { data }
+            data: { data },
           },
         } = await getMe();
+        setUser(data);
         console.log(data);
+        console.log(user.userDescription)
+     
+      } catch (error) {
+        console.log(error)
       }
-
-      catch (error) {
-        console.log(error);
-      }
-    }; getDaata(); 
-
-  },[])
+    };
+    getData();
+  }, []);
      
 
     return (
       <div>
-        
-    
+
     <Grid
         container
         display="flex"
@@ -75,7 +75,7 @@ export default function ProfileAbout() {
         spacing={2}
       >
         <Grid item xs={8}>
-                                <Box
+   <Box
          sx={{
              
          width: '100%',
@@ -89,19 +89,17 @@ export default function ProfileAbout() {
         //  opacity: [0.9, 0.8, 0.7],
         },
       }} >
-         <Typography>
+          <Typography>
                 About me
          </Typography> 
                <TextField
-                id="outlined-multiline-static"
-                label=" "
+                id="standard-multiline-static"      
                 multiline
                 disabled={activeStat2}
                 rows={3}
-                defaultValue=" "
-                  
-                value={user?.profileDescription}
-                sx={{width:'100%'}}  
+                variant="standard"
+                value={user?.userDescription} 
+                sx={{width:'100%', border:0 }}  
                 />  
                 
              <Stack direction="row" spacing={2} justifyContent="right" marginTop={2}>
@@ -139,7 +137,7 @@ export default function ProfileAbout() {
                 <Typography>
                   
                   Profile Completetion 
-              </Typography>
+                </Typography>
                 
                 </stack>
 
@@ -177,14 +175,15 @@ export default function ProfileAbout() {
         },
       }} >
          <Typography>
-                Life style
-                  
+                  Life style <br /> <br/> 
+                
          </Typography>
-                <Stack spacing={2} direction='column'>
+                <Stack spacing={2} direction='column' spacing={2}>
                            <TextField
                 id="outlined-multiline-static"
                 label="INTERESTS AND HOBBIES"
-                multiline
+                    multiline
+                    variant="standard"
                     rows={3}
                     value={ProfileData.interests}
                     disabled={activeStat3}
@@ -205,7 +204,8 @@ export default function ProfileAbout() {
                 id="outlined-multiline-static"
                 label="SPORTS"
                 multiline
-                rows={3}
+                    rows={3}
+                    variant="standard"
                 disabled={activeStat4}
                 value={ProfileData.sports}
                     sx={{ width: '100%' }} /> 
@@ -223,7 +223,8 @@ export default function ProfileAbout() {
                 id="outlined-multiline-static"
                 label="FOOD AND DRINK"
                 multiline
-                rows={3}
+                    rows={3}
+                    variant="standard"
                 defaultValue=" "
                 disabled={activeStat5}
                 value={ProfileData.sports}

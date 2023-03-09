@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect,useState} from "react";
 import ProComplete from '../../../components/Profile/ProfileComplete/profilecomplete';
 import SaveIcon from '@mui/icons-material/Save';
-
+import { useSelector } from "react-redux";
 
 import {
   Card,
@@ -21,9 +21,33 @@ import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import Factfile from   '../ProfileFactfiles/Factfile'
 import { useTheme } from "@emotion/react";
+import { getMe } from "../../../api/UserRequests";
 
 function ProfileContent() {
 
+//   const {
+//     data: { user },
+//   } = useSelector((state) => state.authReducer.authData);
+
+//  // console.log(user.firstname)
+  const [user, setUSer] = useState(null);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getMe();
+        setUSer(data);
+     
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getData();
+  }, []);
+  
   const theme = useTheme();
   return (
     <div>
@@ -38,28 +62,7 @@ function ProfileContent() {
         spacing={2}
         borderRadius={0}
       >
-        <Grid item xs={8}>
-          <Card>
-            <CardContent>
-              <FormControl>
-                <FormLabel>Introduce Yourself</FormLabel>
-                <Textarea minRows={3} >   </Textarea>
-              </FormControl>
-            </CardContent>
 
-            <CardActions>
-              <Stack direction="row" spacing={2} justifyContent="right">
-                <Button variant="outlined" endIcon={<ArrowForwardIosIcon />}>
-                  Edit
-                </Button>
-                <Button variant="outlined" endIcon={<SaveIcon />}>
-                 Save
-                </Button>
-              </Stack>
-            </CardActions>
-          </Card>
-          
-        </Grid>
 
         <Grid item xs={4}>
       

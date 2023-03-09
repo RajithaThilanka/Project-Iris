@@ -28,6 +28,8 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Profile from "./Profile/Profile";
 import Chat from "./pages/Chat/Chat";
 import AboutUs from "./pages/AboutUs/Aboutus";
+import AdminPage from "./pages/Admin/AdminPage";
+import AdminLogin from "./components/AdminLogin/AdminLogin";
 // import DateBox from "./pages/Date/DateBox";
 const theme = createTheme({
   palette: {
@@ -130,6 +132,8 @@ function App() {
             path="/users/verify/:userId/:token"
             element={<VerifyMail />}
           ></Route>
+          <Route path="/me/profile" element={<UserProfile />}></Route>
+          <Route path="/admin" element={<AdminPage/>}></Route>
           <Route
             path="/users/reset-password/:token"
             element={<ResetPassword />}
@@ -140,7 +144,7 @@ function App() {
           <Route path="/about-us" element={<AboutUs />}></Route>
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="/chat" element={<Chat />}></Route>
-
+           <Route path="/admin/login" element={<AdminLogin />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}
