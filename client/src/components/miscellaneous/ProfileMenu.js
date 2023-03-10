@@ -84,14 +84,7 @@ export default function ProfileMenu() {
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               variant={"dot"}
             >
-              <Avatar
-                alt="user avatar"
-                src={
-                  user.profilePhoto
-                    ? serverPublic + user.profilePhoto
-                    : serverPublic + "defaultProfile.png"
-                }
-              />
+              <Avatar alt="user avatar" src={user.profilePhoto} />
             </StyledBadge>
           </IconButton>
         </Tooltip>

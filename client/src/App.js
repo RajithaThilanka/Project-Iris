@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
-import UserProfile from './pages/UProfile/UserProfile'
+import UserProfile from "./pages/UProfile/UserProfile";
 
 import Feed from "./pages/Feed/Feed";
 import Welcome from "./pages/Home/Welcome";
@@ -28,16 +28,12 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Profile from "./Profile/Profile";
 import Chat from "./pages/Chat/Chat";
 import AboutUs from "./pages/AboutUs/Aboutus";
-<<<<<<< HEAD
 
 import Connections from "./pages/Connections/Connections";
 import Friends from "./pages/Friends/Friends";
 import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
-=======
 import AdminPage from "./pages/Admin/AdminPage";
-import AdminLogin from "./components/AdminLogin/AdminLogin";
->>>>>>> aecacc7c542e5645c84d9187465381b421102582
 // import DateBox from "./pages/Date/DateBox";
 const theme = createTheme({
   palette: {
@@ -54,9 +50,8 @@ const theme = createTheme({
     },
     otherColors: {
       light3: "#f0eeee",
-      backgroundc:"#b3e5fc",
+      backgroundc: "#b3e5fc",
     },
-
   },
   shape: {
     borderRadius: 20,
@@ -136,7 +131,7 @@ function App() {
             element={<VerifyMail />}
           ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
-          <Route path="/admin" element={<AdminPage/>}></Route>
+          <Route path="/admin" element={<AdminPage />}></Route>
           <Route
             path="/users/reset-password/:token"
             element={<ResetPassword />}
@@ -161,12 +156,6 @@ function App() {
           ></Route>
           <Route path="/me/chat" element={<Chat />}></Route>
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
-<<<<<<< HEAD
-
-=======
-          <Route path="/chat" element={<Chat />}></Route>
-           <Route path="/admin/login" element={<AdminLogin />}></Route>
->>>>>>> aecacc7c542e5645c84d9187465381b421102582
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}

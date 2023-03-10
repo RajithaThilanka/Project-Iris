@@ -182,11 +182,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                         <Avatar
                           alt="user avatar"
                           src={
-                            user.profilePhoto
-                              ? serverPublic +
-                                getSenderFull(loggedUser, chat.users)
-                                  .profilePhoto
-                              : serverPublic + "defaultProfile.png"
+                            getSenderFull(loggedUser, chat.users).profilePhoto
                           }
                         />
                       </StyledBadge>

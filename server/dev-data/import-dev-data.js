@@ -28,7 +28,7 @@ const deleteDevData = async () => {
     // await Chat.deleteMany();
     // await Message.deleteMany();
     // await User.deleteMany();
-    await LookingFor.deleteMany();
+    // await LookingFor.deleteMany();
   } catch (error) {
     console.log(error);
   }
@@ -174,7 +174,7 @@ const countries = [
 
 // Add the user to the cluster when signing up
 
-const lookingFor = JSON.parse(fs.readFileSync('./lookingForU.json', 'utf-8'));
+const passions = JSON.parse(fs.readFileSync('./updatedPassions.json', 'utf-8'));
 // const updated = users.map((u, index) => {
 //   return {
 //     ...u,
@@ -188,7 +188,7 @@ const import_data = async () => {
   let users = await User.find({});
   // users = users.slice(10);
   const updatedLookingFor = users.map((u, i) => {
-    const temp = lookingFor[generate(0, lookingFor.length)];
+    const temp = passions[generate(0, passions.length)];
     return { ...temp, userId: u._id };
   });
   fs.writeFileSync('./new.json', JSON.stringify(updatedLookingFor), 'utf-8');

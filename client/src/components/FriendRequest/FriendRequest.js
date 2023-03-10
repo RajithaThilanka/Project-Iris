@@ -15,21 +15,10 @@ function FriendRequest({
     <div className="request-container">
       <div className="req-user-img">
         {reqType === "received" ? (
-          <img
-            src={
-              data?.senderId?.profilePhoto
-                ? serverPublic + data?.senderId?.profilePhoto
-                : serverPublic + "defaultProfile.png"
-            }
-            alt={data?.senderId?.callTag}
-          />
+          <img src={data.senderId.profilePhoto} alt={data?.senderId?.callTag} />
         ) : (
           <img
-            src={
-              data?.receiverId?.profilePhoto
-                ? serverPublic + data?.receiverId?.profilePhoto
-                : serverPublic + "defaultProfile.png"
-            }
+            src={data.receiverId.profilePhoto}
             alt={data?.receiverId?.callTag}
           />
         )}
