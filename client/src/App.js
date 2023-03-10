@@ -140,9 +140,18 @@ function App() {
           <Route path="/home" element={<Welcome />}></Route>
           <Route path="/" element={<Navigate to="/home" />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>
-          <Route path="/me/dashboard" element={<Dashboard />}></Route>
-          <Route path="/me/connections" element={<Connections />}></Route>
-          <Route path="/me/friends" element={<Friends />}></Route>
+          <Route
+            path="/me/dashboard"
+            element={user ? <Dashboard /> : <Navigate to="/auth/login" />}
+          ></Route>
+          <Route
+            path="/me/connections"
+            element={user ? <Connections /> : <Navigate to="/auth/login" />}
+          ></Route>
+          <Route
+            path="/me/friends"
+            element={user ? <Friends /> : <Navigate to="/auth/login" />}
+          ></Route>
           <Route path="/me/dates" element={<Dates />}></Route>
           <Route
             path="/me"
