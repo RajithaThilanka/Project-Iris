@@ -69,7 +69,6 @@ function Dashboard() {
   const [lastDirection, setLastDirection] = useState();
   const currentIndexRef = useRef(currentIndex);
   useEffect(() => {
-    
     const generateSuggestions = async () => {
       const {
         data: {
@@ -303,6 +302,7 @@ function Dashboard() {
                       label="Looking For"
                     ></Chip>
                   </Divider>
+
                   <div className="looking-for">
                     <div>{matches[currentIndex]?.lookingFor?.gender}</div>
                     <div>

@@ -83,7 +83,7 @@ function DateCard({ dateInfo }) {
       <div className="date-partners">
         <div className="partner">
           <img
-            src={serverPublic + dateInfo.senderId.profilePhoto}
+            src={dateInfo.senderId.profilePhoto}
             alt=""
             className="partner-img"
           />
@@ -91,7 +91,7 @@ function DateCard({ dateInfo }) {
         </div>
         <div className="partner">
           <img
-            src={serverPublic + dateInfo.receiverId.profilePhoto}
+            src={dateInfo.receiverId.profilePhoto}
             alt=""
             className="partner-img"
           />

@@ -84,7 +84,7 @@ exports.generateUserSuggestions = catchAsync(async (req, res, next) => {
         _id: { $ne: req.user._id },
       },
       {
-        $or: [
+        $and: [
           { gender: lookingFor.gender },
           {
             dob: {
