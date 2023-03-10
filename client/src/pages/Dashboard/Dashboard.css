@@ -93,12 +93,20 @@
 }
 .profile--header {
   font-size: 3.5rem;
-  padding: 2.5rem 1.5rem;
+  background-image: linear-gradient(
+    to right bottom,
+    var(--color-grey-dark-1) 0.1%,
+    transparent
+  );
+  padding: 1rem 2rem;
   position: absolute;
   bottom: 0;
+  width: 100%;
   color: #fff;
   display: flex;
   flex-direction: column;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 .profile--name {
   display: inline-block;

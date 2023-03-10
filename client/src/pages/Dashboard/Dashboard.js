@@ -214,7 +214,7 @@ function Dashboard() {
                 >
                   <Box
                     style={{
-                      backgroundImage: `url(${serverPublic}${character.profilePhoto})`,
+                      backgroundImage: `url(${character.profilePhoto})`,
                     }}
                     className="sugg-card"
                   ></Box>

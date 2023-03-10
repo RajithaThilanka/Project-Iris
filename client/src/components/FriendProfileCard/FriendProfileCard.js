@@ -281,11 +281,7 @@ function FriendProfileCard({ conUser, cardType }) {
       </Modal>
 
       <img
-        src={
-          otherUser?.profilePhoto
-            ? serverPublic + otherUser.profilePhoto
-            : serverPublic + "defaultProfile.png"
-        }
+        src={otherUser.profilePhoto}
         alt={otherUser.callTag}
         className="profile-img"
       />

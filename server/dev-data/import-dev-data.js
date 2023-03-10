@@ -14,6 +14,7 @@ const DB = process.env.DATABASE.replace(
 
 const Chat = require('../models/chatModel');
 const Message = require('../models/messageModel');
+const LookingFor = require('../models/lookingForModel');
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -24,14 +25,16 @@ mongoose
 
 const deleteDevData = async () => {
   try {
-    await Chat.deleteMany();
-    await Message.deleteMany();
+    // await Chat.deleteMany();
+    // await Message.deleteMany();
+    // await User.deleteMany();
+    await LookingFor.deleteMany();
   } catch (error) {
     console.log(error);
   }
 };
 
-deleteDevData();
+// deleteDevData();
 const generate = (min, max) => Math.floor(Math.random() * (max - min) + min);
 // const updatedUsers = users.map(user => {
 //   delete user.photos;
@@ -171,9 +174,25 @@ const countries = [
 
 // Add the user to the cluster when signing up
 
-const users = JSON.parse(fs.readFileSync('./final8.json', 'utf-8'));
-const passions = users.map(u => {
-  return u.profileDescription;
-});
-console.log(passions);
-fs.writeFileSync('./rusith.json', JSON.stringify(passions), 'utf-8');
+const lookingFor = JSON.parse(fs.readFileSync('./lookingForU.json', 'utf-8'));
+// const updated = users.map((u, index) => {
+//   return {
+//     ...u,
+//     profilePhoto: `http://localhost:5000/images/${u.profilePhoto}`,
+//   };
+// });
+// // console.log(passions);
+// fs.writeFileSync('./test.json', JSON.stringify(updated), 'utf-8');
+const import_data = async () => {
+  // await User.create(users, { validateBeforeSave: false });
+  let users = await User.find({});
+  // users = users.slice(10);
+  const updatedLookingFor = users.map((u, i) => {
+    const temp = lookingFor[generate(0, lookingFor.length)];
+    return { ...temp, userId: u._id };
+  });
+  fs.writeFileSync('./new.json', JSON.stringify(updatedLookingFor), 'utf-8');
+};
+//     console.log('Data successfully loaded!');
+deleteDevData();
+// import_data();

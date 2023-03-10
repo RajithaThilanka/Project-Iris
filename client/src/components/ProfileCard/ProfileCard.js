@@ -238,11 +238,7 @@ function ProfileCard({ conUser, cardType }) {
       onMouseLeave={() => setVisible(false)}
     >
       <img
-        src={
-          otherUser?.profilePhoto
-            ? serverPublic + otherUser.profilePhoto
-            : serverPublic + "defaultProfile.png"
-        }
+        src={otherUser.profilePhoto}
         alt={otherUser.callTag}
         className="profile-img"
       />

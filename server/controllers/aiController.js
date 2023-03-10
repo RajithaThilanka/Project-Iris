@@ -80,25 +80,32 @@ exports.generateUserSuggestions = catchAsync(async (req, res, next) => {
 
   let suggestions = await User.find({
     $and: [
-      { gender: lookingFor.gender },
       {
-        dob: {
-          $gte: minYear,
-          $lte: maxYear,
-        },
+        _id: { $ne: req.user._id },
       },
       {
-        height: {
-          $gte: minHeight,
-          $lte: maxHeight,
-        },
-      },
-      {
-        active: true,
+        $or: [
+          { gender: lookingFor.gender },
+          {
+            dob: {
+              $gte: minYear,
+              $lte: maxYear,
+            },
+          },
+          {
+            height: {
+              $gte: minHeight,
+              $lte: maxHeight,
+            },
+          },
+          {
+            active: true,
+          },
+        ],
       },
     ],
   });
-  // suggestions = suggestions.slice(0, 20);
+  suggestions = suggestions.slice(0, 10);
 
   let updatedSuggestionsPromises = suggestions.map(async user => {
     const l = await LookingFor.findOne({ userId: user._id });
