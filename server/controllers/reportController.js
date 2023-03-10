@@ -59,7 +59,19 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
   })
     .populate('reportedByUser')
     .populate('reportedUser');
-
+  await Report.updateMany(
+    {
+      $and: [
+        { reportedUser: userId },
+        { reviewStatus: 'positive' },
+        { userNotified: false },
+        { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
+      ],
+    },
+    {
+      userNotified: true,
+    }
+  );
   res.status(200).json({
     status: 'success',
     nReports: reportWarnings.length,

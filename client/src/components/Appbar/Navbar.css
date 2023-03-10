@@ -24,3 +24,7 @@
   right: 0;
   transform: translate(70%, -50%);
 }
+.main-notification-count {
+  background-color: red;
+  transform: translate(15px, -10px);
+}
