@@ -1,0 +1,36 @@
+.login-title {
+  font-size: 2.3rem;
+  padding: 0.5rem 0.8rem;
+  margin-top: -2rem;
+  font-weight: 500;
+}
+
+.forgot-password {
+  font-size: 1.2rem;
+  /* align-self: flex-end; */
+  padding: 0.9rem 1rem;
+  transition: all 1s;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.forgot-password:hover {
+  transform: scale(1.2, 1.2);
+  color: var(--color-primary-light);
+}
+
+.cancel-btn-container {
+  align-self: flex-end;
+  transform: translate(70%, -70%);
+}
+.error-container {
+  text-align: center;
+}
+.error-msg {
+  color: red;
+  font-size: 1.1rem;
+}
+

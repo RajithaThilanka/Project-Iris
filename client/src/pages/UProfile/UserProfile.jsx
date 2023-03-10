@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Bar from '../../components/Appbar/MainAppbar'
-import Buttonbar from '../../components/Profile/NavButtons/NavButtons'
+
 import Content from '../../components/Profile/Content/ProfileContent'
 import {Stack, Typography, Grid } from '@mui/material'
 import ProfilHeader from '../../components/Profile/Header/ProfileHeader'

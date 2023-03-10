@@ -48,7 +48,7 @@ const columns = [
       
       return (
         <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick}><DoneIcon /></IconButton>
+          <IconButton size="small" onClick={onClick} helperText='Done'><DoneIcon /></IconButton>
           <IconButton size="small" onClick={onClick}><VisibilityIcon /></IconButton>
           <IconButton size="small" onClick={onClick}><DeleteIcon /></IconButton>
         </Stack>

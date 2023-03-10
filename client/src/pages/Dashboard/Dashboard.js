@@ -69,6 +69,7 @@ function Dashboard() {
   const [lastDirection, setLastDirection] = useState();
   const currentIndexRef = useRef(currentIndex);
   useEffect(() => {
+    
     const generateSuggestions = async () => {
       const {
         data: {

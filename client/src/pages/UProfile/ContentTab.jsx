@@ -6,10 +6,17 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import About from '../../components/Profile/Content/ProfileContent'
 import PSettings from '../../components/Profile/ProfileSettings/ProfileSettings'
-import ProAbout from '../../components/Profile/Content/ProfileContent'
+import ProAbout from '../../pages/UProfile/About/ProfileAbout'
+import Profileconnection from "./ProfileConnection/Profileconnection";
+import { useSelector } from "react-redux";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+//  const {
+//     data: { user },
+//   } = useSelector((state) => state.authReducer.authData);
+
+//   console.log(user.firstname)
 
   return (
     <div
@@ -20,6 +27,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
+
+
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
         </Box>
@@ -55,6 +64,7 @@ export default function ContentTab() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          centered
         >
           <Tab label="About" {...a11yProps(0)} />
           <Tab label="Connections" {...a11yProps(1)} />
@@ -63,10 +73,10 @@ export default function ContentTab() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {/* <ProAbout /> */}
+        <ProAbout />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Profileconnection />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
