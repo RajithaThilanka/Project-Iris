@@ -17,6 +17,7 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const app = express();
 const { validateChat } = require('./controllers/aiController');
+const schedule = require('node-schedule');
 
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
@@ -33,7 +34,10 @@ const limiter = rateLimit({
 });
 
 // running hate speech detection
-// validateChat();
+schedule.scheduleJob('0 1 * * *', async function () {
+  await validateChat();
+  console.log('validated');
+});
 
 app.use('/api', limiter);
 

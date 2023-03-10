@@ -130,10 +130,7 @@ exports.generateUserSuggestions = catchAsync(async (req, res, next) => {
 // Hate speech detection
 exports.validateChat = async () => {
   const newMessages = await Message.find({
-    // createdAt: {
-    //   $lte: Date.now(),
-    //   $gte: Date.now() - 24 * 60 * 60 * 1000,
-    // },
+    validated: false,
   }).populate('sender');
 
   const updatedMessages = newMessages.map(msg => {
@@ -150,12 +147,13 @@ exports.validateChat = async () => {
     json: true,
   };
   const response = await request(options);
+  await Message.updateMany({ validated: false }, { validated: true });
   console.log(response);
   response.forEach(async result => {
     if (result.flagged === 'Hate Speech Detected') {
       await Report.create({
-        reportedUser: result._id,
-        reason: result.flagged,
+        reportedUser: result.id,
+        reason: 'Hate Speech',
         reviewStatus: 'positive',
       });
     }
