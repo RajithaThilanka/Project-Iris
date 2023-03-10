@@ -11,7 +11,13 @@
 }
 
 .container {
-  width: 100%;
+  flex: 0 0 82%;
+  /* background-image: linear-gradient(
+    to right bottom,
+    var(--color-primary),
+    transparent
+  ); */
+  /* background: linear-gradient(to right, rgb(248, 87, 166), rgb(255, 88, 88)); */
   height: 100vh;
   margin: auto;
   display: flex;
@@ -22,13 +28,13 @@
 }
 .card-container {
   width: 100%;
-  height: 60%;
+  height: 60vh;
   position: relative;
   padding: 2rem;
 }
 .swipe {
   position: absolute;
-  height: 45rem;
+  height: 90%;
 }
 .sugg-card {
   width: 30rem;
@@ -42,7 +48,7 @@
 .profileContent {
   /* border: 1px solid blue; */
   width: 55%;
-  height: 107%;
+  height: 100%;
   margin-left: auto;
   padding: 1.5rem 2rem;
   border-radius: 10px;
@@ -56,6 +62,13 @@
   height: auto;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+  margin: 1rem;
+  color: #fff;
 }
 .profile--basic-info {
   display: flex;
@@ -69,6 +82,14 @@
   font-size: 1.2rem;
   line-height: 2.5rem;
   font-weight: 400;
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+  margin: 1rem;
+
+  color: #fff;
 }
 .profile--header {
   font-size: 3.5rem;
@@ -127,11 +148,16 @@
   align-content: space-between;
   gap: 1.2rem;
   padding: 1rem 1.6rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .looking-for div {
-  background-image: linear-gradient(to right bottom, #c81172, #eb2f64);
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+
   border-radius: 15px;
   width: auto;
   padding: 0.5rem 1rem;
@@ -145,20 +171,21 @@
   align-content: space-between;
   gap: 1.2rem;
   padding: 1rem 1.6rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .usertags div {
   background-image: linear-gradient(
-    to right bottom,
-    var(--color-secondary),
-    transparent
+    to right,
+    var(--color-primary-light),
+    var(--color-primary-dark)
   );
+
   border-radius: 15px;
   width: auto;
   padding: 0.5rem 1rem;
-  color: #000;
-  font-weight: 500;
+  color: #fff;
+  font-weight: 400;
 }
 
 .infoText {
@@ -213,10 +240,11 @@
 .profile-up-btn {
   transform: translateX(28rem) translateY(50rem) !important;
   padding: 2rem;
-  background-color: white !important;
 }
 .swipe-button__left {
   color: #66e2b3 !important;
+  background-color: var(--color-primary-dark) !important;
+  border: 4px solid var(--color-grey-dark-1) !important;
 }
 .slide-down-btn-container {
 }
@@ -228,11 +256,15 @@
   left: 47%;
 }
 .swipe-button__right {
-  color: #ec5e6f !important;
+  color: #fff !important;
+  background-color: var(--color-primary-dark) !important;
+  border: 4px solid var(--color-grey-dark-1) !important;
 }
 
 .swipe-button__undo {
   color: var(--color-secondary) !important;
+  background-color: var(--color-primary-dark) !important;
+  border: 4px solid var(--color-grey-dark-1) !important;
 }
 
 @keyframes popup {

@@ -24,11 +24,15 @@ import { useContext } from "react";
 import io from "socket.io-client";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
+import Navbar from "../../components/Appbar/Navbar";
 
 const ENDPOINT = "http://localhost:5000";
 let socket;
 
-function Advanced() {
+function Dashboard() {
+  const { activeTab, setActiveTab } = useContext(MatchesContext);
+  setActiveTab(0);
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
@@ -177,193 +181,260 @@ function Advanced() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
-    <Box className="container">
-      <Box className="card-container">
-        {matches?.length === 0 ? (
-          <div className="loading-icon">
-            <Loader />
+    <>
+      <Navbar user={user} />
+      <div style={{ display: "flex" }}>
+        <VerticalNavbar />
+
+        <div
+          className="container"
+          style={{
+            backgroundImage:
+              "radial-gradient(at top left,var(--color-primary) 1%,transparent)",
+          }}
+        >
+          <div className="card-container">
+            {matches?.length === 0 ? (
+              <div className="loading-icon">
+                <Loader />
+              </div>
+            ) : currentIndex < 0 ? (
+              <div className="loading-icon">
+                No suggestions at the moment. Please try again later
+              </div>
+            ) : (
+              matches.map((character, index) => (
+                <TinderCard
+                  swipeThreshold={2000}
+                  ref={childRefs[index]}
+                  className="swipe"
+                  key={character._id}
+                  onSwipe={(dir) => swiped(dir, character._id, index)}
+                  onCardLeftScreen={() => outOfFrame(character._id, index)}
+                >
+                  <Box
+                    style={{
+                      backgroundImage: `url(${serverPublic}${character.profilePhoto})`,
+                    }}
+                    className="sugg-card"
+                  ></Box>
+                  <div className="profile--header">
+                    <h6 className="profile--name">{character.callTag}</h6>
+                    <p className="profile--age">{character.age}</p>
+                    <div className="profile--country">
+                      {<LocationOnIcon fontSize="small" sx={{ padding: 0 }} />}
+                      {character.country}
+                    </div>
+                    <div className="suggestion-status-container">
+                      {activeUsers.some(
+                        (user) => user.userId === character._id
+                      ) ? (
+                        <div className="suggestion-online--dot"></div>
+                      ) : (
+                        <div className="suggestion-offline--dot"></div>
+                      )}
+
+                      <div className="suggestion-status">
+                        {activeUsers.some(
+                          (user) => user.userId === character._id
+                        )
+                          ? "Online"
+                          : "Offline"}
+                      </div>
+                    </div>
+                  </div>
+                </TinderCard>
+              ))
+            )}
+            {currentIndex >= 0 && (
+              <Box className="profileContent">
+                <Zoom>
+                  <Divider>
+                    <Chip
+                      style={{
+                        background: "var(--color-secondary)",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                      }}
+                      label="Basic Info"
+                    ></Chip>
+                  </Divider>
+
+                  <div className="basic-info">
+                    {matches[currentIndex]?.gender === "male" ? (
+                      <div className="profile--basic-info">
+                        {<ManIcon fontSize="medium" />}Man
+                      </div>
+                    ) : (
+                      <div className="profile--basic-info">
+                        {<WomanIcon fontSize="medium" />}Woman
+                      </div>
+                    )}
+
+                    <div className="profile--basic-info">
+                      {<WorkIcon />}
+                      {matches[currentIndex]?.occupation}
+                    </div>
+                    <div className="profile--basic-info">
+                      {<HeightIcon />}
+                      {matches[currentIndex]?.height}
+                    </div>
+                    <div className="profile--basic-info">
+                      {<SchoolIcon />}
+                      {matches[currentIndex]?.educationLevel}
+                    </div>
+                    <div className="profile--basic-info">
+                      {<ChurchIcon />}
+                      {matches[currentIndex]?.religion}
+                    </div>
+                    <div className="profile--basic-info">
+                      {<LanguageIcon />}
+                      {matches[currentIndex]?.ethnicity}
+                    </div>
+                  </div>
+                  <Divider>
+                    <Chip
+                      style={{
+                        background: "var(--color-secondary)",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                      }}
+                      label="Looking For"
+                    ></Chip>
+                  </Divider>
+                  <div className="looking-for">
+                    <div>{matches[currentIndex]?.lookingFor?.gender}</div>
+                    <div>
+                      Age between{" "}
+                      {matches[currentIndex]?.lookingFor?.ageRange?.minAge} and{" "}
+                      {matches[currentIndex]?.lookingFor?.ageRange?.maxAge}
+                    </div>
+                    <div>
+                      Height between{" "}
+                      {matches[currentIndex]?.lookingFor?.height?.minHeight} ft
+                      and {matches[currentIndex]?.lookingFor?.height?.maxHeight}{" "}
+                      ft
+                    </div>
+                  </div>
+                  <Divider>
+                    <Chip
+                      style={{
+                        background: "var(--color-secondary)",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                      }}
+                      label="Movies"
+                    ></Chip>
+                  </Divider>
+                  <div className="usertags">
+                    {matches[currentIndex]?.interests?.movies?.map((movie) => (
+                      <div>{movie}</div>
+                    ))}
+                  </div>
+                  <Divider>
+                    <Chip
+                      style={{
+                        background: "var(--color-secondary)",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                      }}
+                      label="Music"
+                    ></Chip>
+                  </Divider>
+                  <div className="usertags">
+                    {matches[currentIndex]?.interests?.music?.map((music) => (
+                      <div>{music}</div>
+                    ))}
+                  </div>
+                  <Divider>
+                    <Chip
+                      style={{
+                        background: "var(--color-secondary)",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                      }}
+                      label="Social Media"
+                    ></Chip>
+                  </Divider>
+                  <div className="usertags">
+                    {matches[currentIndex]?.interests?.socialMedia?.map(
+                      (social) => (
+                        <div>{social}</div>
+                      )
+                    )}
+                  </div>
+                  <Divider>
+                    <Chip
+                      label="Sports"
+                      style={{
+                        background: "var(--color-secondary)",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                      }}
+                    ></Chip>
+                  </Divider>
+                  <div className="usertags">
+                    {matches[currentIndex]?.interests?.sports?.map((s) => (
+                      <div>{s}</div>
+                    ))}
+                  </div>
+
+                  <Divider>
+                    <Chip
+                      label="About me"
+                      style={{
+                        background: "var(--color-secondary)",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                      }}
+                    ></Chip>
+                  </Divider>
+                  <div className="profile--description">
+                    {matches[currentIndex]?.userDescription}
+                  </div>
+                </Zoom>
+              </Box>
+            )}
           </div>
-        ) : currentIndex < 0 ? (
-          <div className="loading-icon">
-            No suggestions at the moment. Please try again later
-          </div>
-        ) : (
-          matches.map((character, index) => (
-            <TinderCard
-              swipeThreshold={2000}
-              ref={childRefs[index]}
-              className="swipe"
-              key={character._id}
-              onSwipe={(dir) => swiped(dir, character._id, index)}
-              onCardLeftScreen={() => outOfFrame(character._id, index)}
+          <Box className="swipe-buttons">
+            <IconButton
+              className="swipe-button__left"
+              style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+              onClick={() => swipe("left")}
             >
-              <Box
-                style={{
-                  backgroundImage: `url(${serverPublic}${character.profilePhoto})`,
-                }}
-                className="sugg-card"
-              ></Box>
-              <div className="profile--header">
-                <h6 className="profile--name">{character.callTag}</h6>
-                <p className="profile--age">{character.age}</p>
-                <div className="profile--country">
-                  {<LocationOnIcon fontSize="small" sx={{ padding: 0 }} />}
-                  {character.country}
-                </div>
-                <div className="suggestion-status-container">
-                  {activeUsers.some((user) => user.userId === character._id) ? (
-                    <div className="suggestion-online--dot"></div>
-                  ) : (
-                    <div className="suggestion-offline--dot"></div>
-                  )}
+              <MoodBadIcon fontSize="large" />
+            </IconButton>
 
-                  <div className="suggestion-status">
-                    {activeUsers.some((user) => user.userId === character._id)
-                      ? "Online"
-                      : "Offline"}
-                  </div>
-                </div>
-              </div>
-            </TinderCard>
-          ))
-        )}
-        {currentIndex >= 0 && (
-          <Box className="profileContent">
-            <Zoom>
-              <Divider>
-                <Chip label="Basic Info"></Chip>
-              </Divider>
-
-              <div className="basic-info">
-                {matches[currentIndex]?.gender === "male" ? (
-                  <div className="profile--basic-info">
-                    {<ManIcon fontSize="medium" />}Man
-                  </div>
-                ) : (
-                  <div className="profile--basic-info">
-                    {<WomanIcon fontSize="medium" />}Woman
-                  </div>
-                )}
-
-                <div className="profile--basic-info">
-                  {<WorkIcon />}
-                  {matches[currentIndex]?.occupation}
-                </div>
-                <div className="profile--basic-info">
-                  {<HeightIcon />}
-                  {matches[currentIndex]?.height}
-                </div>
-                <div className="profile--basic-info">
-                  {<SchoolIcon />}
-                  {matches[currentIndex]?.educationLevel}
-                </div>
-                <div className="profile--basic-info">
-                  {<ChurchIcon />}
-                  {matches[currentIndex]?.religion}
-                </div>
-                <div className="profile--basic-info">
-                  {<LanguageIcon />}
-                  {matches[currentIndex]?.ethnicity}
-                </div>
-              </div>
-              <Divider>
-                <Chip label="Looking For"></Chip>
-              </Divider>
-              <div className="looking-for">
-                <div>{matches[currentIndex]?.lookingFor?.gender}</div>
-                <div>
-                  Age between{" "}
-                  {matches[currentIndex]?.lookingFor?.ageRange?.minAge} and{" "}
-                  {matches[currentIndex]?.lookingFor?.ageRange?.maxAge}
-                </div>
-                <div>
-                  Height between{" "}
-                  {matches[currentIndex]?.lookingFor?.height?.minHeight} ft and{" "}
-                  {matches[currentIndex]?.lookingFor?.height?.maxHeight} ft
-                </div>
-              </div>
-              <Divider>
-                <Chip label="Movies"></Chip>
-              </Divider>
-              <div className="usertags">
-                {matches[currentIndex]?.interests?.movies?.map((movie) => (
-                  <div>{movie}</div>
-                ))}
-              </div>
-              <Divider>
-                <Chip label="Music"></Chip>
-              </Divider>
-              <div className="usertags">
-                {matches[currentIndex]?.interests?.music?.map((music) => (
-                  <div>{music}</div>
-                ))}
-              </div>
-              <Divider>
-                <Chip label="Social Media"></Chip>
-              </Divider>
-              <div className="usertags">
-                {matches[currentIndex]?.interests?.socialMedia?.map(
-                  (social) => (
-                    <div>{social}</div>
-                  )
-                )}
-              </div>
-              <Divider>
-                <Chip label="Sports"></Chip>
-              </Divider>
-              <div className="usertags">
-                {matches[currentIndex]?.interests?.sports?.map((s) => (
-                  <div>{s}</div>
-                ))}
-              </div>
-
-              <Divider>
-                <Chip label="About me"></Chip>
-              </Divider>
-              <div className="profile--description">
-                {matches[currentIndex]?.userDescription}
-              </div>
-            </Zoom>
+            <IconButton
+              className="swipe-button__right"
+              disabled={!canSwipe}
+              style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+              onClick={() => swipe("right")}
+            >
+              <SentimentVerySatisfiedIcon fontSize="large" />
+            </IconButton>
+            <IconButton
+              disabled={!canGoBack}
+              className="swipe-button__undo"
+              style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
+              onClick={() => goBack()}
+            >
+              <UndoIcon fontSize="large" />
+            </IconButton>
           </Box>
-        )}
-      </Box>
-      <Box className="swipe-buttons">
-        <IconButton
-          className="swipe-button__left"
-          style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-          onClick={() => swipe("left")}
-        >
-          <MoodBadIcon fontSize="large" />
-        </IconButton>
-
-        <IconButton
-          className="swipe-button__right"
-          disabled={!canSwipe}
-          style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-          onClick={() => swipe("right")}
-        >
-          <SentimentVerySatisfiedIcon fontSize="large" />
-        </IconButton>
-        <IconButton
-          disabled={!canGoBack}
-          className="swipe-button__undo"
-          style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
-          onClick={() => goBack()}
-        >
-          <UndoIcon fontSize="large" />
-        </IconButton>
-      </Box>
-      {lastDirection ? (
-        <h2 key={lastDirection} className="infoText">
-          You swiped {lastDirection}
-        </h2>
-      ) : (
-        <h2 className="infoText">
-          Swipe a card or press a button to get Restore Card button visible!
-        </h2>
-      )}
-    </Box>
+          {lastDirection ? (
+            <h2 key={lastDirection} className="infoText">
+              You swiped {lastDirection}
+            </h2>
+          ) : (
+            <h2 className="infoText">
+              Swipe a card or press a button to get Restore Card button visible!
+            </h2>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 
-export default Advanced;
+export default Dashboard;

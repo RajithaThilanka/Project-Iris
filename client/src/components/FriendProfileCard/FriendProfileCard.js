@@ -24,6 +24,7 @@ import CoffeeIcon from "@mui/icons-material/Coffee";
 import {
   cancelDateRequest,
   cancelFriendRequest,
+  createChat,
   removeFriend,
   sendDateRequest,
   sendFriendRequest,
@@ -33,6 +34,8 @@ import MatchesContext from "../../context/matches";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Stack } from "@mui/system";
+import { useNavigate } from "react-router-dom";
+import DateTimePicker from "react-datetime-picker";
 
 const style = {
   position: "absolute",
@@ -56,12 +59,15 @@ function FriendProfileCard({ conUser, cardType }) {
   const handleClose = () => setOpen(false);
 
   const initialDate = {
-    scheduledAt: new Date().toDateString(),
+    scheduledAt: new Date(),
     dateType: "coffee",
   };
   const [dateData, setDateData] = useState(initialDate);
   const handleDateData = (event) => {
     setDateData({ ...dateData, [event.target.name]: event.target.value });
+  };
+  const handleScheduledAt = (value) => {
+    setDateData({ ...dateData, scheduledAt: value });
   };
   const {
     dates,
@@ -71,11 +77,34 @@ function FriendProfileCard({ conUser, cardType }) {
     activeUsers,
     setFriends,
     friends,
+    chats,
+    setChats,
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
   } = useContext(MatchesContext);
-
+  const navigate = useNavigate();
   const otherUser =
     conUser.senderId._id === user._id ? conUser.receiverId : conUser.senderId;
+  const accessChat = async () => {
+    try {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await createChat(otherUser._id);
+      if (!chats.find((c) => c._id === data._id)) {
+        setChats([data, ...chats]);
+      }
 
+      setSelectedChat(data);
+      navigate("/me/chat");
+      //   toggleDrawer(anchor, false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // const t = dates.find((date) => {
   //   return (
   //     date.senderId._id === otherUser._id ||
@@ -198,7 +227,7 @@ function FriendProfileCard({ conUser, cardType }) {
                 <FormHelperText sx={{ marginLeft: "8px" }}>
                   Schedule your date
                 </FormHelperText>
-                <TextField
+                {/* <TextField
                   id="date"
                   name="scheduledAt"
                   type="datetime-local"
@@ -208,6 +237,11 @@ function FriendProfileCard({ conUser, cardType }) {
                   }}
                   value={dateData.scheduledAt}
                   onChange={handleDateData}
+                /> */}
+                <DateTimePicker
+                  value={dateData.scheduledAt}
+                  onChange={handleScheduledAt}
+                  minDate={new Date()}
                 />
               </div>
               <div>
@@ -287,7 +321,10 @@ function FriendProfileCard({ conUser, cardType }) {
           </IconButton>
         </Tooltip>
         <Tooltip title="Message" placement="bottom">
-          <IconButton style={{ color: "var(--color-primary)" }}>
+          <IconButton
+            style={{ color: "var(--color-primary)" }}
+            onClick={accessChat}
+          >
             <ChatIcon />
           </IconButton>
         </Tooltip>

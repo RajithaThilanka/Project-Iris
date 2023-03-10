@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
 import "./Welcome.css";
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 function Welcome() {
   const [navOpen, setNavOpen] = useState(false);
+  const features = useRef();
+
+  const handleClick = () => {
+    features.current?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <div>
       <div className="navigation">
@@ -83,9 +88,9 @@ function Welcome() {
                 platforms
               </p>
 
-              <a href="#" className="btn-text">
+              <span href="#" className="btn-text" onClick={handleClick}>
                 Learn more &rarr;
-              </a>
+              </span>
             </div>
             <div className="col-1-of-2">
               <div className="composition">
@@ -117,7 +122,7 @@ function Welcome() {
           </div>
         </section>
 
-        <section className="section-features">
+        <section className="section-features" ref={features}>
           <div className="row">
             <div className="col-1-of-4">
               <div className="feature-box">

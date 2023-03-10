@@ -5,12 +5,15 @@ import "./DateCard.css";
 import Countdown from "react-countdown";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import PostponeDate from "../PostponeDate/PostponeDate";
 function DateCard({ dateInfo }) {
   const navigate = useNavigate();
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const otherUser =
     dateInfo.senderId._id === user._id
       ? dateInfo.receiverId
@@ -33,10 +36,32 @@ function DateCard({ dateInfo }) {
       img: "winterdate.jpg",
     },
   ];
+  const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return <h2>hey</h2>;
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          {days} days: {hours} hours :{minutes} minutes :{seconds} seconds
+        </span>
+      );
+    }
+  };
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const bkgImage = dateImgs.find((d) => d.dateType === dateInfo.dateType);
   return (
     <div className="date-card">
+      {open && (
+        <PostponeDate
+          open={open}
+          setOpen={setOpen}
+          otherUser={otherUser}
+          dateData={dateInfo}
+        />
+      )}
       <div
         className="date-card-img"
         style={{
@@ -51,9 +76,9 @@ function DateCard({ dateInfo }) {
 
       <div className="date-time-remaining">
         <Countdown
+          renderer={renderer}
           date={new Date(Date.parse(dateInfo.scheduledAt)).getTime()}
         />
-        <span style={{ marginLeft: "5px" }}> remaining</span>
       </div>
       <div className="date-partners">
         <div className="partner">
@@ -74,7 +99,7 @@ function DateCard({ dateInfo }) {
         </div>
       </div>
       <div className="date-scheduled-at">
-        {new Date(Date.parse(dateInfo.scheduledAt)).toUTCString()}
+        {new Date(dateInfo.scheduledAt).toString()}
       </div>
       <div className="date-btn-container">
         <Button
@@ -90,7 +115,11 @@ function DateCard({ dateInfo }) {
           Go to date
         </Button>
 
-        <Button variant="contained" className="postpone-btn">
+        <Button
+          variant="contained"
+          className="postpone-btn"
+          onClick={handleOpen}
+        >
           Postpone
         </Button>
       </div>

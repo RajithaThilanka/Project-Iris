@@ -1,6 +1,4 @@
 .connections-container {
-  margin: auto;
-  text-align: center;
-  width: 61vw;
+  flex: 0 0 82%;
   padding: 1rem 1.2rem;
 }

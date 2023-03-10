@@ -27,6 +27,11 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Profile from "./Profile/Profile";
 import Chat from "./pages/Chat/Chat";
 import AboutUs from "./pages/AboutUs/Aboutus";
+
+import Connections from "./pages/Connections/Connections";
+import Friends from "./pages/Friends/Friends";
+import Dates from "./pages/Dates/Dates";
+import Dashboard from "./pages/Dashboard/Dashboard";
 // import DateBox from "./pages/Date/DateBox";
 const theme = createTheme({
   palette: {
@@ -79,11 +84,6 @@ function App() {
       <>
         <Routes>
           <Route
-            path="/me"
-            element={user ? <Feed /> : <Navigate to="/auth/login" />}
-          ></Route>
-
-          <Route
             path="/auth/signup/account-info"
             element={<AccountInfo />}
           ></Route>
@@ -135,8 +135,22 @@ function App() {
           <Route path="/home" element={<Welcome />}></Route>
           <Route path="/" element={<Navigate to="/home" />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>
+          <Route path="/me/dashboard" element={<Dashboard />}></Route>
+          <Route path="/me/connections" element={<Connections />}></Route>
+          <Route path="/me/friends" element={<Friends />}></Route>
+          <Route path="/me/dates" element={<Dates />}></Route>
+          <Route
+            path="/me"
+            element={
+              user ? (
+                <Navigate to="/me/dashboard" />
+              ) : (
+                <Navigate to="/auth/login" />
+              )
+            }
+          ></Route>
+          <Route path="/me/chat" element={<Chat />}></Route>
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
-          <Route path="/chat" element={<Chat />}></Route>
 
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>

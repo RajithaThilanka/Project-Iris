@@ -34,6 +34,7 @@ const limiter = rateLimit({
 
 // running hate speech detection
 // validateChat();
+
 app.use('/api', limiter);
 
 app.use('/api/v1/users', userRouter);

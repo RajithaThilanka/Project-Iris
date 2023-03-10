@@ -197,11 +197,17 @@ function Navbar({ user }) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   return (
-    <AppBar position="static" sx={{ width: "100vw" }}>
+    <AppBar
+      position="static"
+      sx={{
+        width: "100vw",
+        backgroundColor: "var(--color-grey-dark-1)",
+      }}
+    >
       <Container
         sx={{
           width: "100%",
-          backgroundColor: "primary.main",
+          backgroundColor: "var(--color-grey-dark-1)",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -212,7 +218,7 @@ function Navbar({ user }) {
           onClick={() => navigate("/home")}
           style={{ cursor: "pointer" }}
         >
-          <img src="./irislogo.png" alt="iris-logo" />
+          <img src={serverPublic + "irislogo.png"} alt="iris-logo" />
         </div>
         <Toolbar disableGutters sx={{ width: "100%" }}>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}

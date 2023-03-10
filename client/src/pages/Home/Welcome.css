@@ -956,8 +956,7 @@ body {
   animation-fill-mode: backwards;
 }
 
-.btn-text:link,
-.btn-text:visited {
+.btn-text {
   font-size: 1.6rem;
   color: #c81172;
   display: inline-block;

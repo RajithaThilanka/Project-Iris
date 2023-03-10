@@ -14,11 +14,13 @@ import CoffeeIcon from "@mui/icons-material/Coffee";
 import {
   acceptFriend,
   cancelFriendRequest,
+  createChat,
   removeConnection,
   sendFriendRequest,
 } from "../../api/UserRequests";
 import { useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
+import { useNavigate } from "react-router-dom";
 
 function ProfileCard({ conUser, cardType }) {
   const {
@@ -36,13 +38,19 @@ function ProfileCard({ conUser, cardType }) {
     receivedFriendRequests,
     friends,
     setFriends,
+    chats,
+    setChats,
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
   } = useContext(MatchesContext);
 
   const [visible, setVisible] = useState(false);
   const [requestSent, setRequestSent] = useState(
     conUser.status === "friend-req-pending"
   );
-
+  const navigate = useNavigate();
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const handleSendFriendRequest = async (id) => {
     try {
@@ -76,7 +84,24 @@ function ProfileCard({ conUser, cardType }) {
       });
     }
   };
+  const accessChat = async () => {
+    try {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await createChat(otherUser._id);
+      if (!chats.find((c) => c._id === data._id)) {
+        setChats([data, ...chats]);
+      }
 
+      setSelectedChat(data);
+      navigate("/me/chat");
+      //   toggleDrawer(anchor, false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleRemoveConnection = async (id) => {
     console.log(id);
     try {
@@ -265,7 +290,10 @@ function ProfileCard({ conUser, cardType }) {
         )}
 
         <Tooltip title="Message" placement="bottom">
-          <IconButton style={{ color: "var(--color-primary)" }}>
+          <IconButton
+            style={{ color: "var(--color-primary)" }}
+            onClick={accessChat}
+          >
             <ChatIcon />
           </IconButton>
         </Tooltip>
