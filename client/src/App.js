@@ -5,16 +5,40 @@ import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
+import UserProfile from './pages/UProfile/UserProfile'
 
 import Feed from "./pages/Feed/Feed";
-import Welcome from './pages/Home/Welcome';
+import Welcome from "./pages/Home/Welcome";
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import DateCard from "./components/DateCard/DateCard";
 import Request from "./components/Request/Request";
-import Chat from "./pages/Chat/Chat";
+// import UserChat from "./pages/UserChat/UserChat";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DateVideo from "./pages/DateVideo/DateVideo";
+
+import DateDummy from "./pages/DateDummy";
+import AccountInfo from "./components/SignUp/SignUpForms/AccountInfo";
+import UserInfo from "./components/SignUp/SignUpForms/UserInfo";
+import ProfileView from "./components/SignUp/SignUpForms/ProfileView";
+import LookingFor from "./components/SignUp/SignUpForms/LookingFor";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Profile from "./Profile/Profile";
+import Chat from "./pages/Chat/Chat";
+import AboutUs from "./pages/AboutUs/Aboutus";
+<<<<<<< HEAD
+
+import Connections from "./pages/Connections/Connections";
+import Friends from "./pages/Friends/Friends";
+import Dates from "./pages/Dates/Dates";
+import Dashboard from "./pages/Dashboard/Dashboard";
+=======
+import AdminPage from "./pages/Admin/AdminPage";
+import AdminLogin from "./components/AdminLogin/AdminLogin";
+>>>>>>> aecacc7c542e5645c84d9187465381b421102582
+// import DateBox from "./pages/Date/DateBox";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -30,10 +54,19 @@ const theme = createTheme({
     },
     otherColors: {
       light3: "#f0eeee",
+      backgroundc:"#b3e5fc",
     },
+
   },
   shape: {
     borderRadius: 20,
+  },
+  overrides: {
+    MuiAppBar: {
+      colorPrimary: {
+        backgroundColor: "#662E9B",
+      },
+    },
   },
   typography: {
     fontFamily: "Poppins, sans-serif",
@@ -55,41 +88,97 @@ const theme = createTheme({
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
   return (
-    <>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <>
         <Routes>
           <Route
-            path="/me"
-            element={user ? <Feed /> : <Navigate to="/auth" />}
+            path="/auth/signup/account-info"
+            element={<AccountInfo />}
           ></Route>
           <Route
-            path="/"
-            element={user ? <Navigate to="/me" /> : <Navigate to="/auth" />}
+            path="/auth/signup/user-info/:id"
+            element={<UserInfo />}
           ></Route>
           <Route
-            path="/auth"
-            element={user ? <Navigate to="/me" /> : <Auth />}
+            path="/auth/signup/profileview-info/:id"
+            element={<ProfileView />}
           ></Route>
+          <Route
+            path="/auth/signup/lookingfor-info/:id"
+            element={<LookingFor />}
+          ></Route>
+          <Route
+            path="/auth/login"
+            element={user ? <Navigate to="/me" /> : <Auth action="login" />}
+          ></Route>
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/error/:msg" element={<Error />}></Route>
-          <Route path="/confirm-email" element={<ConfirmMail />}></Route>
+          <Route
+            path="/confirm-email"
+            element={
+              <ConfirmMail
+                main="Mail successfully sent"
+                desc=" Please follow the link attached to your email to verify your account"
+              />
+            }
+          ></Route>
+          <Route
+            path="/reset-message"
+            element={
+              <ConfirmMail
+                main="Mail successfully sent"
+                desc=" Please follow the link attached to your email to reset your password"
+              />
+            }
+          ></Route>
           <Route
             path="/users/verify/:userId/:token"
             element={<VerifyMail />}
           ></Route>
+          <Route path="/me/profile" element={<UserProfile />}></Route>
+          <Route path="/admin" element={<AdminPage/>}></Route>
+          <Route
+            path="/users/reset-password/:token"
+            element={<ResetPassword />}
+          ></Route>
 
-          <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
+          <Route path="/home" element={<Welcome />}></Route>
+          <Route path="/" element={<Navigate to="/home" />}></Route>
+          <Route path="/about-us" element={<AboutUs />}></Route>
+          <Route path="/me/dashboard" element={<Dashboard />}></Route>
+          <Route path="/me/connections" element={<Connections />}></Route>
+          <Route path="/me/friends" element={<Friends />}></Route>
+          <Route path="/me/dates" element={<Dates />}></Route>
+          <Route
+            path="/me"
+            element={
+              user ? (
+                <Navigate to="/me/dashboard" />
+              ) : (
+                <Navigate to="/auth/login" />
+              )
+            }
+          ></Route>
+          <Route path="/me/chat" element={<Chat />}></Route>
+          <Route path="/video-date/:id" element={<DateDummy />}></Route>
+<<<<<<< HEAD
+
+=======
+          <Route path="/chat" element={<Chat />}></Route>
+           <Route path="/admin/login" element={<AdminLogin />}></Route>
+>>>>>>> aecacc7c542e5645c84d9187465381b421102582
           <Route path="*" element={<h1>Page not found</h1>} />
-
         </Routes>
         {/* <Chat /> */}
-      </ThemeProvider>
-      <ToastContainer
-        style={{
-          fontSize: "1.3rem",
-          fontFamily: "Poppins, sans-serif",
-        }}
-      />
-    </>
+
+        <ToastContainer
+          style={{
+            fontSize: "1.3rem",
+            fontFamily: "Poppins, sans-serif",
+          }}
+        />
+      </>
+    </ThemeProvider>
   );
 }
 

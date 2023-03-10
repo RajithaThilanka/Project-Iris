@@ -2,7 +2,7 @@ const express = require('express');
 const datesController = require('../controllers/datesController');
 const authController = require('../controllers/authController');
 const friendsController = require('../controllers/friendsController');
-
+const dateMessageController = require('../controllers/dateMessageController');
 const router = express.Router({ mergeParams: true });
 
 router
@@ -57,6 +57,43 @@ router
     authController.checkManualVerification,
     datesController.removeDate
   );
+
+router
+  .route('/chat')
+  .get(
+    authController.protect,
+    authController.checkManualVerification,
+    datesController.accessDateChat
+  );
+
+router
+  .route('/chat/fetch')
+  .get(
+    authController.protect,
+    authController.checkManualVerification,
+    datesController.fetchDateChats
+  );
+
+router
+  .route('/chat/message')
+  .post(
+    authController.protect,
+    authController.checkManualVerification,
+    dateMessageController.sendDateMessage
+  )
+  .get(
+    authController.protect,
+    authController.checkManualVerification,
+    dateMessageController.allDateMessages
+  );
+
+// router
+//   .route('/:id')
+//   .get(
+//     authController.protect,
+//     authController.checkManualVerification,
+//     datesController.getDate
+//   );
 router
   .route('/')
   .get(

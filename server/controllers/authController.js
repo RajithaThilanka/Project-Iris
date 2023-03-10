@@ -13,7 +13,8 @@ const ManualVerification = require('../models/manualVerificationModel');
 const { formatMils } = require('../utils/utilFuncs');
 const Answer = require('../models/answerModel');
 const Question = require('../models/questionModel');
-
+const fs = require('fs');
+const { dirname } = require('path');
 const signToken = id =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
@@ -60,15 +61,115 @@ const setupAnswerModel = async user => {
   );
 };
 
-const setupLookingFor = async (user, req) => {
-  const { lookingFor } = req.body;
-  delete req.body?.lookingFor;
+exports.setupLookingFor = catchAsync(async (req, res, next) => {
+  const { lookingForGender, minAge, maxAge, minHeight, maxHeight, userId } =
+    req.body;
+
   const newLookingFor = await LookingFor.create({
-    userId: user._id,
-    ...lookingFor,
+    userId,
+    gender: lookingForGender,
+    ageRange: {
+      minAge,
+      maxAge,
+    },
+    height: {
+      minHeight,
+      maxHeight,
+    },
   });
-};
-exports.signup = catchAsync(async (req, res, next) => {
+
+  const newUserVerification = await UserVerification.create({
+    userId,
+  });
+
+  const existingUser = await User.findById(userId);
+  const confirmationToken = newUserVerification.createConfirmationToken();
+
+  newUserVerification.save({ validateBeforeSave: false });
+
+  const message = `<p>Verify your email address to complete the signup and login into your account.</p><p>This link <b>expires in 2 days</b></p><p>Press <a href=${
+    process.env.FRONT_END_BASE_URL +
+    'users/verify/' +
+    userId +
+    '/' +
+    confirmationToken
+  }>here</a> to proceed</p>`;
+  try {
+    await sendEmail({
+      email: existingUser.email,
+      subject: 'Please verify your account (Valid for 2 days)',
+      message,
+    });
+    res.status(200).json({
+      status: 'success',
+      message: 'link sent to mail',
+      data: null,
+    });
+  } catch (err) {
+    return next(new AppError('There was an error sending the email!', 500));
+  }
+});
+
+// exports.signup = catchAsync(async (req, res, next) => {
+//   const notAllowed = [
+//     'role',
+//     'verified',
+//     'manuallyVerified',
+//     'isClustered',
+//     'active',
+//   ];
+
+//   notAllowed.forEach(field => {
+//     if (Object.keys(req.body).includes(field)) delete req.body[field];
+//   });
+
+//   let existingUser;
+
+//   existingUser = await User.findOne({ email: req.body.email });
+//   if (existingUser) {
+//     return next(
+//       new AppError('The email is already signed up. Login instead', 400)
+//     );
+//   }
+//   const newUser = await User.create(req.body);
+//   // setup answer model
+//   setupAnswerModel(newUser);
+//   // setup looking for
+//   setupLookingFor(newUser, req);
+
+//   const newUserVerification = await UserVerification.create({
+//     userId: newUser._id,
+//   });
+
+//   const confirmationToken = newUserVerification.createConfirmationToken();
+
+//   newUserVerification.save({ validateBeforeSave: false });
+//   const message = `<p>Verify your email address to complete the signup and login into your account.</p><p>This link <b>expires in 2 days</b></p><p>Press <a href=${
+//     process.env.FRONT_END_BASE_URL +
+//     'users/verify/' +
+//     newUser._id +
+//     '/' +
+//     confirmationToken
+//   }>here</a> to proceed</p>`;
+//   try {
+//     await sendEmail({
+//       email: newUser.email,
+//       subject: 'Please verify your account (Valid for 2 days)',
+//       message,
+//     });
+//     res.status(200).json({
+//       status: 'success',
+//       message: 'Message sent to email',
+//       data: {
+//         data: newUser,
+//       },
+//     });
+//   } catch (err) {
+//     return next(new AppError('There was an error sending the email!', 500));
+//   }
+// });
+
+exports.signupAccountInfo = catchAsync(async (req, res, next) => {
   const notAllowed = [
     'role',
     'verified',
@@ -89,42 +190,114 @@ exports.signup = catchAsync(async (req, res, next) => {
       new AppError('The email is already signed up. Login instead', 400)
     );
   }
-  const newUser = await User.create(req.body);
+  const { firstname, lastname, email, password, passwordConfirm } = req.body;
+  const newUser = await User.create({
+    firstname,
+    lastname,
+    email,
+    password,
+    passwordConfirm,
+  });
   // setup answer model
   setupAnswerModel(newUser);
-  // setup looking for
-  setupLookingFor(newUser, req);
 
-  const newUserVerification = await UserVerification.create({
-    userId: newUser._id,
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: newUser,
+    },
+  });
+});
+
+exports.signupUserInfo = catchAsync(async (req, res, next) => {
+  const notAllowed = [
+    'role',
+    'verified',
+    'manuallyVerified',
+    'isClustered',
+    'active',
+  ];
+
+  notAllowed.forEach(field => {
+    if (Object.keys(req.body).includes(field)) delete req.body[field];
   });
 
-  const confirmationToken = newUserVerification.createConfirmationToken();
-
-  newUserVerification.save({ validateBeforeSave: false });
-  const message = `<p>Verify your email address to complete the signup and login into your account.</p><p>This link <b>expires in 2 days</b></p><p>Press <a href=${
-    process.env.FRONT_END_BASE_URL +
-    'users/verify/' +
-    newUser._id +
-    '/' +
-    confirmationToken
-  }>here</a> to proceed</p>`;
-  try {
-    await sendEmail({
-      email: newUser.email,
-      subject: 'Please verify your account (Valid for 2 days)',
-      message,
-    });
-    res.status(200).json({
-      status: 'success',
-      message: 'Message sent to email',
-      data: {
-        data: newUser,
-      },
-    });
-  } catch (err) {
-    return next(new AppError('There was an error sending the email!', 500));
+  const {
+    gender,
+    height,
+    country,
+    dob,
+    languages,
+    occupation,
+    educationLevel,
+    religion,
+    ethnicity,
+    monthlyIncome,
+    hasChildren,
+    userId,
+  } = req.body;
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      gender,
+      height,
+      country,
+      dob,
+      languages,
+      occupation,
+      educationLevel,
+      religion,
+      ethnicity,
+      monthlyIncome,
+      hasChildren,
+    },
+    { new: true }
+  );
+  if (!updatedUser) {
+    return next(new AppError('The email not signed up.', 400));
   }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: updatedUser,
+    },
+  });
+});
+
+exports.signupProfileView = catchAsync(async (req, res, next) => {
+  const notAllowed = [
+    'role',
+    'verified',
+    'manuallyVerified',
+    'isClustered',
+    'active',
+  ];
+
+  notAllowed.forEach(field => {
+    if (Object.keys(req.body).includes(field)) delete req.body[field];
+  });
+
+  const { profilePhoto, userDescription, userId } = req.body;
+  const existingUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      profilePhoto,
+      userDescription,
+    },
+    { new: true }
+  );
+  if (!existingUser) {
+    return next(new AppError('The email is not signed up', 400));
+  }
+
+  res.status(200).json({
+    status: 'success',
+
+    data: {
+      data: existingUser,
+    },
+  });
 });
 
 exports.verify = catchAsync(async (req, res, next) => {
@@ -233,13 +406,25 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     'host'
   )}/api/v1/users/reset-password/${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to:${resetURL}.`;
+  // const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to:${resetURL}.`;
+  let msg = fs.readFileSync(`${__dirname}/ResetPassword.html`, 'utf-8');
+  msg = msg.replaceAll('$EMAIL_TITLE$', 'Forgot your password?');
+  msg = msg.replaceAll(
+    '$EMAIL_MESSAGE$',
+    'A request has been received to change the password for your IRIS account. If you did not initiate this request, please ignore this email.'
+  );
+  msg = msg.replaceAll('$HOME_LINK$', `${process.env.FRONT_END_BASE_URL}home`);
 
+  msg = msg.replaceAll(
+    '$CTA_BTN_LINK$',
+    `${process.env.FRONT_END_BASE_URL}users/reset-password/${resetToken}`
+  );
+  msg = msg.replaceAll('$CTA_BTN_TEXT$', `Reset Password`);
   try {
     await sendEmail({
       email: user.email,
       subject: 'Your password reset token (valid for 10mins)',
-      message,
+      message: msg,
     });
     res.status(200).json({
       status: 'success',
