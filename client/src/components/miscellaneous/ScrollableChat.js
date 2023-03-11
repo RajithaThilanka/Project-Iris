@@ -41,7 +41,7 @@ function ScrollableChat({ messages }) {
                     width: "1.5rem",
                     height: "1.5rem",
                   }}
-                  src={m.sender.profilePhoto}
+                  src={serverPublic + m.sender.profilePhoto}
                 >
                   {m.sender.firstname[0]}
                 </Avatar>

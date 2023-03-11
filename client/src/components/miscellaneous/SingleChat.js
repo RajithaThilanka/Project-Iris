@@ -206,7 +206,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                   >
                     <Avatar
                       alt="user avatar"
-                      src={getSenderFull(user, selectedChat.users).profilePhoto}
+                      src={
+                        serverPublic +
+                        getSenderFull(user, selectedChat.users).profilePhoto
+                      }
                       style={{ cursor: "pointer" }}
                       onClick={() => setOpen(true)}
                     />

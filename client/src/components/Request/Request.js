@@ -10,10 +10,13 @@ function Request({ data, reqType, handleAcceptClick, handleCancelClick }) {
     <div className="request-container">
       <div className="req-user-img">
         {reqType === "received" ? (
-          <img src={data.senderId.profilePhoto} alt={data?.senderId?.callTag} />
+          <img
+            src={serverPublic + data.senderId.profilePhoto}
+            alt={data?.senderId?.callTag}
+          />
         ) : (
           <img
-            src={data.receiverId.profilePhoto}
+            src={serverPublic + data.receiverId.profilePhoto}
             alt={data?.receiverId?.callTag}
           />
         )}

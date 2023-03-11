@@ -16,6 +16,8 @@ code {
   --color-secondary: #0fd1fc;
   --color-primary-light: #eb2f64;
   --color-primary-dark: #ba265d;
+  --color-quaternary: #f07a6a;
+  --color-quinary: #ee6352;
 
   --color-grey-light-1: rgb(250, 249, 249);
   --color-grey-light-2: rgb(244, 242, 242);

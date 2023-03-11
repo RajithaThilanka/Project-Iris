@@ -506,7 +506,10 @@ function Navbar({ user }) {
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                   variant={socketConnected ? "dot" : ""}
                 >
-                  <Avatar alt="user avatar" src={user.profilePhoto} />
+                  <Avatar
+                    alt="user avatar"
+                    src={serverPublic + user.profilePhoto}
+                  />
                 </StyledBadge>
               </IconButton>
             </Tooltip>

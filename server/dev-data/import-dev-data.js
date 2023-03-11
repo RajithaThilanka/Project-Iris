@@ -174,7 +174,7 @@ const countries = [
 
 // Add the user to the cluster when signing up
 
-const passions = JSON.parse(fs.readFileSync('./updatedPassions.json', 'utf-8'));
+const ids = JSON.parse(fs.readFileSync('./userIds.json', 'utf-8'));
 // const updated = users.map((u, index) => {
 //   return {
 //     ...u,
@@ -185,14 +185,21 @@ const passions = JSON.parse(fs.readFileSync('./updatedPassions.json', 'utf-8'));
 // fs.writeFileSync('./test.json', JSON.stringify(updated), 'utf-8');
 const import_data = async () => {
   // await User.create(users, { validateBeforeSave: false });
-  let users = await User.find({});
-  // users = users.slice(10);
-  const updatedLookingFor = users.map((u, i) => {
-    const temp = passions[generate(0, passions.length)];
-    return { ...temp, userId: u._id };
+  ids.forEach(async id => {
+    const r = generate(0, 81);
+    await User.findByIdAndUpdate(id, {
+      profilePhoto: `user${r}.jpeg`,
+    });
   });
-  fs.writeFileSync('./new.json', JSON.stringify(updatedLookingFor), 'utf-8');
+
+  console.log('done');
+  // let users = await User.find({});
+  // users = users.slice(10);
+  // const ids = users.map((u, i) => {
+  //   return u._id;
+  // });
+  // fs.writeFileSync('./userIds.json', JSON.stringify(ids), 'utf-8');
 };
 //     console.log('Data successfully loaded!');
-deleteDevData();
-// import_data();
+// deleteDevData();
+import_data();

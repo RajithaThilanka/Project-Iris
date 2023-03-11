@@ -39,7 +39,11 @@ function DateCard({ dateInfo }) {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
-      return <h2>hey</h2>;
+      return (
+        <div className="date-on">
+          <h6 className="text_shadows">Let's roll</h6>
+        </div>
+      );
     } else {
       // Render a countdown
       return (
@@ -83,7 +87,7 @@ function DateCard({ dateInfo }) {
       <div className="date-partners">
         <div className="partner">
           <img
-            src={dateInfo.senderId.profilePhoto}
+            src={serverPublic + dateInfo.senderId.profilePhoto}
             alt=""
             className="partner-img"
           />
@@ -91,7 +95,7 @@ function DateCard({ dateInfo }) {
         </div>
         <div className="partner">
           <img
-            src={dateInfo.receiverId.profilePhoto}
+            src={serverPublic + dateInfo.receiverId.profilePhoto}
             alt=""
             className="partner-img"
           />

@@ -46,7 +46,7 @@ function ProfileModal({ modalOpen, handleCloseModal, user }) {
           >
             <img
               style={{ width: "10rem", height: "10rem", borderRadius: "50%" }}
-              src={user.profilePhoto}
+              src={serverPublic + user.profilePhoto}
               alt={user.callTag}
             />
             <h3>Email: {user.email}</h3>
