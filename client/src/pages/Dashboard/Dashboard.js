@@ -183,16 +183,10 @@ function Dashboard() {
   return (
     <>
       <Navbar user={user} />
-      <div style={{ display: "flex" }}>
+      <div className="dashboard-container">
         <VerticalNavbar />
 
-        <div
-          className="container"
-          style={{
-            backgroundImage:
-              "radial-gradient(at top left,var(--color-primary) 1%,transparent)",
-          }}
-        >
+        <div className="container">
           <div className="card-container">
             {matches?.length === 0 ? (
               <div className="loading-icon">
@@ -416,24 +410,15 @@ function Dashboard() {
             >
               <SentimentVerySatisfiedIcon fontSize="large" />
             </IconButton>
-            <IconButton
+            {/* <IconButton
               disabled={!canGoBack}
               className="swipe-button__undo"
               style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
               onClick={() => goBack()}
             >
               <UndoIcon fontSize="large" />
-            </IconButton>
+            </IconButton> */}
           </Box>
-          {lastDirection ? (
-            <h2 key={lastDirection} className="infoText">
-              You swiped {lastDirection}
-            </h2>
-          ) : (
-            <h2 className="infoText">
-              Swipe a card or press a button to get Restore Card button visible!
-            </h2>
-          )}
         </div>
       </div>
     </>
