@@ -13,12 +13,6 @@
   display: flex;
 }
 
-@media only screen and (max-width: 68em) {
-  .dashboard-container {
-    flex-direction: column;
-  }
-}
-
 .container {
   flex: 0 0 82%;
   background-image: radial-gradient(
@@ -33,12 +27,6 @@
   gap: 1rem;
   padding: 2rem;
   overflow: hidden;
-}
-
-@media only screen and (max-width: 55em) {
-  .dashboard-container {
-    flex-direction: column;
-  }
 }
 
 .card-container {
@@ -316,28 +304,5 @@
   }
   100% {
     transform: scale(1, 1);
-  }
-}
-
-@media only screen and (max-width: 68em) {
-  .container {
-    width: 100%;
-    height: 100vh;
-  }
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  .card-container {
-    width: 100%;
-    height: 100%;
-  }
-  .profileContent {
-    /* height: 40rem; */
-  }
-
-  .swipe-buttons {
-    /* margin-left: 36rem; */
-    /* margin-top: 2.5rem; */
   }
 }

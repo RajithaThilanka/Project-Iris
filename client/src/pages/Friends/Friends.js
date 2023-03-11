@@ -46,6 +46,7 @@ function Friends() {
     <>
       <Navbar user={user} />
       <div
+        className="friends-container"
         style={{
           display: "flex",
           backgroundImage:
@@ -54,7 +55,7 @@ function Friends() {
       >
         <VerticalNavbar />
         <Pulse>
-          <div className="friends-container">
+          <div className="friends">
             <ProfileCards cardType="friend" />
           </div>
         </Pulse>

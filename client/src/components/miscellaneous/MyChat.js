@@ -11,6 +11,8 @@ import GroupChatModal from "./GroupChatModal";
 import styled from "@emotion/styled";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import CircleIcon from "@mui/icons-material/Circle";
+import "./MyChat.css";
+import SearchIcon from "@mui/icons-material/Search";
 function MyChat({ fetchAgain, setFetchAgain }) {
   const {
     data: { user },
@@ -53,8 +55,6 @@ function MyChat({ fetchAgain, setFetchAgain }) {
         position: "absolute",
         top: 0,
         left: 0,
-        width: "100%",
-        height: "100%",
         borderRadius: "50%",
         animation: "ripple 1.2s infinite ease-in-out",
         border: "1px solid currentColor",
@@ -74,64 +74,29 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   }));
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div
-      style={{
-        display: selectedChat ? "none" : "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "24px",
-        backgroundColor: "var(--color-primary)",
-        width: "100%",
-        borderRadius: "15px",
-        borderWidth: "1px",
-        maxWidth: "70%",
-        margin: "0 auto",
-      }}
-    >
-      <div
-        style={{
-          fontSize: "28px",
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-          alignItems: "center",
-          background: "var(--color-primary)",
-          borderRadius: "20px",
-          marginBottom: "0.8rem",
-        }}
-      >
-        <h6
-          style={{
-            fontSize: "2rem",
-            color: "#fff",
-
-            flex: 1,
-            textAlign: "center",
-          }}
-        >
-          My Chats
-        </h6>
-        <GroupChatModal>
-          <IconButton
-            variant="contained"
-            style={{ display: "flex", fontSize: "12px" }}
-          >
-            <AddCircleIcon style={{ color: "#fff" }} />
+    <div className="chat" style={{ display: selectedChat ? "none" : "flex" }}>
+      <div className="contacts_card">
+        <form className="search">
+          <input
+            type="text"
+            placeholder="Search..."
+            name=""
+            className="search__input"
+          />
+          <IconButton className="search__button">
+            <SearchIcon className="search__icon" />
           </IconButton>
-        </GroupChatModal>
+        </form>
       </div>
       <div
         style={{
-          padding: "24px",
-          backgroundColor: "#F8F8F8",
           width: "100%",
           height: "100%",
-          borderRadius: "24px",
           overflow: "hidden",
         }}
       >
         {chats ? (
-          <Stack overflow="scroll" spacing={2}>
+          <Stack overflow="scroll" spacing={2} sx={{ height: "100%" }}>
             {chats.map((chat) => {
               return (
                 <div
@@ -142,17 +107,12 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                     );
                   }}
                   key={chat._id}
+                  className="chat-contact"
                   style={{
                     cursor: "pointer",
-                    // backgroundColor:
-                    //   selectedChat === chat
-                    //     ? "var(--color-primary-light)"
-                    //     : "#E8E8E8",
-                    // color: selectedChat === chat ? "white" : "black",
-                    background: "var( --color-grey-light-3)",
-                    borderRadius: "50px",
-                    padding: " 16px 24px",
-                    overflowY: "scroll",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    color: "#fff",
+                    height: "10rem",
                   }}
                 >
                   {!chat.isGroupChat ? (
@@ -161,7 +121,8 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                         display: "flex",
                         flexDirection: "row",
                         alignItems: "center",
-                        gap: "20px",
+                        gap: "10px",
+                        padding: " 16px 24px",
                       }}
                     >
                       <StyledBadge
@@ -185,16 +146,19 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                             serverPublic +
                             getSenderFull(loggedUser, chat.users).profilePhoto
                           }
+                          sx={{
+                            width: "7rem",
+                            height: "7rem",
+                            border: "1px solid #fff",
+                          }}
                         />
                       </StyledBadge>
                       <h6
                         style={{
-                          // backgroundColor: "var(--color-primary)",
-                          color: "#000",
-                          fontSize: "1.3rem",
+                          fontSize: "2rem",
                           padding: "0.2rem 2rem",
-                          borderRadius: "20px",
-                          fontWeight: 700,
+
+                          fontWeight: 600,
                           flex: 1,
                         }}
                       >
@@ -206,9 +170,8 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                             display: "flex",
                             alignItems: "center",
                             gap: "10px",
-                            // background: "var(--color-secondary)",
-                            // color: "#000",
-                            fontSize: "1.2rem",
+
+                            fontSize: "1.4rem",
                             fontWeight: "400",
                           }}
                         >
@@ -230,7 +193,9 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                               chat.latestMessage.sender._id === loggedUser._id
                                 ? "You :"
                                 : chat.latestMessage.sender.firstname[0] + ": "
-                            } ${chat.latestMessage.content}`}
+                            } ${
+                              chat.latestMessage.content.slice(0, 10) + " ..."
+                            }`}
                           {notification.some(
                             (not) => not.chat._id === chat._id
                           ) ? (

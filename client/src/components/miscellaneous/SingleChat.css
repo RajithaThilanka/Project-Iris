@@ -7,22 +7,27 @@
 
 .chat-user-header {
   font-size: 2rem;
-  padding: 0 1.8rem 1.2rem 1.2rem;
+
   width: 100%;
   display: flex;
-  /* justify-content: center; */
+  justify-content: space-around;
   align-items: center;
+
   color: #fff;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  padding: 1rem 0;
+  height: 18%;
 }
 
 .chat-container {
   display: flex;
+  padding: 0 1.4rem;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 1.7rem;
-  background-color: var(--color-grey-light-1);
+  background-color: rgba(0, 0, 0, 0.2);
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 1.5rem;
 }
