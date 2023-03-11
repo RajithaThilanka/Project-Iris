@@ -8,7 +8,7 @@ import MatchesContext from "../../context/matches";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import Navbar from "../../components/Appbar/Navbar";
 import { useSelector } from "react-redux";
-
+import "./Connections.css";
 function Connections() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(1);
@@ -32,6 +32,7 @@ function Connections() {
     <>
       <Navbar user={user} />
       <div
+        className="connections-container"
         style={{
           display: "flex",
           backgroundImage:
@@ -40,7 +41,7 @@ function Connections() {
       >
         <VerticalNavbar />
         <Pulse>
-          <div className="connections-container">
+          <div className="connections">
             <ProfileCards cardType="connection" />
           </div>
         </Pulse>

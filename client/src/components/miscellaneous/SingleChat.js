@@ -22,6 +22,7 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import animationData from "../../animations/typing.json";
 import styled from "@emotion/styled";
+import DuoIcon from "@mui/icons-material/Duo";
 import InputEmoji from "react-input-emoji";
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
@@ -173,18 +174,15 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     <>
       {selectedChat ? (
         <>
-          <span className="chat-user-header">
-            <IconButton
-              style={{ display: "flex" }}
-              onClick={() => setSelectedChat("")}
-            >
+          <div className="chat-user-header">
+            <IconButton style={{}} onClick={() => setSelectedChat("")}>
               <ArrowBackIosIcon style={{ color: "#fff" }} />
             </IconButton>
             {!selectedChat.isGroupChat ? (
               <>
                 <div
                   style={{
-                    flex: 1,
+                    flex: 0.9,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -206,14 +204,35 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                   >
                     <Avatar
                       alt="user avatar"
-                      src={getSenderFull(user, selectedChat.users).profilePhoto}
-                      style={{ cursor: "pointer" }}
+                      src={
+                        serverPublic +
+                        getSenderFull(user, selectedChat.users).profilePhoto
+                      }
+                      style={{
+                        cursor: "pointer",
+                        width: "7rem",
+                        height: "7rem",
+                        border: "1px solid #fff",
+                      }}
                       onClick={() => setOpen(true)}
                     />
                   </StyledBadge>
-                  <h6 style={{ fontSize: "1.5rem", fontWeight: "400" }}>
+                  <h6
+                    style={{
+                      fontSize: "1.8rem",
+                      fontWeight: "400",
+                      fontFamily: "inherit",
+                    }}
+                  >
                     {getSender(user, selectedChat.users)}
                   </h6>
+                  <DuoIcon
+                    fontSize="large"
+                    sx={{
+                      width: "4rem",
+                      height: "4rem",
+                    }}
+                  />
                 </div>
 
                 <ProfileModal
@@ -232,7 +251,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 />
               </>
             )}
-          </span>
+          </div>
           <div className="chat-container">
             {loading ? (
               <div
@@ -273,6 +292,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 onChange={typingHandler}
                 value={newMessage}
                 onEnter={sendMessage}
+                theme="dark"
               />
             </div>
           </div>

@@ -9,15 +9,17 @@
 .row > * {
   margin: 5px;
 }
+.dashboard-container {
+  display: flex;
+}
 
 .container {
   flex: 0 0 82%;
-  /* background-image: linear-gradient(
-    to right bottom,
-    var(--color-primary),
+  background-image: radial-gradient(
+    at top left,
+    var(--color-primary) 1%,
     transparent
-  ); */
-  /* background: linear-gradient(to right, rgb(248, 87, 166), rgb(255, 88, 88)); */
+  );
   height: 100vh;
   margin: auto;
   display: flex;
@@ -26,15 +28,18 @@
   padding: 2rem;
   overflow: hidden;
 }
+
 .card-container {
-  width: 100%;
+  width: 80%;
+  max-width: 85rem;
   height: 60vh;
   position: relative;
   padding: 2rem;
+  margin: auto;
 }
 .swipe {
   position: absolute;
-  height: 90%;
+  height: 50rem;
 }
 .sugg-card {
   width: 30rem;
@@ -48,7 +53,7 @@
 .profileContent {
   /* border: 1px solid blue; */
   width: 55%;
-  height: 100%;
+  height: 50rem;
   margin-left: auto;
   padding: 1.5rem 2rem;
   border-radius: 10px;
@@ -68,6 +73,7 @@
     var(--color-primary-dark)
   );
   margin: 1rem;
+
   color: #fff;
 }
 .profile--basic-info {
@@ -75,11 +81,12 @@
   align-items: center;
   gap: 5px;
   padding: 1.2rem 1rem;
-  font-size: 1.2rem;
+
+  font-size: 1.4rem;
 }
 .profile--description {
   padding: 1rem 1rem;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   line-height: 2.5rem;
   font-weight: 400;
   background-image: linear-gradient(
@@ -170,6 +177,7 @@
   width: auto;
   padding: 0.5rem 1rem;
   color: #fff;
+  font-size: 1.4rem;
 }
 
 .usertags {
@@ -179,7 +187,7 @@
   align-content: space-between;
   gap: 1.2rem;
   padding: 1rem 1.6rem;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 
 .usertags div {
@@ -203,6 +211,7 @@
   color: #fff;
   animation-name: popup;
   animation-duration: 800ms;
+  font-size: 1.4rem;
 }
 
 .swipe-buttons {
@@ -210,9 +219,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: rgba(0, 0, 0, 0.4); */
+  transform: translateY(-5rem);
 
-  /* background-color: red; */
   gap: 3rem;
 }
 
