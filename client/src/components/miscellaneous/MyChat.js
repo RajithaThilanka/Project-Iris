@@ -74,7 +74,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   }));
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div className="chat" style={{ display: selectedChat ? "none" : "flex" }}>
+    <div className="chat">
       <div className="contacts_card">
         <form className="search">
           <input

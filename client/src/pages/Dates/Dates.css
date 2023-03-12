@@ -1,7 +1,18 @@
 .dates-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   flex: 0 0 82%;
+}
+
+.dates {
   padding: 2rem 2rem;
+  width: 100%;
+  min-height: 100vh;
+}
+
+@media only screen and (max-width: 68em) {
+  .dates-container {
+    flex-direction: column;
+  }
+  .dates {
+    /* height: 100vh; */
+  }
 }

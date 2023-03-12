@@ -3,7 +3,6 @@
   align-items: center;
   flex-direction: column;
 
-  width: 60%;
   border-radius: 1rem;
   border-width: 1px;
   max-width: 55rem;
@@ -12,4 +11,5 @@
   max-height: 65rem;
   background: -webkit-linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
   background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
+  flex: 0 0 60%;
 }
