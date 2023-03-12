@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
-import UserProfile from './pages/UProfile/UserProfile'
+import UserProfile from "./pages/UProfile/UserProfile";
 
 import Feed from "./pages/Feed/Feed";
 import Welcome from "./pages/Home/Welcome";
@@ -30,6 +30,7 @@ import Chat from "./pages/Chat/Chat";
 import AboutUs from "./pages/AboutUs/Aboutus";
 import AdminPage from "./pages/Admin/AdminPage";
 import AdminLogin from "./components/AdminLogin/AdminLogin";
+import SuggessionPage from "./pages/suggestionProfile/SuggessionPage";
 // import DateBox from "./pages/Date/DateBox";
 const theme = createTheme({
   palette: {
@@ -46,12 +47,11 @@ const theme = createTheme({
     },
     otherColors: {
       light3: "#f0eeee",
-      backgroundc:"#b3e5fc",
+      backgroundc: "#b3e5fc",
     },
-
   },
   shape: {
-    borderRadius: 20,
+    borderRadius: 10,
   },
   overrides: {
     MuiAppBar: {
@@ -133,7 +133,8 @@ function App() {
             element={<VerifyMail />}
           ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
-          <Route path="/admin" element={<AdminPage/>}></Route>
+          <Route path="/me/suggestion" element={<SuggessionPage />}></Route>
+          <Route path="/admin" element={<AdminPage />}></Route>
           <Route
             path="/users/reset-password/:token"
             element={<ResetPassword />}
@@ -144,7 +145,7 @@ function App() {
           <Route path="/about-us" element={<AboutUs />}></Route>
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="/chat" element={<Chat />}></Route>
-           <Route path="/admin/login" element={<AdminLogin />}></Route>
+          <Route path="/admin/login" element={<AdminLogin />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}

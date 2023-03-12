@@ -41,18 +41,40 @@ export default function UserVerificationView() {
         </Box>
 
         <Typography variant="h6"> Live Image </Typography>
-        <Box
-          sx={{
-            width: "100%",
-            height: "250px",
-            border: 1,
-            borderRadius: 0.5,
-          }}
-        >
-          <Stack direction="row" spacing="1" sx={{ justifyContent: "center" }}>
-            <Box sx={{ width: "100%" }}>Live Image</Box>
-          </Stack>
-        </Box>
+        <Stack direction="row" spacing={2}>
+          <Box
+            sx={{
+              width: "100%",
+              height: "250px",
+              border: 1,
+              borderRadius: 0.5,
+            }}
+          >
+            <Stack
+              direction="row"
+              spacing="1"
+              sx={{ justifyContent: "center" }}
+            >
+              <Box sx={{ width: "100%" }}>Live Image</Box>
+            </Stack>
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "250px",
+              border: 1,
+              borderRadius: 0.5,
+            }}
+          >
+            <Stack
+              direction="row"
+              spacing="1"
+              sx={{ justifyContent: "center" }}
+            >
+              <Box sx={{ width: "100%" }}>Profile Picture</Box>
+            </Stack>
+          </Box>
+        </Stack>
       </Stack>
     </div>
   );
