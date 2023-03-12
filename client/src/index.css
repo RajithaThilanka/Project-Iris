@@ -82,6 +82,8 @@ body {
   .sidebar {
     width: 100%;
     padding: 1rem 0;
+    height: 100%;
+    min-height: 100%;
   }
 }
 /* bp-largest 
