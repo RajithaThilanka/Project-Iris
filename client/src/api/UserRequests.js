@@ -102,3 +102,8 @@ export const getAllDateMessages = (chatId) =>
 export const getMe = () => API.get("/users/me");
 
 export const removeFriend = (id) => API.patch(`/users/me/friends/remove/${id}`);
+
+export const postponeDate = (id, scheduledAt) =>
+  API.patch(`/users/me/dates/postpone/${id}`, { scheduledAt });
+
+export const fetchWarnings = () => API.get("/report/fetch-warnings");

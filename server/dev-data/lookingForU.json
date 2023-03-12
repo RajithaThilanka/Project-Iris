@@ -1,0 +1,50 @@
+[
+  {
+    "userId": "640b2bbc2e8b8455140fe451",
+    "gender": "female",
+    "ageRange": { "minAge": 10, "maxAge": 80 },
+    "height": { "minHeight": 1, "maxHeight": 10 }
+  },
+  {
+    "userId": "640b2bbc2e8b8455140fe452",
+    "gender": "male",
+    "ageRange": { "minAge": 10, "maxAge": 80 },
+    "height": { "minHeight": 1, "maxHeight": 10 }
+  },
+  {
+    "userId": "640b2bbc2e8b8455140fe453",
+    "gender": "female",
+    "ageRange": { "minAge": 10, "maxAge": 80 },
+    "height": { "minHeight": 1, "maxHeight": 10 }
+  },
+  {
+    "userId": "640b2bbc2e8b8455140fe454",
+    "gender": "female",
+    "ageRange": { "minAge": 10, "maxAge": 80 },
+    "height": { "minHeight": 1, "maxHeight": 10 }
+  },
+  {
+    "userId": "640b2bbc2e8b8455140fe455",
+    "gender": "female",
+    "ageRange": { "minAge": 10, "maxAge": 80 },
+    "height": { "minHeight": 1, "maxHeight": 10 }
+  },
+  {
+    "userId": "640b2bbc2e8b8455140fe456",
+    "gender": "female",
+    "ageRange": { "minAge": 10, "maxAge": 80 },
+    "height": { "minHeight": 1, "maxHeight": 10 }
+  },
+  {
+    "userId": "640b2bbc2e8b8455140fe457",
+    "gender": "male",
+    "ageRange": { "minAge": 10, "maxAge": 80 },
+    "height": { "minHeight": 1, "maxHeight": 10 }
+  },
+  {
+    "userId": "640b2bbc2e8b8455140fe458",
+    "gender": "female",
+    "ageRange": { "minAge": 10, "maxAge": 80 },
+    "height": { "minHeight": 1, "maxHeight": 10 }
+  }
+]

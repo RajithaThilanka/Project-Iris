@@ -195,31 +195,40 @@ exports.getAllReceivedDates = catchAsync(async (req, res, next) => {
 exports.postponeDate = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
-  const postDate = await date.findOneAndUpdate(
-    {
-      $or: [
-        {
-          senderId: userId,
-          receiverId: receiverId,
-        },
-        {
-          senderId: receiverId,
-          receiverId: userId,
-        },
-      ],
-      scheduledAt: {
-        $gte: Date.now(),
+  const postDate = await date
+    .findOneAndUpdate(
+      {
+        $and: [
+          {
+            $or: [
+              {
+                senderId: userId,
+                receiverId: receiverId,
+              },
+              {
+                senderId: receiverId,
+                receiverId: userId,
+              },
+            ],
+          },
+          {
+            scheduledAt: {
+              $gte: Date.now(),
+            },
+          },
+          { status: 'accepted' },
+        ],
       },
-      status: 'accepted',
-    },
-    {
-      scheduledAt: new Date(req.body.scheduledAt),
-    },
-    {
-      validateBeforeSave: true,
-      new: true,
-    }
-  );
+      {
+        scheduledAt: new Date(req.body.scheduledAt),
+      },
+      {
+        validateBeforeSave: true,
+        new: true,
+      }
+    )
+    .populate('senderId')
+    .populate('receiverId');
 
   if (!postDate) {
     return next(new AppError('Request failed', 500));

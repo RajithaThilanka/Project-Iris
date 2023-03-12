@@ -1,6 +1,15 @@
 .friends-container {
-  margin: auto;
-  text-align: center;
-  width: 61vw;
-  padding: 1rem 1.2rem;
+  flex: 0 0 82%;
+}
+.friends {
+  padding: 0.1rem 2rem;
+  width: 100%;
+}
+@media only screen and (max-width: 68em) {
+  .friends-container {
+    flex-direction: column;
+  }
+  .friends {
+    height: 100vh;
+  }
 }

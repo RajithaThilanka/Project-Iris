@@ -15,6 +15,7 @@ import { logout } from "../../actions/AuthActions";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import { useDispatch } from "react-redux";
 import { BsFillPersonCheckFill } from "react-icons/bs";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { BsFillPersonFill } from "react-icons/bs";
 import "./Navbar.css";
 import Requests from "../Requests/Requests";
@@ -25,6 +26,7 @@ import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import MatchesContext from "../../context/matches";
 import {
+  fetchWarnings,
   getAllFriends,
   getReceivedConRequests,
   getReceivedDateRequests,
@@ -34,6 +36,7 @@ import {
   getSentFriendRequests,
 } from "../../api/UserRequests";
 import { useNavigate } from "react-router-dom";
+import Notifications from "../Notifications/Notifications";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
 const settings = ["Profile", "Account", "Dashboard"];
@@ -72,10 +75,13 @@ function Navbar({ user }) {
   const [anchorElFriend, setAnchorElFriend] = useState(null);
   const [anchorElConnection, setAnchorElConnection] = useState(null);
   const [anchorElDate, setAnchorElDate] = useState(null);
-
+  const [anchorElNot, setAnchorElNot] = useState(null);
   const [dateRequests, setDateRequests] = useState();
   const dispatch = useDispatch();
 
+  const handleOpenNotMenu = (event) => {
+    setAnchorElNot(event.currentTarget);
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -90,6 +96,9 @@ function Navbar({ user }) {
   };
   const handleOpenConnectionMenu = (event) => {
     setAnchorElConnection(event.currentTarget);
+  };
+  const handleCloseNotMenu = () => {
+    setAnchorElNot(null);
   };
   const handleCloseFriendMenu = () => {
     setAnchorElFriend(null);
@@ -123,6 +132,8 @@ function Navbar({ user }) {
     receivedDateRequests,
     setsentDateRequests,
     setreceivedDateRequests,
+    notification,
+    setNotification,
   } = useContext(MatchesContext);
   useEffect(() => {
     const fetchsentConRequests = async () => {
@@ -194,14 +205,33 @@ function Navbar({ user }) {
     };
     fetchreceivedDateRequests();
   }, []);
+
+  useEffect(() => {
+    const fetchNewWarnings = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await fetchWarnings();
+      setNotification(data);
+    };
+    fetchNewWarnings();
+  }, []);
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   return (
-    <AppBar position="static" sx={{ width: "100vw" }}>
+    <AppBar
+      position="static"
+      sx={{
+        width: "100vw",
+        backgroundColor: "var(--color-grey-dark-1)",
+      }}
+    >
       <Container
         sx={{
           width: "100%",
-          backgroundColor: "primary.main",
+          backgroundColor: "var(--color-grey-dark-1)",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -212,7 +242,7 @@ function Navbar({ user }) {
           onClick={() => navigate("/home")}
           style={{ cursor: "pointer" }}
         >
-          <img src="./irislogo.png" alt="iris-logo" />
+          <img src={serverPublic + "irislogo.png"} alt="iris-logo" />
         </div>
         <Toolbar disableGutters sx={{ width: "100%" }}>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
@@ -270,25 +300,7 @@ function Navbar({ user }) {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -426,6 +438,45 @@ function Navbar({ user }) {
               </div>
             </Menu>
 
+            {/* Notifications */}
+            <Tooltip title="Open date invitations">
+              <IconButton onClick={handleOpenNotMenu} sx={{ p: 0 }}>
+                <NotificationsIcon
+                  sx={{ color: "#fff", marginTop: "0.5rem" }}
+                />
+                <div className="num-req-count main-notification-count">
+                  {notification.length}
+                </div>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              PaperProps={{
+                sx: {
+                  width: "30rem",
+                  height: "92%",
+                  mt: "35px",
+                  overflow: "scroll",
+                },
+              }}
+              id="menu-appbar"
+              anchorEl={anchorElNot}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElNot)}
+              onClose={handleCloseNotMenu}
+            >
+              <div>
+                <Notifications />
+              </div>
+            </Menu>
+
             {/* Settings */}
             <Tooltip title="Open settings">
               <IconButton
@@ -439,11 +490,7 @@ function Navbar({ user }) {
                 >
                   <Avatar
                     alt="user avatar"
-                    src={
-                      user.profilePhoto
-                        ? serverPublic + user.profilePhoto
-                        : serverPublic + "defaultProfile.png"
-                    }
+                    src={serverPublic + user.profilePhoto}
                   />
                 </StyledBadge>
               </IconButton>

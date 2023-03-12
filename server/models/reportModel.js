@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const reportSchema = mongoose.Schema(
   {
     reportedUser: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
     reportedByUser: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
     reason: {
