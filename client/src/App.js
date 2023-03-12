@@ -10,6 +10,8 @@ import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserProfile from "./pages/UProfile/UserProfile";
+import SuggessionPage from "./pages/suggestionProfile/SuggessionPage";
 
 import DateDummy from "./pages/DateDummy";
 import AccountInfo from "./components/SignUp/SignUpForms/AccountInfo";
@@ -25,7 +27,6 @@ import Friends from "./pages/Friends/Friends";
 import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminPage from "./pages/Admin/AdminPage";
-
 const theme = createTheme({
   palette: {
     type: "light",
@@ -55,7 +56,7 @@ const theme = createTheme({
   },
 
   shape: {
-    borderRadius: 20,
+    borderRadius: 10,
   },
   overrides: {
     MuiAppBar: {
@@ -165,6 +166,11 @@ function App() {
             }
           ></Route>
           <Route path="/me/chat" element={<Chat />}></Route>
+          <Route path="/me/profile" element={<UserProfile />}></Route>
+          <Route
+            path="/me/suggession/profile"
+            element={<SuggessionPage />}
+          ></Route>
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
