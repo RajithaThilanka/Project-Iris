@@ -8,7 +8,12 @@ import { Stack, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { IconButton, Typography } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
-import ProfileReportReason from "../ProfileReportReason/ProfileReportReason";
+import BlockIcon from "@mui/icons-material/Block";
+import { useState, useEffect } from "react";
+import ProfileSuspeneReason from "../ProfileSuspendReason/ProfileSuspeneReason";
+
+// import { getMe } from "../../../api/UserRequests";
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
@@ -24,9 +29,9 @@ const columns = [
     editable: false,
   },
   {
-    field: "reportType",
-    headerName: "Report Type",
-    type: "number",
+    field: "status",
+    headerName: "Status",
+    type: "string",
     width: 110,
     editable: false,
   },
@@ -47,7 +52,7 @@ const columns = [
       return (
         <Stack direction="row" spacing={1}>
           <IconButton size="small" onClick={onClick}>
-            <MessageIcon />
+            <DoneIcon />
           </IconButton>
           <IconButton size="small" onClick={onClick}>
             <VisibilityIcon />
@@ -62,24 +67,19 @@ const columns = [
 ];
 
 const rows = [
-  {
-    id: 1,
-    fullName: "Snow",
-    email: "Jon@gmail.com",
-    reportType: "Fake profile",
-  },
+  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "unverified" },
 
   {
     id: 2,
     fullName: "Lannister",
     email: "Cersei@gmail.com",
-    reportType: "hatespeech",
+    status: "verified",
   },
 ];
 
-export default function Profilereports() {
+export default function SuspendedAccounts() {
   return (
-    <>
+    <div>
       <Stack direction="row" spacing={2}>
         <Box
           sx={{
@@ -89,7 +89,7 @@ export default function Profilereports() {
             textAlign: "center",
           }}
         >
-          <Typography variant="h6">Account Reports </Typography>
+          <Typography variant="h6">Suspended Accounts </Typography>
           <DataGrid
             rows={rows}
             columns={columns}
@@ -101,9 +101,9 @@ export default function Profilereports() {
           />
         </Box>
         <Box>
-          <ProfileReportReason />
+          <ProfileSuspeneReason />
         </Box>
       </Stack>
-    </>
+    </div>
   );
 }

@@ -4,19 +4,19 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import About from '../../components/Profile/Content/ProfileContent'
-import PSettings from '../../components/Profile/ProfileSettings/ProfileSettings'
-import ProAbout from '../../pages/UProfile/About/ProfileAbout'
+import About from "../../components/Profile/Content/ProfileContent";
+import ProAbout from "../../pages/UProfile/About/ProfileAbout";
 import Profileconnection from "./ProfileConnection/Profileconnection";
 import { useSelector } from "react-redux";
+import ProfileSettings from "../../components/Profile/ProfileSettings/ProfileSettings";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-//  const {
-//     data: { user },
-//   } = useSelector((state) => state.authReducer.authData);
+  //  const {
+  //     data: { user },
+  //   } = useSelector((state) => state.authReducer.authData);
 
-//   console.log(user.firstname)
+  //   console.log(user.firstname)
 
   return (
     <div
@@ -27,8 +27,6 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-
-
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
         </Box>
@@ -40,13 +38,13 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -58,7 +56,7 @@ export default function ContentTab() {
   };
 
   return (
-    <Box sx={{ width: "100%", justifyContent: 'center'  }}>
+    <Box sx={{ width: "100%", justifyContent: "center" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -68,8 +66,7 @@ export default function ContentTab() {
         >
           <Tab label="About" {...a11yProps(0)} />
           <Tab label="Connections" {...a11yProps(1)} />
-          <Tab label="Personality profile" {...a11yProps(2)} />
-          <Tab label="Setings" {...a11yProps(3)} />
+          <Tab label="Setings" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -79,11 +76,7 @@ export default function ContentTab() {
         <Profileconnection />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-
-      <TabPanel value={value} index={3}>
-        <PSettings />
+        <ProfileSettings />
       </TabPanel>
     </Box>
   );

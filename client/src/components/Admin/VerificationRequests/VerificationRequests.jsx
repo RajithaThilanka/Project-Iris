@@ -4,11 +4,11 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DoneIcon from "@mui/icons-material/Done";
-import { Stack, Button } from "@mui/material";
+import { Stack, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { IconButton, Typography } from "@mui/material";
-import MessageIcon from "@mui/icons-material/Message";
-import ProfileReportReason from "../ProfileReportReason/ProfileReportReason";
+import { IconButton } from "@mui/material";
+import UserVerificationView from "../UserVerificationData/UserVerificationView";
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
@@ -24,8 +24,8 @@ const columns = [
     editable: false,
   },
   {
-    field: "reportType",
-    headerName: "Report Type",
+    field: "status",
+    headerName: "Status",
     type: "number",
     width: 110,
     editable: false,
@@ -46,8 +46,8 @@ const columns = [
 
       return (
         <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick}>
-            <MessageIcon />
+          <IconButton size="small" onClick={onClick} helperText="Done">
+            <DoneIcon />
           </IconButton>
           <IconButton size="small" onClick={onClick}>
             <VisibilityIcon />
@@ -62,25 +62,20 @@ const columns = [
 ];
 
 const rows = [
-  {
-    id: 1,
-    fullName: "Snow",
-    email: "Jon@gmail.com",
-    reportType: "Fake profile",
-  },
+  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "Verified" },
 
   {
     id: 2,
     fullName: "Lannister",
     email: "Cersei@gmail.com",
-    reportType: "hatespeech",
+    status: "Verified",
   },
 ];
 
-export default function Profilereports() {
+export default function VerificationRequests() {
   return (
     <>
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={3}>
         <Box
           sx={{
             height: 400,
@@ -89,7 +84,7 @@ export default function Profilereports() {
             textAlign: "center",
           }}
         >
-          <Typography variant="h6">Account Reports </Typography>
+          <Typography variant="h6"> Verification Requests</Typography>
           <DataGrid
             rows={rows}
             columns={columns}
@@ -101,7 +96,7 @@ export default function Profilereports() {
           />
         </Box>
         <Box>
-          <ProfileReportReason />
+          <UserVerificationView />
         </Box>
       </Stack>
     </>
