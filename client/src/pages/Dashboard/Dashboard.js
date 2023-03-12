@@ -239,6 +239,32 @@ function Dashboard() {
                       </div>
                     </div>
                   </div>
+                  <Box className="swipe-buttons">
+                    <IconButton
+                      className="swipe-button__left"
+                      style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+                      onClick={() => swipe("left")}
+                    >
+                      <MoodBadIcon fontSize="large" />
+                    </IconButton>
+
+                    <IconButton
+                      className="swipe-button__right"
+                      disabled={!canSwipe}
+                      style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+                      onClick={() => swipe("right")}
+                    >
+                      <SentimentVerySatisfiedIcon fontSize="large" />
+                    </IconButton>
+                    <IconButton
+                      disabled={!canGoBack}
+                      className="swipe-button__undo"
+                      style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
+                      onClick={() => goBack()}
+                    >
+                      <UndoIcon fontSize="large" />
+                    </IconButton>
+                  </Box>
                 </TinderCard>
               ))
             )}
@@ -393,32 +419,6 @@ function Dashboard() {
               </Box>
             )}
           </div>
-          <Box className="swipe-buttons">
-            <IconButton
-              className="swipe-button__left"
-              style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-              onClick={() => swipe("left")}
-            >
-              <MoodBadIcon fontSize="large" />
-            </IconButton>
-
-            <IconButton
-              className="swipe-button__right"
-              disabled={!canSwipe}
-              style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-              onClick={() => swipe("right")}
-            >
-              <SentimentVerySatisfiedIcon fontSize="large" />
-            </IconButton>
-            {/* <IconButton
-              disabled={!canGoBack}
-              className="swipe-button__undo"
-              style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
-              onClick={() => goBack()}
-            >
-              <UndoIcon fontSize="large" />
-            </IconButton> */}
-          </Box>
         </div>
       </div>
     </>
