@@ -39,6 +39,11 @@ exports.inviteDate = catchAsync(async (req, res, next) => {
           },
         ],
       },
+      {
+        scheduledAt: {
+          $lte: Date.now(),
+        },
+      },
     ],
   });
   if (doc) {

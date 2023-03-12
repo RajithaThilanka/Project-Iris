@@ -31,6 +31,7 @@ function Dates() {
     <>
       <Navbar user={user} />
       <div
+        className="dates-container"
         style={{
           display: "flex",
           backgroundImage:
@@ -39,7 +40,7 @@ function Dates() {
       >
         <VerticalNavbar />
         <Pulse>
-          <div className="dates-container">
+          <div className="dates">
             <DateCards />
           </div>
         </Pulse>
