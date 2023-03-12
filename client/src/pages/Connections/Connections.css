@@ -4,12 +4,12 @@
 .connections {
   padding: 0.1rem 2rem;
   width: 100%;
+  min-height: 100vh;
 }
 @media only screen and (max-width: 68em) {
   .connections-container {
     flex-direction: column;
   }
   .connections {
-    height: 100vh;
   }
 }
