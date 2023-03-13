@@ -28,20 +28,20 @@ const filterByLookingFor = (users, lookingFor) => {
 
 exports.generateSuggestions = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user._id);
-
+  const passions = await Answer.findOne({ userId: req.user._id });
   // const isClustered = user.isClustered;
   const isClustered = true;
   const ageDifMs = Date.now() - user.dob.getTime();
   const ageDate = new Date(ageDifMs); // miliseconds from epoch
   const Age = Math.abs(ageDate.getUTCFullYear() - 1970);
   const userData = {
-    Bios: user.profileDescription,
+    Bios: passions.profileDescription,
     Religion: user.religion,
-    Politics: user.politics,
-    Movies: user.movies,
-    Music: user.music,
-    Social_Media: user.socialMedia,
-    Sports: user.sports,
+    Politics: passions.politics,
+    Movies: passions.movies,
+    Music: passions.music,
+    Social_Media: passions.socialMedia,
+    Sports: passions.sports,
     Age,
     isClustered,
   };
@@ -54,15 +54,28 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
   };
 
   const sentUsers = await request(options);
-  const aiSuggestedUsers = await getUsersByIndex(sentUsers);
-  const filteredUsers = filterByLookingFor(aiSuggestedUsers);
+  let suggestions = await getUsersByIndex(sentUsers);
+  // const filteredUsers = filterByLookingFor(aiSuggestedUsers);
+  // suggestions = suggestions.slice(0, 10);
 
+  let updatedSuggestionsPromises = suggestions.map(async user => {
+    const l = await LookingFor.findOne({ userId: user._id });
+    const p = await Answer.findOne({ userId: user._id });
+    return { ...user, lookingFor: l, interests: p };
+  });
+
+  let updatedSuggestions = await Promise.all(updatedSuggestionsPromises);
+  updatedSuggestions = updatedSuggestions.map(sug => {
+    const { _doc, lookingFor, interests } = sug;
+    return { ..._doc, lookingFor: lookingFor, interests: interests };
+  });
   // Looking for
 
   res.status(200).json({
     status: 'success',
+    nSuggestions: updatedSuggestions.length,
     data: {
-      data: filteredUsers,
+      data: updatedSuggestions,
     },
   });
 });
@@ -112,6 +125,7 @@ exports.generateUserSuggestions = catchAsync(async (req, res, next) => {
     const p = await Answer.findOne({ userId: user._id });
     return { ...user, lookingFor: l, interests: p };
   });
+
   let updatedSuggestions = await Promise.all(updatedSuggestionsPromises);
   updatedSuggestions = updatedSuggestions.map(sug => {
     const { _doc, lookingFor, interests } = sug;

@@ -486,16 +486,17 @@ exports.checkManualVerification = catchAsync(async (req, res, next) => {
   const verification = await ManualVerification.findOne({
     userId: req.user._id,
   });
-
+  if (!verification) {
+    return next(
+      new AppError('You have to verify your account to access this service')
+    );
+  }
   if (verification?.status == 'verified') return next();
   else if (!verification || verification?.status == 'pending') {
     const allowedMs = 7 * 24 * 60 * 60 * 1000;
     const diffMs = Math.abs(Date.now() - req.user.createdAt);
     if (diffMs <= allowedMs) return next();
   }
-  return next(
-    new AppError('You have to verify your account to access this service')
-  );
 });
 
 // Admin login

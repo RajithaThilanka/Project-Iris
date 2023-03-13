@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 
 const User = require(`../models/userModel`);
+const Answer = require('../models/answerModel');
 
 const dotenv = require('dotenv');
 
@@ -28,7 +29,8 @@ const deleteDevData = async () => {
     // await Chat.deleteMany();
     // await Message.deleteMany();
     // await User.deleteMany();
-    // await LookingFor.deleteMany();
+    await LookingFor.deleteMany();
+    // await Answer.deleteMany();
   } catch (error) {
     console.log(error);
   }
@@ -175,6 +177,7 @@ const countries = [
 // Add the user to the cluster when signing up
 
 const ids = JSON.parse(fs.readFileSync('./userIds.json', 'utf-8'));
+const looking = JSON.parse(fs.readFileSync('./new.json', 'utf-8'));
 // const updated = users.map((u, index) => {
 //   return {
 //     ...u,
@@ -185,13 +188,16 @@ const ids = JSON.parse(fs.readFileSync('./userIds.json', 'utf-8'));
 // fs.writeFileSync('./test.json', JSON.stringify(updated), 'utf-8');
 const import_data = async () => {
   // await User.create(users, { validateBeforeSave: false });
-  ids.forEach(async id => {
-    const r = generate(0, 81);
-    await User.findByIdAndUpdate(id, {
-      profilePhoto: `user${r}.jpeg`,
-    });
+  const updatedLooking = looking.map((p, i) => {
+    return { ...p, userId: { $oid: `${ids[i]}` } };
   });
-
+  fs.writeFileSync('./new.json', JSON.stringify(updatedLooking), 'utf-8');
+  // await LookingFor.updateMany(
+  //   {},
+  //   {
+  //     userId: mongoose.Types.ObjectId(this.userId),
+  //   }
+  // );
   console.log('done');
   // let users = await User.find({});
   // users = users.slice(10);
@@ -203,3 +209,5 @@ const import_data = async () => {
 //     console.log('Data successfully loaded!');
 // deleteDevData();
 import_data();
+
+// "_id": { "$oid":"dbfe53c3c4d568240378b0c6"}

@@ -1,4 +1,4 @@
-import { Button, Chip, Divider, IconButton } from "@mui/material";
+import { Button, Chip, Divider, IconButton, Tooltip } from "@mui/material";
 import Zoom from "react-reveal/Zoom";
 import { Box } from "@mui/system";
 import React, { useState, useMemo, useRef, useEffect, createRef } from "react";
@@ -240,30 +240,36 @@ function Dashboard() {
                     </div>
                   </div>
                   <Box className="swipe-buttons">
-                    <IconButton
-                      className="swipe-button__left"
-                      style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-                      onClick={() => swipe("left")}
-                    >
-                      <MoodBadIcon fontSize="large" />
-                    </IconButton>
+                    <Tooltip title="Unlike" arrow>
+                      <IconButton
+                        className="swipe-button__left"
+                        style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+                        onClick={() => swipe("left")}
+                      >
+                        <MoodBadIcon fontSize="large" />
+                      </IconButton>
+                    </Tooltip>
 
-                    <IconButton
-                      className="swipe-button__right"
-                      disabled={!canSwipe}
-                      style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-                      onClick={() => swipe("right")}
-                    >
-                      <SentimentVerySatisfiedIcon fontSize="large" />
-                    </IconButton>
-                    <IconButton
-                      disabled={!canGoBack}
-                      className="swipe-button__undo"
-                      style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
-                      onClick={() => goBack()}
-                    >
-                      <UndoIcon fontSize="large" />
-                    </IconButton>
+                    <Tooltip title="Like" arrow>
+                      <IconButton
+                        className="swipe-button__right"
+                        disabled={!canSwipe}
+                        style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
+                        onClick={() => swipe("right")}
+                      >
+                        <SentimentVerySatisfiedIcon fontSize="large" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Undo" arrow>
+                      <IconButton
+                        disabled={!canGoBack}
+                        className="swipe-button__undo"
+                        style={{ backgroundColor: !canGoBack && "#c3c4d3" }}
+                        onClick={() => goBack()}
+                      >
+                        <UndoIcon fontSize="large" />
+                      </IconButton>
+                    </Tooltip>
                   </Box>
                 </TinderCard>
               ))

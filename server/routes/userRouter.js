@@ -40,6 +40,14 @@ router
     aiController.generateUserSuggestions
   );
 router
+  .route('/me/suggestions/ai')
+  .get(
+    authController.protect,
+    authController.checkManualVerification,
+    aiController.generateSuggestions
+  );
+
+router
   .route('/me/manual-verify')
   .post(authController.protect, authController.requestManualVerify);
 router.use('/me/connections', connectionsRouter);
