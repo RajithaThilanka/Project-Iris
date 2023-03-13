@@ -1,5 +1,7 @@
 const Connection = require('../models/connectionsModel');
 const date = require('../models/dateModel');
+const User = require('../models/userModel');
+const DateChat = require('../models/dateChatModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -13,23 +15,34 @@ exports.inviteDate = catchAsync(async (req, res, next) => {
     return next(new AppError('Date Request to yourself unauthorized', 401));
   }
 
-  const doc = await Connection.findOne({
-    $or: [
+  const doc = await date.findOne({
+    $and: [
       {
-        senderId: userId,
-        receiverId: receiverId,
+        $or: [
+          {
+            senderId: userId,
+            receiverId: receiverId,
+          },
+          {
+            senderId: receiverId,
+            receiverId: userId,
+          },
+        ],
       },
       {
-        senderId: receiverId,
-        receiverId: userId,
+        $or: [
+          {
+            status: 'pending',
+          },
+          {
+            status: 'accepted',
+          },
+        ],
       },
-    ],
-    $or: [
       {
-        status: 'pending',
-      },
-      {
-        status: 'accepted',
+        scheduledAt: {
+          $lte: Date.now(),
+        },
       },
     ],
   });
@@ -39,17 +52,23 @@ exports.inviteDate = catchAsync(async (req, res, next) => {
 
   const { scheduledAt, dateType } = req.body;
 
+  const newDateChat = await DateChat.create({
+    users: [userId, receiverId],
+  });
   let newDate = await date.create({
     senderId: userId,
     receiverId,
     scheduledAt,
     dateType,
+    chat: newDateChat._id,
   });
 
   newDate = await newDate
     .populate('senderId')
     .populate('receiverId')
+    .populate('chat')
     .execPopulate();
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -100,17 +119,23 @@ exports.getAllScheduledDates = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const allConfirmedDates = await date
     .find({
-      $or: [
+      $and: [
         {
-          senderId: userId,
+          $or: [
+            {
+              senderId: userId,
+            },
+            {
+              receiverId: userId,
+            },
+          ],
         },
         {
-          receiverId: userId,
+          scheduledAt: {
+            $gte: Date.now() - 24 * 60 * 60 * 1000,
+          },
         },
       ],
-      scheduledAt: {
-        $gte: Date.now(),
-      },
     })
     .populate('senderId')
     .populate('receiverId');
@@ -175,31 +200,40 @@ exports.getAllReceivedDates = catchAsync(async (req, res, next) => {
 exports.postponeDate = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
-  const postDate = await date.findOneAndUpdate(
-    {
-      $or: [
-        {
-          senderId: userId,
-          receiverId: receiverId,
-        },
-        {
-          senderId: receiverId,
-          receiverId: userId,
-        },
-      ],
-      scheduledAt: {
-        $gte: Date.now(),
+  const postDate = await date
+    .findOneAndUpdate(
+      {
+        $and: [
+          {
+            $or: [
+              {
+                senderId: userId,
+                receiverId: receiverId,
+              },
+              {
+                senderId: receiverId,
+                receiverId: userId,
+              },
+            ],
+          },
+          {
+            scheduledAt: {
+              $gte: Date.now(),
+            },
+          },
+          { status: 'accepted' },
+        ],
       },
-      status: 'accepted',
-    },
-    {
-      scheduledAt: new Date(req.body.scheduledAt),
-    },
-    {
-      validateBeforeSave: true,
-      new: true,
-    }
-  );
+      {
+        scheduledAt: new Date(req.body.scheduledAt),
+      },
+      {
+        validateBeforeSave: true,
+        new: true,
+      }
+    )
+    .populate('senderId')
+    .populate('receiverId');
 
   if (!postDate) {
     return next(new AppError('Request failed', 500));
@@ -260,4 +294,57 @@ exports.cancelDateInvite = catchAsync(async (req, res, next) => {
     status: 'success',
     data: null,
   });
+});
+
+exports.accessDateChat = catchAsync(async (req, res, next) => {
+  let { dateId } = req.body;
+
+  if (!dateId) {
+    return next(new AppError('Date Id param not sent with request', 400));
+  }
+  let dt = await date.findById(dateId);
+
+  let isChat = await DateChat.findById(dt.chat)
+    .populate('users', '-password')
+    .populate('latestMessage');
+
+  isChat = await User.populate(isChat, {
+    path: 'latestMessage.sender',
+    select: 'firstname profilePhoto email',
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: isChat,
+    },
+  });
+});
+
+exports.fetchDateChats = catchAsync(async (req, res, next) => {
+  let { dateId } = req.body;
+  if (!dateId) {
+    return next(new AppError('Date Id param not sent with request', 400));
+  }
+  let dt = await date.findById(dateId);
+  try {
+    DateChat.findById(dt.chat)
+      .populate('users', '-password')
+      .populate('latestMessage')
+      .sort({ updatedAt: -1 })
+      .then(async results => {
+        results = await User.populate(results, {
+          path: 'latestMessage.sender',
+          select: 'firstname profilePhoto email',
+        });
+        res.status(200).json({
+          status: 'success',
+          data: {
+            data: results,
+          },
+        });
+      });
+  } catch (error) {
+    return next(new AppError(error, 500));
+  }
 });

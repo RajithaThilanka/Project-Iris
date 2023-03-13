@@ -1,5 +1,5 @@
 import { Avatar, Tooltip } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import ScrollableFeed from "react-scrollable-feed";
 import TimeAgo from "react-timeago";
@@ -15,12 +15,25 @@ function ScrollableChat({ messages }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+  const scroll = useRef();
+
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <ScrollableFeed>
       {messages &&
         messages.map((m, i) => (
-          <div style={{ display: "flex" }} key={m._id}>
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: "rgba(0, 0, 0, 0.01)",
+              padding: "0 1rem",
+            }}
+            key={m._id}
+            ref={scroll}
+          >
             {(isSameSender(messages, m, i, user._id) ||
               isLastMessage(messages, i, user._id)) && (
               <Tooltip
@@ -45,16 +58,16 @@ function ScrollableChat({ messages }) {
             <span
               style={{
                 backgroundColor: `${
-                  m.sender._id === user._id ? "#BEE3F8" : "#B9F5D0"
+                  m.sender._id === user._id ? "#78e08f" : "#82ccdd"
                 }`,
 
                 borderRadius: "1rem",
                 padding: "0.2rem 1.2rem",
-
+                fontFamily: "inherit",
                 maxWidth: "50%",
                 minWidth: "20%",
-                fontSize: "1.2rem",
-                fontWeight: 500,
+                fontSize: "1.4rem",
+                fontWeight: 400,
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,
                 marginBottom: "4px",

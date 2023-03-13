@@ -22,6 +22,7 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import animationData from "../../animations/typing.json";
 import styled from "@emotion/styled";
+import DuoIcon from "@mui/icons-material/Duo";
 import InputEmoji from "react-input-emoji";
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
@@ -59,6 +60,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     //   setActiveUsers(activeUsers);
     // });
   }, []);
+
   const fetchMessages = async () => {
     if (!selectedChat) return;
     try {
@@ -99,8 +101,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     });
   });
 
-  const sendMessage = async (event) => {
-    event.preventDefault();
+  const sendMessage = async () => {
+    // event.preventDefault();
     if (newMessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
@@ -119,8 +121,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       }
     }
   };
-  const typingHandler = (event) => {
-    setNewMessage(event.target.value);
+  const typingHandler = (text) => {
+    setNewMessage(text);
     // Typing indicator logic
     if (!socketConnected) return;
     if (!typing) {
@@ -132,7 +134,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     setTimeout(() => {
       let timeNow = new Date().getTime();
       let timeDiff = timeNow - lastTypingTime;
-      if (timeDiff >= timerLength && typing) {
+      if (timeDiff >= timerLength && !typing) {
         socket.emit("stop typing", selectedChat._id);
         setTyping(false);
       }
@@ -172,18 +174,15 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     <>
       {selectedChat ? (
         <>
-          <span className="chat-user-header">
-            <IconButton
-              style={{ display: "flex" }}
-              onClick={() => setSelectedChat("")}
-            >
+          <div className="chat-user-header">
+            <IconButton style={{}} onClick={() => setSelectedChat("")}>
               <ArrowBackIosIcon style={{ color: "#fff" }} />
             </IconButton>
             {!selectedChat.isGroupChat ? (
               <>
                 <div
                   style={{
-                    flex: 1,
+                    flex: 0.9,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -206,18 +205,34 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                     <Avatar
                       alt="user avatar"
                       src={
-                        user.profilePhoto
-                          ? serverPublic +
-                            getSenderFull(user, selectedChat.users).profilePhoto
-                          : serverPublic + "defaultProfile.png"
+                        serverPublic +
+                        getSenderFull(user, selectedChat.users).profilePhoto
                       }
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        width: "7rem",
+                        height: "7rem",
+                        border: "1px solid #fff",
+                      }}
                       onClick={() => setOpen(true)}
                     />
                   </StyledBadge>
-                  <h6 style={{ fontSize: "1.5rem", fontWeight: "400" }}>
+                  <h6
+                    style={{
+                      fontSize: "1.8rem",
+                      fontWeight: "400",
+                      fontFamily: "inherit",
+                    }}
+                  >
                     {getSender(user, selectedChat.users)}
                   </h6>
+                  <DuoIcon
+                    fontSize="large"
+                    sx={{
+                      width: "4rem",
+                      height: "4rem",
+                    }}
+                  />
                 </div>
 
                 <ProfileModal
@@ -236,7 +251,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 />
               </>
             )}
-          </span>
+          </div>
           <div className="chat-container">
             {loading ? (
               <div
@@ -252,7 +267,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-            <form onSubmit={sendMessage}>
+            <div>
               {isTyping ? (
                 <div>
                   <Lottie
@@ -264,16 +279,22 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
               ) : (
                 <></>
               )}
-              <TextField
+              {/* <TextField
                 required
                 placeholder="Type a message"
                 size="small"
                 fullWidth
                 onChange={typingHandler}
                 value={newMessage}
+              /> */}
+              <InputEmoji
+                placeholder="Type a message"
+                onChange={typingHandler}
+                value={newMessage}
+                onEnter={sendMessage}
+                theme="dark"
               />
-              {/* <InputEmoji onChange={typingHandler} value={newMessage} /> */}
-            </form>
+            </div>
           </div>
         </>
       ) : (

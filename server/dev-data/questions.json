@@ -1,8 +1,8 @@
 [
     {
         "question": "What you most like between tea and coffee?",
-        "optionTags": ["Tea", "Coffee"],
-        "questionType": "beverages"
+        "optionTags": ["Tea", "coffee fanatic"],
+        "questionType": "profileDescription"
     },
     
     {
@@ -24,7 +24,7 @@
     },
     
     {
-        "question": "What are your favorite music genres?",
+        "question": "What type of music do you like to listen to?",
         "optionTags": ["Pop", "Country", "HipHop", "Rock"],
         "questionType": "music"
     },
@@ -34,24 +34,29 @@
         "optionTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
         "questionType": "politics"
     },
+
+    {
+        "question": "What kind of hobbies do you have?",
+        "optionTags": ["Sports","Cinema","travel enthusiast","Art","Food aficionado","Passionate gamer","Crafts","Carpentry/DIY","Dancing","Photography","music fan","Writer","Extreme reader"],
+        "questionType": "profileDescription"
+    },
+
+    {
+        "question": "What are your favorite sports?",
+        "optionTags": ["Baseball", "Football"],
+        "questionType": "profileDescription"
+    },
     
     {
         "question": "What are your favorite sports?",
-        "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "optionTags": ["Baseball", "Football"],
         "questionType": "sports"
     },
     
     {
         "question": "What are your favorite sports?",
-        "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
-        "questionType": "sports"
-    },
-    
-    {
-        "question": "What are your favorite sports?",
-        "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "optionTags": ["Baseball", "Football"],
         "questionType": "sports"
     }
 
 ]
-

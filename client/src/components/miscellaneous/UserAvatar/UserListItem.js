@@ -66,14 +66,7 @@ function UserListItem({ user, handleFunction }) {
           }}
           variant={activeUsers.some((u) => u.userId === user._id) ? "dot" : ""}
         >
-          <Avatar
-            alt="user avatar"
-            src={
-              user.profilePhoto
-                ? serverPublic + user.profilePhoto
-                : serverPublic + "defaultProfile.png"
-            }
-          />
+          <Avatar alt="user avatar" src={serverPublic + user.profilePhoto} />
         </StyledBadge>
         <span style={{ flex: 1, textAlign: "center" }}>
           {user.firstname + " " + user.lastname}

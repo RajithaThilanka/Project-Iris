@@ -95,22 +95,28 @@ exports.removeConnection = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const removeUserId = req.params.id;
   const doc = await Connection.findOne({
-    $or: [
+    $and: [
       {
-        senderId: userId,
-        receiverId: removeUserId,
+        $or: [
+          {
+            senderId: userId,
+            receiverId: removeUserId,
+          },
+          {
+            senderId: removeUserId,
+            receiverId: userId,
+          },
+        ],
       },
       {
-        senderId: removeUserId,
-        receiverId: userId,
-      },
-    ],
-    $or: [
-      {
-        status: 'connected',
-      },
-      {
-        status: 'friend-req-pending',
+        $or: [
+          {
+            status: 'connected',
+          },
+          {
+            status: 'friend-req-pending',
+          },
+        ],
       },
     ],
   });
@@ -133,17 +139,21 @@ exports.cancelConnectionInvite = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const removeUserId = req.params.id;
   const doc = await Connection.findOne({
-    $or: [
+    $and: [
       {
-        senderId: userId,
-        receiverId: removeUserId,
+        $or: [
+          {
+            senderId: userId,
+            receiverId: removeUserId,
+          },
+          {
+            senderId: removeUserId,
+            receiverId: userId,
+          },
+        ],
       },
-      {
-        senderId: removeUserId,
-        receiverId: userId,
-      },
+      { status: 'con-req-pending' },
     ],
-    status: 'con-req-pending',
   });
 
   if (!doc) {

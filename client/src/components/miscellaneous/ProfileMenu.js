@@ -86,11 +86,7 @@ export default function ProfileMenu() {
             >
               <Avatar
                 alt="user avatar"
-                src={
-                  user.profilePhoto
-                    ? serverPublic + user.profilePhoto
-                    : serverPublic + "defaultProfile.png"
-                }
+                src={serverPublic + user.profilePhoto}
               />
             </StyledBadge>
           </IconButton>

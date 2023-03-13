@@ -11,6 +11,10 @@ const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
+
+const Chat = require('../models/chatModel');
+const Message = require('../models/messageModel');
+const LookingFor = require('../models/lookingForModel');
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -19,6 +23,18 @@ mongoose
   })
   .then(() => console.log('DB Connection successful'));
 
+const deleteDevData = async () => {
+  try {
+    // await Chat.deleteMany();
+    // await Message.deleteMany();
+    // await User.deleteMany();
+    // await LookingFor.deleteMany();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// deleteDevData();
 const generate = (min, max) => Math.floor(Math.random() * (max - min) + min);
 // const updatedUsers = users.map(user => {
 //   delete user.photos;
@@ -36,16 +52,16 @@ const generate = (min, max) => Math.floor(Math.random() * (max - min) + min);
 //   });
 //   fs.writeFileSync('./final7.json', JSON.stringify(updatedUsers), 'utf-8');
 // };
-const deleteData = async () => {
-  try {
-    await User.deleteMany();
+// const deleteData = async () => {
+//   try {
+//     await User.deleteMany();
 
-    console.log('All data successfully deleted');
-    process.exit();
-  } catch (err) {
-    console.log(err);
-  }
-};
+//     console.log('All data successfully deleted');
+//     process.exit();
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 const countries = [
   'Sri Lanka',
@@ -85,28 +101,28 @@ const countries = [
 // prepareData();
 // deleteData();
 
-const importData = async () => {
-  try {
-    const users = await User.find({});
-    const userIds = users.map(user => user._id);
-    const userFile = JSON.parse(
-      fs.readFileSync('./userLookingFor.json', 'utf-8')
-    );
-    const updated = userFile.map((user, index) => {
-      return { ...user, userId: userIds[index] };
-    });
-    fs.writeFileSync(
-      './updatedPassions.json',
-      JSON.stringify(updated),
-      'utf-8'
-    );
-    process.exit();
-  } catch (err) {
-    console.log(err);
-  }
-};
+// const importData = async () => {
+//   try {
+//     const users = await User.find({});
+//     const userIds = users.map(user => user._id);
+//     const userFile = JSON.parse(
+//       fs.readFileSync('./userLookingFor.json', 'utf-8')
+//     );
+//     const updated = userFile.map((user, index) => {
+//       return { ...user, userId: userIds[index] };
+//     });
+//     fs.writeFileSync(
+//       './updatedPassions.json',
+//       JSON.stringify(updated),
+//       'utf-8'
+//     );
+//     process.exit();
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
-importData();
+// importData();
 // const userLookingFor = users.map(user => {
 //   const { movies, music, politics, socialMedia, sports, profileDescription } =
 //     user;
@@ -157,3 +173,33 @@ importData();
 // assignIndex();
 
 // Add the user to the cluster when signing up
+
+const ids = JSON.parse(fs.readFileSync('./userIds.json', 'utf-8'));
+// const updated = users.map((u, index) => {
+//   return {
+//     ...u,
+//     profilePhoto: `http://localhost:5000/images/${u.profilePhoto}`,
+//   };
+// });
+// // console.log(passions);
+// fs.writeFileSync('./test.json', JSON.stringify(updated), 'utf-8');
+const import_data = async () => {
+  // await User.create(users, { validateBeforeSave: false });
+  ids.forEach(async id => {
+    const r = generate(0, 81);
+    await User.findByIdAndUpdate(id, {
+      profilePhoto: `user${r}.jpeg`,
+    });
+  });
+
+  console.log('done');
+  // let users = await User.find({});
+  // users = users.slice(10);
+  // const ids = users.map((u, i) => {
+  //   return u._id;
+  // });
+  // fs.writeFileSync('./userIds.json', JSON.stringify(ids), 'utf-8');
+};
+//     console.log('Data successfully loaded!');
+// deleteDevData();
+import_data();

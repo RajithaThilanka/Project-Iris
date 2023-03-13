@@ -1,6 +1,15 @@
 .connections-container {
-  margin: auto;
-  text-align: center;
-  width: 61vw;
-  padding: 1rem 1.2rem;
+  flex: 0 0 82%;
+}
+.connections {
+  padding: 0.1rem 2rem;
+  width: 100%;
+  min-height: 100vh;
+}
+@media only screen and (max-width: 68em) {
+  .connections-container {
+    flex-direction: column;
+  }
+  .connections {
+  }
 }

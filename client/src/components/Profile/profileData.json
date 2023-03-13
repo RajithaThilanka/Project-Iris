@@ -1,0 +1,16 @@
+{
+    "name": "rajitha thilanka",
+    "address": {
+        "street": "rajasinghe mawata",
+        "city": "gampaha"
+    },
+
+    "about": "This is David, a 29-year-old graphic designer from London. He is a creative and detail-oriented individual who is passionate about visual storytelling. David enjoys exploring new design techniques and staying up-to-date with the latest design trends. In his free time, he likes to experiment with photography and travel to new places. David is also a foodie and enjoys trying new restaurants and cuisines.",
+    "introduction": "Meet Sarah, a 35-year-old nurse from Los Angeles. She is a caring and compassionate person who enjoys helping others. In her free time, Sarah enjoys hiking, practicing yoga, and reading books about psychology and self-improvement. She is also an animal lover and has two rescue dogs named Max and Luna.",
+    "interests": "This is Emily, a 25-year-old artist from San Francisco. She is a creative and imaginative person who loves to express herself through her art. Emily enjoys painting, drawing, and sculpting, and is always looking for new ways to challenge herself artistically",
+    "sports": "cricket,football,vollyball,rugby,photography,swimming,hiking ",
+    "food": "kottu rice and curry",
+
+    "profileCompletetion": 20,
+    "factfiles":" "
+}

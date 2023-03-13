@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const LookingForSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
 

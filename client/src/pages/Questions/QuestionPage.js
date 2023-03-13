@@ -19,9 +19,12 @@ function QuestionPage() {
                       width: 128,
                       height: 500,
                     },
+                    
                   }}
             >
-                <Paper elevation={3} />
+                <Paper elevation={3}
+                    
+                />
 
             </Box>
         </div>

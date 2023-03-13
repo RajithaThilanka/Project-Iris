@@ -1,22 +1,37 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/Home/Home";
 import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
 import { createTheme, ThemeProvider } from "@mui/material";
 
-import Feed from "./pages/Feed/Feed";
-import Welcome from './pages/Home/Welcome';
+import Welcome from "./pages/Home/Welcome";
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
-import DateCard from "./components/DateCard/DateCard";
-import Request from "./components/Request/Request";
-import Chat from "./pages/Chat/Chat";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+<<<<<<< HEAD
 import QuestionPage from "./pages/Questions/QuestionPage";
 
+=======
+import UserProfile from "./pages/UProfile/UserProfile";
+import SuggessionPage from "./pages/suggestionProfile/SuggessionPage";
+
+import DateDummy from "./pages/DateDummy";
+import AccountInfo from "./components/SignUp/SignUpForms/AccountInfo";
+import UserInfo from "./components/SignUp/SignUpForms/UserInfo";
+import ProfileView from "./components/SignUp/SignUpForms/ProfileView";
+import LookingFor from "./components/SignUp/SignUpForms/LookingFor";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Chat from "./pages/Chat/Chat";
+import AboutUs from "./pages/AboutUs/Aboutus";
+import Connections from "./pages/Connections/Connections";
+import Friends from "./pages/Friends/Friends";
+import Dates from "./pages/Dates/Dates";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import AdminPage from "./pages/Admin/AdminPage";
+>>>>>>> 3dd6ba6784071c92c75ebac38ccba40cc4a38703
 const theme = createTheme({
   palette: {
     type: "light",
@@ -32,10 +47,28 @@ const theme = createTheme({
     },
     otherColors: {
       light3: "#f0eeee",
+      backgroundc: "#b3e5fc",
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 1088,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+
   shape: {
-    borderRadius: 20,
+    borderRadius: 10,
+  },
+  overrides: {
+    MuiAppBar: {
+      colorPrimary: {
+        backgroundColor: "#662E9B",
+      },
+    },
   },
   typography: {
     fontFamily: "Poppins, sans-serif",
@@ -57,45 +90,120 @@ const theme = createTheme({
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
   return (
-    <>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <>
         <Routes>
           <Route
+<<<<<<< HEAD
             path="/"
             element={<QuestionPage />}
           ></Route>
           {/* <Route
             path="/me"
             element={user ? <Feed /> : <Navigate to="/auth" />}
+=======
+            path="/auth/signup/account-info"
+            element={<AccountInfo />}
           ></Route>
           <Route
-            path="/"
-            element={user ? <Navigate to="/me" /> : <Navigate to="/auth" />}
+            path="/auth/signup/user-info/:id"
+            element={<UserInfo />}
           ></Route>
           <Route
-            path="/auth"
-            element={user ? <Navigate to="/me" /> : <Auth />}
+            path="/auth/signup/profileview-info/:id"
+            element={<ProfileView />}
+>>>>>>> 3dd6ba6784071c92c75ebac38ccba40cc4a38703
           ></Route>
+          <Route
+            path="/auth/signup/lookingfor-info/:id"
+            element={<LookingFor />}
+          ></Route>
+          <Route
+            path="/auth/login"
+            element={user ? <Navigate to="/me" /> : <Auth action="login" />}
+          ></Route>
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/error/:msg" element={<Error />}></Route>
-          <Route path="/confirm-email" element={<ConfirmMail />}></Route>
+          <Route
+            path="/confirm-email"
+            element={
+              <ConfirmMail
+                main="Mail successfully sent"
+                desc=" Please follow the link attached to your email to verify your account"
+              />
+            }
+          ></Route>
+          <Route
+            path="/reset-message"
+            element={
+              <ConfirmMail
+                main="Mail successfully sent"
+                desc=" Please follow the link attached to your email to reset your password"
+              />
+            }
+          ></Route>
           <Route
             path="/users/verify/:userId/:token"
             element={<VerifyMail />}
           ></Route>
+          {/* <Route path="/me/profile" element={<UserProfile />}></Route> */}
+          <Route path="/admin" element={<AdminPage />}></Route>
+          <Route
+            path="/users/reset-password/:token"
+            element={<ResetPassword />}
+          ></Route>
 
+<<<<<<< HEAD
           <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} /> */}
 
+=======
+          <Route path="/home" element={<Welcome />}></Route>
+          <Route path="/" element={<Navigate to="/home" />}></Route>
+          <Route path="/about-us" element={<AboutUs />}></Route>
+          <Route
+            path="/me/dashboard"
+            element={user ? <Dashboard /> : <Navigate to="/auth/login" />}
+          ></Route>
+          <Route
+            path="/me/connections"
+            element={user ? <Connections /> : <Navigate to="/auth/login" />}
+          ></Route>
+          <Route
+            path="/me/friends"
+            element={user ? <Friends /> : <Navigate to="/auth/login" />}
+          ></Route>
+          <Route path="/me/dates" element={<Dates />}></Route>
+          <Route
+            path="/me"
+            element={
+              user ? (
+                <Navigate to="/me/dashboard" />
+              ) : (
+                <Navigate to="/auth/login" />
+              )
+            }
+          ></Route>
+          <Route path="/me/chat" element={<Chat />}></Route>
+          <Route path="/me/profile" element={<UserProfile />}></Route>
+          <Route
+            path="/me/suggession/profile"
+            element={<SuggessionPage />}
+          ></Route>
+          <Route path="/video-date/:id" element={<DateDummy />}></Route>
+          <Route path="*" element={<h1>Page not found</h1>} />
+>>>>>>> 3dd6ba6784071c92c75ebac38ccba40cc4a38703
         </Routes>
         {/* <Chat /> */}
-      </ThemeProvider>
-      <ToastContainer
-        style={{
-          fontSize: "1.3rem",
-          fontFamily: "Poppins, sans-serif",
-        }}
-      />
-    </>
+
+        <ToastContainer
+          style={{
+            fontSize: "1.3rem",
+            fontFamily: "Poppins, sans-serif",
+          }}
+        />
+      </>
+    </ThemeProvider>
   );
 }
 
