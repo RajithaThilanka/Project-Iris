@@ -42,9 +42,9 @@
     },
 
     {
-        "question": "What are your favorite sports?",
-        "optionTags": ["Baseball", "Football"],
-        "questionType": "profileDescription"
+        "question": "Being around people makes me feel...",
+        "optionTags": ["Extrovert", "Introvert", "Introvert"],
+        "questionType": "Other"
     },
     
     {

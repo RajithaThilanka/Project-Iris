@@ -10,10 +10,8 @@ import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-<<<<<<< HEAD
 import QuestionPage from "./pages/Questions/QuestionPage";
 
-=======
 import UserProfile from "./pages/UProfile/UserProfile";
 import SuggessionPage from "./pages/suggestionProfile/SuggessionPage";
 
@@ -31,7 +29,6 @@ import Friends from "./pages/Friends/Friends";
 import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminPage from "./pages/Admin/AdminPage";
->>>>>>> 3dd6ba6784071c92c75ebac38ccba40cc4a38703
 const theme = createTheme({
   palette: {
     type: "light",
@@ -94,14 +91,10 @@ function App() {
       <>
         <Routes>
           <Route
-<<<<<<< HEAD
-            path="/"
-            element={<QuestionPage />}
+	          path="/"
+	          element={<QuestionPage />}
           ></Route>
-          {/* <Route
-            path="/me"
-            element={user ? <Feed /> : <Navigate to="/auth" />}
-=======
+          <Route
             path="/auth/signup/account-info"
             element={<AccountInfo />}
           ></Route>
@@ -112,7 +105,6 @@ function App() {
           <Route
             path="/auth/signup/profileview-info/:id"
             element={<ProfileView />}
->>>>>>> 3dd6ba6784071c92c75ebac38ccba40cc4a38703
           ></Route>
           <Route
             path="/auth/signup/lookingfor-info/:id"
@@ -153,11 +145,6 @@ function App() {
             element={<ResetPassword />}
           ></Route>
 
-<<<<<<< HEAD
-          <Route path="/chat" element={user ? <Chat /> : <Auth />}></Route>
-          <Route path="*" element={<h1>Page not found</h1>} /> */}
-
-=======
           <Route path="/home" element={<Welcome />}></Route>
           <Route path="/" element={<Navigate to="/home" />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>
@@ -192,9 +179,8 @@ function App() {
           ></Route>
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
->>>>>>> 3dd6ba6784071c92c75ebac38ccba40cc4a38703
         </Routes>
-        {/* <Chat /> */}
+        
 
         <ToastContainer
           style={{
