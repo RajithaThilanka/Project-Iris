@@ -157,6 +157,7 @@ function Dashboard() {
       });
       setsentConRequests([data, ...sentConRequests]);
     }
+    setLastDirection(direction);
     updateCurrentIndex(index - 1);
     console.log(currentIndex);
   };

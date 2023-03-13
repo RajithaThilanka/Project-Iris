@@ -502,11 +502,19 @@ exports.checkManualVerification = catchAsync(async (req, res, next) => {
 // Admin login
 
 exports.adminLogin = catchAsync(async (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    return next(new AppError('Please provide an username and a password', 400));
+  const { username, password, email } = req.body;
+  if (!username || !password || !email) {
+    return next(
+      new AppError(
+        'Please provide an username and an email and a password',
+        400
+      )
+    );
   }
-  const admin = await Admin.findOne({ username: username }).select('+password');
+  const admin = await Admin.findOne({
+    username: username,
+    email: email,
+  }).select('+password');
   if (!admin || !(await admin.correctPassword(password, admin.password))) {
     return next(new AppError('Incorrect username or password', 401));
   }

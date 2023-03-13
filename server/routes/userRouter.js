@@ -32,13 +32,13 @@ router
 router
   .route('/me/update')
   .patch(authController.protect, userController.updateMe);
-router
-  .route('/me/suggestions')
-  .get(
-    authController.protect,
-    authController.checkManualVerification,
-    aiController.generateUserSuggestions
-  );
+// router
+//   .route('/me/suggestions')
+//   .get(
+//     authController.protect,
+//     authController.checkManualVerification,
+//     aiController.generateUserSuggestions
+//   );
 router
   .route('/me/suggestions/ai')
   .get(

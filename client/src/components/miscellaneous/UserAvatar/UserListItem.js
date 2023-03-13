@@ -47,15 +47,11 @@ function UserListItem({ user, handleFunction }) {
     >
       <h6
         style={{
-          backgroundColor: "var(--color-primary)",
-          color: "#fff",
-          fontSize: "1.4rem",
-          padding: "1rem 2rem",
-          borderRadius: "50px",
-          fontWeight: 400,
           display: "flex",
+          flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-between",
+          gap: "10px",
+          padding: " 10px 24px",
         }}
       >
         <StyledBadge
@@ -66,7 +62,15 @@ function UserListItem({ user, handleFunction }) {
           }}
           variant={activeUsers.some((u) => u.userId === user._id) ? "dot" : ""}
         >
-          <Avatar alt="user avatar" src={serverPublic + user.profilePhoto} />
+          <Avatar
+            alt="user avatar"
+            src={serverPublic + user.profilePhoto}
+            sx={{
+              width: "6rem",
+              height: "6rem",
+              border: "1px solid #fff",
+            }}
+          />
         </StyledBadge>
         <span style={{ flex: 1, textAlign: "center" }}>
           {user.firstname + " " + user.lastname}
@@ -77,3 +81,53 @@ function UserListItem({ user, handleFunction }) {
 }
 
 export default UserListItem;
+
+// <div
+//                     style={{
+//                       display: "flex",
+//                       flexDirection: "row",
+//                       alignItems: "center",
+//                       gap: "10px",
+//                       padding: " 10px 24px",
+//                     }}
+//                   >
+//                     <StyledBadge
+//                       overlap="circular"
+//                       anchorOrigin={{
+//                         vertical: "bottom",
+//                         horizontal: "right",
+//                       }}
+//                       variant={
+//                         activeUsers.some(
+//                           (u) =>
+//                             u.userId === getSenderFull(user, chat?.users)._id
+//                         )
+//                           ? "dot"
+//                           : ""
+//                       }
+//                     >
+//                       <Avatar
+//                         alt="user avatar"
+//                         src={
+//                           serverPublic +
+//                           getSenderFull(loggedUser, chat.users).profilePhoto
+//                         }
+//                         sx={{
+//                           width: "6rem",
+//                           height: "6rem",
+//                           border: "1px solid #fff",
+//                         }}
+//                       />
+//                     </StyledBadge>
+//                     <h6
+//                       style={{
+//                         fontSize: "1.4rem",
+//                         padding: "0.1rem 1rem",
+
+//                         fontWeight: 600,
+//                         flex: 1,
+//                       }}
+//                     >
+//                       {getSenderFull(loggedUser, chat.users).firstname +
+//                         " " +
+//                         getSenderFull(loggedUser, chat.users).lastname}
