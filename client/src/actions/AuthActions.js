@@ -49,3 +49,14 @@ export const resetPassword =
       dispatch({ type: "AUTH_FAIL" });
     }
   };
+
+export const adminLogIn = (formData, navigate) => async (dispatch) => {
+  dispatch({ type: "AUTH_START" });
+  try {
+    const { data } = await AuthApi.adminLogin(formData);
+    dispatch({ type: "AUTH_SUCCESS", data: data });
+    navigate("/admin", { replace: true });
+  } catch (error) {
+    dispatch({ type: "AUTH_FAIL" });
+  }
+};

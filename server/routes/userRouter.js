@@ -32,13 +32,21 @@ router
 router
   .route('/me/update')
   .patch(authController.protect, userController.updateMe);
+// router
+//   .route('/me/suggestions')
+//   .get(
+//     authController.protect,
+//     authController.checkManualVerification,
+//     aiController.generateUserSuggestions
+//   );
 router
-  .route('/me/suggestions')
+  .route('/me/suggestions/ai')
   .get(
     authController.protect,
     authController.checkManualVerification,
-    aiController.generateUserSuggestions
+    aiController.generateSuggestions
   );
+
 router
   .route('/me/manual-verify')
   .post(authController.protect, authController.requestManualVerify);

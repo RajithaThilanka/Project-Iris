@@ -1,31 +1,38 @@
-import { Avatar, Badge, Button, IconButton } from "@mui/material";
+import { Avatar, Badge, IconButton } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { fetchUserChats } from "../../api/UserRequests";
+import { createChat, fetchUserChats, searchUser } from "../../api/UserRequests";
 import MatchesContext from "../../context/matches";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+
 import Loader from "../Loading/Loading";
 import { Stack } from "@mui/system";
-import { getSender, getSenderFull } from "../../config/ChatLogics";
-import GroupChatModal from "./GroupChatModal";
+import { getSenderFull } from "../../config/ChatLogics";
 import styled from "@emotion/styled";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import CircleIcon from "@mui/icons-material/Circle";
 import "./MyChat.css";
 import SearchIcon from "@mui/icons-material/Search";
+import ChatFriendsList from "./ChatFriendsList/ChatFriendsList";
+
 function MyChat({ fetchAgain, setFetchAgain }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+
   const [loggedUser, setLoggedUser] = useState(user);
+  const [focused, setFocus] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const {
     chats,
     setChats,
-    selectedChat,
     setSelectedChat,
     activeUsers,
     notification,
     setNotification,
+    selectedChat,
   } = useContext(MatchesContext);
   console.log(notification);
   const fetchChats = async () => {
@@ -45,6 +52,22 @@ function MyChat({ fetchAgain, setFetchAgain }) {
     setLoggedUser(user);
     fetchChats();
   }, [fetchAgain]);
+
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await searchUser(search);
+      setLoading(false);
+      setSearchResult(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -72,27 +95,45 @@ function MyChat({ fetchAgain, setFetchAgain }) {
       },
     },
   }));
+  const handleBlur = () => {
+    !search && setFocus(false);
+  };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div className="chat" style={{ display: selectedChat ? "none" : "flex" }}>
+    <div className="chat">
       <div className="contacts_card">
-        <form className="search">
+        <form className="search" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="Search..."
-            name=""
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="search__input"
+            onFocus={() => setFocus(true)}
+            onBlur={handleBlur}
           />
-          <IconButton className="search__button">
+          <IconButton className="search__button" type="submit">
             <SearchIcon className="search__icon" />
           </IconButton>
         </form>
       </div>
+      {focused ? (
+        <ChatFriendsList
+          loading={loading}
+          searchResult={searchResult}
+          setSearch={setSearch}
+          setSearchResult={setSearchResult}
+        />
+      ) : (
+        ""
+      )}
+
       <div
         style={{
           width: "100%",
           height: "100%",
           overflow: "hidden",
+          display: !focused ? "block" : "none",
         }}
       >
         {chats ? (
@@ -112,7 +153,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                     cursor: "pointer",
                     backgroundColor: "rgba(0, 0, 0, 0.1)",
                     color: "#fff",
-                    height: "10rem",
+                    height: "8rem",
                   }}
                 >
                   {!chat.isGroupChat ? (
@@ -122,7 +163,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                         flexDirection: "row",
                         alignItems: "center",
                         gap: "10px",
-                        padding: " 16px 24px",
+                        padding: " 10px 24px",
                       }}
                     >
                       <StyledBadge
@@ -147,16 +188,16 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                             getSenderFull(loggedUser, chat.users).profilePhoto
                           }
                           sx={{
-                            width: "7rem",
-                            height: "7rem",
+                            width: "6rem",
+                            height: "6rem",
                             border: "1px solid #fff",
                           }}
                         />
                       </StyledBadge>
                       <h6
                         style={{
-                          fontSize: "2rem",
-                          padding: "0.2rem 2rem",
+                          fontSize: "1.4rem",
+                          padding: "0.1rem 1rem",
 
                           fontWeight: 600,
                           flex: 1,

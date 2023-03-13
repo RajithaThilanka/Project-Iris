@@ -27,7 +27,7 @@ import Friends from "./pages/Friends/Friends";
 import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminPage from "./pages/Admin/AdminPage";
-
+import AdminLogin from "./pages/AdminAuth/AdminLogin";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -136,7 +136,15 @@ function App() {
             path="/users/verify/:userId/:token"
             element={<VerifyMail />}
           ></Route>
-          <Route path="/admin" element={<AdminPage />}></Route>
+          {/* <Route path="/me/profile" element={<UserProfile />}></Route> */}
+          <Route
+            path="/login/admin"
+            element={user ? <AdminPage /> : <AdminLogin />}
+          />
+          <Route
+            path="/admin"
+            element={user ? <AdminPage /> : <Navigate to="/login/admin" />}
+          ></Route>
           <Route
             path="/users/reset-password/:token"
             element={<ResetPassword />}
