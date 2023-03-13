@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
 
 export const getUser = (userId) => API.get(`/users/${userId}`);
 
-export const getMatches = () => API.get("/users/me/suggestions");
+export const getMatches = () => API.get("/users/me/suggestions/ai");
 export const sendConRequest = (id) =>
   API.post(`/users/me/connections/invite/${id}`);
 export const getSentConRequests = () => API.get(`/users/me/connections/sent`);

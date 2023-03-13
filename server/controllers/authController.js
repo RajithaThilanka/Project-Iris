@@ -486,26 +486,35 @@ exports.checkManualVerification = catchAsync(async (req, res, next) => {
   const verification = await ManualVerification.findOne({
     userId: req.user._id,
   });
-
+  if (!verification) {
+    return next(
+      new AppError('You have to verify your account to access this service')
+    );
+  }
   if (verification?.status == 'verified') return next();
   else if (!verification || verification?.status == 'pending') {
     const allowedMs = 7 * 24 * 60 * 60 * 1000;
     const diffMs = Math.abs(Date.now() - req.user.createdAt);
     if (diffMs <= allowedMs) return next();
   }
-  return next(
-    new AppError('You have to verify your account to access this service')
-  );
 });
 
 // Admin login
 
 exports.adminLogin = catchAsync(async (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    return next(new AppError('Please provide an username and a password', 400));
+  const { username, password, email } = req.body;
+  if (!username || !password || !email) {
+    return next(
+      new AppError(
+        'Please provide an username and an email and a password',
+        400
+      )
+    );
   }
-  const admin = await Admin.findOne({ username: username }).select('+password');
+  const admin = await Admin.findOne({
+    username: username,
+    email: email,
+  }).select('+password');
   if (!admin || !(await admin.correctPassword(password, admin.password))) {
     return next(new AppError('Incorrect username or password', 401));
   }
