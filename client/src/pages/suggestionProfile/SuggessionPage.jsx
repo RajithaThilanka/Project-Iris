@@ -5,6 +5,7 @@ import SugContent from "../../components/suggestionProfile/Content/SuggestionCon
 import "./suggesstionStyle.css";
 import { useSelector } from "react-redux";
 import Navbar from "../../components/Appbar/Navbar";
+
 export default function SuggessionPage() {
   const {
     data: { user },
@@ -12,8 +13,11 @@ export default function SuggessionPage() {
 
   return (
     <div className="suggesstionPage">
-      <Navbar user={user} />
-      <SugHeader />
+      <Stack direction="column">
+        <Navbar user={user} />
+        <SugHeader />
+      </Stack>
+
       <Stack
         direction="column"
         sx={{

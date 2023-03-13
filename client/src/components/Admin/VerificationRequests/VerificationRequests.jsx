@@ -8,11 +8,14 @@ import { Stack, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { IconButton } from "@mui/material";
 import UserVerificationView from "../UserVerificationData/UserVerificationView";
+import { useState, useEffect } from "react";
+
+import jsonData from "./AllData.json"; // Import the JSON file
 
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
-    field: "fullName",
+    field: "fullname",
     headerName: "Full Name",
     width: 150,
     editable: false,
@@ -73,12 +76,30 @@ const rows = [
 ];
 
 export default function VerificationRequests() {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    // Parse the JSON data
+    const data = JSON.parse(JSON.stringify(jsonData));
+
+    // Create the rows array
+    const rowsArray = data.map((item) => ({
+      id: item.id,
+      fullname: item.fullname,
+      email: item.email,
+      status: item.status,
+    }));
+
+    // Set the rows state
+    setRows(rowsArray);
+  }, []);
+
   return (
     <>
       <Stack direction="row" spacing={3}>
         <Box
           sx={{
-            height: 400,
+            height: 500,
             width: 800,
             justifyContent: "center",
             textAlign: "center",

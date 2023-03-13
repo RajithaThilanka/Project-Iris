@@ -11,14 +11,17 @@ export default function SuggestionContent() {
       <Grid
         container
         justifyContent="center"
+        alignItems="flex-start"
+        marginBottom="50px"
         sx={{
           boxShadow: 4,
-          width: "800px",
           height: "100%",
+          width: { xl: 850, lg: 850, md: 650, sm: 550, xs: 350 },
           borderRadius: 2,
           textAlign: "center",
           bgcolor: "white",
-          padding: "20px",
+          marginLeft: { xl: 20, lg: 20, md: 10, sm: 5, xs: 5 },
+          marginRight: { xl: 20, lg: 20, md: 10, sm: 5, xs: 5 },
         }}
       >
         <Grid item xs={8}>
@@ -37,7 +40,7 @@ export default function SuggestionContent() {
               }}
             >
               <Typography variant="h6">About</Typography>
-              <Typography sx={{ overflowX: "auto" }}>
+              <Typography sx={{ overflowX: "auto" }} variant="subtitle">
                 This is David, a 29-year-old graphic designer from London. He is
                 a creative and detail-oriented individual who is passionate
                 about visual storytelling. David enjoys exploring new design
@@ -70,21 +73,27 @@ export default function SuggestionContent() {
                 <Typography variant="h6"> Your Compatibility Level</Typography>
                 <AvatarGroup total={3}>
                   <Avatar
-                    sx={{ width: 70, height: 70 }}
+                    sx={{
+                      width: { xl: 70, lg: 70, md: 50, sm: 60, xs: 50 },
+                      height: { xl: 70, lg: 70, md: 50, sm: 60, xs: 50 },
+                    }}
                     alt="Remy Sharp"
                     src="https://images.unsplash.com/photo-1677484179240-ff398b0a2d09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
                   />
                   <Avatar
                     sx={{
-                      width: 90,
-                      height: 90,
+                      width: { xl: 90, lg: 90, md: 70, sm: 70, xs: 60 },
+                      height: { xl: 90, lg: 90, md: 70, sm: 70, xs: 60 },
                       bgcolor: "#C81172",
                     }}
                   >
                     <Typography varient="h3">85%</Typography>
                   </Avatar>
                   <Avatar
-                    sx={{ width: 70, height: 70 }}
+                    sx={{
+                      width: { xl: 70, lg: 70, md: 50, sm: 60, xs: 50 },
+                      height: { xl: 70, lg: 70, md: 50, sm: 60, xs: 50 },
+                    }}
                     alt="Agnes Walker"
                     src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
                   />

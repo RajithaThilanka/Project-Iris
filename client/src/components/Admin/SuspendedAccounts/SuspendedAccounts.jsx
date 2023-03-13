@@ -12,12 +12,14 @@ import BlockIcon from "@mui/icons-material/Block";
 import { useState, useEffect } from "react";
 import ProfileSuspeneReason from "../ProfileSuspendReason/ProfileSuspeneReason";
 
+import jsonData from "./AllData.json"; // Import the JSON file
+
 // import { getMe } from "../../../api/UserRequests";
 
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
-    field: "fullName",
+    field: "fullname",
     headerName: "Full Name",
     width: 150,
     editable: false,
@@ -66,18 +68,24 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "unverified" },
-
-  {
-    id: 2,
-    fullName: "Lannister",
-    email: "Cersei@gmail.com",
-    status: "verified",
-  },
-];
-
 export default function SuspendedAccounts() {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    // Parse the JSON data
+    const data = JSON.parse(JSON.stringify(jsonData));
+
+    // Create the rows array
+    const rowsArray = data.map((item) => ({
+      id: item.id,
+      fullname: item.fullname,
+      email: item.email,
+      status: item.status,
+    }));
+
+    // Set the rows state
+    setRows(rowsArray);
+  }, []);
   return (
     <div>
       <Stack direction="row" spacing={2}>
