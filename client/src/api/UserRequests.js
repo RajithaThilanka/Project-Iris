@@ -55,7 +55,7 @@ export const searchUser = (username) =>
   API.get(`/users/con?search=${username}`);
 
 export const createChat = (userId) => API.post(`/chat`, { userId });
-
+export const deleteChat = (id) => API.delete(`/chat/delete-chat/${id}`);
 export const accessDateChat = (dateId) =>
   API.get(`/users/me/dates/chat`, { dateId });
 

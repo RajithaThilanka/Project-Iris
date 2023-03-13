@@ -1,7 +1,16 @@
 import { Avatar, Badge, IconButton } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { createChat, fetchUserChats, searchUser } from "../../api/UserRequests";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  createChat,
+  deleteChat,
+  fetchUserChats,
+  getAllConnections,
+  getAllFriends,
+  searchUser,
+} from "../../api/UserRequests";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MatchesContext from "../../context/matches";
 
 import Loader from "../Loading/Loading";
@@ -24,7 +33,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [backBtnVisible, setBackBtnVisible] = useState(false);
   const {
     chats,
     setChats,
@@ -34,7 +43,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
     setNotification,
     selectedChat,
   } = useContext(MatchesContext);
-  console.log(notification);
+
   const fetchChats = async () => {
     try {
       const {
@@ -53,8 +62,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
     fetchChats();
   }, [fetchAgain]);
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
+  const handleSearch = async () => {
     setLoading(true);
     try {
       const {
@@ -98,21 +106,52 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   const handleBlur = () => {
     !search && setFocus(false);
   };
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [search]);
+
+  const handleDeleteChat = async (id) => {
+    try {
+      await deleteChat(id);
+      setChats(chats.filter((chat) => chat._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleBackClick = () => {
+    setFocus(false);
+    setBackBtnVisible(false);
+  };
+
+  const handleFocus = () => {
+    setFocus(true);
+    setBackBtnVisible(true);
+  };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="chat">
       <div className="contacts_card">
-        <form className="search" onSubmit={handleSearch}>
+        <IconButton
+          onClick={handleBackClick}
+          style={{ display: backBtnVisible ? "flex" : "none" }}
+        >
+          <ArrowBackIcon style={{ color: "#fff", marginLeft: "0.8rem" }} />
+        </IconButton>
+        <form className="search">
           <input
             type="text"
             placeholder="Search..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={handleChange}
             className="search__input"
-            onFocus={() => setFocus(true)}
-            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
-          <IconButton className="search__button" type="submit">
+          <IconButton className="search__button">
             <SearchIcon className="search__icon" />
           </IconButton>
         </form>
@@ -141,118 +180,137 @@ function MyChat({ fetchAgain, setFetchAgain }) {
             {chats.map((chat) => {
               return (
                 <div
-                  onClick={() => {
-                    setSelectedChat(chat);
-                    setNotification(
-                      notification.filter((not) => not.chat._id !== chat._id)
-                    );
-                  }}
-                  key={chat._id}
-                  className="chat-contact"
                   style={{
-                    cursor: "pointer",
-                    backgroundColor: "rgba(0, 0, 0, 0.1)",
-                    color: "#fff",
-                    height: "8rem",
+                    display: "flex",
+                    backgroundColor:
+                      selectedChat?._id === chat._id
+                        ? "rgba(0, 0, 0, 0.4)"
+                        : "rgba(0,0,0,0.1)",
+                    paddingRight: "0.9rem",
                   }}
+                  className="chat-contact-container"
                 >
-                  {!chat.isGroupChat ? (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: "10px",
-                        padding: " 10px 24px",
-                      }}
-                    >
-                      <StyledBadge
-                        overlap="circular"
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "right",
-                        }}
-                        variant={
-                          activeUsers.some(
-                            (u) =>
-                              u.userId === getSenderFull(user, chat?.users)._id
-                          )
-                            ? "dot"
-                            : ""
-                        }
-                      >
-                        <Avatar
-                          alt="user avatar"
-                          src={
-                            serverPublic +
-                            getSenderFull(loggedUser, chat.users).profilePhoto
-                          }
-                          sx={{
-                            width: "6rem",
-                            height: "6rem",
-                            border: "1px solid #fff",
-                          }}
-                        />
-                      </StyledBadge>
-                      <h6
+                  <div
+                    onClick={() => {
+                      setSelectedChat(chat);
+                      setNotification(
+                        notification.filter((not) => not.chat._id !== chat._id)
+                      );
+                    }}
+                    key={chat._id}
+                    className="chat-contact"
+                    style={{
+                      cursor: "pointer",
+
+                      color: "#fff",
+                      height: "8rem",
+                    }}
+                  >
+                    {!chat.isGroupChat ? (
+                      <div
                         style={{
-                          fontSize: "1.4rem",
-                          padding: "0.1rem 1rem",
-
-                          fontWeight: 600,
-                          flex: 1,
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: "10px",
+                          padding: " 10px 24px",
                         }}
                       >
-                        {getSenderFull(loggedUser, chat.users).firstname +
-                          " " +
-                          getSenderFull(loggedUser, chat.users).lastname}
-                        <span
+                        <StyledBadge
+                          overlap="circular"
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "right",
+                          }}
+                          variant={
+                            activeUsers.some(
+                              (u) =>
+                                u.userId ===
+                                getSenderFull(user, chat?.users)._id
+                            )
+                              ? "dot"
+                              : ""
+                          }
+                        >
+                          <Avatar
+                            alt="user avatar"
+                            src={
+                              serverPublic +
+                              getSenderFull(loggedUser, chat.users).profilePhoto
+                            }
+                            sx={{
+                              width: "6rem",
+                              height: "6rem",
+                              border: "1px solid #fff",
+                            }}
+                          />
+                        </StyledBadge>
+                        <h6
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-
                             fontSize: "1.4rem",
-                            fontWeight: "400",
+                            padding: "0.1rem 1rem",
+
+                            fontWeight: 600,
+                            flex: 1,
                           }}
                         >
-                          {notification.some(
-                            (not) => not.chat._id === chat._id
-                          ) ? (
-                            <CircleIcon
-                              style={{
-                                color: "var(--color-primary)",
-                                height: "1.5rem",
-                              }}
-                            />
-                          ) : (
-                            ""
-                          )}
+                          {getSenderFull(loggedUser, chat.users).firstname +
+                            " " +
+                            getSenderFull(loggedUser, chat.users).lastname}
+                          <span
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "10px",
 
-                          {chat.latestMessage &&
-                            `${
-                              chat.latestMessage.sender._id === loggedUser._id
-                                ? "You :"
-                                : chat.latestMessage.sender.firstname[0] + ": "
-                            } ${
-                              chat.latestMessage.content.slice(0, 10) + " ..."
-                            }`}
-                          {notification.some(
-                            (not) => not.chat._id === chat._id
-                          ) ? (
-                            ""
-                          ) : (
-                            <DoneAllIcon
-                              style={{ color: "var(--color-primary)" }}
-                            />
-                          )}
-                          {console.log(notification, chat._id)}
-                        </span>
-                      </h6>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+                              fontSize: "1.4rem",
+                              fontWeight: "400",
+                            }}
+                          >
+                            {notification.some(
+                              (not) => not.chat._id === chat._id
+                            ) ? (
+                              <CircleIcon
+                                style={{
+                                  color: "var(--color-primary)",
+                                  height: "1.5rem",
+                                }}
+                              />
+                            ) : (
+                              ""
+                            )}
+
+                            {chat.latestMessage &&
+                              `${
+                                chat.latestMessage.sender._id === loggedUser._id
+                                  ? "You :"
+                                  : chat.latestMessage.sender.firstname[0] +
+                                    ": "
+                              } ${
+                                chat.latestMessage.content.slice(0, 10) + " ..."
+                              }`}
+                            {notification.some(
+                              (not) => not.chat._id === chat._id
+                            ) ? (
+                              ""
+                            ) : (
+                              <DoneAllIcon
+                                style={{ color: "var(--color-primary)" }}
+                              />
+                            )}
+                          </span>
+                        </h6>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <IconButton
+                    style={{ marginLeft: "auto" }}
+                    onClick={() => handleDeleteChat(chat._id)}
+                  >
+                    <DeleteIcon sx={{ color: "red" }} />
+                  </IconButton>
                 </div>
               );
             })}

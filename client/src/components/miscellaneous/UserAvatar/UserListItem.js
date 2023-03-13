@@ -3,7 +3,7 @@ import { Avatar, Badge } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useContext } from "react";
 import MatchesContext from "../../../context/matches";
-
+import "./UserListItem.css";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
@@ -41,9 +41,9 @@ function UserListItem({ user, handleFunction }) {
       onClick={handleFunction}
       style={{
         cursor: "pointer",
-        borderRadius: "50px",
         width: "100%",
       }}
+      className="user-list-item-container"
     >
       <h6
         style={{
@@ -72,9 +72,17 @@ function UserListItem({ user, handleFunction }) {
             }}
           />
         </StyledBadge>
-        <span style={{ flex: 1, textAlign: "center" }}>
+        <h6
+          style={{
+            fontSize: "1.4rem",
+            padding: "0.1rem 1rem",
+            color: "#fff",
+            fontWeight: 600,
+            flex: 1,
+          }}
+        >
           {user.firstname + " " + user.lastname}
-        </span>
+        </h6>
       </h6>
     </div>
   );
@@ -119,6 +127,7 @@ export default UserListItem;
 //                         }}
 //                       />
 //                     </StyledBadge>
+
 //                     <h6
 //                       style={{
 //                         fontSize: "1.4rem",
