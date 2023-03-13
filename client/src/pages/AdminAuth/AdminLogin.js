@@ -147,11 +147,6 @@ function AdminLogin() {
                 <p className="error-msg">
                   Please check your credentials and Try again
                 </p>
-                <p className="forgot-password">
-                  <Link to="/forgot-password" replace={true}>
-                    Trouble logging in?
-                  </Link>
-                </p>
               </div>
             )}
           </Box>

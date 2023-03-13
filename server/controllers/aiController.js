@@ -90,8 +90,7 @@ const generateUserSuggestions = async userId => {
 exports.generateSuggestions = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   const passions = await Answer.findOne({ userId: req.user._id });
-  // const isClustered = user.isClustered;
-  const isClustered = true;
+  const isClustered = user.isClustered;
   const ageDifMs = Date.now() - user.dob.getTime();
   const ageDate = new Date(ageDifMs); // miliseconds from epoch
   const Age = Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -116,6 +115,7 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
 
   const sentUsers = await request(options);
   let suggestions = await getUsersByIndex(sentUsers);
+  await User.findByIdAndUpdate(req.user._id, { isClustered: true });
   // const filteredUsers = filterByLookingFor(aiSuggestedUsers);
   // suggestions = suggestions.slice(0, 10);
 
@@ -164,6 +164,7 @@ exports.validateChat = async () => {
     json: true,
   };
   const response = await request(options);
+
   await Message.updateMany({ validated: false }, { validated: true });
   console.log(response);
   response.forEach(async result => {

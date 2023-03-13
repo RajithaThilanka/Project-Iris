@@ -188,10 +188,11 @@ const looking = JSON.parse(fs.readFileSync('./new.json', 'utf-8'));
 // fs.writeFileSync('./test.json', JSON.stringify(updated), 'utf-8');
 const import_data = async () => {
   // await User.create(users, { validateBeforeSave: false });
-  const updatedLooking = looking.map((p, i) => {
-    return { ...p, userId: { $oid: `${ids[i]}` } };
-  });
-  fs.writeFileSync('./new.json', JSON.stringify(updatedLooking), 'utf-8');
+  await User.updateMany({}, { isClustered: true });
+  // const updatedLooking = looking.map((p, i) => {
+  //   return { ...p, userId: { $oid: `${ids[i]}` } };
+  // });
+  // fs.writeFileSync('./new.json', JSON.stringify(updatedLooking), 'utf-8');
   // await LookingFor.updateMany(
   //   {},
   //   {
