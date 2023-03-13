@@ -9,10 +9,13 @@ import { styled } from "@mui/material/styles";
 import { IconButton, Typography } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import ProfileReportReason from "../ProfileReportReason/ProfileReportReason";
+import { useState, useEffect } from "react";
+
+import jsonData from "./AllData.json"; // Import the JSON file
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
-    field: "fullName",
+    field: "fullname",
     headerName: "Full Name",
     width: 150,
     editable: false,
@@ -41,7 +44,6 @@ const columns = [
     renderCell: (params) => {
       const onClick = (e) => {
         const currentRow = params.row;
-        // return alert(JSON.stringify(currentRow, null, 4));
       };
 
       return (
@@ -61,29 +63,31 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    fullName: "Snow",
-    email: "Jon@gmail.com",
-    reportType: "Fake profile",
-  },
-
-  {
-    id: 2,
-    fullName: "Lannister",
-    email: "Cersei@gmail.com",
-    reportType: "hatespeech",
-  },
-];
-
 export default function Profilereports() {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    // Parse the JSON data
+    const data = JSON.parse(JSON.stringify(jsonData));
+
+    // Create the rows array
+    const rowsArray = data.map((item) => ({
+      id: item.id,
+      fullname: item.fullname,
+      email: item.email,
+      reportType: item.reportType,
+    }));
+
+    // Set the rows state
+    setRows(rowsArray);
+  }, []);
+
   return (
     <>
       <Stack direction="row" spacing={2}>
         <Box
           sx={{
-            height: 400,
+            height: 500,
             width: 800,
             justifyContent: "center",
             textAlign: "center",

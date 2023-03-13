@@ -17,18 +17,19 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useState, useEffect } from "react";
 import TempleBuddhistIcon from "@mui/icons-material/TempleBuddhist";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import data from "./Data.json";
 
 export default function SuggessionFactfiles() {
   return (
     <div>
-      <Stack direction="column" spacing={2}>
+      <Stack direction="column" spacing={2} sx={{ alignItems: "left" }}>
         <Stack
           direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
+          spacing={1}
+          // sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <PersonIcon /> Name :
+            <PersonIcon /> Name : {data[0].name}
           </Typography>
         </Stack>
         <hr />
@@ -39,7 +40,7 @@ export default function SuggessionFactfiles() {
           sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <PersonIcon /> Call Name :
+            <PersonIcon /> Call Name : {data[0].callname}
           </Typography>
         </Stack>
         <hr />
@@ -49,7 +50,7 @@ export default function SuggessionFactfiles() {
           sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <CakeIcon /> DOB :
+            <CakeIcon /> DOB :{data[0].dob}
           </Typography>
         </Stack>
         <hr />
@@ -59,7 +60,7 @@ export default function SuggessionFactfiles() {
           sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <WorkIcon /> Occupation :
+            <WorkIcon /> Occupation :{data[0].occupation}
           </Typography>
         </Stack>
         <hr />
@@ -70,7 +71,7 @@ export default function SuggessionFactfiles() {
         >
           <Typography spacing={2}>
             <BoyIcon />
-            Body Type :
+            Body Type :{data[0].bodytype}
           </Typography>
         </Stack>
         <hr />
@@ -80,7 +81,7 @@ export default function SuggessionFactfiles() {
           sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <SchoolIcon /> Education Level :
+            <SchoolIcon /> Education Level :{data[0].education}
           </Typography>
         </Stack>
         <hr />
@@ -90,7 +91,7 @@ export default function SuggessionFactfiles() {
           sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <LanguageIcon /> Language :
+            <LanguageIcon /> Language :{data[0].language}
           </Typography>
         </Stack>
         <hr />
@@ -100,7 +101,7 @@ export default function SuggessionFactfiles() {
           sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <WcIcon /> Merital Status :
+            <WcIcon /> Merital Status :{data[0].maritalstatus}
           </Typography>
         </Stack>
         <hr />
@@ -110,7 +111,7 @@ export default function SuggessionFactfiles() {
           sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <ChildCareIcon /> Has Children :
+            <ChildCareIcon /> Has Children :{data[0].haschildren}
           </Typography>
         </Stack>
         <hr />
@@ -120,7 +121,7 @@ export default function SuggessionFactfiles() {
           sx={{ justifyContent: "space-between" }}
         >
           <Typography spacing={2}>
-            <TempleBuddhistIcon /> Religion :
+            <TempleBuddhistIcon /> Religion :{data[0].Religion}
           </Typography>
         </Stack>
       </Stack>

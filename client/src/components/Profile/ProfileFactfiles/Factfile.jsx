@@ -77,7 +77,7 @@ export default function Factfile() {
             sx={{ justifyContent: "space-between" }}
           >
             <Typography spacing={2}>
-              <PersonIcon /> Name : {user?.firstname}
+              <PersonIcon /> Name :{user?.firstname}
             </Typography>
 
             <Button

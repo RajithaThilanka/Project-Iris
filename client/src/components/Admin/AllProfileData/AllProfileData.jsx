@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { Typography, Stack } from "@mui/material";
 
 import Button from "@mui/material/Button";
+
 export default function UserVerificationView() {
   return (
     <div>
