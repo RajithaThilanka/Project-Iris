@@ -11,13 +11,12 @@ import MessageIcon from "@mui/icons-material/Message";
 import BlockIcon from "@mui/icons-material/Block";
 import { useState, useEffect } from "react";
 import AllProfileData from "../AllProfileData/AllProfileData";
-
-// import { getMe } from "../../../api/UserRequests";
+import jsonData from "./AllData.json"; // Import the JSON file
 
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
-    field: "fullName",
+    field: "fullname",
     headerName: "Full Name",
     width: 150,
     editable: false,
@@ -66,45 +65,31 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "unverified" },
-
-  {
-    id: 2,
-    fullName: "Lannister",
-    email: "Cersei@gmail.com",
-    status: "verified",
-  },
-];
-
 export default function Profilereports() {
-  const [admindata, setAdminData] = useState(null);
+  const [rows, setRows] = useState([]);
 
-  // useEffect(() => {
-  //   const getAdminData = async () => {
-  //     try {
-  //       const {
-  //         data: {
-  //           data: { data },
-  //         },
-  //       } = await getProfiles();
-  //       setAdminData(data);
-  //       console.log(data);
-  //       // console.log(user.userDescription)
+  useEffect(() => {
+    // Parse the JSON data
+    const data = JSON.parse(JSON.stringify(jsonData));
 
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   };
-  //   getAdminData();
-  // }, []);
+    // Create the rows array
+    const rowsArray = data.map((item) => ({
+      id: item.id,
+      fullname: item.fullname,
+      email: item.email,
+      status: item.status,
+    }));
+
+    // Set the rows state
+    setRows(rowsArray);
+  }, []);
 
   return (
     <>
       <Stack direction="row" spacing={3}>
         <Box
           sx={{
-            height: 400,
+            height: 500,
             width: 800,
             justifyContent: "center",
             textAlign: "center",
@@ -114,7 +99,7 @@ export default function Profilereports() {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={10}
+            pageSize={20}
             rowsPerPageOptions={[]}
             checkboxSelection
             disableSelectionOnClick

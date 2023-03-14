@@ -1,0 +1,9 @@
+@media screen and (max-width: 900px) and (min-width: 600px) {
+  .className {
+    width: 100%;
+    height: 50;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}

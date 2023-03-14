@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider, responsiveFontSizes } from "@mui/material";
 
 import Welcome from "./pages/Home/Welcome";
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
@@ -48,9 +48,10 @@ const theme = createTheme({
   },
   breakpoints: {
     values: {
+      // xxs: 0,
       xs: 0,
       sm: 600,
-      md: 1088,
+      md: 900,
       lg: 1200,
       xl: 1536,
     },
@@ -72,17 +73,19 @@ const theme = createTheme({
     fontWeightBold: 500,
     fontWeightLight: 300,
     fontWeightRegular: 400,
+  },
 
-    button: {
-      fontFamily: "Poppins, sans-serif",
-      fontWeight: 400,
-      fontSize: "1.3rem",
-      lineHeight: 1.75,
-      letterSpacing: "0.17em",
-      textTransform: "uppercase",
-    },
+  button: {
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: 400,
+    fontSize: "1.3rem",
+    lineHeight: 1.75,
+    letterSpacing: "0.17em",
+    textTransform: "uppercase",
+    textAlign: "left",
   },
 });
+
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
   return (
