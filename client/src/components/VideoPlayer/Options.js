@@ -1,4 +1,11 @@
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  IconButton,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Container } from "@mui/system";
 import React, { useContext, useEffect, useState } from "react";
@@ -8,7 +15,8 @@ import { Assignment, Phone, PhoneDisabled } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import VideoContext from "../../context/videoContext";
-
+import { getUser } from "../../api/UserRequests";
+import Loader from "../../components/Loading/Loading";
 const socket = io("http://localhost:5000");
 
 const useStyles = makeStyles((theme) => ({
@@ -47,78 +55,109 @@ function Options({ resId, children }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+
+  const [resUser, setResUser] = useState(null);
   const {
     me,
     callAccepted,
-    name,
-    setName,
     leaveCall,
     callEnded,
     videoActiveUsers,
     callUser,
+    call,
+    calling,
+    setCalling,
   } = useContext(VideoContext);
   const [idToCall, setIdToCall] = useState("");
 
   useEffect(() => {
     const socketObj = videoActiveUsers.find((u) => u.userId === resId);
-    console.log(videoActiveUsers);
     if (socketObj) {
       setIdToCall(socketObj.socketId);
-    }
+    } else setIdToCall("");
   }, [videoActiveUsers]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getUser(resId);
+        setResUser(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUser();
+  }, []);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  const handleCallUser = () => {
+    setCalling(true);
+    callUser(idToCall);
+  };
   const classes = useStyles();
   return (
-    <Container>
-      <Paper elevation={10} className={classes.paper}>
-        <form className={classes.root} noValidate autoComplete="off">
-          <Grid container className={classes.gridContainer}>
-            <Grid item xs={12} md={6} className={classes.padding}>
-              <Typography gutterBottom variant="h6">
-                Account Info
-              </Typography>
-              <TextField
-                label="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} md={6} className={classes.padding}>
-              <Typography gutterBottom variant="h6">
-                Make a call
-              </Typography>
-              <TextField
-                label="ID to Call"
-                value={idToCall}
-                fullWidth
-                aria-readonly
-              />
-              <div id="controls">
-                {callAccepted && !callEnded ? (
-                  <div
-                    className="control-container"
-                    id="leave-btn"
-                    onClick={() => leaveCall(idToCall)}
-                  >
-                    <img src={serverPublic + "phone.png"} alt="" />
-                  </div>
-                ) : (
-                  <div
-                    className="control-container"
-                    id="camera-btn"
-                    onClick={() => callUser(idToCall)}
-                  >
-                    <img src={serverPublic + "camera.png"} alt="" />
-                  </div>
-                )}
-              </div>
-            </Grid>
-          </Grid>
-        </form>
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        background:
+          callAccepted && !callEnded ? "rgba(0,0,0,0)" : "rgba(0,0,0,0.7)",
+
+        // opacity: callAccepted && !callEnded ? "0%" : "100%",
+        paddingBottom: "1.4rem",
+      }}
+    >
+      <div
+        style={{
+          color: "#fff",
+          fontSize: "2rem",
+          textAlign: "center",
+          marginTop: "2rem",
+          marginBottom: "1rem",
+          transition: "all 1s",
+        }}
+      >
+        {idToCall ? "" : `${resUser?.firstname} is offline. Please wait!`}
+        {idToCall && !callAccepted && !call.isReceivingCall && !calling
+          ? `${resUser?.firstname} is online. Call ${
+              resUser?.gender === "male" ? "him" : "her"
+            }!`
+          : ""}
+        {calling && !callAccepted ? `Calling ${resUser?.firstname}` : ""}
+      </div>
+      <div style={{ textAlign: "center" }}> {!idToCall && <Loader />}</div>
+      <div>
+        <div id="controls">
+          {callAccepted && !callEnded ? (
+            <div
+              className="control-container"
+              id="leave-btn"
+              onClick={() => leaveCall(idToCall)}
+            >
+              <img src={serverPublic + "phone.png"} alt="" />
+            </div>
+          ) : call.isReceivingCall ? (
+            ""
+          ) : (
+            <IconButton
+              className="control-container"
+              id="camera-btn"
+              onClick={handleCallUser}
+              style={{ display: calling && !callAccepted ? "none" : "block" }}
+              disabled={!idToCall}
+            >
+              <img src={serverPublic + "camera.png"} alt="" />
+            </IconButton>
+          )}
+        </div>
         {children}
-      </Paper>
-    </Container>
+      </div>
+    </div>
   );
 }
 

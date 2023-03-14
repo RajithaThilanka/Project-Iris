@@ -3,6 +3,9 @@ import { Grid, Typography, Paper } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import VideoContext from "../../context/videoContext";
 import "./VideoPlayer.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const useStyles = makeStyles((theme) => ({
   video: {
     width: "550px",
@@ -43,6 +46,7 @@ const VideoPlayer = () => {
     stream,
     call,
     socket,
+    videoActiveUsers,
   } = useContext(VideoContext);
 
   const classes = useStyles();
@@ -56,7 +60,9 @@ const VideoPlayer = () => {
   socket.on("endCall", () => {
     window.location.reload();
   });
-
+  // useEffect(() => {
+  //   window.location.reload();
+  // }, [videoActiveUsers]);
   return (
     <div container className="video-container">
       {stream && (

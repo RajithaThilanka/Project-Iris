@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Peer from "simple-peer";
 import { io } from "socket.io-client";
 import MatchesContext from "./matches";
@@ -17,6 +18,7 @@ function VideoContextProvider({ children }) {
   const [call, setCall] = useState({});
   const [me, setMe] = useState(user.callTag);
   const [videoActiveUsers, setVideoActiveUsers] = useState([]);
+  const [calling, setCalling] = useState(false);
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
@@ -28,6 +30,18 @@ function VideoContextProvider({ children }) {
         setStream(currentStream);
 
         if (myVideo.current) myVideo.current.srcObject = currentStream;
+      })
+      .catch((err) => {
+        toast.error("Please allow camera and mic permissions", {
+          position: "bottom-left",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       });
 
     socket.emit("vidsetup", user);
@@ -89,8 +103,8 @@ function VideoContextProvider({ children }) {
   const leaveCall = (id) => {
     socket.emit("endCall", id);
     setCallEnded(true);
-
-    connectionRef.current.destroy();
+    setCalling(false);
+    connectionRef?.current?.destroy();
 
     window.location.reload();
   };
@@ -113,6 +127,8 @@ function VideoContextProvider({ children }) {
     setMe,
     setVideoActiveUsers,
     socket,
+    calling,
+    setCalling,
   };
 
   return (
