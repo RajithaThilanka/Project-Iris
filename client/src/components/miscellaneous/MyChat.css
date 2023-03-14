@@ -36,6 +36,9 @@
   flex: 1;
   justify-content: center;
   align-items: center;
+  padding: 0.5rem 0;
+
+  border-bottom: 1px solid #fff;
 }
 
 .search__input {
@@ -45,7 +48,7 @@
   border: none;
   color: inherit;
   padding: 0.7rem 2rem;
-  width: 50%;
+  width: 60%;
   border-radius: 100px;
   transition: all 0.2s;
   margin-right: -3.5rem;
@@ -67,6 +70,8 @@
 .search__button:focus {
   outline: none;
 }
-.chat-contact:hover {
+.chat-contact-container:hover {
   background-color: rgba(0, 0, 0, 0.4) !important;
+}
+.chat-contact:hover {
 }

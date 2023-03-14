@@ -58,6 +58,9 @@ exports.fetchChats = catchAsync(async (req, res, next) => {
   try {
     Chat.find({
       users: { $elemMatch: { $eq: req.user._id } },
+      invisible: {
+        $nin: req.user._id,
+      },
     })
       .populate('users', '-password')
       .populate('groupAdmin', '-password')
@@ -181,6 +184,18 @@ exports.removeFromGroup = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.deleteChat = catchAsync(async (req, res, next) => {
+  const chatId = req.params.id;
+  await Chat.findByIdAndUpdate(chatId, {
+    $push: { invisible: req.user._id },
+  });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: null,
+    },
+  });
+});
 // exports.userChats = catchAsync(async (req, res, next) => {
 //   const chat = await Chat.find({
 //     members: { $in: [req.params.userId] },

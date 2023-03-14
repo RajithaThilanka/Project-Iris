@@ -78,6 +78,9 @@ io.on('connection', socket => {
   socket.on('answerCall', data => {
     io.to(data.to).emit('callAccepted', data.signal);
   });
+  socket.on('endCall', id => {
+    io.to(id).emit('endCall');
+  });
 
   socket.on('typing', room => socket.in(room).emit('typing'));
   socket.on('stop typing', room => socket.in(room).emit('stop typing'));

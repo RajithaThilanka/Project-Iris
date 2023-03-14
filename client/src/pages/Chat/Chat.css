@@ -13,7 +13,7 @@
   width: 70%;
 
   height: 91.4vh;
-  padding: 10px;
+  padding: 1rem;
   margin: 1rem auto;
   max-width: 100rem;
 }
@@ -45,5 +45,11 @@
   }
   .chat-page {
     height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 46.2em) {
+  .chat-page {
+    margin: 0;
   }
 }

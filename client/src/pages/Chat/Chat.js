@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 import Navbar from "../../components/Appbar/Navbar";
@@ -17,6 +17,10 @@ function Chat() {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const [fetchAgain, setFetchAgain] = useState(false);
+  const mychatscroll = useRef();
+  useEffect(() => {
+    mychatscroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
   return (
     <>
       <Navbar user={user} />{" "}
@@ -24,7 +28,7 @@ function Chat() {
         <VerticalNavbar />
         <div className="chat-page">
           {/* <Sidedrawer /> */}
-          <div className="chat-page-sub">
+          <div className="chat-page-sub" ref={mychatscroll}>
             <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
             <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
           </div>

@@ -99,7 +99,7 @@ function Options({ resId, children }) {
                   <div
                     className="control-container"
                     id="leave-btn"
-                    onClick={leaveCall}
+                    onClick={() => leaveCall(idToCall)}
                   >
                     <img src={serverPublic + "phone.png"} alt="" />
                   </div>
