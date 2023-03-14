@@ -36,7 +36,6 @@ function VideoContextProvider({ children }) {
       setMe(id);
     });
     socket.on("vidme", (vidUsers) => {
-      console.log(vidUsers);
       setVideoActiveUsers(vidUsers);
     });
 
@@ -87,7 +86,8 @@ function VideoContextProvider({ children }) {
     connectionRef.current = peer;
   };
 
-  const leaveCall = () => {
+  const leaveCall = (id) => {
+    socket.emit("endCall", id);
     setCallEnded(true);
 
     connectionRef.current.destroy();
@@ -112,6 +112,7 @@ function VideoContextProvider({ children }) {
     videoActiveUsers,
     setMe,
     setVideoActiveUsers,
+    socket,
   };
 
   return (
