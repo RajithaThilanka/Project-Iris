@@ -19,7 +19,7 @@ import jsonData from "./AllData.json"; // Import the JSON file
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
-    field: "fullname",
+    field: "firstname",
     headerName: "Full Name",
     width: 150,
     editable: false,
@@ -31,8 +31,8 @@ const columns = [
     editable: false,
   },
   {
-    field: "status",
-    headerName: "Status",
+    field: "verified",
+    headerName: "Verified",
     type: "string",
     width: 110,
     editable: false,
@@ -65,6 +65,20 @@ const columns = [
         </Stack>
       );
     },
+  },
+  {
+    field: "occupation",
+    headerName: "Occupation",
+    type: "string",
+    width: 110,
+    editable: false,
+  },
+  {
+    field: "country",
+    headerName: "Country",
+    type: "string",
+    width: 110,
+    editable: false,
   },
 ];
 

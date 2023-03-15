@@ -12,10 +12,12 @@ import { useState, useEffect } from "react";
 
 import jsonData from "./AllData.json"; // Import the JSON file
 
+import { getAllVeriReq } from "../../../api/AdminRequests";
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
-    field: "fullname",
+    field: "firstname",
     headerName: "Full Name",
     width: 150,
     editable: false,
@@ -27,8 +29,8 @@ const columns = [
     editable: false,
   },
   {
-    field: "status",
-    headerName: "Status",
+    field: "verified",
+    headerName: "Verified",
     type: "number",
     width: 110,
     editable: false,
@@ -62,6 +64,20 @@ const columns = [
       );
     },
   },
+  {
+    field: "occupation",
+    headerName: "Occupation",
+    type: "string",
+    width: 110,
+    editable: false,
+  },
+  {
+    field: "country",
+    headerName: "Country",
+    type: "string",
+    width: 110,
+    editable: false,
+  },
 ];
 
 const rows = [
@@ -78,20 +94,37 @@ const rows = [
 export default function VerificationRequests() {
   const [rows, setRows] = useState([]);
 
+  // useEffect(() => {
+  //   // Parse the JSON data
+  //   const data = JSON.parse(JSON.stringify(jsonData));
+
+  //   // Create the rows array
+  //   const rowsArray = data.map((item) => ({
+  //     id: item.id,
+  //     fullname: item.fullname,
+  //     email: item.email,
+  //     status: item.status,
+  //   }));
+
+  //   // Set the rows state
+  //   setRows(rowsArray);
+  // }, []);
+
+  ///API call
   useEffect(() => {
-    // Parse the JSON data
-    const data = JSON.parse(JSON.stringify(jsonData));
-
-    // Create the rows array
-    const rowsArray = data.map((item) => ({
-      id: item.id,
-      fullname: item.fullname,
-      email: item.email,
-      status: item.status,
-    }));
-
-    // Set the rows state
-    setRows(rowsArray);
+    const getVerReqData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getAllVeriReq();
+        setRows(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getVerReqData();
   }, []);
 
   return (

@@ -12,10 +12,12 @@ import ProfileReportReason from "../ProfileReportReason/ProfileReportReason";
 import { useState, useEffect } from "react";
 
 import jsonData from "./AllData.json"; // Import the JSON file
+import { getProfileReports } from "../../../api/AdminRequests";
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
-    field: "fullname",
+    field: "firstname",
     headerName: "Full Name",
     width: 150,
     editable: false,
@@ -61,25 +63,56 @@ const columns = [
       );
     },
   },
+  {
+    field: "occupation",
+    headerName: "Occupation",
+    type: "string",
+    width: 110,
+    editable: false,
+  },
+  {
+    field: "country",
+    headerName: "Country",
+    type: "string",
+    width: 110,
+    editable: false,
+  },
 ];
 
 export default function Profilereports() {
   const [rows, setRows] = useState([]);
 
+  // useEffect(() => {
+  //   // Parse the JSON data
+  //   const data = JSON.parse(JSON.stringify(jsonData));
+
+  //   // Create the rows array
+  //   const rowsArray = data.map((item) => ({
+  //     id: item.id,
+  //     fullname: item.fullname,
+  //     email: item.email,
+  //     reportType: item.reportType,
+  //   }));
+
+  //   // Set the rows state
+  //   setRows(rowsArray);
+  // }, []);
+
+  ///API call
   useEffect(() => {
-    // Parse the JSON data
-    const data = JSON.parse(JSON.stringify(jsonData));
-
-    // Create the rows array
-    const rowsArray = data.map((item) => ({
-      id: item.id,
-      fullname: item.fullname,
-      email: item.email,
-      reportType: item.reportType,
-    }));
-
-    // Set the rows state
-    setRows(rowsArray);
+    const getReportData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getProfileReports();
+        setRows(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getReportData();
   }, []);
 
   return (
