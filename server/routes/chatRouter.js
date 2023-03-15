@@ -17,5 +17,7 @@ router
 router
   .route('/groupadd')
   .patch(authController.protect, chatController.addToGroup);
-
+router
+  .route('/delete-chat/:id')
+  .delete(authController.protect, chatController.deleteChat);
 module.exports = router;

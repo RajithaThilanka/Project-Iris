@@ -2,6 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Grid, Typography, Paper } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import VideoContext from "../../context/videoContext";
+import "./VideoPlayer.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const useStyles = makeStyles((theme) => ({
   video: {
@@ -22,10 +25,29 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px",
   },
 }));
+{
+  /* <Typography variant="h5" gutterBottom>
+              {call.name}
+            </Typography> */
+}
+{
+  /* <Typography variant="h5" gutterBottom>
+            {name || "Name"}
+          </Typography> */
+}
 
 const VideoPlayer = () => {
-  const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } =
-    useContext(VideoContext);
+  const {
+    name,
+    callAccepted,
+    myVideo,
+    userVideo,
+    callEnded,
+    stream,
+    call,
+    socket,
+    videoActiveUsers,
+  } = useContext(VideoContext);
 
   const classes = useStyles();
 
@@ -35,47 +57,38 @@ const VideoPlayer = () => {
     }
   }, [myVideo, stream]);
 
+  socket.on("endCall", () => {
+    window.location.reload();
+  });
+  // useEffect(() => {
+  //   window.location.reload();
+  // }, [videoActiveUsers]);
   return (
-    <Grid container className={classes.gridContainer}>
+    <div container className="video-container">
       {stream && (
-        <Paper
-          className={classes.paper}
-          style={{
-            boxShadow:
-              "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-          }}
-        >
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>
-              {name || "Name"}
-            </Typography>
-            <video
-              playsInline
-              muted
-              autoPlay
-              className={classes.video}
-              ref={myVideo}
-            />
-          </Grid>
-        </Paper>
+        <video
+          playsInline
+          muted
+          autoPlay
+          className={
+            callAccepted && !callEnded
+              ? "video-player smallFrame"
+              : "video-player video-me"
+          }
+          ref={myVideo}
+        />
       )}
 
       {callAccepted && !callEnded && (
-        <Paper className={classes.paper}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>
-              {call.name}
-            </Typography>
-            <video
-              playsInline
-              autoPlay
-              className={classes.video}
-              ref={userVideo}
-            />
-          </Grid>
-        </Paper>
+        <video
+          playsInline
+          autoPlay
+          className="video-player video-other"
+          ref={userVideo}
+          style={{ display: "block" }}
+        />
       )}
-    </Grid>
+    </div>
   );
 };
 

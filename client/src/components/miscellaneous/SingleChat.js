@@ -6,6 +6,7 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
@@ -31,7 +32,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-  const { activeUsers } = useContext(MatchesContext);
+  const { activeUsers, setActiveUsers } = useContext(MatchesContext);
 
   const { selectedChat, setSelectedChat, notification, setNotification } =
     useContext(MatchesContext);
@@ -56,9 +57,9 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
-    // socket.on("active-users", (activeUsers) => {
-    //   setActiveUsers(activeUsers);
-    // });
+    socket.on("active-users", (activeUsers) => {
+      setActiveUsers(activeUsers);
+    });
   }, []);
 
   const fetchMessages = async () => {
@@ -287,13 +288,24 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 onChange={typingHandler}
                 value={newMessage}
               /> */}
-              <InputEmoji
-                placeholder="Type a message"
-                onChange={typingHandler}
-                value={newMessage}
-                onEnter={sendMessage}
-                theme="dark"
-              />
+              <div
+                style={{
+                  display: "flex",
+                  marginBottom: "0.9rem",
+                  marginTop: "1rem",
+                }}
+              >
+                <InputEmoji
+                  placeholder="Type a message"
+                  onChange={typingHandler}
+                  value={newMessage}
+                  onEnter={sendMessage}
+                  theme="dark"
+                />
+                <IconButton sx={{ color: "#fff" }} onClick={sendMessage}>
+                  <SendIcon />
+                </IconButton>
+              </div>
             </div>
           </div>
         </>

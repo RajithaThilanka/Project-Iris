@@ -30,7 +30,7 @@ function DateVideo() {
     <div style={{ background: "var(--color-primary)", height: "100vh" }}>
       <VideoPlayer />
       <Options resId={id}>
-        <Notifications />
+        <Notifications resId={id} />
       </Options>
     </div>
   );
