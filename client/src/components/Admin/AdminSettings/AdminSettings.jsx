@@ -21,36 +21,41 @@ export default function AdminSettings() {
 
   return (
     <div>
-      <Stack diretion="column" spacing={2} sx={{ alignItems: "center" }}>
-        <Typography variant="h5">
-          Schedule Hatespeech Detect Date and Time
-        </Typography>
-        <Typography variant="h6">
-          {dayjs(selectedDate).format("dddd, MMMM D, YYYY h:mm A")}
-        </Typography>
-        <Box
-          sx={{
-            border: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 2,
-            padding: 3,
-            boxShadow: 2,
-          }}
-        >
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <StaticDateTimePicker
-              orientation="landscape"
-              value={selectedDate}
-              onChange={handleDateChange}
-            />
-          </LocalizationProvider>
-        </Box>
-        <Typography variant="h5">Hate Speech Check Now</Typography>
-        <Button variant="outlined" onClick={handleClick}>
-          Schedule Now
-        </Button>
-        {/* {currentDateTime && <p>{currentDateTime}</p>} */}
+      <Stack direction="row" spacing="3">
+        <Stack diretion="column" spacing={2} sx={{ alignItems: "center" }}>
+          <Typography variant="h5">
+            Schedule Hatespeech Detect Date and Time
+          </Typography>
+          <Typography variant="h6">
+            {dayjs(selectedDate).format("dddd, MMMM D, YYYY h:mm A")}
+          </Typography>
+          <Box
+            sx={{
+              border: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 2,
+              padding: 3,
+              boxShadow: 2,
+            }}
+          >
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <StaticDateTimePicker
+                orientation="landscape"
+                value={selectedDate}
+                onChange={handleDateChange}
+              />
+            </LocalizationProvider>
+          </Box>
+
+          {/* {currentDateTime && <p>{currentDateTime}</p>} */}
+        </Stack>
+        <Stack direction="column" spacing={2} alignItems="center" padding={25}>
+          <Typography variant="h5">Hate Speech Check Now</Typography>
+          <Button variant="outlined" onClick={handleClick}>
+            Check Now
+          </Button>
+        </Stack>
       </Stack>
     </div>
   );

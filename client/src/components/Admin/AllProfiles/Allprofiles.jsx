@@ -61,8 +61,8 @@ export default function Profilereports() {
           getuserId(userId);
 
           try {
-            await deleteaUser(userId);
             console.log(userId);
+            await deleteaUser(userId);
           } catch (error) {
             console.log(error);
           }
