@@ -28,6 +28,8 @@ import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminPage from "./pages/Admin/AdminPage";
 import AdminLogin from "./pages/AdminAuth/AdminLogin";
+
+import Dashboard2 from "./pages/Dashboard/Dashboard2";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -108,6 +110,7 @@ function App() {
             path="/auth/signup/lookingfor-info/:id"
             element={<LookingFor />}
           ></Route>
+
           <Route
             path="/auth/login"
             element={user ? <Navigate to="/me" /> : <Auth action="login" />}
@@ -155,7 +158,7 @@ function App() {
           <Route path="/about-us" element={<AboutUs />}></Route>
           <Route
             path="/me/dashboard"
-            element={user ? <Dashboard /> : <Navigate to="/auth/login" />}
+            element={user ? <Dashboard2 /> : <Navigate to="/auth/login" />}
           ></Route>
           <Route
             path="/me/connections"
@@ -182,6 +185,7 @@ function App() {
             path="/me/suggession/profile"
             element={<SuggessionPage />}
           ></Route>
+
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
