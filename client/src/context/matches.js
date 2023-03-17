@@ -22,6 +22,7 @@ function ContextProvider({ children }) {
   const [socketConnected, setSocketConnected] = useState(false);
   const [activeUsers, setActiveUsers] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
+  const [matches, setMatches] = useState([]);
   const [filter, setFilter] = useState({
     age: [18, 120],
     gender: {
@@ -30,8 +31,11 @@ function ContextProvider({ children }) {
     },
     countries: [],
     languages: [],
+    online: false,
   });
   const valueToShare = {
+    matches,
+    setMatches,
     filter,
     setFilter,
     sentConRequests,

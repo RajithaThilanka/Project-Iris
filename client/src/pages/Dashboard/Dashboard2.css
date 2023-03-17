@@ -137,7 +137,7 @@
   height: 70%;
 }
 .sugg-card {
-  min-width: 30rem;
+  max-width: 32rem;
   width: 40%;
   height: 100%;
   position: relative;

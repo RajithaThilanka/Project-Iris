@@ -63,7 +63,7 @@ function Dashboard2() {
   const [currentProfile, setCurrentProfile] = useState(0);
   const { filter } = useContext(MatchesContext);
   const { sentConRequests, setsentConRequests } = useContext(MatchesContext);
-  const [matches, setMatches] = useState([]);
+  const { matches, setMatches } = useContext(MatchesContext);
   const [filtered, setFiltered] = useState([]);
 
   const applyFilter = () => {
@@ -85,12 +85,19 @@ function Dashboard2() {
           ? m.languages.filter((value) => filter.languages.includes(value))
               .length > 0
           : true;
+      let isOnline = true;
+      if (filter.online) {
+        isOnline = activeUsers.some((user) => user.userId === m._id)
+          ? true
+          : false;
+      }
       return (
         age >= filter.age[0] &&
         age <= filter.age[1] &&
         genderMatch &&
         countryMatch &&
-        langMatch
+        langMatch &&
+        isOnline
       );
     });
     return filteredSugs;

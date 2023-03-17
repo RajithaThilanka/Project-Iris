@@ -7,7 +7,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import Filter from "../Filter/Filter";
 function VerticalNavbar({ children }) {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab } = useContext(MatchesContext);
+  const { activeTab, setActiveTab, matches } = useContext(MatchesContext);
   const handleClick = (index, link) => {
     setActiveTab(index);
     navigate(link);
@@ -25,6 +25,7 @@ function VerticalNavbar({ children }) {
           onChange={handleChange}
           inputProps={{ "aria-label": "controlled" }}
           className="filter-btn"
+          disabled={matches.length === 0}
         />
         Filter
       </div>

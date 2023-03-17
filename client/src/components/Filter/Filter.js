@@ -48,10 +48,8 @@ function Filter() {
   const handleData = (event) => {
     setFilter({ ...filter, [event.target.name]: event.target.value });
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(filter);
+  const handleOnline = (event) => {
+    setFilter({ ...filter, online: event.target.checked });
   };
   return (
     <div className="filter-bar">
@@ -128,6 +126,20 @@ function Filter() {
               name="languages"
             />
           </FormControl>
+        </div>
+        <div className="online-only-container">
+          <FormControlLabel
+            sx={{ color: "#000" }}
+            control={
+              <Checkbox
+                checked={filter.online}
+                onChange={handleOnline}
+                name="online"
+                size="small"
+              />
+            }
+            label="Online"
+          />
         </div>
         <Button
           variant="contained"

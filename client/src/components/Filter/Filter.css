@@ -32,3 +32,9 @@
   display: flex;
   gap: 3.5rem;
 }
+.online-only-container {
+  display: block;
+}
+.css-l9gw3y-MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-size: 1.2rem !important;
+}
