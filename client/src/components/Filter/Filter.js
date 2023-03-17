@@ -55,7 +55,7 @@ function Filter() {
   };
   return (
     <div className="filter-bar">
-      <form className="filter-form" onSubmit={handleSubmit}>
+      <form className="filter-form">
         <div className="age-filter">
           <FormLabel style={{ color: "#000", fontSize: "inherit" }}>
             Age
@@ -129,6 +129,23 @@ function Filter() {
             />
           </FormControl>
         </div>
+        <Button
+          variant="contained"
+          style={{ width: "50%", margin: "auto" }}
+          onClick={() =>
+            setFilter({
+              age: [18, 120],
+              gender: {
+                male: true,
+                female: true,
+              },
+              countries: [],
+              languages: [],
+            })
+          }
+        >
+          Reset
+        </Button>
       </form>
     </div>
   );

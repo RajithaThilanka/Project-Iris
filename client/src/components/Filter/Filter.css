@@ -15,6 +15,7 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
   min-height: 100vh;
+  border-right: 2px solid #000;
 }
 
 .looking-for-country {
