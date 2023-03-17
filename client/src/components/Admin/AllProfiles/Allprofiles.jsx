@@ -13,80 +13,135 @@ import { useState, useEffect } from "react";
 import AllProfileData from "../AllProfileData/AllProfileData";
 import jsonData from "./AllData.json"; // Import the JSON file
 
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "fullname",
-    headerName: "Full Name",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    type: "string",
-    width: 110,
-    editable: false,
-  },
-
-  {
-    field: "action",
-    headerName: "Action",
-    width: 180,
-    sortable: false,
-    disableClickEventBubbling: true,
-
-    renderCell: (params) => {
-      const onClick = (e) => {
-        const currentRow = params.row;
-        // return alert(JSON.stringify(currentRow, null, 4));
-      };
-
-      return (
-        <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick}>
-            <BlockIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <VisibilityIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <DeleteIcon />
-          </IconButton>
-        </Stack>
-      );
-    },
-  },
-];
+import { getAllUsers, deleteaUser } from "../../../api/AdminRequests";
 
 export default function Profilereports() {
+  const [imid, setimid] = useState(null);
+  const [userId, getuserId] = useState(null);
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 90 },
+    {
+      field: "firstname",
+      headerName: "Full Name",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "verified",
+      headerName: "Verified",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
+
+    {
+      field: "action",
+      headerName: "Action",
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
+
+      renderCell: (params) => {
+        let imageid;
+        let userId;
+        const showProfileImage = (e) => {
+          imageid = params.row.profilePhoto;
+          setimid(imageid);
+        };
+
+        const deleteProfile = async () => {
+          userId = params.row._id;
+          getuserId(userId);
+
+          try {
+            console.log(userId);
+            await deleteaUser(userId);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+
+        return (
+          <Stack direction="row" spacing={1}>
+            <IconButton size="small" onClick={showProfileImage}>
+              <BlockIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showProfileImage}>
+              <VisibilityIcon />
+            </IconButton>
+            <IconButton size="small" onClick={deleteProfile}>
+              <DeleteIcon />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "occupation",
+      headerName: "Occupation",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
+    {
+      field: "country",
+      headerName: "Country",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
+  ];
+
   const [rows, setRows] = useState([]);
 
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  // const [user, setUser] = useState([]);
+
+  //Json File load
+  // useEffect(() => {
+  //   // Parse the JSON data
+  //   const data = JSON.parse(JSON.stringify(jsonData));
+
+  //   // Create the rows array
+  //   const rowsArray = data.map((item) => ({
+  //     id: item.id,
+  //     fullname: item.fullname,
+  //     email: item.email,
+  //     status: item.status,
+  //   }));
+
+  //   // Set the rows state
+  //   setRows(rowsArray);
+  // }, []);
+
+  ///API call
   useEffect(() => {
-    // Parse the JSON data
-    const data = JSON.parse(JSON.stringify(jsonData));
-
-    // Create the rows array
-    const rowsArray = data.map((item) => ({
-      id: item.id,
-      fullname: item.fullname,
-      email: item.email,
-      status: item.status,
-    }));
-
-    // Set the rows state
-    setRows(rowsArray);
+    const getData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getAllUsers();
+        setRows(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
   }, []);
 
   return (
     <>
-      <Stack direction="row" spacing={3}>
+      <Stack direction="row" spacing={2}>
         <Box
           sx={{
             height: 500,
@@ -107,7 +162,7 @@ export default function Profilereports() {
           />
         </Box>
         <Box>
-          <AllProfileData />
+          <AllProfileData imid={imid} />
         </Box>
       </Stack>
     </>

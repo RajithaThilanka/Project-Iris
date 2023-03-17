@@ -2,6 +2,7 @@ import React, { useInsertionEffect } from "react";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import SaveIcon from "@mui/icons-material/Save";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 
 import {
   Card,
@@ -24,8 +25,6 @@ import ProComplete from "../../../components/Profile/ProfileComplete/profilecomp
 import Factfile from "../../../components/Profile/ProfileFactfiles/Factfile";
 import { getMe } from "../../../api/UserRequests";
 import GppBadIcon from "@mui/icons-material/GppBad";
-
-const ENDPOINT = "http://localhost:5000";
 
 export default function ProfileAbout() {
   const ProfileData = require("../../../components/Profile/profileData.json");
@@ -150,9 +149,16 @@ export default function ProfileAbout() {
                 </Stack>
               </stack>
 
-              <stack direction="column">
-                <GppBadIcon />
-                <Typography>Unverified</Typography>
+              <stack
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}
+              >
+                <VerifiedUserIcon verified={user?.verified} />
+                <Typography>
+                  {user?.verified ? "Verified" : "Unverified"}
+                </Typography>
               </stack>
             </Stack>
           </Box>
@@ -174,17 +180,68 @@ export default function ProfileAbout() {
                 },
               }}
             >
+              <Typography>Profile Description</Typography>
+              <TextField
+                id="standard-multiline-static"
+                multiline
+                disabled={activeStat2}
+                rows={3}
+                variant="standard"
+                value={user?.interests.profileDescription}
+                sx={{ width: "100%", border: 0 }}
+              />
+
+              <Stack
+                direction="row"
+                spacing={2}
+                justifyContent="right"
+                marginTop={2}
+              >
+                <Button
+                  variant="outlined"
+                  endIcon={<ArrowForwardIosIcon />}
+                  onClick={() => {
+                    activeState2(0);
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="outlined"
+                  endIcon={<SaveIcon />}
+                  onClick={() => {
+                    activeState2(1);
+                  }}
+                >
+                  Save
+                </Button>
+              </Stack>
+            </Box>
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                padding: 2,
+                borderRadius: 0.5,
+                boxShadow: 0.5,
+                backgroundColor: "#e1f5fe",
+                "&:hover": {
+                  backgroundColor: "#e1f5fe",
+                  //  opacity: [0.9, 0.8, 0.7],
+                },
+              }}
+            >
               <Typography>
                 Life style <br /> <br />
               </Typography>
               <Stack spacing={2} direction="column" spacing={2}>
                 <TextField
                   id="outlined-multiline-static"
-                  label="INTERESTS AND HOBBIES"
+                  label="INTERESTS MOVIES"
                   multiline
                   variant="standard"
                   rows={3}
-                  value={ProfileData.interests}
+                  value={user?.interests.movies}
                   disabled={activeStat3}
                   sx={{ width: "100%" }}
                 />
@@ -222,7 +279,7 @@ export default function ProfileAbout() {
                   rows={3}
                   variant="standard"
                   disabled={activeStat4}
-                  value={ProfileData.sports}
+                  value={user?.interests.sports}
                   sx={{ width: "100%" }}
                 />
 
@@ -254,13 +311,48 @@ export default function ProfileAbout() {
 
                 <TextField
                   id="outlined-multiline-static"
-                  label="FOOD AND DRINK"
+                  label="MUSIC"
+                  multiline
+                  rows={3}
+                  variant="standard"
+                  disabled={activeStat5}
+                  value={user?.interests.music}
+                  sx={{ width: "100%" }}
+                />
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="right"
+                  marginTop={2}
+                >
+                  <Button
+                    variant="outlined"
+                    endIcon={<ArrowForwardIosIcon />}
+                    onClick={() => {
+                      activeState5(0);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    endIcon={<SaveIcon />}
+                    onClick={() => {
+                      activeState5(1);
+                    }}
+                  >
+                    Save
+                  </Button>
+                </Stack>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="SOCIAL MEDIA"
                   multiline
                   rows={3}
                   variant="standard"
                   defaultValue=" "
                   disabled={activeStat5}
-                  value={ProfileData.sports}
+                  value={user?.interests.music}
                   sx={{ width: "100%" }}
                 />
                 <Stack

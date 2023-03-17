@@ -13,6 +13,7 @@ import Profilereports from "../../components/Admin/Profilereport/Profilereports"
 import UserVerificationView from "../../components/Admin/UserVerificationData/UserVerificationView";
 import VerificationRequests from "../../components/Admin/VerificationRequests/VerificationRequests";
 import SuspendedAccounts from "../../components/Admin/SuspendedAccounts/SuspendedAccounts";
+import AdminSettings from "../../components/Admin/AdminSettings/AdminSettings";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,8 +62,8 @@ export default function AdminPage() {
         direction="row"
         justifyContent="center"
         alignItems="left"
-        spacing={2}
-        padding={1}
+        spacing={1}
+        // padding={1}
       >
         <Grid item xs={12}>
           <AdminSearch />
@@ -80,7 +81,7 @@ export default function AdminPage() {
           >
             <Tabs
               orientation="vertical"
-              variant="scrollable"
+              variant="fix"
               value={value}
               onChange={handleChange}
               aria-label="Vertical tabs example"
@@ -90,6 +91,7 @@ export default function AdminPage() {
               <Tab label="Varification Requests" {...a11yProps(1)} />
               <Tab label="Profile Reports" {...a11yProps(2)} />
               <Tab label="Suspended Acccoounts" {...a11yProps(3)} />
+              <Tab label="Admin Settings" {...a11yProps(4)} />
             </Tabs>
             <TabPanel value={value} index={0}>
               <Allprofiles />
@@ -102,6 +104,9 @@ export default function AdminPage() {
             </TabPanel>
             <TabPanel value={value} index={3}>
               <SuspendedAccounts />
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+              <AdminSettings />
             </TabPanel>
           </Box>
         </Grid>

@@ -1,10 +1,12 @@
 const catchAsync = require('../utils/catchAsync');
 const User = require('../models/userModel');
+const Connection = require('../models/connectionsModel');
 const AppError = require('../utils/appError');
 const request = require('request-promise');
 const LookingFor = require('../models/lookingForModel');
 const Answer = require('../models/answerModel');
 const Message = require('../models/messageModel');
+const ManualVerification = require('../models/manualVerificationModel');
 const Report = require('../models/reportModel');
 const getUsersByIndex = async users => {
   const suggestedUserPromises = users.map(async user => {
@@ -118,6 +120,23 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user._id, { isClustered: true });
   // const filteredUsers = filterByLookingFor(aiSuggestedUsers);
   // suggestions = suggestions.slice(0, 10);
+  const connections = await Connection.find({
+    $or: [{ senderId: req.user._id }, { receiverId: req.user._id }],
+  });
+
+  const conIds = connections.map(con => {
+    return '' + con.senderId == req.user._id
+      ? '' + con.receiverId
+      : '' + con.senderId;
+  });
+
+  let userSuggestions = await generateUserSuggestions(req.user._id);
+  suggestions = suggestions.filter(s => {
+    return !conIds.includes(s._id + '');
+  });
+  userSuggestions = userSuggestions.filter(s => {
+    return !conIds.includes(s._id + '');
+  });
 
   let updatedSuggestionsPromises = suggestions.map(async user => {
     const l = await LookingFor.findOne({ userId: user._id });
@@ -130,11 +149,20 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
     const { _doc, lookingFor, interests } = sug;
     return { ..._doc, lookingFor: lookingFor, interests: interests };
   });
-  // Looking for
-  const userSuggestions = await generateUserSuggestions(req.user._id);
 
-  // console.log(userSuggestions);
   updatedSuggestions = [...updatedSuggestions, ...userSuggestions];
+  updatedSuggestions = await Promise.all(
+    updatedSuggestions.map(async u => {
+      let status = false;
+      const verificationStatus = await ManualVerification.findOne({
+        userId: u._id,
+      });
+      if (!verificationStatus) status = false;
+      else if (verificationStatus.status === 'verified') status = true;
+      return { ...u, verStatus: status };
+    })
+  );
+
   res.status(200).json({
     status: 'success',
     nSuggestions: updatedSuggestions.length,

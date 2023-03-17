@@ -4,32 +4,27 @@ import { Typography, Stack } from "@mui/material";
 
 import Button from "@mui/material/Button";
 
-export default function ProfileSuspeneReason() {
+export default function ProfileSuspeneReason(props) {
   return (
     <div>
       <Stack
-        spacing={3}
+        spacing={0}
         direction="column"
         sx={{ width: "100%", height: "100%" }}
       >
         <Typography variant="h6"> Suspend Description </Typography>
+
         <Box
           sx={{
-            width: "500px",
-            height: "250px",
+            width: "400px",
+            height: "400px",
             border: 1,
             borderRadius: 0.5,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Box
-            sx={{
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            Suspend Description
-          </Box>
+          {props.description}
         </Box>
       </Stack>
     </div>

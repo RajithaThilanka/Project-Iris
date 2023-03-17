@@ -229,6 +229,7 @@ function UserInfo() {
                   names={["English", "Tamil", "Hindi"]}
                   onChange={handleData}
                   value={formData.languages}
+                  name="languages"
                 />
               </FormControl>
             </Stack>

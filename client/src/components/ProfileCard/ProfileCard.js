@@ -4,7 +4,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import BlockIcon from "@mui/icons-material/Block";
-
+import { Link } from "react-router-dom";
 import ChatIcon from "@mui/icons-material/Chat";
 import "./ProfileCard.css";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -98,10 +98,18 @@ function ProfileCard({ conUser, cardType }) {
       setSelectedChat(data);
       navigate("/me/chat");
       //   toggleDrawer(anchor, false);
+    } catch (error) {}
+  };
+
+  //view suggestion profile
+  const viewPro = async () => {
+    try {
+      navigate("/me/suggession/profile");
     } catch (error) {
       console.log(error);
     }
   };
+
   const handleRemoveConnection = async (id) => {
     console.log(id);
     try {
@@ -251,7 +259,10 @@ function ProfileCard({ conUser, cardType }) {
         }}
       >
         <Tooltip title="View Profile" placement="bottom">
-          <IconButton style={{ color: "var(--color-primary)" }}>
+          <IconButton
+            style={{ color: "var(--color-primary)" }}
+            onCLick={viewPro}
+          >
             <AccountCircleIcon />
           </IconButton>
         </Tooltip>

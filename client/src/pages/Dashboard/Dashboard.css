@@ -1,4 +1,4 @@
-* {
+/* * {
   user-select: none;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .profileContent {
-  /* border: 1px solid blue; */
+   border: 1px solid blue; 
   width: 55%;
   height: 50rem;
   margin-left: auto;
@@ -282,4 +282,4 @@
   100% {
     transform: scale(1, 1);
   }
-}
+} */
