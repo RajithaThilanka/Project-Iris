@@ -28,7 +28,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChip({ names, onChange, value }) {
+export default function MultipleSelectChip({ names, onChange, value, name }) {
   const theme = useTheme();
 
   return (
@@ -40,7 +40,7 @@ export default function MultipleSelectChip({ names, onChange, value }) {
           multiple
           size="small"
           fullWidth
-          name="languages"
+          name={name}
           value={value}
           onChange={onChange}
           renderValue={(selected) => (

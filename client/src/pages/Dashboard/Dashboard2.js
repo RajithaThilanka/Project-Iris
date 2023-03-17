@@ -61,14 +61,48 @@ function Dashboard2() {
   } = useSelector((state) => state.authReducer.authData);
   const [swiper, setSwiper] = useState(null);
   const [currentProfile, setCurrentProfile] = useState(0);
+  const { filter } = useContext(MatchesContext);
+  const { sentConRequests, setsentConRequests } = useContext(MatchesContext);
+  const [matches, setMatches] = useState([]);
+  const [filtered, setFiltered] = useState([]);
 
+  const applyFilter = () => {
+    const lookingForGenders = [];
+    filter.gender.male && lookingForGenders.push("male");
+    filter.gender.female && lookingForGenders.push("female");
+    let filteredSugs = matches.filter((m) => {
+      const age = Math.abs(
+        new Date(
+          Date.now() - Date.parse(matches[currentProfile].dob)
+        ).getUTCFullYear() - 1970
+      );
+
+      const genderMatch = lookingForGenders.includes(m.gender);
+      const countryMatch =
+        filter.countries.length > 0
+          ? filter.countries.includes(m.country)
+          : true;
+      const langMatch =
+        filter.languages.length > 0
+          ? m.languages.filter((value) => filter.languages.includes(value))
+              .length > 0
+          : true;
+      return (
+        age >= filter.age[0] &&
+        age <= filter.age[1] &&
+        genderMatch &&
+        countryMatch &&
+        langMatch
+      );
+    });
+    return filteredSugs;
+  };
   const {
     setSocketConnected,
     activeUsers,
     setActiveUsers,
     receivedConRequests,
     setreceivedConRequests,
-    setMe,
   } = useContext(MatchesContext);
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -85,8 +119,6 @@ function Dashboard2() {
       }
     });
   });
-  const { sentConRequests, setsentConRequests } = useContext(MatchesContext);
-  const [matches, setMatches] = useState([]);
 
   useEffect(() => {
     const generateSuggestions = async () => {
@@ -99,6 +131,11 @@ function Dashboard2() {
     };
     generateSuggestions();
   }, []);
+
+  useEffect(() => {
+    setFiltered([]);
+    setFiltered(applyFilter(matches));
+  }, [filter, matches]);
   const handleConRequest = async (id) => {
     try {
       const {
@@ -161,21 +198,21 @@ function Dashboard2() {
             className="swiper-container-main"
             style={{ display: "flex", flexDirection: "column" }}
           >
-            {matches.length > 0 ? (
+            {filtered.length > 0 ? (
               <div className="current-profile" style={{ display: "flex" }}>
                 <div
                   className="sugg-card"
                   style={{
                     backgroundImage: `url(${
-                      serverPublic + matches[currentProfile].profilePhoto
+                      serverPublic + filtered[currentProfile]?.profilePhoto
                     })`,
                   }}
                 >
                   <div className="profile--header">
                     <h6 className="profile--name">
-                      {matches[currentProfile].callTag}
+                      {filtered[currentProfile]?.callTag}
 
-                      {matches[currentProfile].verStatus && (
+                      {filtered[currentProfile]?.verStatus && (
                         <VerifiedIcon
                           style={{ fill: "cyan" }}
                           fontSize="small"
@@ -185,17 +222,17 @@ function Dashboard2() {
                     <p className="profile--age">
                       {Math.abs(
                         new Date(
-                          Date.now() - Date.parse(matches[currentProfile].dob)
+                          Date.now() - Date.parse(filtered[currentProfile]?.dob)
                         ).getUTCFullYear() - 1970
                       )}
                     </p>
                     <div className="profile--country">
                       {<LocationOnIcon fontSize="small" sx={{ padding: 0 }} />}
-                      {matches[currentProfile].country}
+                      {filtered[currentProfile]?.country}
                     </div>
                     <div className="suggestion-status-container">
                       {activeUsers.some(
-                        (user) => user.userId === matches[currentProfile]._id
+                        (user) => user.userId === filtered[currentProfile]?._id
                       ) ? (
                         <div className="suggestion-online--dot"></div>
                       ) : (
@@ -204,7 +241,8 @@ function Dashboard2() {
 
                       <div className="suggestion-status">
                         {activeUsers.some(
-                          (user) => user.userId === matches[currentProfile]._id
+                          (user) =>
+                            user.userId === filtered[currentProfile]?._id
                         )
                           ? "Online"
                           : "Offline"}
@@ -219,7 +257,7 @@ function Dashboard2() {
                         margin: "auto",
                       }}
                       onClick={() =>
-                        handleConRequest(matches[currentProfile]._id)
+                        handleConRequest(filtered[currentProfile]?._id)
                       }
                     >
                       Connect
@@ -240,7 +278,7 @@ function Dashboard2() {
                     </Divider>
 
                     <div className="basic-info">
-                      {matches[currentProfile]?.gender === "male" ? (
+                      {filtered[currentProfile]?.gender === "male" ? (
                         <div className="profile--basic-info">
                           {<ManIcon fontSize="medium" />}Man
                         </div>
@@ -252,23 +290,23 @@ function Dashboard2() {
 
                       <div className="profile--basic-info">
                         {<WorkIcon />}
-                        {matches[currentProfile]?.occupation}
+                        {filtered[currentProfile]?.occupation}
                       </div>
                       <div className="profile--basic-info">
                         {<HeightIcon />}
-                        {matches[currentProfile]?.height}
+                        {filtered[currentProfile]?.height}
                       </div>
                       <div className="profile--basic-info">
                         {<SchoolIcon />}
-                        {matches[currentProfile]?.educationLevel}
+                        {filtered[currentProfile]?.educationLevel}
                       </div>
                       <div className="profile--basic-info">
                         {<ChurchIcon />}
-                        {matches[currentProfile]?.religion}
+                        {filtered[currentProfile]?.religion}
                       </div>
                       <div className="profile--basic-info">
                         {<LanguageIcon />}
-                        {matches[currentProfile]?.ethnicity}
+                        {filtered[currentProfile]?.ethnicity}
                       </div>
                     </div>
                     <Divider>
@@ -283,18 +321,24 @@ function Dashboard2() {
                     </Divider>
 
                     <div className="looking-for">
-                      <div>{matches[currentProfile]?.lookingFor?.gender}</div>
+                      <div>{filtered[currentProfile]?.lookingFor?.gender}</div>
                       <div>
                         Age between{" "}
-                        {matches[currentProfile]?.lookingFor?.ageRange?.minAge}{" "}
+                        {filtered[currentProfile]?.lookingFor?.ageRange?.minAge}{" "}
                         and{" "}
-                        {matches[currentProfile]?.lookingFor?.ageRange?.maxAge}
+                        {filtered[currentProfile]?.lookingFor?.ageRange?.maxAge}
                       </div>
                       <div>
                         Height between{" "}
-                        {matches[currentProfile]?.lookingFor?.height?.minHeight}{" "}
+                        {
+                          filtered[currentProfile]?.lookingFor?.height
+                            ?.minHeight
+                        }{" "}
                         ft and{" "}
-                        {matches[currentProfile]?.lookingFor?.height?.maxHeight}{" "}
+                        {
+                          filtered[currentProfile]?.lookingFor?.height
+                            ?.maxHeight
+                        }{" "}
                         ft
                       </div>
                     </div>
@@ -309,7 +353,7 @@ function Dashboard2() {
                       ></Chip>
                     </Divider>
                     <div className="usertags">
-                      {matches[currentProfile]?.interests?.movies?.map(
+                      {filtered[currentProfile]?.interests?.movies?.map(
                         (movie) => (
                           <div>{movie}</div>
                         )
@@ -326,7 +370,7 @@ function Dashboard2() {
                       ></Chip>
                     </Divider>
                     <div className="usertags">
-                      {matches[currentProfile]?.interests?.music?.map(
+                      {filtered[currentProfile]?.interests?.music?.map(
                         (music) => (
                           <div>{music}</div>
                         )
@@ -343,7 +387,7 @@ function Dashboard2() {
                       ></Chip>
                     </Divider>
                     <div className="usertags">
-                      {matches[currentProfile]?.interests?.socialMedia?.map(
+                      {filtered[currentProfile]?.interests?.socialMedia?.map(
                         (social) => (
                           <div>{social}</div>
                         )
@@ -360,7 +404,7 @@ function Dashboard2() {
                       ></Chip>
                     </Divider>
                     <div className="usertags">
-                      {matches[currentProfile]?.interests?.sports?.map((s) => (
+                      {filtered[currentProfile]?.interests?.sports?.map((s) => (
                         <div>{s}</div>
                       ))}
                     </div>
@@ -376,7 +420,7 @@ function Dashboard2() {
                       ></Chip>
                     </Divider>
                     <div className="profile--description">
-                      {matches[currentProfile]?.userDescription}
+                      {filtered[currentProfile]?.userDescription}
                     </div>
                   </Zoom>
                 </Box>
@@ -420,9 +464,10 @@ function Dashboard2() {
               onSlideChange={(el) => setCurrentProfile(el.realIndex)}
               initialSlide={currentProfile}
               onSwiper={setSwiper}
+              grabCursor={true}
             >
-              {matches.length > 0
-                ? matches.map((character) => {
+              {filtered.length > 0
+                ? filtered.map((character) => {
                     return (
                       <SwiperSlide
                         key={character._id}
@@ -450,7 +495,11 @@ function Dashboard2() {
                           </div>
                           <div className="sug-profile-age">
                             <PersonOutlineIcon />
-                            15
+                            {Math.abs(
+                              new Date(
+                                Date.now() - Date.parse(character.dob)
+                              ).getUTCFullYear() - 1970
+                            )}
                           </div>
                           <div className="sug-profile-country">
                             <LocationOnIcon />

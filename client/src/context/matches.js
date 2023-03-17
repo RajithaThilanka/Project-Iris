@@ -22,7 +22,18 @@ function ContextProvider({ children }) {
   const [socketConnected, setSocketConnected] = useState(false);
   const [activeUsers, setActiveUsers] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
+  const [filter, setFilter] = useState({
+    age: [18, 100],
+    gender: {
+      male: true,
+      female: true,
+    },
+    countries: [],
+    languages: [],
+  });
   const valueToShare = {
+    filter,
+    setFilter,
     sentConRequests,
     receivedDateRequests,
     setreceivedDateRequests,

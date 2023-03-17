@@ -3,7 +3,41 @@
   display: -ms-flexbox;
   display: flex;
 }
+.vertical-nav-container {
+  background-color: var(--color-grey-dark-1);
+}
+.toggle-btn-container {
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-bottom: -2rem !important; */
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.filter-btn {
+  color: #fff;
+}
 
+.filter-form {
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.3rem 1.5rem;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.age-filter {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.gender-filter {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
 .sidebar {
   background-color: var(--color-grey-dark-1);
   -webkit-box-flex: 0;
