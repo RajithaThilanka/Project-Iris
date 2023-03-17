@@ -129,9 +129,6 @@ function Filter() {
             />
           </FormControl>
         </div>
-        <Button type="submit" variant="contained">
-          Filter
-        </Button>
       </form>
     </div>
   );

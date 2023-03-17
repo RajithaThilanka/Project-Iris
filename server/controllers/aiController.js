@@ -162,6 +162,7 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
       return { ...u, verStatus: status };
     })
   );
+
   res.status(200).json({
     status: 'success',
     nSuggestions: updatedSuggestions.length,

@@ -23,7 +23,7 @@ function ContextProvider({ children }) {
   const [activeUsers, setActiveUsers] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
   const [filter, setFilter] = useState({
-    age: [18, 100],
+    age: [18, 120],
     gender: {
       male: true,
       female: true,

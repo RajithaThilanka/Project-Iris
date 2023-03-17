@@ -72,9 +72,7 @@ function Dashboard2() {
     filter.gender.female && lookingForGenders.push("female");
     let filteredSugs = matches.filter((m) => {
       const age = Math.abs(
-        new Date(
-          Date.now() - Date.parse(matches[currentProfile].dob)
-        ).getUTCFullYear() - 1970
+        new Date(Date.now() - Date.parse(m.dob)).getUTCFullYear() - 1970
       );
 
       const genderMatch = lookingForGenders.includes(m.gender);
@@ -134,7 +132,7 @@ function Dashboard2() {
 
   useEffect(() => {
     setFiltered([]);
-    setFiltered(applyFilter(matches));
+    setFiltered(applyFilter());
   }, [filter, matches]);
   const handleConRequest = async (id) => {
     try {
@@ -150,8 +148,6 @@ function Dashboard2() {
       setMatches(matches.filter((m) => m._id !== id));
       // setCurrentProfile((currentProfile + 1) % matches.length);
 
-      console.log(currentProfile);
-      console.log(swiper.realIndex);
       swiper?.slideTo(currentProfile);
 
       setsentConRequests([data, ...sentConRequests]);
@@ -436,10 +432,11 @@ function Dashboard2() {
               </div>
             )}
             <Swiper
+              spaceBetween={2}
+              navigation={{
+                clickable: true,
+              }}
               slidesPerView={1}
-              spaceBetween={4}
-              navigation={true}
-              centeredSlides={false}
               slideToClickedSlide={true}
               // effect={"coverflow"}
               pagination={{
@@ -465,9 +462,10 @@ function Dashboard2() {
               initialSlide={currentProfile}
               onSwiper={setSwiper}
               grabCursor={true}
+              centeredSlides={true}
             >
               {filtered.length > 0
-                ? filtered.map((character) => {
+                ? filtered.map((character, index) => {
                     return (
                       <SwiperSlide
                         key={character._id}
