@@ -56,7 +56,7 @@ export const searchUser = (username) =>
   API.get(`/users/con?search=${username}`);
 
 export const createChat = (userId) => API.post(`/chat`, { userId });
-export const deleteChat = (id) => API.delete(`/chat/delete-chat/${id}`);
+
 export const accessDateChat = (dateId) =>
   API.get(`/users/me/dates/chat`, { dateId });
 
@@ -108,3 +108,10 @@ export const postponeDate = (id, scheduledAt) =>
   API.patch(`/users/me/dates/postpone/${id}`, { scheduledAt });
 
 export const fetchWarnings = () => API.get("/report/fetch-warnings");
+
+export const updateMyPassword = (passwordCurrent, password, passwordConfirm) =>
+  API.patch("/users/me/update-password", {
+    passwordCurrent,
+    password,
+    passwordConfirm,
+  });

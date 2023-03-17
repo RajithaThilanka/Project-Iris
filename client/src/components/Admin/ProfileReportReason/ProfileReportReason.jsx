@@ -8,28 +8,23 @@ export default function ProfileReportReason() {
   return (
     <div>
       <Stack
-        spacing={3}
+        spacing={0}
         direction="column"
         sx={{ width: "100%", height: "100%" }}
       >
-        <Typography variant="h6"> Report Description </Typography>
+        <Typography variant="inherit"> Report Description </Typography>
+
         <Box
           sx={{
-            width: "500px",
-            height: "250px",
+            width: "400px",
+            height: "400px",
             border: 1,
             borderRadius: 0.5,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Box
-            sx={{
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            Report Description
-          </Box>
+          Report Description
         </Box>
       </Stack>
     </div>

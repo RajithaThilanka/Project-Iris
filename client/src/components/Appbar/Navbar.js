@@ -39,7 +39,7 @@ import { useNavigate } from "react-router-dom";
 import Notifications from "../Notifications/Notifications";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
-const settings = ["Profile", "Account", "Dashboard"];
+const settings = ["Account", "Dashboard"];
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -305,7 +305,8 @@ function Navbar({ user }) {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                // onClick={handleCloseNavMenu}
+                onClick={() => navigate("/about-us")}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
@@ -516,8 +517,12 @@ function Navbar({ user }) {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+
+              <MenuItem key={"Profile"} onClick={handleCloseUserMenu}>
+                <Button onClick={() => navigate("/me/profile")}>Profile</Button>
+              </MenuItem>
+
               <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
-                {/* <Typography textAlign="center">{setting}</Typography> */}
                 <Button onClick={() => dispatch(logout())}>Logout</Button>
               </MenuItem>
             </Menu>
