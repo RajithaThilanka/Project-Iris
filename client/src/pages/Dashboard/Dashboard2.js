@@ -202,7 +202,7 @@ function Dashboard2() {
             style={{ display: "flex", flexDirection: "column" }}
           >
             {filtered.length > 0 ? (
-              <div className="current-profile" style={{ display: "flex" }}>
+              <div className="current-profile">
                 <div
                   className="sugg-card"
                   style={{
@@ -443,7 +443,7 @@ function Dashboard2() {
               navigation={{
                 clickable: true,
               }}
-              slidesPerView={1}
+              slidesPerView={4}
               slideToClickedSlide={true}
               // effect={"coverflow"}
               pagination={{
@@ -451,7 +451,7 @@ function Dashboard2() {
               }}
               breakpoints={{
                 640: {
-                  slidesPerView: 2,
+                  slidesPerView: 4,
                   spaceBetween: 20,
                 },
                 768: {

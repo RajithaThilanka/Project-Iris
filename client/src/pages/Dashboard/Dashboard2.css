@@ -21,7 +21,7 @@
 .suggestions-container {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0);
-  max-width: 114rem;
+  max-width: 100rem;
   width: 100%;
   margin: 0 auto;
 }
@@ -135,6 +135,8 @@
   padding: 0 0 2rem 0.5rem;
   border-bottom: 2px solid #000;
   height: 70%;
+
+  display: flex;
 }
 .sugg-card {
   max-width: 32rem;
@@ -498,4 +500,12 @@
   /* filter: blur(1px); */
   /* -webkit-filter: blur(1px); */
   border: 4px solid #fff;
+}
+@media only screen and (max-width: 78rem) {
+  .current-profile {
+    height: 60%;
+  }
+  .swiper {
+    height: 20%;
+  }
 }
