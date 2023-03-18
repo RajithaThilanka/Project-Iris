@@ -5,15 +5,20 @@
 }
 .vertical-nav-container {
   background-color: var(--color-grey-dark-1);
+  position: relative;
 }
 .toggle-btn-container {
   color: #fff;
   font-size: 1.5rem;
   display: flex;
+  gap: 0.8rem;
   align-items: center;
   justify-content: center;
   /* margin-bottom: -2rem !important; */
   background-color: rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  z-index: 200;
 }
 .filter-btn {
   color: #fff;
@@ -120,4 +125,34 @@
   height: 1.75rem;
   margin-right: 2rem;
   fill: currentColor;
+}
+
+@media only screen and (max-width: 78rem) {
+  .toggle-btn-container {
+    width: 10%;
+    border-radius: 20px;
+    padding: 0 2rem;
+    background-color: #eee;
+    color: #000;
+    font-weight: 400;
+    margin: auto;
+  }
+  .multi-chip {
+    font-size: 1.3rem !important;
+  }
+}
+
+@media only screen and (max-width: 53rem) {
+  .toggle-btn-container {
+    width: 10%;
+    background-color: var(--color-grey-dark-1);
+    color: #fff;
+    margin: 0.4rem 0 0 auto;
+  }
+}
+
+@media only screen and (max-width: 41rem) {
+  .vertical-nav-container {
+    display: none;
+  }
 }

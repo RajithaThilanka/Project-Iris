@@ -8,6 +8,7 @@ import { getAllDates, getAllFriends } from "../../api/UserRequests";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import Navbar from "../../components/Appbar/Navbar";
 import { useSelector } from "react-redux";
+import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 function Friends() {
   const { friends, setFriends } = useContext(MatchesContext);
   const { dates, setDates } = useContext(MatchesContext);
@@ -59,6 +60,7 @@ function Friends() {
             <ProfileCards cardType="friend" />
           </div>
         </Pulse>
+        <BottomNavbar />
       </div>
     </>
   );

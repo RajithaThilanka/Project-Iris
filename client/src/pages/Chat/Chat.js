@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 import Navbar from "../../components/Appbar/Navbar";
+import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 
 import ChatBox from "../../components/miscellaneous/ChatBox";
 import MyChat from "../../components/miscellaneous/MyChat";
@@ -33,6 +34,7 @@ function Chat() {
             <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
           </div>
         </div>
+        <BottomNavbar />
       </div>
     </>
   );
