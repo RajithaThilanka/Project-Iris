@@ -2229,6 +2229,7 @@ body {
   -webkit-transform: skewY(-7deg);
   transform: skewY(-7deg);
   margin-top: -10rem;
+  background-position: center;
 }
 
 .section-features > * {

@@ -13,7 +13,7 @@ function Friends() {
   const { friends, setFriends } = useContext(MatchesContext);
   const { dates, setDates } = useContext(MatchesContext);
   const { activeTab, setActiveTab } = useContext(MatchesContext);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   setActiveTab(2);
   useEffect(() => {
     const fetchFriends = async () => {
@@ -52,6 +52,9 @@ function Friends() {
   } = useSelector((state) => state.authReducer.authData);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const containerRef = useRef();
+  useEffect(() => {
+    containerRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
   return (
     <>
       <Navbar user={user} />
