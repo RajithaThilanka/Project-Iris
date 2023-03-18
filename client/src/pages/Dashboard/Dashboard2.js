@@ -28,7 +28,8 @@ import io from "socket.io-client";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Pagination } from "swiper";
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CloseIcon from "@mui/icons-material/Close";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -66,7 +67,8 @@ function Dashboard2() {
   const { sentConRequests, setsentConRequests } = useContext(MatchesContext);
   const { matches, setMatches } = useContext(MatchesContext);
   const [filtered, setFiltered] = useState([]);
-
+  const profileContentRef = useRef();
+  const [btnClicked, setBtnClicked] = useState(false);
   const applyFilter = () => {
     const lookingForGenders = [];
     filter.gender.male && lookingForGenders.push("male");
@@ -185,7 +187,17 @@ function Dashboard2() {
       return null;
     }
   };
+  const handleProfileContent = () => {
+    profileContentRef?.current.classList.add("show");
+    // profileContentRef?.current.classList.add("show");
+    setBtnClicked(true);
+  };
 
+  const handleCloseProfileContent = () => {
+    profileContentRef?.current.classList.remove("show");
+    // profileContentRef?.current.classList.add("close");
+    setBtnClicked(false);
+  };
   return (
     <>
       <Navbar user={user} />
@@ -212,6 +224,21 @@ function Dashboard2() {
                     })`,
                   }}
                 >
+                  {!btnClicked ? (
+                    <IconButton
+                      className="more-info-btn"
+                      onClick={handleProfileContent}
+                    >
+                      <MoreVertIcon fontSize="large" sx={{ color: "#eee" }} />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      className="more-info-btn"
+                      onClick={handleCloseProfileContent}
+                    >
+                      <CloseIcon fontSize="large" sx={{ color: "#eee" }} />
+                    </IconButton>
+                  )}
                   <div className="profile--header">
                     <h6 className="profile--name">
                       {filtered[currentProfile]?.callTag}
@@ -257,12 +284,13 @@ function Dashboard2() {
                       onClick={() =>
                         handleConRequest(filtered[currentProfile]?._id)
                       }
+                      className="connect-btn-sug"
                     >
                       Connect
                     </Button>
                   </div>
                 </div>
-                <Box className="profileContent">
+                <Box className="profileContent" ref={profileContentRef}>
                   <Zoom>
                     <Divider>
                       <Chip
