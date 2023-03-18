@@ -7,6 +7,7 @@ import MatchesContext from "../../context/matches";
 import { useSelector } from "react-redux";
 import Navbar from "../../components/Appbar/Navbar";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
+import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 
 function Dates() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
@@ -44,6 +45,7 @@ function Dates() {
             <DateCards />
           </div>
         </Pulse>
+        <BottomNavbar />
       </div>
     </>
   );

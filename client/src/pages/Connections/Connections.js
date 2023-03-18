@@ -9,6 +9,7 @@ import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import Navbar from "../../components/Appbar/Navbar";
 import { useSelector } from "react-redux";
 import "./Connections.css";
+import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 function Connections() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(1);
@@ -45,6 +46,7 @@ function Connections() {
             <ProfileCards cardType="connection" />
           </div>
         </Pulse>
+        <BottomNavbar />
       </div>
     </>
   );

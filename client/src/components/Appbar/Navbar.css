@@ -1,6 +1,8 @@
 .navbar-logo {
   height: 4.5rem;
   width: 4.5rem;
+  min-width: 4.5rem;
+  min-height: 4.5rem;
   margin-right: 2rem;
 }
 
@@ -27,4 +29,10 @@
 .main-notification-count {
   background-color: red;
   transform: translate(15px, -10px);
+}
+
+@media only screen and (max-width: 25rem) {
+  .navbar-logo {
+    display: none;
+  }
 }

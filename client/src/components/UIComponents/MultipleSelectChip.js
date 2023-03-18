@@ -44,9 +44,20 @@ export default function MultipleSelectChip({ names, onChange, value, name }) {
           value={value}
           onChange={onChange}
           renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 0.5,
+              }}
+            >
               {selected.map((value) => (
-                <Chip key={value} label={value} />
+                <Chip
+                  key={value}
+                  label={value}
+                  // sx={{ fontSize: "1.2rem" }}
+                  className="multi-chip"
+                />
               ))}
             </Box>
           )}

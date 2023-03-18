@@ -137,15 +137,19 @@
   height: 70%;
 
   display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 .sugg-card {
-  max-width: 32rem;
+  /* max-width: 32rem;
+  min-width: 24rem; */
   width: 40%;
   height: 100%;
   position: relative;
   border-radius: 15px;
   background-size: cover;
   background-position: center;
+  max-height: 49rem;
 }
 .profile--header {
   font-size: 1.3rem;
@@ -167,7 +171,7 @@
 .profileContent {
   width: 50%;
   height: 100%;
-  margin-left: auto;
+
   padding: 1.5rem 2rem;
   border-radius: 10px;
   overflow: scroll;
@@ -493,6 +497,13 @@
   animation-iteration-count: infinite;
 }
 
+.profile--header .MuiButtonBase-root {
+  color: #fff;
+  background-color: var(--color-primary);
+  width: 40%;
+  margin: auto;
+  border-radius: 20px;
+}
 .dashboard-loading-photo img {
   width: 100%;
   height: 100%;
@@ -507,5 +518,33 @@
   }
   .swiper {
     height: 20%;
+  }
+}
+
+@media only screen and (max-width: 41rem) {
+  html {
+    font-size: 45%;
+  }
+  .bottom-nav-container {
+    display: flex;
+  }
+  .profileContent {
+    display: none;
+  }
+  .swiper-container-main {
+    height: 100%;
+  }
+  .sugg-card {
+    max-width: 40rem;
+
+    flex: 1;
+    height: 100%;
+  }
+  .profile--header .MuiButtonBase-root {
+    font-size: 1rem !important;
+    /* width: % !important; */
+    padding: 0.9rem 0.5rem !important;
+    border-radius: 20px;
+    width: 15% !important;
   }
 }

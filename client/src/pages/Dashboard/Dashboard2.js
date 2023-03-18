@@ -40,6 +40,7 @@ import "swiper/css/thumbs";
 
 import SwiperCore, { EffectCoverflow, Navigation } from "swiper/core";
 import { FreeMode, Thumbs } from "swiper";
+import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
@@ -253,12 +254,6 @@ function Dashboard2() {
                     </div>
                     <Button
                       type="contained"
-                      style={{
-                        color: "#fff",
-                        background: "var(--color-primary)",
-                        width: "40%",
-                        margin: "auto",
-                      }}
                       onClick={() =>
                         handleConRequest(filtered[currentProfile]?._id)
                       }
@@ -443,13 +438,17 @@ function Dashboard2() {
               navigation={{
                 clickable: true,
               }}
-              slidesPerView={4}
+              slidesPerView={3}
               slideToClickedSlide={true}
               // effect={"coverflow"}
               pagination={{
                 clickable: true,
               }}
               breakpoints={{
+                600: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
                 640: {
                   slidesPerView: 4,
                   spaceBetween: 20,
@@ -537,6 +536,7 @@ function Dashboard2() {
             </Swiper>
           </div>
         </div>
+        <BottomNavbar />
       </div>
     </>
   );

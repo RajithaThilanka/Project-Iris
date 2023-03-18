@@ -11,6 +11,7 @@
   color: #fff;
   font-size: 1.5rem;
   display: flex;
+  gap: 0.8rem;
   align-items: center;
   justify-content: center;
   /* margin-bottom: -2rem !important; */
@@ -131,6 +132,27 @@
     width: 10%;
     border-radius: 20px;
     padding: 0 2rem;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: #eee;
+    color: #000;
+    font-weight: 400;
+    margin: auto;
+  }
+  .multi-chip {
+    font-size: 1.3rem !important;
+  }
+}
+
+@media only screen and (max-width: 53rem) {
+  .toggle-btn-container {
+    width: 10%;
+    background-color: var(--color-grey-dark-1);
+    color: #fff;
+    margin: 0.4rem 0 0 auto;
+  }
+}
+
+@media only screen and (max-width: 41rem) {
+  .vertical-nav-container {
+    display: none;
   }
 }
