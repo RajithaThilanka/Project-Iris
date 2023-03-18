@@ -63,12 +63,12 @@ body {
   line-height: 1.7;
 }
 
-@media only screen and (max-width: 78rem) {
+@media only screen and (max-width: 78em) {
   .side-nav__item:not(:last-child) {
     margin-bottom: 0;
   }
 }
-@media only screen and (max-width: 78rem) {
+@media only screen and (max-width: 78em) {
   .side-nav {
     display: flex;
     flex-direction: row;
@@ -78,7 +78,7 @@ body {
     height: 5rem;
   }
 }
-@media only screen and (max-width: 78rem) {
+@media only screen and (max-width: 78em) {
   .sidebar {
     width: 100%;
     padding: 1rem 0;
@@ -92,7 +92,7 @@ body {
   bp-small 55em
   bp-smallest
 */
-@media only screen and (max-width: 78rem) {
+@media only screen and (max-width: 78em) {
   .dashboard-container {
     flex-direction: column;
   }
@@ -103,7 +103,7 @@ body {
     flex-direction: column;
   }
 } */
-@media only screen and (max-width: 78rem) {
+@media only screen and (max-width: 78em) {
   .container {
     width: 100%;
     height: 100vh;
@@ -118,12 +118,12 @@ body {
   }
 }
 
-@media only screen and (max-width: 67rem) {
+@media only screen and (max-width: 67em) {
   html {
     font-size: 54%;
   }
 }
-@media only screen and (max-width: 41rem) {
+@media only screen and (max-width: 41em) {
   ::-webkit-scrollbar {
     display: none !important;
   }

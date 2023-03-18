@@ -1,12 +1,14 @@
 .connections-container {
   flex: 0 0 82%;
+  background-color: #eee;
 }
 .connections {
   padding: 0.1rem 2rem;
   width: 100%;
   min-height: 100vh;
+  margin: 0 auto;
 }
-@media only screen and (max-width: 68em) {
+@media only screen and (max-width: 78em) {
   .connections-container {
     flex-direction: column;
   }

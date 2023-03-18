@@ -1,8 +1,29 @@
 .profile-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, min-content));
+  grid-template-columns: repeat(5, 1fr);
   column-gap: 2rem;
   row-gap: 2rem;
   padding: 2rem 0;
   justify-items: center;
+  margin: auto;
+}
+@media only screen and (max-width: 67em) {
+  .profile-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media only screen and (max-width: 41em) {
+  .profile-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media only screen and (max-width: 37em) {
+  .profile-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width: 24rem) {
+  .profile-cards {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }

@@ -151,7 +151,7 @@
   position: relative;
   border-radius: 15px;
   background-size: cover;
-  background-position: center;
+  background-position: top;
   max-height: 49rem;
 }
 .profile--header {
@@ -522,7 +522,7 @@
   right: 0 !important;
   top: 0 !important;
 }
-@media only screen and (max-width: 78rem) {
+@media only screen and (max-width: 78em) {
   .current-profile {
     height: 60%;
   }
@@ -531,7 +531,7 @@
   }
 }
 
-@media only screen and (max-width: 41rem) {
+@media only screen and (max-width: 41em) {
   .profile--header {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
@@ -618,6 +618,10 @@
   .more-info-btn {
     display: flex !important;
     z-index: 1000 !important;
+  }
+  .mySwiper .swiper-slide-active {
+    opacity: 1;
+    border: 5px solid var(--color-primary);
   }
 }
 .connect-btn-sug:hover {
