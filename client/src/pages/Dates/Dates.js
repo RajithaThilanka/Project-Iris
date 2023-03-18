@@ -35,16 +35,14 @@ function Dates() {
         className="dates-container"
         style={{
           display: "flex",
-          backgroundImage:
-            "radial-gradient(at top left,var(--color-primary) 1%,transparent)",
         }}
       >
         <VerticalNavbar />
-        <Pulse>
-          <div className="dates">
-            <DateCards />
-          </div>
-        </Pulse>
+
+        <div className="dates">
+          <DateCards />
+        </div>
+
         <BottomNavbar />
       </div>
     </>

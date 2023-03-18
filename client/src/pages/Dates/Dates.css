@@ -3,12 +3,12 @@
 }
 
 .dates {
-  padding: 2rem 2rem;
+  padding: 2rem;
   width: 100%;
-  min-height: 100vh;
+  margin: 0 auto;
 }
 
-@media only screen and (max-width: 68em) {
+@media only screen and (max-width: 78em) {
   .dates-container {
     flex-direction: column;
   }
