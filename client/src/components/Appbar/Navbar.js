@@ -165,6 +165,7 @@ function Navbar({ user }) {
           data: { data },
         },
       } = await getSentFriendRequests();
+
       setsentFriendRequests(data);
     };
     fetchsentFriendRequests();
