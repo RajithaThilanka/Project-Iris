@@ -123,3 +123,15 @@ body {
     font-size: 54%;
   }
 }
+@media only screen and (max-width: 41rem) {
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    display: none !important;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    display: none !important;
+  }
+}
