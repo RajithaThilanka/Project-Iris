@@ -70,6 +70,7 @@
 
 .side-nav__item {
   position: relative;
+  cursor: pointer;
 }
 .side-nav__item:not(:last-child) {
   margin-bottom: 0.5rem;
