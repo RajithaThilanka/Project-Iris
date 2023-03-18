@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ProfileCards from "../../components/ProfileCards/ProfileCards";
 import { users } from "../../dev-data/users";
 import "./Friends.css";
@@ -13,16 +13,24 @@ function Friends() {
   const { friends, setFriends } = useContext(MatchesContext);
   const { dates, setDates } = useContext(MatchesContext);
   const { activeTab, setActiveTab } = useContext(MatchesContext);
+  const [loading, setLoading] = useState(false);
   setActiveTab(2);
   useEffect(() => {
     const fetchFriends = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getAllFriends();
-      // console.log(data);
-      setFriends(data);
+      setLoading(true);
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getAllFriends();
+
+        setFriends(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     };
     fetchFriends();
   }, []);
@@ -42,7 +50,8 @@ function Friends() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  const containerRef = useRef();
   return (
     <>
       <Navbar user={user} />
@@ -50,16 +59,25 @@ function Friends() {
         className="friends-container"
         style={{
           display: "flex",
-          backgroundImage:
-            "radial-gradient(at top left,var(--color-primary) 1%,transparent)",
         }}
       >
         <VerticalNavbar />
-        <Pulse>
+        {!loading && friends.length > 0 && (
           <div className="friends">
             <ProfileCards cardType="friend" />
           </div>
-        </Pulse>
+        )}
+        {loading && (
+          <div
+            className="dashboard-loading-container"
+            style={{ height: "100vh" }}
+            ref={containerRef}
+          >
+            <div className="dashboard-loading-photo">
+              <img src={serverPublic + "irislogo.png"} alt="loading-user" />
+            </div>
+          </div>
+        )}
         <BottomNavbar />
       </div>
     </>

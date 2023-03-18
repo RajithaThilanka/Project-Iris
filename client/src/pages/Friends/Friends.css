@@ -1,10 +1,12 @@
 .friends-container {
   flex: 0 0 82%;
+  background-color: #eee;
 }
 .friends {
   padding: 0.1rem 2rem;
   width: 100%;
   min-height: 100vh;
+  margin: 0 auto;
 }
 @media only screen and (max-width: 78em) {
   .friends-container {

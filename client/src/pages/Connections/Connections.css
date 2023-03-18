@@ -8,10 +8,11 @@
   min-height: 100vh;
   margin: 0 auto;
 }
+.dashboard-loading-container {
+  width: 100% !important;
+}
 @media only screen and (max-width: 78em) {
   .connections-container {
     flex-direction: column;
-  }
-  .connections {
   }
 }

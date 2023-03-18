@@ -5,10 +5,15 @@
   left: 0;
   right: 0;
   width: 100%;
+  background-color: #eee;
 }
 .bottom-sidebar {
   width: 100%;
 }
+.bottom-side-nav__item {
+  cursor: pointer;
+}
+
 .bottom-side-nav {
   display: flex;
   flex-direction: row;

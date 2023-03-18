@@ -1,10 +1,38 @@
 .date-card-container {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 2rem;
+  row-gap: 2rem;
+  padding: 2rem 0;
+  justify-items: center;
   margin: auto;
-  flex-wrap: wrap;
-
-  justify-content: center;
+}
+@media only screen and (max-width: 67em) {
+  .date-card-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .date-time-remaining,
+  .date-scheduled-at {
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (max-width: 41em) {
+  .date-card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width: 37em) {
+  .date-card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width: 46em) {
+  .date-card-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media only screen and (max-width: 24rem) {
+  .date-card-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }

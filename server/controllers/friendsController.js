@@ -9,7 +9,6 @@ exports.inviteFriend = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
 
-  console.log('hey');
   if (userId === receiverId) {
     return next(new AppError('Request to yourself unauthorized', 401));
   }

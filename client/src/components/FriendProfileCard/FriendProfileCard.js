@@ -294,8 +294,8 @@ function FriendProfileCard({ conUser, cardType }) {
         }}
       >
         <Tooltip title="View Profile" placement="bottom">
-          <IconButton style={{ color: "var(--color-primary)" }}>
-            <AccountCircleIcon />
+          <IconButton style={{ color: "#fff" }}>
+            <AccountCircleIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
         <Tooltip
@@ -310,35 +310,36 @@ function FriendProfileCard({ conUser, cardType }) {
                     handleCancelDate(otherUser._id);
                   }
             }
-            style={{ color: "var(--color-primary)" }}
+            style={{ color: "#fff" }}
             disabled={alreadyHasDate}
           >
-            {inviteBtnVisible ? <CoffeeIcon /> : <CancelIcon />}
+            {inviteBtnVisible ? (
+              <CoffeeIcon className="profile-card-btn" />
+            ) : (
+              <CancelIcon className="profile-card-btn" />
+            )}
           </IconButton>
         </Tooltip>
         <Tooltip title="Message" placement="bottom">
-          <IconButton
-            style={{ color: "var(--color-primary)" }}
-            onClick={accessChat}
-          >
-            <ChatIcon />
+          <IconButton style={{ color: "#fff" }} onClick={accessChat}>
+            <ChatIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Demote" placement="bottom">
           <IconButton
-            style={{ color: "var(--color-primary)" }}
+            style={{ color: "#fff" }}
             onClick={() => {
               handleRemoveFriend(otherUser._id);
             }}
           >
-            <PersonRemoveAlt1Icon />
+            <PersonRemoveAlt1Icon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Block and Report" placement="bottom">
-          <IconButton style={{ color: "var(--color-primary)" }}>
-            <BlockIcon />
+          <IconButton style={{ color: "#fff" }}>
+            <BlockIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
       </div>
