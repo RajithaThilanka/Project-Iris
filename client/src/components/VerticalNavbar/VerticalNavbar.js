@@ -26,7 +26,9 @@ function VerticalNavbar({ children }) {
           onChange={handleChange}
           inputProps={{ "aria-label": "controlled" }}
           className="filter-btn"
-          disabled={matches.length === 0}
+          disabled={
+            matches.length === 0 || window.location.pathname !== "/me/dashboard"
+          }
           size="small"
         />
       </div>

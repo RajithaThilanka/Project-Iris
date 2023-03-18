@@ -14,7 +14,7 @@ function Connections() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(1);
   const { connections, setConnections } = useContext(MatchesContext);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchConnections = async () => {
       setLoading(true);
