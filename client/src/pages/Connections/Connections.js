@@ -36,8 +36,6 @@ function Connections() {
         className="connections-container"
         style={{
           display: "flex",
-          backgroundImage:
-            "radial-gradient(at top left,var(--color-primary) 1%,transparent)",
         }}
       >
         <VerticalNavbar />

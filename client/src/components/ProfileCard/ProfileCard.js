@@ -245,11 +245,13 @@ function ProfileCard({ conUser, cardType }) {
       onMouseOver={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
     >
-      <img
-        src={serverPublic + otherUser.profilePhoto}
-        alt={otherUser.callTag}
-        className="profile-img"
-      />
+      <div className="image-section">
+        <img
+          src={serverPublic + otherUser.profilePhoto}
+          alt={otherUser.callTag}
+          className="profile-img"
+        />
+      </div>
       <h5 className="profile-call-tag">{otherUser.callTag}</h5>
 
       <div
@@ -259,55 +261,49 @@ function ProfileCard({ conUser, cardType }) {
         }}
       >
         <Tooltip title="View Profile" placement="bottom">
-          <IconButton
-            style={{ color: "var(--color-primary)" }}
-            onCLick={viewPro}
-          >
-            <AccountCircleIcon />
+          <IconButton style={{ color: "#fff" }} onClick={viewPro}>
+            <AccountCircleIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
 
         {!requestSent ? (
           <IconButton
             onClick={() => handleSendFriendRequest(otherUser._id)}
-            style={{ color: "var(--color-primary)" }}
+            style={{ color: "#fff" }}
           >
             <Tooltip title="add friend">
-              <PersonAddIcon />
+              <PersonAddIcon className="profile-card-btn" />
             </Tooltip>
           </IconButton>
         ) : requestSent && conUser.senderId._id === user._id ? (
           <IconButton
             onClick={() => handleCancelFriendRequest(otherUser._id)}
-            style={{ color: "var(--color-primary)" }}
+            style={{ color: "#fff" }}
           >
             <Tooltip title="cancel request">
-              <CancelIcon />
+              <CancelIcon className="profile-card-btn" />
             </Tooltip>
           </IconButton>
         ) : (
           <IconButton
             onClick={() => handleAcceptFriendRequest(otherUser._id)}
-            style={{ color: "var(--color-primary)" }}
+            style={{ color: "#fff" }}
           >
             <Tooltip title="accept request">
-              <PersonAddIcon />
+              <PersonAddIcon className="profile-card-btn" />
             </Tooltip>
           </IconButton>
         )}
 
         <Tooltip title="Message" placement="bottom">
-          <IconButton
-            style={{ color: "var(--color-primary)" }}
-            onClick={accessChat}
-          >
-            <ChatIcon />
+          <IconButton style={{ color: "#fff" }} onClick={accessChat}>
+            <ChatIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
         {cardType === "friend" && (
           <Tooltip title="Invite for a date" placement="bottom">
-            <IconButton style={{ color: "var(--color-primary)" }}>
-              <CoffeeIcon />
+            <IconButton style={{ color: "#fff" }}>
+              <CoffeeIcon className="profile-card-btn" />
             </IconButton>
           </Tooltip>
         )}
@@ -317,15 +313,15 @@ function ProfileCard({ conUser, cardType }) {
             onClick={() => {
               handleRemoveConnection(otherUser._id);
             }}
-            style={{ color: "var(--color-primary)" }}
+            style={{ color: "#fff" }}
           >
-            <PersonRemoveAlt1Icon />
+            <PersonRemoveAlt1Icon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Block and Report" placement="bottom">
-          <IconButton style={{ color: "var(--color-primary)" }}>
-            <BlockIcon />
+          <IconButton style={{ color: "#fff" }}>
+            <BlockIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
       </div>
