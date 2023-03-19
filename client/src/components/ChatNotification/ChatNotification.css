@@ -1,0 +1,32 @@
+.chat-notification-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 7rem;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+    rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  border-radius: 15px;
+  padding: 0.5rem 1rem;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.chat-notification-sender-pic {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+.chat-notification-sender-pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.chat-notification-msg {
+  flex: 1;
+  font-size: 1.1rem;
+  padding: 0;
+  height: 70%;
+
+  overflow: hidden;
+}

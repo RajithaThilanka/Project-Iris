@@ -23,6 +23,7 @@ import "./MyChat.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ChatFriendsList from "./ChatFriendsList/ChatFriendsList";
 import ChatIcon from "@mui/icons-material/Chat";
+import { updateSeenAll } from "../../api/ChatRequests";
 function MyChat({ fetchAgain, setFetchAgain }) {
   const {
     data: { user },
@@ -132,6 +133,12 @@ function MyChat({ fetchAgain, setFetchAgain }) {
     setFocus(true);
     setBackBtnVisible(true);
   };
+
+  const handleOpenMessage = async (chat) => {
+    await updateSeenAll(chat._id);
+    setSelectedChat(chat);
+    setNotification(notification.filter((not) => not.chat._id !== chat._id));
+  };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div
@@ -200,12 +207,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                   className="chat-contact-container"
                 >
                   <div
-                    onClick={() => {
-                      setSelectedChat(chat);
-                      setNotification(
-                        notification.filter((not) => not.chat._id !== chat._id)
-                      );
-                    }}
+                    onClick={() => handleOpenMessage(chat)}
                     key={chat._id}
                     className="chat-contact"
                     style={{}}

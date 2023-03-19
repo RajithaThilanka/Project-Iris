@@ -11,5 +11,7 @@ router.route('/').post(authController.protect, messageController.sendMessage);
 router
   .route('/setSeen/:id')
   .patch(authController.protect, messageController.setSeen);
-
+router
+  .route('/setSeenAll/:id')
+  .patch(authController.protect, messageController.setSeenAll);
 module.exports = router;

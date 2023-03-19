@@ -37,6 +37,7 @@ import {
 } from "../../api/UserRequests";
 import { useNavigate } from "react-router-dom";
 import Notifications from "../Notifications/Notifications";
+import { fetchChatNotifications } from "../../api/ChatRequests";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
 const settings = ["Account", "Dashboard"];
@@ -221,7 +222,17 @@ function Navbar({ user }) {
     };
     fetchNewWarnings();
   }, []);
-
+  useEffect(() => {
+    const fetchChatNots = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await fetchChatNotifications();
+      setNotification(data);
+    };
+    fetchChatNots();
+  }, []);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   return (
@@ -464,13 +475,13 @@ function Navbar({ user }) {
             </Menu>
 
             {/* Notifications */}
-            <Tooltip title="Open date invitations">
+            <Tooltip title="Open new notifications">
               <IconButton onClick={handleOpenNotMenu} sx={{ p: 0 }}>
                 <NotificationsIcon
                   sx={{ color: "#fff", marginTop: "0.5rem" }}
                 />
                 <div className="num-req-count main-notification-count">
-                  {warnings.length}
+                  {warnings.length + notification.length}
                 </div>
               </IconButton>
             </Tooltip>
@@ -498,7 +509,7 @@ function Navbar({ user }) {
               onClose={handleCloseNotMenu}
             >
               <div>
-                <Notifications />
+                <Notifications handleCloseNotMenu={handleCloseNotMenu} />
               </div>
             </Menu>
 

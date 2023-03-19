@@ -74,3 +74,22 @@ exports.setSeen = catchAsync(async (req, res, next) => {
     return next(new AppError(error, 400));
   }
 });
+
+exports.setSeenAll = catchAsync(async (req, res, next) => {
+  try {
+    const updatedMsgs = await Message.updateMany(
+      { $and: [{ chat: req.params.id }, { isSeen: false }] },
+      {
+        isSeen: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: updatedMsgs,
+      },
+    });
+  } catch (error) {
+    return next(new AppError(error, 400));
+  }
+});

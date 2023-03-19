@@ -25,6 +25,7 @@ import animationData from "../../animations/typing.json";
 import styled from "@emotion/styled";
 import DuoIcon from "@mui/icons-material/Duo";
 import InputEmoji from "react-input-emoji";
+import { updateSeen } from "../../api/ChatRequests";
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
 
@@ -91,7 +92,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on("message recieved", (newMessageRecieved) => {
+    socket.on("message recieved", async (newMessageRecieved) => {
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -104,7 +105,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       } else {
         setMessages([...messages, newMessageRecieved]);
         try {
-        } catch (err) {}
+          await updateSeen(newMessageRecieved._id);
+        } catch (err) {
+          console.log(err);
+        }
       }
     });
   });
