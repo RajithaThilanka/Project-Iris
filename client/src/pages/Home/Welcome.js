@@ -39,6 +39,9 @@ function Welcome() {
             />
             <span className="logo-content">IRIS</span>
           </div>
+        </div>
+
+        <div className="header__text-box">
           <Link
             to="/auth/login"
             className="btn btn--white btn--animated btn-login"
@@ -46,9 +49,6 @@ function Welcome() {
           >
             Login
           </Link>
-        </div>
-
-        <div className="header__text-box">
           <h1 className="heading-primary">
             <span className="heading-primary--main">Soulmate</span>
             <span className="heading-primary--sub">is waiting for you</span>
