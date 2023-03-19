@@ -31,3 +31,10 @@
     grid-template-columns: 1fr 1.5fr;
   }
 }
+/* tbd */
+
+@media only screen and (max-width: 56em) {
+  .chat-page-sub {
+    display: flex;
+  }
+}

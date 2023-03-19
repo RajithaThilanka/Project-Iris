@@ -6,6 +6,7 @@
   width: 100%;
   background-color: #fff;
   max-height: 100vh;
+  position: relative;
 }
 .contacts_card {
   font-size: 28px;
@@ -45,7 +46,20 @@
   transition: all 0.2s;
   margin-right: -3.5rem;
 }
-
+.chat-friend-list-mob {
+  bottom: 10%;
+  right: 5%;
+  position: fixed;
+  color: #fff;
+  background-color: var(--color-primary);
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 .chat-contact-container {
   display: flex;
   padding-right: 0.9rem;

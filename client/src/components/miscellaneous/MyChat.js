@@ -22,7 +22,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import "./MyChat.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ChatFriendsList from "./ChatFriendsList/ChatFriendsList";
-
+import ChatIcon from "@mui/icons-material/Chat";
 function MyChat({ fetchAgain, setFetchAgain }) {
   const {
     data: { user },
@@ -136,8 +136,14 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   return (
     <div
       className="chat"
-      style={{ backgroundImage: `url(${serverPublic + "chat-background.png"}` }}
+      style={{
+        backgroundImage: `url(${serverPublic + "chat-background.png"}`,
+        display: window.innerWidth <= 896 && selectedChat ? "none" : "flex",
+      }}
     >
+      <div className="chat-friend-list-mob">
+        <ChatIcon fontSize="medium" />
+      </div>
       <div className="contacts_card">
         <IconButton
           onClick={handleBackClick}

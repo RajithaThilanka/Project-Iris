@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -33,7 +33,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const { activeUsers, setActiveUsers } = useContext(MatchesContext);
-
+  const inputRef = useRef();
   const { selectedChat, setSelectedChat, notification, setNotification } =
     useContext(MatchesContext);
   const [modalOpen, setOpen] = React.useState(false);
@@ -171,6 +171,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     },
   }));
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {
+    selectedChat && inputRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [selectedChat]);
   return (
     <>
       {selectedChat ? (
@@ -273,7 +277,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-            <div>
+            <div style={{ height: "20%", width: "100%" }}>
               {isTyping ? (
                 <div>
                   <Lottie
@@ -298,7 +302,13 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                   display: "flex",
                   marginBottom: "0.9rem",
                   marginTop: "1rem",
+                  position: "absolute",
+                  background: "rgba(0,0,0,0.6)",
+                  bottom: "5%",
+                  left: 0,
+                  right: 0,
                 }}
+                ref={inputRef}
               >
                 <InputEmoji
                   placeholder="Type a message"
@@ -306,6 +316,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                   value={newMessage}
                   onEnter={sendMessage}
                   theme="dark"
+                  fontSize={12}
                 />
                 <IconButton sx={{ color: "#fff" }} onClick={sendMessage}>
                   <SendIcon />
