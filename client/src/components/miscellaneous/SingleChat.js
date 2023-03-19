@@ -289,14 +289,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
               ) : (
                 <></>
               )}
-              {/* <TextField
-                required
-                placeholder="Type a message"
-                size="small"
-                fullWidth
-                onChange={typingHandler}
-                value={newMessage}
-              /> */}
+
               <div
                 style={{
                   display: "flex",

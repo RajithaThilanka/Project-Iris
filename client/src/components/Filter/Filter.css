@@ -95,3 +95,16 @@
     padding-top: 1.2rem;
   }
 }
+@media only screen and (max-width: 41em) {
+  .filter-bar {
+    display: flex;
+    position: static;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    border-right: none;
+  }
+}

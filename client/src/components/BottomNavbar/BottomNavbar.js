@@ -1,4 +1,10 @@
-import { FormControlLabel, FormGroup, styled, Switch } from "@mui/material";
+import {
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  styled,
+  Switch,
+} from "@mui/material";
 import React, { useContext, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import MatchesContext from "../../context/matches";
@@ -10,6 +16,8 @@ import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import Filter from "../Filter/Filter";
+import PublicIcon from "@mui/icons-material/Public";
+import FilterMobileContainer from "../FilterMobileContainer/FilterMobileContainer";
 
 function BottomNavbar({ children }) {
   const navigate = useNavigate();
@@ -20,9 +28,12 @@ function BottomNavbar({ children }) {
   };
   const [checked, setChecked] = React.useState(false);
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+  const handleShowFilter = () => {
+    setChecked(true);
   };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div className="bottom-nav-container">
       {/* <div className="toggle-btn-container">
@@ -47,7 +58,7 @@ function BottomNavbar({ children }) {
             }
             onClick={() => handleClick(0, "/me/dashboard")}
           >
-            <PersonSearchIcon
+            <PublicIcon
               fontSize="large"
               sx={{ color: "var(--color-grey-dark-2)" }}
             />
@@ -104,10 +115,22 @@ function BottomNavbar({ children }) {
               sx={{ color: "var(--color-grey-dark-2)" }}
             />
           </li>
+          <li
+            className={
+              activeTab === 5
+                ? "bottom-side-nav__item bottom-side-nav__item--active"
+                : "bottom-side-nav__item"
+            }
+          >
+            <FilterMobileContainer>
+              <PersonSearchIcon
+                fontSize="large"
+                sx={{ color: "var(--color-grey-dark-2)" }}
+              />
+            </FilterMobileContainer>
+          </li>
         </ul>
       </nav>
-
-      {checked && <Filter />}
 
       {children}
     </div>
