@@ -39,13 +39,11 @@ router
 //     authController.checkManualVerification,
 //     aiController.generateUserSuggestions
 //   );
-router
-  .route('/me/suggestions/ai')
-  .get(
-    authController.protect,
-    authController.checkManualVerification,
-    aiController.generateSuggestions
-  );
+router.route('/me/suggestions/ai').get(
+  authController.protect,
+  // authController.checkManualVerification,
+  aiController.generateSuggestions
+);
 
 router
   .route('/me/manual-verify')

@@ -461,107 +461,109 @@ function Dashboard2() {
                 </div>
               </div>
             )}
-            <Swiper
-              spaceBetween={2}
-              navigation={{
-                clickable: true,
-              }}
-              slidesPerView={3}
-              slideToClickedSlide={true}
-              // effect={"coverflow"}
-              pagination={{
-                clickable: true,
-              }}
-              breakpoints={{
-                600: {
-                  slidesPerView: 3,
-                  spaceBetween: 20,
-                },
-                640: {
-                  slidesPerView: 4,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 4,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 5,
-                  spaceBetween: 50,
-                },
-              }}
-              modules={[Pagination]}
-              className="mySwiper"
-              onSlideChange={(el) => setCurrentProfile(el.realIndex)}
-              initialSlide={currentProfile}
-              onSwiper={setSwiper}
-              grabCursor={true}
-              centeredSlides={true}
-            >
-              {filtered.length > 0
-                ? filtered.map((character, index) => {
-                    return (
-                      <SwiperSlide
-                        key={character._id}
-                        style={{ positon: "relative" }}
-                      >
-                        <img
-                          src={serverPublic + character.profilePhoto}
-                          alt={character._id}
-                        />
+            {filtered.length > 0 && (
+              <Swiper
+                spaceBetween={2}
+                navigation={{
+                  clickable: true,
+                }}
+                slidesPerView={3}
+                slideToClickedSlide={true}
+                // effect={"coverflow"}
+                pagination={{
+                  clickable: true,
+                }}
+                breakpoints={{
+                  600: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                  },
+                  640: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 50,
+                  },
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
+                onSlideChange={(el) => setCurrentProfile(el.realIndex)}
+                initialSlide={currentProfile}
+                onSwiper={setSwiper}
+                grabCursor={true}
+                centeredSlides={true}
+              >
+                {filtered.length > 0
+                  ? filtered.map((character, index) => {
+                      return (
+                        <SwiperSlide
+                          key={character._id}
+                          style={{ positon: "relative" }}
+                        >
+                          <img
+                            src={serverPublic + character.profilePhoto}
+                            alt={character._id}
+                          />
 
-                        <div className="sug-profile-header">
-                          <div className="sug-profile-calltag">
-                            {character.callTag}
+                          <div className="sug-profile-header">
+                            <div className="sug-profile-calltag">
+                              {character.callTag}
 
-                            {character.verStatus && (
-                              <VerifiedIcon
-                                style={{
-                                  fill: "cyan",
-                                  width: "1.6rem",
-                                  height: "1.6rem",
-                                }}
-                                fontSize="small"
-                              />
-                            )}
+                              {character.verStatus && (
+                                <VerifiedIcon
+                                  style={{
+                                    fill: "cyan",
+                                    width: "1.6rem",
+                                    height: "1.6rem",
+                                  }}
+                                  fontSize="small"
+                                />
+                              )}
+                            </div>
+                            <div className="sug-profile-age">
+                              <PersonOutlineIcon />
+                              {Math.abs(
+                                new Date(
+                                  Date.now() - Date.parse(character.dob)
+                                ).getUTCFullYear() - 1970
+                              )}
+                            </div>
+                            <div className="sug-profile-country">
+                              <LocationOnIcon />
+                              {character.country}
+                            </div>
                           </div>
-                          <div className="sug-profile-age">
-                            <PersonOutlineIcon />
-                            {Math.abs(
-                              new Date(
-                                Date.now() - Date.parse(character.dob)
-                              ).getUTCFullYear() - 1970
-                            )}
-                          </div>
-                          <div className="sug-profile-country">
-                            <LocationOnIcon />
-                            {character.country}
-                          </div>
-                        </div>
-                        <div className="suggestion-status-container">
-                          {activeUsers.some(
-                            (user) =>
-                              user.userId === matches[currentProfile]._id
-                          ) ? (
-                            <div className="suggestion-online--dot"></div>
-                          ) : (
-                            <div className="suggestion-offline--dot"></div>
-                          )}
-
-                          <div className="suggestion-status">
+                          <div className="suggestion-status-container">
                             {activeUsers.some(
                               (user) =>
                                 user.userId === matches[currentProfile]._id
-                            )
-                              ? "Online"
-                              : "Offline"}
+                            ) ? (
+                              <div className="suggestion-online--dot"></div>
+                            ) : (
+                              <div className="suggestion-offline--dot"></div>
+                            )}
+
+                            <div className="suggestion-status">
+                              {activeUsers.some(
+                                (user) =>
+                                  user.userId === matches[currentProfile]._id
+                              )
+                                ? "Online"
+                                : "Offline"}
+                            </div>
                           </div>
-                        </div>
-                      </SwiperSlide>
-                    );
-                  })
-                : ""}
-            </Swiper>
+                        </SwiperSlide>
+                      );
+                    })
+                  : ""}
+              </Swiper>
+            )}
           </div>
         </div>
         <BottomNavbar />
