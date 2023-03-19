@@ -294,6 +294,26 @@ function Navbar({ user }) {
                 display: { xs: "block", md: "none" },
               }}
             >
+              {
+                <MenuItem
+                  className="home-menu-item"
+                  onClick={() => navigate("/home")}
+                >
+                  <div>
+                    <div style={{ width: "4rem", height: "4rem" }}>
+                      <img
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: "50%",
+                        }}
+                        src={serverPublic + "irislogo.png"}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </MenuItem>
+              }
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
