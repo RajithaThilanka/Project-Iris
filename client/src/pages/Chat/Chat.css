@@ -1,55 +1,33 @@
 .chat-page-container {
-  background: -webkit-linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
-  background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", "Noto Color Emoji";
+  background: #eee;
 
   flex: 0 0 82%;
 }
 .chat-page {
-  display: flex;
-  justify-content: center;
-  width: 70%;
-
-  height: 91.4vh;
-  padding: 1rem;
-  margin: 1rem auto;
-  max-width: 100rem;
-}
-
-.chat-page-sub {
-  display: flex;
-  align-items: center;
   width: 100%;
 }
 
-@media only screen and (max-width: 87em) {
-  .chat-page-container {
-    width: 100%;
-  }
-  .chat-page {
-    width: 100%;
-    margin: 0;
-    max-width: 100%;
-  }
+.chat-page-sub {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 
-  .chat-page-sub {
-    width: 100%;
-  }
+  column-gap: 0rem;
+  max-width: 105rem;
+  height: 100vh;
+  margin: auto;
+  max-height: 100vh;
 }
 
-@media only screen and (max-width: 68em) {
+@media only screen and (max-width: 78em) {
   .chat-page-container {
     flex-direction: column;
   }
-  .chat-page {
-    height: 100vh;
+  .chat-page-sub {
+    max-width: 100%;
   }
 }
-
-@media only screen and (max-width: 46.2em) {
-  .chat-page {
-    margin: 0;
+@media only screen and (max-width: 67em) {
+  .chat-page-sub {
+    grid-template-columns: 1fr 1.5fr;
   }
 }

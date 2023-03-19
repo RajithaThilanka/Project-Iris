@@ -177,19 +177,14 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
         <>
           <div className="chat-user-header">
             <IconButton style={{}} onClick={() => setSelectedChat("")}>
-              <ArrowBackIosIcon style={{ color: "#fff" }} />
+              <ArrowBackIosIcon
+                style={{ color: "#000", width: "2rem", height: "2rem" }}
+                fontSize="small"
+              />
             </IconButton>
             {!selectedChat.isGroupChat ? (
               <>
-                <div
-                  style={{
-                    flex: 0.9,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "1.5rem",
-                  }}
-                >
+                <div className="single-chat-user-container">
                   <StyledBadge
                     overlap="circular"
                     anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -211,27 +206,22 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                       }
                       style={{
                         cursor: "pointer",
-                        width: "7rem",
-                        height: "7rem",
+                        width: "4rem",
+                        height: "4rem",
                         border: "1px solid #fff",
                       }}
                       onClick={() => setOpen(true)}
                     />
                   </StyledBadge>
-                  <h6
-                    style={{
-                      fontSize: "1.8rem",
-                      fontWeight: "400",
-                      fontFamily: "inherit",
-                    }}
-                  >
+                  <h6 className="single-chat-username">
                     {getSender(user, selectedChat.users)}
                   </h6>
                   <DuoIcon
-                    fontSize="large"
+                    fontSize="small"
                     sx={{
-                      width: "4rem",
-                      height: "4rem",
+                      width: "2.7rem",
+                      height: "2.7rem",
+                      marginLeft: "auto",
                     }}
                   />
                 </div>
@@ -253,7 +243,22 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
               </>
             )}
           </div>
-          <div className="chat-container">
+          <div
+            className="chat-container"
+            style={{
+              backgroundImage:
+                serverPublic +
+                  getSenderFull(user, selectedChat.users).profilePhoto !==
+                "defaultProfile"
+                  ? `linear-gradient(to bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url(${
+                      serverPublic +
+                      getSenderFull(user, selectedChat.users).profilePhoto
+                    })`
+                  : serverPublic + "chat-background.png",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
             {loading ? (
               <div
                 style={{

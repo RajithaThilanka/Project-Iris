@@ -134,13 +134,16 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div className="chat">
+    <div
+      className="chat"
+      style={{ backgroundImage: `url(${serverPublic + "chat-background.png"}` }}
+    >
       <div className="contacts_card">
         <IconButton
           onClick={handleBackClick}
           style={{ display: backBtnVisible ? "flex" : "none" }}
         >
-          <ArrowBackIcon style={{ color: "#fff", marginLeft: "0.8rem" }} />
+          <ArrowBackIcon style={{ color: "#000", marginLeft: "0.8rem" }} />
         </IconButton>
         <form className="search">
           <input
@@ -181,12 +184,10 @@ function MyChat({ fetchAgain, setFetchAgain }) {
               return (
                 <div
                   style={{
-                    display: "flex",
                     backgroundColor:
                       selectedChat?._id === chat._id
-                        ? "rgba(0, 0, 0, 0.4)"
-                        : "rgba(0,0,0,0.1)",
-                    paddingRight: "0.9rem",
+                        ? "rgba(255,255,255,0.6)"
+                        : "rgba(255,255,255,0.4)",
                   }}
                   className="chat-contact-container"
                 >
@@ -199,12 +200,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                     }}
                     key={chat._id}
                     className="chat-contact"
-                    style={{
-                      cursor: "pointer",
-
-                      color: "#fff",
-                      height: "8rem",
-                    }}
+                    style={{}}
                   >
                     {!chat.isGroupChat ? (
                       <div
@@ -239,34 +235,17 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                               getSenderFull(loggedUser, chat.users).profilePhoto
                             }
                             sx={{
-                              width: "6rem",
-                              height: "6rem",
+                              width: "4.3rem",
+                              height: "4.3rem",
                               border: "1px solid #fff",
                             }}
                           />
                         </StyledBadge>
-                        <h6
-                          style={{
-                            fontSize: "1.4rem",
-                            padding: "0.1rem 1rem",
-
-                            fontWeight: 600,
-                            flex: 1,
-                          }}
-                        >
+                        <h6 className="chat-contact-card-username">
                           {getSenderFull(loggedUser, chat.users).firstname +
                             " " +
                             getSenderFull(loggedUser, chat.users).lastname}
-                          <span
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "10px",
-
-                              fontSize: "1.4rem",
-                              fontWeight: "400",
-                            }}
-                          >
+                          <span style={{}} className="chat-contact-latest-msg">
                             {notification.some(
                               (not) => not.chat._id === chat._id
                             ) ? (
@@ -295,7 +274,8 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                               ""
                             ) : (
                               <DoneAllIcon
-                                style={{ color: "var(--color-primary)" }}
+                                style={{ color: "cyan" }}
+                                fontSize="small"
                               />
                             )}
                           </span>

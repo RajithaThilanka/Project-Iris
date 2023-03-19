@@ -6,6 +6,8 @@
   padding: 2rem;
   width: 100%;
   margin: 0 auto;
+  /* background-color: #eee; */
+  position: relative;
 }
 
 @media only screen and (max-width: 78em) {
