@@ -134,6 +134,8 @@ function Navbar({ user }) {
     setreceivedDateRequests,
     notification,
     setNotification,
+    warnings,
+    setWarnings,
   } = useContext(MatchesContext);
   useEffect(() => {
     const fetchsentConRequests = async () => {
@@ -214,7 +216,8 @@ function Navbar({ user }) {
           data: { data },
         },
       } = await fetchWarnings();
-      setNotification(data);
+
+      setWarnings(data);
     };
     fetchNewWarnings();
   }, []);
@@ -467,7 +470,7 @@ function Navbar({ user }) {
                   sx={{ color: "#fff", marginTop: "0.5rem" }}
                 />
                 <div className="num-req-count main-notification-count">
-                  {notification.length}
+                  {warnings.length}
                 </div>
               </IconButton>
             </Tooltip>

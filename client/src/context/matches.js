@@ -19,6 +19,7 @@ function ContextProvider({ children }) {
   const [chats, setChats] = useState([]);
   const [dateChats, setDateChats] = useState([]);
   const [notification, setNotification] = useState([]);
+  const [warnings, setWarnings] = useState([]);
   const [socketConnected, setSocketConnected] = useState(false);
   const [activeUsers, setActiveUsers] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
@@ -34,6 +35,8 @@ function ContextProvider({ children }) {
     online: false,
   });
   const valueToShare = {
+    warnings,
+    setWarnings,
     matches,
     setMatches,
     filter,
