@@ -55,7 +55,7 @@
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -109,5 +109,11 @@
   .chatbox-container {
     margin: 0;
     max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 56em) {
+  .chat-friend-list-mob {
+    display: flex;
   }
 }

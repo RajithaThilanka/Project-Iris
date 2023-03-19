@@ -141,9 +141,11 @@ function MyChat({ fetchAgain, setFetchAgain }) {
         display: window.innerWidth <= 896 && selectedChat ? "none" : "flex",
       }}
     >
-      <div className="chat-friend-list-mob">
-        <ChatIcon fontSize="medium" />
-      </div>
+      {!backBtnVisible && (
+        <div className="chat-friend-list-mob" onClick={handleFocus}>
+          <ChatIcon fontSize="medium" />
+        </div>
+      )}
       <div className="contacts_card">
         <IconButton
           onClick={handleBackClick}

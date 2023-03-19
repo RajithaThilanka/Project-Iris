@@ -29,7 +29,11 @@ function Chat() {
         <VerticalNavbar />
         <div className="chat-page">
           {/* <Sidedrawer /> */}
-          <div className="chat-page-sub" ref={mychatscroll}>
+          <div
+            className="chat-page-sub"
+            ref={mychatscroll}
+            style={{ background: "#ddd" }}
+          >
             <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
             <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
           </div>

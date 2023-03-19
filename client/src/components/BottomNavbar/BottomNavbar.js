@@ -10,6 +10,7 @@ import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import Filter from "../Filter/Filter";
+import PublicIcon from "@mui/icons-material/Public";
 
 function BottomNavbar({ children }) {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ function BottomNavbar({ children }) {
   };
   const [checked, setChecked] = React.useState(false);
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+  const handleShowFilter = () => {
+    setChecked(true);
   };
   return (
     <div className="bottom-nav-container">
@@ -47,7 +48,7 @@ function BottomNavbar({ children }) {
             }
             onClick={() => handleClick(0, "/me/dashboard")}
           >
-            <PersonSearchIcon
+            <PublicIcon
               fontSize="large"
               sx={{ color: "var(--color-grey-dark-2)" }}
             />
@@ -101,6 +102,19 @@ function BottomNavbar({ children }) {
           >
             <ChatBubbleIcon
               fontSize="medium"
+              sx={{ color: "var(--color-grey-dark-2)" }}
+            />
+          </li>
+          <li
+            className={
+              activeTab === 5
+                ? "bottom-side-nav__item bottom-side-nav__item--active"
+                : "bottom-side-nav__item"
+            }
+            onClick={handleShowFilter}
+          >
+            <PersonSearchIcon
+              fontSize="large"
               sx={{ color: "var(--color-grey-dark-2)" }}
             />
           </li>
