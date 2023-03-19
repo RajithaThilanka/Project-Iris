@@ -8,5 +8,8 @@ router
   .route('/:chatId')
   .get(authController.protect, messageController.allMessages);
 router.route('/').post(authController.protect, messageController.sendMessage);
+router
+  .route('/setSeen/:id')
+  .patch(authController.protect, messageController.setSeen);
 
 module.exports = router;

@@ -13,3 +13,4 @@ API.interceptors.request.use((req) => {
 });
 
 export const userChats = (id) => API.get(`/chat/${id}`);
+export const updateSeen = (id) => API.patch(`/message/setSeen/${id}`);

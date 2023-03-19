@@ -34,8 +34,14 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   } = useSelector((state) => state.authReducer.authData);
   const { activeUsers, setActiveUsers } = useContext(MatchesContext);
   const inputRef = useRef();
-  const { selectedChat, setSelectedChat, notification, setNotification } =
-    useContext(MatchesContext);
+  const {
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+    chats,
+    setChats,
+  } = useContext(MatchesContext);
   const [modalOpen, setOpen] = React.useState(false);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -93,11 +99,12 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
         // give notification
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
-
           setFetchAgain(!fetchAgain);
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
+        try {
+        } catch (err) {}
       }
     });
   });
