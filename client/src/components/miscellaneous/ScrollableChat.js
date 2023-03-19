@@ -66,7 +66,7 @@ function ScrollableChat({ messages }) {
                 fontFamily: "inherit",
                 maxWidth: "50%",
                 minWidth: "20%",
-                fontSize: "1.4rem",
+                fontSize: "1.3rem",
                 fontWeight: 400,
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,

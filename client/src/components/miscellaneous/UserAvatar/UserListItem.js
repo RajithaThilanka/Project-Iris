@@ -52,6 +52,7 @@ function UserListItem({ user, handleFunction }) {
           alignItems: "center",
           gap: "10px",
           padding: " 10px 24px",
+          borderBottom: "1px solid #fff",
         }}
       >
         <StyledBadge
@@ -66,17 +67,17 @@ function UserListItem({ user, handleFunction }) {
             alt="user avatar"
             src={serverPublic + user.profilePhoto}
             sx={{
-              width: "6rem",
-              height: "6rem",
+              width: "5rem",
+              height: "5rem",
               border: "1px solid #fff",
             }}
           />
         </StyledBadge>
         <h6
           style={{
-            fontSize: "1.4rem",
+            fontSize: "1.3rem",
             padding: "0.1rem 1rem",
-            color: "#fff",
+            color: "#000",
             fontWeight: 600,
             flex: 1,
           }}
