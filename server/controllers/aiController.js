@@ -117,6 +117,8 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
 
   const sentUsers = await request(options);
   let suggestions = await getUsersByIndex(sentUsers);
+
+  suggestions = suggestions.filter(s => s._id + '' != req.user._id + '');
   await User.findByIdAndUpdate(req.user._id, { isClustered: true });
   // const filteredUsers = filterByLookingFor(aiSuggestedUsers);
   // suggestions = suggestions.slice(0, 10);
