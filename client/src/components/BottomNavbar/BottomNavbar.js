@@ -21,8 +21,10 @@ import FilterMobileContainer from "../FilterMobileContainer/FilterMobileContaine
 
 function BottomNavbar({ children }) {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, matches } = useContext(MatchesContext);
+  const { activeTab, setActiveTab, matches, setSelectedChat } =
+    useContext(MatchesContext);
   const handleClick = (index, link) => {
+    setSelectedChat(null);
     setActiveTab(index);
     navigate(link);
   };
