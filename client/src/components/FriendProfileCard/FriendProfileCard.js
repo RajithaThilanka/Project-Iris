@@ -36,6 +36,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Stack } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import DateTimePicker from "react-datetime-picker";
+import DialogBox from "../DialogBox/DialogBox";
 
 const style = {
   position: "absolute",
@@ -125,16 +126,6 @@ function FriendProfileCard({ conUser, cardType }) {
           return con._id !== conUser._id;
         })
       );
-      toast.success("Friend removed", {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     } catch (err) {
       const {
         response: {
@@ -298,7 +289,36 @@ function FriendProfileCard({ conUser, cardType }) {
             <AccountCircleIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
-        <Tooltip
+
+        {inviteBtnVisible ? (
+          <Tooltip title={"Invite date"} placement="bottom">
+            <IconButton
+              onClick={handleOpen}
+              style={{ color: "#fff" }}
+              disabled={alreadyHasDate}
+            >
+              <CoffeeIcon className="profile-card-btn" />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <DialogBox
+            title="Confirm Cancel"
+            content="Are you sure to cancel date invitation?"
+            YesBtn="Confirm"
+            NoBtn="Cancel"
+            handleYes={() => {
+              handleCancelDate(otherUser._id);
+            }}
+          >
+            <Tooltip title={"Cancel date invite"} placement="bottom">
+              <IconButton style={{ color: "#fff" }} disabled={alreadyHasDate}>
+                <CancelIcon className="profile-card-btn" />
+              </IconButton>
+            </Tooltip>
+          </DialogBox>
+        )}
+
+        {/* <Tooltip
           title={inviteBtnVisible ? "Invite date" : "Cancel date invite"}
           placement="bottom"
         >
@@ -319,23 +339,27 @@ function FriendProfileCard({ conUser, cardType }) {
               <CancelIcon className="profile-card-btn" />
             )}
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         <Tooltip title="Message" placement="bottom">
           <IconButton style={{ color: "#fff" }} onClick={accessChat}>
             <ChatIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
-
-        <Tooltip title="Demote" placement="bottom">
-          <IconButton
-            style={{ color: "#fff" }}
-            onClick={() => {
-              handleRemoveFriend(otherUser._id);
-            }}
-          >
-            <PersonRemoveAlt1Icon className="profile-card-btn" />
-          </IconButton>
-        </Tooltip>
+        <DialogBox
+          title="Confirm Downgrade"
+          content="Are you sure to downgrade to connection level?"
+          YesBtn="Confirm"
+          NoBtn="Cancel"
+          handleYes={() => {
+            handleRemoveFriend(otherUser._id);
+          }}
+        >
+          <Tooltip title="Demote" placement="bottom">
+            <IconButton style={{ color: "#fff" }}>
+              <PersonRemoveAlt1Icon className="profile-card-btn" />
+            </IconButton>
+          </Tooltip>
+        </DialogBox>
 
         <Tooltip title="Block and Report" placement="bottom">
           <IconButton style={{ color: "#fff" }}>

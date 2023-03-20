@@ -8,27 +8,32 @@ import { useSelector } from "react-redux";
 import Navbar from "../../components/Appbar/Navbar";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
-
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 function Dates() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(3);
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(false);
+
   const containerRef = useRef();
   const { dates, setDates } = useContext(MatchesContext);
   useEffect(() => {
     const fetchDates = async () => {
       setLoading(true);
+      setErr(false);
       try {
         const {
           data: {
             data: { data },
           },
         } = await getAllDates();
+        setErr(false);
         setLoading(false);
         setDates(data);
       } catch (error) {
         console.log(error);
         setLoading(false);
+        setErr(true);
       }
     };
     fetchDates();
@@ -51,12 +56,16 @@ function Dates() {
       >
         <VerticalNavbar />
 
-        {!loading && dates.length > 0 && (
+        {!loading && !err && dates.length > 0 ? (
           <div className="dates">
             <DateCards />
           </div>
-        )}
-        {loading && (
+        ) : !loading && !err && dates.length === 0 ? (
+          <h3 className="connections-err-msg">
+            No any dates yet
+            <SentimentVeryDissatisfiedIcon fontSize="large" />
+          </h3>
+        ) : loading && !err ? (
           <div
             className="dashboard-loading-container"
             style={{ height: "100vh" }}
@@ -66,7 +75,15 @@ function Dates() {
               <img src={serverPublic + "irislogo.png"} alt="loading-user" />
             </div>
           </div>
+        ) : !loading && err ? (
+          <h3 className="connections-err-msg">
+            Something went wrong
+            <SentimentVeryDissatisfiedIcon fontSize="large" />
+          </h3>
+        ) : (
+          ""
         )}
+
         <BottomNavbar />
       </div>
     </>

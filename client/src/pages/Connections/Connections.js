@@ -10,14 +10,18 @@ import Navbar from "../../components/Appbar/Navbar";
 import { useSelector } from "react-redux";
 import "./Connections.css";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 function Connections() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(1);
   const { connections, setConnections } = useContext(MatchesContext);
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(false);
+
   useEffect(() => {
     const fetchConnections = async () => {
       setLoading(true);
+      setErr(false);
       try {
         const {
           data: {
@@ -25,10 +29,12 @@ function Connections() {
           },
         } = await getAllConnections();
         setConnections(data);
+        setErr(false);
         setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
+        setErr(true);
       }
     };
     fetchConnections();
@@ -53,13 +59,16 @@ function Connections() {
       >
         <VerticalNavbar />
 
-        {!loading && connections.length > 0 && (
+        {!loading && !err && connections.length > 0 ? (
           <div className="connections">
             <ProfileCards cardType="connection" />
           </div>
-        )}
-
-        {loading && (
+        ) : !loading && !err && connections.length === 0 ? (
+          <h3 className="connections-err-msg">
+            No any connections yet
+            <SentimentVeryDissatisfiedIcon fontSize="large" />
+          </h3>
+        ) : loading && !err ? (
           <div
             className="dashboard-loading-container"
             style={{ height: "100vh" }}
@@ -69,7 +78,15 @@ function Connections() {
               <img src={serverPublic + "irislogo.png"} alt="loading-user" />
             </div>
           </div>
+        ) : !loading && err ? (
+          <h3 className="connections-err-msg">
+            Something went wrong
+            <SentimentVeryDissatisfiedIcon fontSize="large" />
+          </h3>
+        ) : (
+          ""
         )}
+
         <BottomNavbar />
       </div>
     </>

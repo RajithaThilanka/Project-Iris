@@ -174,17 +174,6 @@ function Dashboard2() {
 
       setsentConRequests([data, ...sentConRequests]);
       socket.emit("new-con-request-sent", data);
-
-      toast.success("Connection request sent", {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     } catch (error) {
       toast.error(error.response.data.message, {
         position: "bottom-left",

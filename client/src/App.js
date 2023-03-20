@@ -179,7 +179,10 @@ function App() {
               )
             }
           ></Route>
-          <Route path="/me/chat" element={<Chat />}></Route>
+          <Route
+            path="/me/chat"
+            element={user ? <Chat /> : <Navigate to="/auth/login" />}
+          ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
           <Route
             path="/me/suggession/profile"
