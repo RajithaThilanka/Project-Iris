@@ -288,7 +288,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-            <div style={{ height: "20%", width: "100%" }}>
+            <div className="lottie-container" style={{}}>
               {isTyping ? (
                 <div>
                   <Lottie
@@ -301,19 +301,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <></>
               )}
 
-              <div
-                style={{
-                  display: "flex",
-                  marginBottom: "0.9rem",
-                  marginTop: "1rem",
-                  position: "absolute",
-                  background: "rgba(0,0,0,0.6)",
-                  bottom: "5%",
-                  left: 0,
-                  right: 0,
-                }}
-                ref={inputRef}
-              >
+              <div className="input-emoji-chat-container" ref={inputRef}>
                 <InputEmoji
                   placeholder="Type a message"
                   onChange={typingHandler}
