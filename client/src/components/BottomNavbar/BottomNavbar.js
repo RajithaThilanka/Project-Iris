@@ -26,14 +26,9 @@ function BottomNavbar({ children }) {
     setActiveTab(index);
     navigate(link);
   };
-  const [checked, setChecked] = React.useState(false);
 
-  const handleShowFilter = () => {
-    setChecked(true);
-  };
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { notification, setNotification } = useContext(MatchesContext);
+
   return (
     <div className="bottom-nav-container">
       {/* <div className="toggle-btn-container">
@@ -108,8 +103,26 @@ function BottomNavbar({ children }) {
                 ? "bottom-side-nav__item bottom-side-nav__item--active"
                 : "bottom-side-nav__item"
             }
+            style={{ position: "relative" }}
             onClick={() => handleClick(4, "/me/chat")}
           >
+            <div
+              style={{
+                position: "absolute",
+                top: "-25%",
+                right: "-40%",
+                background: "red",
+                borderRadius: "50%",
+                width: "2rem",
+                height: "2rem",
+                fontSize: "1.2rem",
+                textAlign: "center",
+                color: "#fff",
+                display: notification.length > 0 ? "block" : "none",
+              }}
+            >
+              {notification?.length}
+            </div>
             <ChatBubbleIcon
               fontSize="medium"
               sx={{ color: "var(--color-grey-dark-2)" }}

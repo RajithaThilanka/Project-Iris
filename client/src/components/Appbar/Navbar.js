@@ -37,6 +37,7 @@ import {
 } from "../../api/UserRequests";
 import { useNavigate } from "react-router-dom";
 import Notifications from "../Notifications/Notifications";
+import { fetchChatNotifications } from "../../api/ChatRequests";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
 const settings = ["Account", "Dashboard"];
@@ -134,6 +135,8 @@ function Navbar({ user }) {
     setreceivedDateRequests,
     notification,
     setNotification,
+    warnings,
+    setWarnings,
   } = useContext(MatchesContext);
   useEffect(() => {
     const fetchsentConRequests = async () => {
@@ -214,19 +217,32 @@ function Navbar({ user }) {
           data: { data },
         },
       } = await fetchWarnings();
-      setNotification(data);
+
+      setWarnings(data);
     };
     fetchNewWarnings();
   }, []);
-
+  useEffect(() => {
+    const fetchChatNots = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await fetchChatNotifications();
+      setNotification(data);
+    };
+    fetchChatNots();
+  }, []);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         width: "100vw",
         backgroundColor: "var(--color-grey-dark-1)",
+        top: 0,
+        left: 0,
       }}
     >
       <Container
@@ -294,6 +310,26 @@ function Navbar({ user }) {
                 display: { xs: "block", md: "none" },
               }}
             >
+              {
+                <MenuItem
+                  className="home-menu-item"
+                  onClick={() => navigate("/home")}
+                >
+                  <div>
+                    <div style={{ width: "4rem", height: "4rem" }}>
+                      <img
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: "50%",
+                        }}
+                        src={serverPublic + "irislogo.png"}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </MenuItem>
+              }
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
@@ -441,23 +477,24 @@ function Navbar({ user }) {
             </Menu>
 
             {/* Notifications */}
-            <Tooltip title="Open date invitations">
+            <Tooltip title="Open new notifications">
               <IconButton onClick={handleOpenNotMenu} sx={{ p: 0 }}>
                 <NotificationsIcon
                   sx={{ color: "#fff", marginTop: "0.5rem" }}
                 />
                 <div className="num-req-count main-notification-count">
-                  {notification.length}
+                  {warnings.length + notification.length}
                 </div>
               </IconButton>
             </Tooltip>
             <Menu
               PaperProps={{
                 sx: {
-                  width: "30rem",
-                  height: "92%",
+                  width: "25rem",
+                  height: "50%",
                   mt: "35px",
                   overflow: "scroll",
+                  background: "#eee",
                 },
               }}
               id="menu-appbar"
@@ -475,7 +512,7 @@ function Navbar({ user }) {
               onClose={handleCloseNotMenu}
             >
               <div>
-                <Notifications />
+                <Notifications handleCloseNotMenu={handleCloseNotMenu} />
               </div>
             </Menu>
 

@@ -114,62 +114,67 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
     body: userData,
     json: true,
   };
+  try {
+    const sentUsers = await request(options);
+    let suggestions = await getUsersByIndex(sentUsers);
 
-  const sentUsers = await request(options);
-  let suggestions = await getUsersByIndex(sentUsers);
-  await User.findByIdAndUpdate(req.user._id, { isClustered: true });
-  // const filteredUsers = filterByLookingFor(aiSuggestedUsers);
-  // suggestions = suggestions.slice(0, 10);
-  const connections = await Connection.find({
-    $or: [{ senderId: req.user._id }, { receiverId: req.user._id }],
-  });
+    suggestions = suggestions.filter(s => s._id + '' != req.user._id + '');
+    await User.findByIdAndUpdate(req.user._id, { isClustered: true });
+    // const filteredUsers = filterByLookingFor(aiSuggestedUsers);
+    // suggestions = suggestions.slice(0, 10);
+    const connections = await Connection.find({
+      $or: [{ senderId: req.user._id }, { receiverId: req.user._id }],
+    });
 
-  const conIds = connections.map(con => {
-    return '' + con.senderId == req.user._id
-      ? '' + con.receiverId
-      : '' + con.senderId;
-  });
+    const conIds = connections.map(con => {
+      return '' + con.senderId == req.user._id
+        ? '' + con.receiverId
+        : '' + con.senderId;
+    });
 
-  let userSuggestions = await generateUserSuggestions(req.user._id);
-  suggestions = suggestions.filter(s => {
-    return !conIds.includes(s._id + '');
-  });
-  userSuggestions = userSuggestions.filter(s => {
-    return !conIds.includes(s._id + '');
-  });
+    let userSuggestions = await generateUserSuggestions(req.user._id);
+    suggestions = suggestions.filter(s => {
+      return !conIds.includes(s._id + '');
+    });
+    userSuggestions = userSuggestions.filter(s => {
+      return !conIds.includes(s._id + '');
+    });
 
-  let updatedSuggestionsPromises = suggestions.map(async user => {
-    const l = await LookingFor.findOne({ userId: user._id });
-    const p = await Answer.findOne({ userId: user._id });
-    return { ...user, lookingFor: l, interests: p };
-  });
+    let updatedSuggestionsPromises = suggestions.map(async user => {
+      const l = await LookingFor.findOne({ userId: user._id });
+      const p = await Answer.findOne({ userId: user._id });
+      return { ...user, lookingFor: l, interests: p };
+    });
 
-  let updatedSuggestions = await Promise.all(updatedSuggestionsPromises);
-  updatedSuggestions = updatedSuggestions.map(sug => {
-    const { _doc, lookingFor, interests } = sug;
-    return { ..._doc, lookingFor: lookingFor, interests: interests };
-  });
+    let updatedSuggestions = await Promise.all(updatedSuggestionsPromises);
+    updatedSuggestions = updatedSuggestions.map(sug => {
+      const { _doc, lookingFor, interests } = sug;
+      return { ..._doc, lookingFor: lookingFor, interests: interests };
+    });
 
-  updatedSuggestions = [...updatedSuggestions, ...userSuggestions];
-  updatedSuggestions = await Promise.all(
-    updatedSuggestions.map(async u => {
-      let status = false;
-      const verificationStatus = await ManualVerification.findOne({
-        userId: u._id,
-      });
-      if (!verificationStatus) status = false;
-      else if (verificationStatus.status === 'verified') status = true;
-      return { ...u, verStatus: status };
-    })
-  );
+    updatedSuggestions = [...updatedSuggestions, ...userSuggestions];
+    updatedSuggestions = await Promise.all(
+      updatedSuggestions.map(async u => {
+        let status = false;
+        const verificationStatus = await ManualVerification.findOne({
+          userId: u._id,
+        });
+        if (!verificationStatus) status = false;
+        else if (verificationStatus.status === 'verified') status = true;
+        return { ...u, verStatus: status };
+      })
+    );
 
-  res.status(200).json({
-    status: 'success',
-    nSuggestions: updatedSuggestions.length,
-    data: {
-      data: updatedSuggestions,
-    },
-  });
+    res.status(200).json({
+      status: 'success',
+      nSuggestions: updatedSuggestions.length,
+      data: {
+        data: updatedSuggestions,
+      },
+    });
+  } catch (error) {
+    return next(new AppError('Connection Refused', 500));
+  }
 });
 
 // Hate speech detection

@@ -20,4 +20,8 @@ router
 router
   .route('/delete-chat/:id')
   .delete(authController.protect, chatController.deleteChat);
+
+router
+  .route('/fetch-chat-notifications')
+  .get(authController.protect, chatController.fetchChatNotifications);
 module.exports = router;

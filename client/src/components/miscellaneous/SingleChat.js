@@ -25,6 +25,7 @@ import animationData from "../../animations/typing.json";
 import styled from "@emotion/styled";
 import DuoIcon from "@mui/icons-material/Duo";
 import InputEmoji from "react-input-emoji";
+import { updateSeen } from "../../api/ChatRequests";
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
 
@@ -34,8 +35,14 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   } = useSelector((state) => state.authReducer.authData);
   const { activeUsers, setActiveUsers } = useContext(MatchesContext);
   const inputRef = useRef();
-  const { selectedChat, setSelectedChat, notification, setNotification } =
-    useContext(MatchesContext);
+  const {
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+    chats,
+    setChats,
+  } = useContext(MatchesContext);
   const [modalOpen, setOpen] = React.useState(false);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -85,7 +92,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on("message recieved", (newMessageRecieved) => {
+    socket.on("message recieved", async (newMessageRecieved) => {
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -93,11 +100,15 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
         // give notification
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
-
           setFetchAgain(!fetchAgain);
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
+        try {
+          await updateSeen(newMessageRecieved._id);
+        } catch (err) {
+          console.log(err);
+        }
       }
     });
   });
@@ -277,7 +288,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-            <div style={{ height: "20%", width: "100%" }}>
+            <div className="lottie-container" style={{}}>
               {isTyping ? (
                 <div>
                   <Lottie
@@ -290,19 +301,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <></>
               )}
 
-              <div
-                style={{
-                  display: "flex",
-                  marginBottom: "0.9rem",
-                  marginTop: "1rem",
-                  position: "absolute",
-                  background: "rgba(0,0,0,0.6)",
-                  bottom: "5%",
-                  left: 0,
-                  right: 0,
-                }}
-                ref={inputRef}
-              >
+              <div className="input-emoji-chat-container" ref={inputRef}>
                 <InputEmoji
                   placeholder="Type a message"
                   onChange={typingHandler}

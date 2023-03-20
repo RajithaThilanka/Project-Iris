@@ -30,9 +30,17 @@
   background-color: red;
   transform: translate(15px, -10px);
 }
-
+.home-menu-item {
+  display: none;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
 @media only screen and (max-width: 25em) {
   .navbar-logo {
     display: none;
+  }
+  .home-menu-item {
+    display: flex;
   }
 }
