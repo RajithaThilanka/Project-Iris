@@ -24,7 +24,7 @@ function Chat() {
   }, []);
   return (
     <>
-      <Navbar user={user} />{" "}
+      <Navbar user={user} />
       <div style={{ display: "flex" }} className="chat-page-container">
         <VerticalNavbar />
         <div className="chat-page">

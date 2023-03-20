@@ -1,14 +1,19 @@
 .messages {
   display: flex;
   flex-direction: column;
-  /* padding: 5rem; */
   overflow-y: scroll;
   font-family: "Roboto", sans-serif;
   font-weight: 200;
-
-  height: 100%;
+  top: 8.4%;
+  height: 75%;
+  position: absolute;
+  left: 0;
+  width: 100%;
 }
-
+.styles_scrollable-div__prSCv {
+  max-height: auto !important;
+  height: auto !important;
+}
 .chat-user-header {
   width: 100%;
   display: flex;
@@ -49,7 +54,9 @@
 .lottie-container {
   height: 20%;
   width: 100%;
-  position: relative;
+  bottom: 0;
+  left: 0;
+  position: absolute;
 }
 
 .input-emoji-chat-container {
@@ -64,10 +71,56 @@
 @media only screen and (max-width: 41em) {
   .chat-container {
     height: 100%;
+    position: relative;
+  }
+  .messages {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 8.4%;
+    height: 75%;
+  }
+  .styles_scrollable-div__prSCv {
+    max-height: auto !important;
+    height: auto !important;
+  }
+  .lottie-container {
+    position: absolute;
+    height: 15%;
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
   .input-emoji-chat-container {
-    position: absolute;
-    bottom: 8%;
-    left: 0%;
   }
 }
+
+@media only screen and (max-width: 41em) {
+  .chat-container {
+    height: 100%;
+    position: relative;
+  }
+  .messages {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 8.4%;
+    height: 75%;
+  }
+  .styles_scrollable-div__prSCv {
+    max-height: auto !important;
+    height: auto !important;
+  }
+  .lottie-container {
+    position: absolute;
+    height: 15%;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  .input-emoji-chat-container {
+  }
+}
+/* @media only screen and (max-width: 41rem) {
+  
+} */
