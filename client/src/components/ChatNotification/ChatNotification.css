@@ -1,21 +1,21 @@
 .chat-notification-container {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  /* justify-content: center; */
   width: 100%;
-  height: 7rem;
-  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
-    rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-  border-radius: 15px;
-  padding: 0.5rem 1rem;
+  /* height: 4rem; */
+
+  background-color: #eee;
+  /* padding: 0 1rem; */
   gap: 10px;
   cursor: pointer;
 }
 
 .chat-notification-sender-pic {
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
+  margin-left: 1rem;
 }
 .chat-notification-sender-pic img {
   width: 100%;
@@ -26,7 +26,18 @@
   flex: 1;
   font-size: 1.1rem;
   padding: 0;
-  height: 70%;
+  height: 4rem;
+
+  width: 100%;
+  /* margin-left: auto; */
 
   overflow: hidden;
+  font-weight: 500;
+}
+
+.chat-notification-sender-name {
+  /* background-color: red; */
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
 }

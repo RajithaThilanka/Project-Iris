@@ -234,7 +234,7 @@ exports.fetchChatNotifications = catchAsync(async (req, res, next) => {
       .then(async results => {
         results = await User.populate(results, {
           path: 'latestMessage.sender',
-          select: 'firstname profilePhoto email',
+          select: 'firstname profilePhoto email lastname',
         });
         const nots = await Promise.all(
           results.map(async ch => {

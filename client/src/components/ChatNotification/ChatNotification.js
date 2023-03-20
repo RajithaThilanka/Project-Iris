@@ -32,9 +32,24 @@ function ChatNotification({ notData, handleCloseNotMenu }) {
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div className="chat-notification-container" onClick={accessChat}>
-      <div className="chat-notification-sender-pic">
-        <img src={serverPublic + notData?.sender?.profilePhoto} alt="profile" />
+    <div
+      style={{
+        height: "7rem",
+        borderBottom: "1px solid #ccc",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div className="chat-notification-container" onClick={accessChat}>
+        <div className="chat-notification-sender-pic">
+          <img
+            src={serverPublic + notData?.sender?.profilePhoto}
+            alt="profile"
+          />
+        </div>
+        <div className="chat-notification-sender-name">
+          {notData?.sender?.firstname}
+        </div>
       </div>
       <div className="chat-notification-msg">{notData?.content}</div>
     </div>

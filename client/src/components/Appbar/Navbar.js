@@ -488,10 +488,11 @@ function Navbar({ user }) {
             <Menu
               PaperProps={{
                 sx: {
-                  width: "30rem",
-                  height: "92%",
+                  width: "25rem",
+                  height: "50%",
                   mt: "35px",
                   overflow: "scroll",
+                  background: "#eee",
                 },
               }}
               id="menu-appbar"
