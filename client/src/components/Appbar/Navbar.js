@@ -237,10 +237,12 @@ function Navbar({ user }) {
   const navigate = useNavigate();
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         width: "100vw",
         backgroundColor: "var(--color-grey-dark-1)",
+        top: 0,
+        left: 0,
       }}
     >
       <Container

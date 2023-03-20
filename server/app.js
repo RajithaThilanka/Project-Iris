@@ -28,7 +28,7 @@ app.use(express.static('public'));
 app.use('/images', express.static('images'));
 
 const limiter = rateLimit({
-  max: 1000,
+  max: 3000,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP! Please try again later',
 });

@@ -32,7 +32,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import "./Dashboard2.css";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -48,6 +48,8 @@ const ENDPOINT = "http://localhost:5000";
 let socket;
 function Dashboard2() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
+  const [err, setErr] = useState(false);
+  const [loading, setLoading] = useState(false);
   setActiveTab(0);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const images = [
@@ -130,12 +132,22 @@ function Dashboard2() {
 
   useEffect(() => {
     const generateSuggestions = async () => {
-      const {
-        data: {
-          data: { data },
-        },
-      } = await getMatches();
-      setMatches(data);
+      setLoading(true);
+      setErr(false);
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getMatches();
+        setMatches(data);
+        setLoading(false);
+        setErr(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+        setErr(true);
+      }
     };
     generateSuggestions();
   }, []);
@@ -214,7 +226,7 @@ function Dashboard2() {
             className="swiper-container-main"
             style={{ display: "flex", flexDirection: "column" }}
           >
-            {filtered.length > 0 ? (
+            {filtered.length > 0 && !loading && !err ? (
               <div className="current-profile">
                 <div
                   className="sugg-card"
@@ -451,7 +463,7 @@ function Dashboard2() {
                   </Zoom>
                 </Box>
               </div>
-            ) : (
+            ) : !err && loading ? (
               <div className="dashboard-loading-container">
                 <div className="dashboard-loading-photo">
                   <img
@@ -460,8 +472,20 @@ function Dashboard2() {
                   />
                 </div>
               </div>
+            ) : !err && !loading && matches.length === 0 ? (
+              <h3 className="dashboard-err-msg">
+                No suggestions at the moment
+                <SentimentVeryDissatisfiedIcon fontSize="large" />
+              </h3>
+            ) : err && !loading ? (
+              <h3 className="dashboard-err-msg">
+                Something went wrong
+                <SentimentVeryDissatisfiedIcon fontSize="large" />
+              </h3>
+            ) : (
+              ""
             )}
-            {filtered.length > 0 && (
+            {filtered.length > 0 && !loading && !err && (
               <Swiper
                 spaceBetween={2}
                 navigation={{
@@ -499,7 +523,7 @@ function Dashboard2() {
                 grabCursor={true}
                 centeredSlides={true}
               >
-                {filtered.length > 0
+                {filtered.length > 0 && !err && !loading
                   ? filtered.map((character, index) => {
                       return (
                         <SwiperSlide
