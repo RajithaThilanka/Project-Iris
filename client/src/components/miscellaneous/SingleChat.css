@@ -17,7 +17,6 @@
 .chat-user-header {
   width: 100%;
   display: flex;
-  /* justify-content: space-around; */
   align-items: center;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.6);

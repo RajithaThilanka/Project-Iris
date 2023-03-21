@@ -173,7 +173,7 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
       },
     });
   } catch (error) {
-    return next(new AppError('Connection Refused', 500));
+    return next(new AppError('Something went wrong', 500));
   }
 });
 

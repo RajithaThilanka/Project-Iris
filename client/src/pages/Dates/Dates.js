@@ -17,7 +17,7 @@ function Dates() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(3);
   const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState(null);
   const { setSocketConnected, setActiveUsers, notification, setNotification } =
     useContext(MatchesContext);
   const containerRef = useRef();
@@ -25,20 +25,20 @@ function Dates() {
   useEffect(() => {
     const fetchDates = async () => {
       setLoading(true);
-      setErr(false);
+      setErr(null);
       try {
         const {
           data: {
             data: { data },
           },
         } = await getAllDates();
-        setErr(false);
+        setErr(null);
         setLoading(false);
         setDates(data);
       } catch (error) {
         console.log(error);
         setLoading(false);
-        setErr(true);
+        setErr(error);
       }
     };
     fetchDates();
@@ -101,7 +101,7 @@ function Dates() {
           </div>
         ) : !loading && err ? (
           <h3 className="connections-err-msg">
-            Something went wrong
+            {err?.response?.data?.message}
             <SentimentVeryDissatisfiedIcon fontSize="large" />
           </h3>
         ) : (

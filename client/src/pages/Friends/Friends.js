@@ -21,7 +21,7 @@ function Friends() {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState(null);
 
   const { setSocketConnected, setActiveUsers, notification, setNotification } =
     useContext(MatchesContext);
@@ -30,7 +30,7 @@ function Friends() {
   useEffect(() => {
     const fetchFriends = async () => {
       setLoading(true);
-      setErr(false);
+      setErr(null);
       try {
         const {
           data: {
@@ -39,12 +39,12 @@ function Friends() {
         } = await getAllFriends();
 
         setFriends(data);
-        setErr(false);
+        setErr(null);
         setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
-        setErr(true);
+        setErr(error);
       }
     };
     fetchFriends();
@@ -125,7 +125,7 @@ function Friends() {
           </div>
         ) : !loading && err ? (
           <h3 className="connections-err-msg">
-            Something went wrong
+            {err?.response?.data?.message}
             <SentimentVeryDissatisfiedIcon fontSize="large" />
           </h3>
         ) : (

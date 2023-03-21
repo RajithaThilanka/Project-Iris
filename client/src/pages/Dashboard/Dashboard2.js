@@ -48,7 +48,7 @@ const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
 function Dashboard2() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
   setActiveTab(0);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -144,7 +144,7 @@ function Dashboard2() {
   useEffect(() => {
     const generateSuggestions = async () => {
       setLoading(true);
-      setErr(false);
+      setErr(null);
       try {
         const {
           data: {
@@ -153,11 +153,11 @@ function Dashboard2() {
         } = await getMatches();
         setMatches(data);
         setLoading(false);
-        setErr(false);
+        setErr(null);
       } catch (err) {
         console.log(err);
         setLoading(false);
-        setErr(true);
+        setErr(err);
       }
     };
     generateSuggestions();
@@ -479,7 +479,7 @@ function Dashboard2() {
               </h3>
             ) : err && !loading ? (
               <h3 className="dashboard-err-msg">
-                Something went wrong
+                {err?.response?.data?.message}
                 <SentimentVeryDissatisfiedIcon fontSize="large" />
               </h3>
             ) : (

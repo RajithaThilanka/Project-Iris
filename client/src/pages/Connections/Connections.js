@@ -19,12 +19,12 @@ function Connections() {
   setActiveTab(1);
   const { connections, setConnections } = useContext(MatchesContext);
   const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState(null);
 
   useEffect(() => {
     const fetchConnections = async () => {
       setLoading(true);
-      setErr(false);
+      setErr(null);
       try {
         const {
           data: {
@@ -32,12 +32,12 @@ function Connections() {
           },
         } = await getAllConnections();
         setConnections(data);
-        setErr(false);
+        setErr(null);
         setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
-        setErr(true);
+        setErr(error);
       }
     };
     fetchConnections();
@@ -102,7 +102,7 @@ function Connections() {
           </div>
         ) : !loading && err ? (
           <h3 className="connections-err-msg">
-            Something went wrong
+            {err?.response?.data?.message}
             <SentimentVeryDissatisfiedIcon fontSize="large" />
           </h3>
         ) : (
