@@ -10,13 +10,22 @@ import Navbar from "../../components/Appbar/Navbar";
 import { useSelector } from "react-redux";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import io from "socket.io-client";
+const ENDPOINT = "http://localhost:5000";
+let socket;
 function Friends() {
   const { friends, setFriends } = useContext(MatchesContext);
   const { dates, setDates } = useContext(MatchesContext);
   const { activeTab, setActiveTab } = useContext(MatchesContext);
-
+  const {
+    data: { user },
+  } = useSelector((state) => state.authReducer.authData);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(false);
+
+  const { setSocketConnected, setActiveUsers, notification, setNotification } =
+    useContext(MatchesContext);
+
   setActiveTab(2);
   useEffect(() => {
     const fetchFriends = async () => {
@@ -63,9 +72,23 @@ function Friends() {
     };
     fetchDates();
   }, []);
-  const {
-    data: { user },
-  } = useSelector((state) => state.authReducer.authData);
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("active-users", (activeUsers) => {
+      setActiveUsers(activeUsers);
+    });
+  }, [user]);
+  useEffect(() => {
+    socket.on("message recieved", async (newMessageRecieved) => {
+      if (!notification.includes(newMessageRecieved)) {
+        setNotification([newMessageRecieved, ...notification]);
+        // setFetchAgain(!fetchAgain);
+      }
+    });
+  });
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const containerRef = useRef();
   useEffect(() => {

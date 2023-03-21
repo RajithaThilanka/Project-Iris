@@ -9,12 +9,17 @@ import Navbar from "../../components/Appbar/Navbar";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import io from "socket.io-client";
+const ENDPOINT = "http://localhost:5000";
+let socket;
+
 function Dates() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(3);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(false);
-
+  const { setSocketConnected, setActiveUsers, notification, setNotification } =
+    useContext(MatchesContext);
   const containerRef = useRef();
   const { dates, setDates } = useContext(MatchesContext);
   useEffect(() => {
@@ -41,10 +46,29 @@ function Dates() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   useEffect(() => {
     containerRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("active-users", (activeUsers) => {
+      setActiveUsers(activeUsers);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    socket.on("message recieved", async (newMessageRecieved) => {
+      if (!notification.includes(newMessageRecieved)) {
+        setNotification([newMessageRecieved, ...notification]);
+      }
+    });
+  });
+
   return (
     <>
       <Navbar user={user} />

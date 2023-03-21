@@ -45,15 +45,8 @@ function Connections() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-  const {
-    setSocketConnected,
-    activeUsers,
-    setActiveUsers,
-    receivedConRequests,
-    setreceivedConRequests,
-    notification,
-    setNotification,
-  } = useContext(MatchesContext);
+  const { setSocketConnected, setActiveUsers, notification, setNotification } =
+    useContext(MatchesContext);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const containerRef = useRef();
   useEffect(() => {
