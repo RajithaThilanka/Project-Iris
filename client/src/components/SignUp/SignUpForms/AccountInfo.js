@@ -54,7 +54,7 @@ function AccountInfo() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="signup-container">
-      <form onSubmit={handleSubmit} className="account-info-form">
+      <form onSubmit={handleSubmit} className="account-info-form" method="post">
         <Grid container spacing={3} px={3} margin={2}>
           <Grid sm={12} xs={12}>
             <div style={{ textAlign: "center" }}>
