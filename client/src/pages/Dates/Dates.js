@@ -68,7 +68,11 @@ function Dates() {
       }
     });
   });
-
+  useEffect(() => {
+    return () => {
+      socket.off();
+    };
+  }, []);
   return (
     <>
       <Navbar user={user} />

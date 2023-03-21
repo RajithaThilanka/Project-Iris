@@ -231,6 +231,7 @@ function Navbar({ user }) {
           data: { data },
         },
       } = await fetchChatNotifications();
+
       setFetchNots(false);
       setNotification(data);
     };

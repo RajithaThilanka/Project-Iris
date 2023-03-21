@@ -24,6 +24,7 @@ function BottomNavbar({ children }) {
   const { activeTab, setActiveTab, matches, setSelectedChat } =
     useContext(MatchesContext);
   const handleClick = (index, link) => {
+    setSelectedChat(null);
     setActiveTab(index);
     navigate(link);
   };

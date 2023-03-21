@@ -8,7 +8,6 @@ import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 
 import ChatBox from "../../components/miscellaneous/ChatBox";
 import MyChat from "../../components/miscellaneous/MyChat";
-import Sidedrawer from "../../components/miscellaneous/Sidedrawer";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import MatchesContext from "../../context/matches";
 import "./Chat.css";
