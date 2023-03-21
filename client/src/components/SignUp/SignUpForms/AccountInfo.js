@@ -10,7 +10,7 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupAccountInfo } from "../../../api/AuthRequests";
-
+import "./AccountInfo.css";
 function AccountInfo() {
   const [formData, setData] = useState({
     firstname: "",
@@ -53,20 +53,10 @@ function AccountInfo() {
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div className="signup-container" style={{ height: "100vh" }}>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          width: "80vw",
-          margin: "auto",
-          height: "auto",
-          background: "#fff",
-          boxShadow:
-            "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-        }}
-      >
-        <Grid container spacing={3} py={4} px={3} margin={2}>
-          <Grid sm={12}>
+    <div className="signup-container">
+      <form onSubmit={handleSubmit} className="account-info-form">
+        <Grid container spacing={3} px={3} margin={2}>
+          <Grid sm={12} xs={12}>
             <div style={{ textAlign: "center" }}>
               <img
                 style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
@@ -75,15 +65,10 @@ function AccountInfo() {
               />
             </div>
           </Grid>
-          <Grid sm={12}>
-            <h3
-              style={{ textAlign: "center", fontSize: "3.4rem" }}
-              className="heading-tertiary"
-            >
-              Let's begin
-            </h3>
+          <Grid sm={12} xs={12}>
+            <h3 className="heading-tertiary signup-heading">Let's begin</h3>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>First Name</FormLabel>
               <TextField
@@ -97,7 +82,7 @@ function AccountInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Last Name</FormLabel>
               <TextField
@@ -111,7 +96,7 @@ function AccountInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Email</FormLabel>
               <TextField
@@ -126,7 +111,7 @@ function AccountInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Password</FormLabel>
               <TextField
@@ -141,7 +126,7 @@ function AccountInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Confirm Password
@@ -158,10 +143,10 @@ function AccountInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={4}></Grid>
-          <Grid sm={4}>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={4} xs={1}></Grid>
+          <Grid sm={4} xs={6}>
             <Button variant="contained" fullWidth type="submit">
               Next
             </Button>

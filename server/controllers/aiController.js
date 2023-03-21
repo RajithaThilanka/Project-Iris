@@ -47,17 +47,22 @@ const generateUserSuggestions = async userId => {
         $and: [
           { gender: lookingFor.gender },
           {
-            dob: {
-              $gte: minYear,
-              $lte: maxYear,
-            },
+            $or: [
+              {
+                dob: {
+                  $gte: minYear,
+                  $lte: maxYear,
+                },
+              },
+              {
+                height: {
+                  $gte: minHeight,
+                  $lte: maxHeight,
+                },
+              },
+            ],
           },
-          {
-            height: {
-              $gte: minHeight,
-              $lte: maxHeight,
-            },
-          },
+
           {
             active: true,
           },
