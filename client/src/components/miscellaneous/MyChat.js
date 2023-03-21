@@ -17,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ChatFriendsList from "./ChatFriendsList/ChatFriendsList";
 import ChatIcon from "@mui/icons-material/Chat";
 import { updateSeenAll } from "../../api/ChatRequests";
+
 function MyChat({ fetchAgain, setFetchAgain }) {
   const {
     data: { user },
