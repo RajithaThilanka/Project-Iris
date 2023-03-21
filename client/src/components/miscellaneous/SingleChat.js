@@ -293,13 +293,13 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-            <div className="lottie-container" style={{}}>
+            <div className="lottie-container" style={{ position: "relative" }}>
               {isTyping ? (
-                <div>
+                <div style={{}} className="lottie">
                   <Lottie
                     options={defaultOptions}
-                    width={70}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
+                    width={30}
+                    style={{ marginBottom: 15 }}
                   />
                 </div>
               ) : (

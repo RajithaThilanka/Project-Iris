@@ -52,7 +52,7 @@
   position: relative;
 }
 .lottie-container {
-  height: 20%;
+  height: 17%;
   width: 100%;
   bottom: 0;
   left: 0;
@@ -67,7 +67,13 @@
   left: 0%;
   width: 100%;
 }
-
+.lottie {
+  margin-left: auto;
+  display: inline-block;
+  position: absolute;
+  left: 0.5rem;
+  top: 0.6rem;
+}
 @media only screen and (max-width: 41em) {
   .chat-container {
     height: 100%;
@@ -121,6 +127,11 @@
   .input-emoji-chat-container {
   }
 }
-/* @media only screen and (max-width: 41rem) {
-  
-} */
+@media only screen and (max-width: 41rem) {
+  .lottie {
+    margin-left: auto;
+    display: inline-block;
+    position: absolute;
+    top: -1rem;
+  }
+}
