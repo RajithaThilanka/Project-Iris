@@ -32,6 +32,7 @@ function ProfileView() {
   const handleUpload = async (e) => {
     e.preventDefault();
     // if there is an image with post
+
     if (image) {
       const data = new FormData();
       const fileName = Date.now() + image.name;

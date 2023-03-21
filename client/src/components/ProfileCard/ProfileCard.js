@@ -95,7 +95,7 @@ function ProfileCard({ conUser, cardType }) {
   //view suggestion profile
   const viewPro = async () => {
     try {
-      navigate("/me/suggession/profile");
+      navigate("/me/suggession/profile/");
     } catch (error) {
       console.log(error);
     }
