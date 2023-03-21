@@ -26,8 +26,14 @@ import { useState, useEffect } from "react";
 import TempleBuddhistIcon from "@mui/icons-material/TempleBuddhist";
 import { getMe } from "../../../api/UserRequests";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ProfileUpdatePop from "../ProfileUpdatePopUp/ProfileUpdatePop";
 
 export default function Factfile() {
+  const [showProfileUpdatePop, setShowProfileUpdatePop] = useState(false);
+  const toggleProfileUpdatePop = () => {
+    setShowProfileUpdatePop(!showProfileUpdatePop);
+  };
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -83,9 +89,7 @@ export default function Factfile() {
             <Button
               variant="outlined"
               endIcon={<ArrowForwardIosIcon />}
-              onClick={() => {
-                // activeState2(0);
-              }}
+              onClick={toggleProfileUpdatePop}
             ></Button>
           </Stack>
           <hr />
