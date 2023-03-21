@@ -210,6 +210,12 @@ function Dashboard2() {
     // profileContentRef?.current.classList.add("close");
     setBtnClicked(false);
   };
+
+  useEffect(() => {
+    return () => {
+      socket.off();
+    };
+  }, []);
   return (
     <>
       <Navbar user={user} />

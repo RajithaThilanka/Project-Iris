@@ -70,6 +70,12 @@ function Connections() {
   useEffect(() => {
     containerRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
+
+  useEffect(() => {
+    return () => {
+      socket.off();
+    };
+  }, []);
   return (
     <>
       <Navbar user={user} />
