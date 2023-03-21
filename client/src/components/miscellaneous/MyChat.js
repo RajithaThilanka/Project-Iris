@@ -2,14 +2,7 @@ import { Avatar, Badge, IconButton } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  createChat,
-  deleteChat,
-  fetchUserChats,
-  getAllConnections,
-  getAllFriends,
-  searchUser,
-} from "../../api/UserRequests";
+import { deleteChat, fetchUserChats, searchUser } from "../../api/UserRequests";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MatchesContext from "../../context/matches";
 
@@ -24,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ChatFriendsList from "./ChatFriendsList/ChatFriendsList";
 import ChatIcon from "@mui/icons-material/Chat";
 import { updateSeenAll } from "../../api/ChatRequests";
+
 function MyChat({ fetchAgain, setFetchAgain }) {
   const {
     data: { user },
@@ -104,9 +98,6 @@ function MyChat({ fetchAgain, setFetchAgain }) {
       },
     },
   }));
-  const handleBlur = () => {
-    !search && setFocus(false);
-  };
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -137,6 +128,12 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   const handleOpenMessage = async (chat) => {
     await updateSeenAll(chat._id);
     setSelectedChat(chat);
+    if (
+      chat?.latestMessage &&
+      chat?.latestMessage?.sender?._id != loggedUser._id
+    ) {
+      chat.latestMessage.isSeen = true;
+    }
     setNotification(notification.filter((not) => not.chat._id !== chat._id));
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -256,7 +253,36 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                             " " +
                             getSenderFull(loggedUser, chat.users).lastname}
                           <span style={{}} className="chat-contact-latest-msg">
-                            {notification.some(
+                            {chat.latestMessage &&
+                              `${
+                                chat.latestMessage.sender._id === loggedUser._id
+                                  ? "You :"
+                                  : chat.latestMessage.sender.firstname[0] +
+                                    ": "
+                              } ${
+                                chat.latestMessage.content.slice(0, 10) + " ..."
+                              }`}
+
+                            {chat.latestMessage &&
+                            chat.latestMessage.sender._id != loggedUser._id &&
+                            chat.latestMessage.isSeen === false ? (
+                              <CircleIcon
+                                style={{
+                                  color: "var(--color-primary)",
+                                  height: "1.5rem",
+                                }}
+                              />
+                            ) : chat.latestMessage &&
+                              chat.latestMessage.sender._id == loggedUser._id &&
+                              chat.latestMessage.isSeen === true ? (
+                              <DoneAllIcon
+                                style={{ color: "cyan" }}
+                                fontSize="small"
+                              />
+                            ) : (
+                              ""
+                            )}
+                            {/* {notification.some(
                               (not) => not.chat._id === chat._id
                             ) ? (
                               <CircleIcon
@@ -267,18 +293,9 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                               />
                             ) : (
                               ""
-                            )}
+                            )} */}
 
-                            {chat.latestMessage &&
-                              `${
-                                chat.latestMessage.sender._id === loggedUser._id
-                                  ? "You :"
-                                  : chat.latestMessage.sender.firstname[0] +
-                                    ": "
-                              } ${
-                                chat.latestMessage.content.slice(0, 10) + " ..."
-                              }`}
-                            {notification.some(
+                            {/* {notification.some(
                               (not) => not.chat._id === chat._id
                             ) ? (
                               ""
@@ -287,7 +304,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                                 style={{ color: "cyan" }}
                                 fontSize="small"
                               />
-                            )}
+                            )} */}
                           </span>
                         </h6>
                       </div>

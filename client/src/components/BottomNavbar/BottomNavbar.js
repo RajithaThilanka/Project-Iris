@@ -21,7 +21,8 @@ import FilterMobileContainer from "../FilterMobileContainer/FilterMobileContaine
 
 function BottomNavbar({ children }) {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, matches } = useContext(MatchesContext);
+  const { activeTab, setActiveTab, matches, setSelectedChat } =
+    useContext(MatchesContext);
   const handleClick = (index, link) => {
     setActiveTab(index);
     navigate(link);
@@ -31,18 +32,6 @@ function BottomNavbar({ children }) {
 
   return (
     <div className="bottom-nav-container">
-      {/* <div className="toggle-btn-container">
-        Filter
-        <Switch
-          checked={checked}
-          onChange={handleChange}
-          inputProps={{ "aria-label": "controlled" }}
-          className="filter-btn"
-          disabled={matches.length === 0}
-          size="small"
-        />
-      </div> */}
-
       <nav className="bottom-sidebar">
         <ul className="bottom-side-nav">
           <li

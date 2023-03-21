@@ -127,7 +127,6 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
 
         socket.emit("new message", data);
         setMessages([...messages, data]);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -191,9 +190,15 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       {selectedChat ? (
         <>
           <div className="chat-user-header">
-            <IconButton style={{}} onClick={() => setSelectedChat("")}>
+            <IconButton
+              style={{}}
+              onClick={() => {
+                setSelectedChat("");
+                setFetchAgain(!fetchAgain);
+              }}
+            >
               <ArrowBackIosIcon
-                style={{ color: "#000", width: "2rem", height: "2rem" }}
+                style={{ color: "#fff", width: "2rem", height: "2rem" }}
                 fontSize="small"
               />
             </IconButton>
@@ -288,13 +293,13 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-            <div className="lottie-container" style={{}}>
+            <div className="lottie-container" style={{ position: "relative" }}>
               {isTyping ? (
-                <div>
+                <div style={{}} className="lottie">
                   <Lottie
                     options={defaultOptions}
-                    width={70}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
+                    width={30}
+                    style={{ marginBottom: 15 }}
                   />
                 </div>
               ) : (

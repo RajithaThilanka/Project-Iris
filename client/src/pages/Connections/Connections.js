@@ -11,17 +11,20 @@ import { useSelector } from "react-redux";
 import "./Connections.css";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import io from "socket.io-client";
+const ENDPOINT = "http://localhost:5000";
+let socket;
 function Connections() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(1);
   const { connections, setConnections } = useContext(MatchesContext);
   const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState(null);
 
   useEffect(() => {
     const fetchConnections = async () => {
       setLoading(true);
-      setErr(false);
+      setErr(null);
       try {
         const {
           data: {
@@ -29,12 +32,12 @@ function Connections() {
           },
         } = await getAllConnections();
         setConnections(data);
-        setErr(false);
+        setErr(null);
         setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
-        setErr(true);
+        setErr(error);
       }
     };
     fetchConnections();
@@ -42,8 +45,27 @@ function Connections() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+  const { setSocketConnected, setActiveUsers, notification, setNotification } =
+    useContext(MatchesContext);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const containerRef = useRef();
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("active-users", (activeUsers) => {
+      setActiveUsers(activeUsers);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    socket.on("message recieved", async (newMessageRecieved) => {
+      if (!notification.includes(newMessageRecieved)) {
+        setNotification([newMessageRecieved, ...notification]);
+        // setFetchAgain(!fetchAgain);
+      }
+    });
+  });
 
   useEffect(() => {
     containerRef?.current?.scrollIntoView({ behavior: "smooth" });
@@ -80,7 +102,7 @@ function Connections() {
           </div>
         ) : !loading && err ? (
           <h3 className="connections-err-msg">
-            Something went wrong
+            {err?.response?.data?.message}
             <SentimentVeryDissatisfiedIcon fontSize="large" />
           </h3>
         ) : (

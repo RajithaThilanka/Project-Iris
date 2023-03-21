@@ -137,6 +137,8 @@ function Navbar({ user }) {
     setNotification,
     warnings,
     setWarnings,
+    fetchNots,
+    setFetchNots,
   } = useContext(MatchesContext);
   useEffect(() => {
     const fetchsentConRequests = async () => {
@@ -229,9 +231,10 @@ function Navbar({ user }) {
           data: { data },
         },
       } = await fetchChatNotifications();
+      setFetchNots(false);
       setNotification(data);
     };
-    fetchChatNots();
+    fetchNots && fetchChatNots();
   }, []);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();

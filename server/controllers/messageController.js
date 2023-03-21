@@ -57,8 +57,10 @@ exports.allMessages = catchAsync(async (req, res, next) => {
 
 exports.setSeen = catchAsync(async (req, res, next) => {
   try {
-    const updatedMsg = await Message.findByIdAndUpdate(
-      req.params.id,
+    const updatedMsg = await Message.findOneAndUpdate(
+      {
+        $and: [{ _id: req.params.id }, { sender: { $ne: req.user._id } }],
+      },
       {
         isSeen: true,
       },
@@ -78,7 +80,13 @@ exports.setSeen = catchAsync(async (req, res, next) => {
 exports.setSeenAll = catchAsync(async (req, res, next) => {
   try {
     const updatedMsgs = await Message.updateMany(
-      { $and: [{ chat: req.params.id }, { isSeen: false }] },
+      {
+        $and: [
+          { chat: req.params.id },
+          { isSeen: false },
+          { sender: { $ne: req.user._id } },
+        ],
+      },
       {
         isSeen: true,
       }

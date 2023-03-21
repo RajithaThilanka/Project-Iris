@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { updateSeenAll } from "../../api/ChatRequests";
 import { createChat } from "../../api/UserRequests";
 import MatchesContext from "../../context/matches";
+import { format } from "timeago.js";
 import "./ChatNotification.css";
 function ChatNotification({ notData, handleCloseNotMenu }) {
   const { chats, setChats, setSelectedChat, setNotification, notification } =
@@ -38,6 +39,9 @@ function ChatNotification({ notData, handleCloseNotMenu }) {
         borderBottom: "1px solid #ccc",
         display: "flex",
         flexDirection: "column",
+        // backgroundImage:
+        //   "linear-gradient(to right bottom,rgba(0,0,0,0.8),rgba(0,0,0,0.4))",
+        background: "#ddd",
       }}
     >
       <div className="chat-notification-container" onClick={accessChat}>
@@ -47,10 +51,13 @@ function ChatNotification({ notData, handleCloseNotMenu }) {
             alt="profile"
           />
         </div>
+
         <div className="chat-notification-sender-name">
           {notData?.sender?.firstname}
         </div>
+        <div className="notification-time">{format(notData?.createdAt)}</div>
       </div>
+
       <div className="chat-notification-msg">{notData?.content}</div>
     </div>
   );
