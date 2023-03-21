@@ -33,13 +33,12 @@ function ProfilHeader() {
   return (
     <div>
       <Box
+        className="Header"
         sx={{
           display: "flex",
           height: 300,
           padding: "2",
           borderradius: "5",
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1677352241429-dc90cfc7a623?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80')",
         }}
       >
         <Grid
@@ -74,13 +73,6 @@ function ProfilHeader() {
               </Button>
               <br />
             </Stack>
-          </Grid>
-
-          <Grid xs={2} item marginTop={21}>
-            <Button component="label" variant="contained">
-              Update cover picture
-              <input hidden accept="image/*" multiple type="file" />
-            </Button>
           </Grid>
         </Grid>
       </Box>

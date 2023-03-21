@@ -76,20 +76,9 @@ function LookingFor() {
 
   return (
     <div className="signup-container">
-      <form
-        style={{
-          width: "80vw",
-          margin: "auto",
-          height: "auto",
-          background: "#fff",
-          boxShadow:
-            "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-        }}
-        onSubmit={handleSubmit}
-        method="post"
-      >
+      <form className="account-info-form" onSubmit={handleSubmit} method="post">
         <Grid container spacing={3} py={1} px={3} margin={2}>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <div style={{ textAlign: "center" }}>
               <img
                 style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
@@ -98,15 +87,12 @@ function LookingFor() {
               />
             </div>
           </Grid>
-          <Grid sm={12}>
-            <h3
-              style={{ textAlign: "center", fontSize: "3.4rem" }}
-              className="heading-tertiary"
-            >
+          <Grid sm={12} xs={12}>
+            <h3 className="heading-tertiary signup-heading">
               Your ideal partner should be
             </h3>
           </Grid>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <Stack spacing={1.7}>
               <Stack spacing={2}>
                 <FormLabel>Gender</FormLabel>
@@ -133,7 +119,7 @@ function LookingFor() {
               </Stack>
             </Stack>
           </Grid>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <Stack spacing={1.7}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Age between</FormLabel>
               <Stack direction="row">
@@ -156,7 +142,7 @@ function LookingFor() {
               </Stack>
             </Stack>
           </Grid>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <Stack spacing={1.7}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Height between
@@ -193,10 +179,10 @@ function LookingFor() {
               </Stack>
             </Stack>
           </Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={4}></Grid>
-          <Grid sm={4}>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={4} xs={1}></Grid>
+          <Grid sm={4} xs={6}>
             <Button variant="contained" fullWidth type="submit">
               Finish
             </Button>

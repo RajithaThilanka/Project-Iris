@@ -17,4 +17,4 @@ export const getAllVeriReq = () => API.get("/users/verify-requests");
 
 export const getProfileReports = () => API.get("/report/admin-reports");
 
-export const deleteaUser = (id) => API.delete("/users/${id}");
+export const deleteaUser = (id) => API.delete(`/users/${id}`);
