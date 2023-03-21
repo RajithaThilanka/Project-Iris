@@ -21,7 +21,7 @@ const style = {
   width: "40vw",
   height: "60vh",
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  // border: "2px solid #000",
   boxShadow: 24,
   p: 4,
   display: "flex",
@@ -67,17 +67,13 @@ function Login() {
   //
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div
-      style={{
-        boxShadow:
-          "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-      }}
-    >
+    <div className="login-container-main" style={{}}>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        hideBackdrop={true}
       >
         <form onSubmit={handleSubmit}>
           <Box sx={style}>
