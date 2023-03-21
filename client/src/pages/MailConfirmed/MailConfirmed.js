@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
-import "./ConfirmMail.css";
 import Zoom from "react-reveal/Zoom";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { confirmMail } from "../../actions/AuthActions";
-function ConfirmMail({ main, desc }) {
+import { Link, useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
+import "./MailConfirmed.css";
+
+function MailConfirmed({ main }) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
 
   return (
-    <div className="confirm-mail-container">
+    <div className="confirmed-mail-container">
       <div
         style={{ textAlign: "center", cursor: "pointer" }}
-        className="confirm-mail-logo-container"
+        className="confirmed-mail-logo-container"
         onClick={() => {
           navigate(`/home`, { replace: true });
         }}
@@ -27,15 +27,22 @@ function ConfirmMail({ main, desc }) {
           alt="logo"
         />
       </div>
-      <div className="confirm-mail-msg">
+      <div className="confirmed-mail-msg">
         <Zoom>
           <h2>{main}</h2>
         </Zoom>
 
-        <p>{desc}</p>
+        <p>
+          {" "}
+          Click{" "}
+          <Link style={{ color: "var(--color-secondary)" }} to="/me">
+            here
+          </Link>{" "}
+          to go to your account
+        </p>
       </div>
     </div>
   );
 }
 
-export default ConfirmMail;
+export default MailConfirmed;

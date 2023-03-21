@@ -30,6 +30,7 @@ import AdminPage from "./pages/Admin/AdminPage";
 import AdminLogin from "./pages/AdminAuth/AdminLogin";
 
 import Dashboard2 from "./pages/Dashboard/Dashboard2";
+import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -121,7 +122,7 @@ function App() {
             path="/confirm-email"
             element={
               <ConfirmMail
-                main="Mail successfully sent"
+                main="SUCCESS"
                 desc=" Please follow the link attached to your email to verify your account"
               />
             }
@@ -130,10 +131,18 @@ function App() {
             path="/reset-message"
             element={
               <ConfirmMail
-                main="Mail successfully sent"
+                main="SUCCESS"
                 desc=" Please follow the link attached to your email to reset your password"
               />
             }
+          ></Route>
+          <Route
+            path="/email-confirm/success"
+            element={<MailConfirmed main="Email successfully verified" />}
+          ></Route>
+          <Route
+            path="/password-reset/success"
+            element={<MailConfirmed main="Password changed successfully" />}
           ></Route>
           <Route
             path="/users/verify/:userId/:token"
