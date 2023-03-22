@@ -115,3 +115,6 @@ export const updateMyPassword = (passwordCurrent, password, passwordConfirm) =>
     password,
     passwordConfirm,
   });
+
+export const UpdateMe = (firstname) =>
+  API.patch(`/users/me/update`, { firstname });

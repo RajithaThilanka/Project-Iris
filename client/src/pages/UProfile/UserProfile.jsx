@@ -2,7 +2,6 @@ import React from "react";
 
 import Bar from "../../components/Appbar/MainAppbar";
 
-import Content from "../../components/Profile/Content/ProfileContent";
 import { Stack, Typography, Grid } from "@mui/material";
 import ProfilHeader from "../../components/Profile/Header/ProfileHeader";
 import "./profilestyle.css";

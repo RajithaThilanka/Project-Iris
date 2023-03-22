@@ -4,7 +4,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import About from "../../components/Profile/Content/ProfileContent";
 import ProAbout from "../../pages/UProfile/About/ProfileAbout";
 import Profileconnection from "./ProfileConnection/Profileconnection";
 import { useSelector } from "react-redux";
