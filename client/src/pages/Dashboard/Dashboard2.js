@@ -1,21 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/Appbar/Navbar";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
-import { Button, Chip, Divider, IconButton, Tooltip } from "@mui/material";
-import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
+import { Button, Chip, Divider, IconButton } from "@mui/material";
 import Zoom from "react-reveal/Zoom";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Box } from "@mui/system";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import WorkIcon from "@mui/icons-material/Work";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
-import MoodBadIcon from "@mui/icons-material/MoodBad";
-import UndoIcon from "@mui/icons-material/Undo";
-import { useSelector, useDispatch } from "react-redux";
-import Loader from "../../components/Loading/Loading";
+import { useSelector } from "react-redux";
 import { getMatches, sendConRequest } from "../../api/UserRequests";
 import SchoolIcon from "@mui/icons-material/School";
 import HeightIcon from "@mui/icons-material/Height";
@@ -30,7 +24,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Pagination } from "swiper";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import "./Dashboard2.css";
@@ -40,26 +33,17 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
 import SwiperCore, { EffectCoverflow, Navigation } from "swiper/core";
-import { FreeMode, Thumbs } from "swiper";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
-let socket, selectedChatCompare;
+let socket;
 function Dashboard2() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
   setActiveTab(0);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-  const images = [
-    "user1.jpeg",
-    "user2.jpeg",
-    "user3.jpeg",
-    "user4.jpeg",
-    "user5.jpeg",
-    "user6.jpeg",
-  ];
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);

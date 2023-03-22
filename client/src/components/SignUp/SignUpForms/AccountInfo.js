@@ -7,8 +7,9 @@ import {
   TextField,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../Loading/Loading";
 import { signupAccountInfo } from "../../../api/AuthRequests";
 import "./AccountInfo.css";
 function AccountInfo() {
@@ -19,6 +20,10 @@ function AccountInfo() {
     password: "",
     passwordConfirm: "",
   });
+  const [err, setErr] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
+  const [strong, setStrong] = useState(false);
 
   const resetForm = () => {
     setData({
@@ -35,6 +40,8 @@ function AccountInfo() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setErr(null);
     if (formData.password === formData.passwordConfirm) {
       try {
         const {
@@ -43,15 +50,26 @@ function AccountInfo() {
           },
         } = await signupAccountInfo(formData);
         resetForm();
+        setErr(null);
+        setLoading(false);
         navigate(`/auth/signup/user-info/${data._id}`);
       } catch (error) {
         console.log(error);
+        setErr(error);
+        setLoading(false);
       }
     } else {
       console.log("Passwords do not match");
     }
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  useEffect(() => {
+    setPasswordsMatch(formData.password === formData.passwordConfirm);
+  }, [formData.password, formData.passwordConfirm]);
+
+  useEffect(() => {
+    setStrong(formData.password.length >= 8);
+  }, [formData.password]);
   return (
     <div className="signup-container">
       <form onSubmit={handleSubmit} className="account-info-form" method="post">
@@ -106,6 +124,8 @@ function AccountInfo() {
                 fullWidth
                 name="email"
                 type="email"
+                error={err ? true : false}
+                helperText={err ? err?.response?.data?.message : ""}
                 onChange={handleData}
                 value={formData.email}
               />
@@ -122,6 +142,14 @@ function AccountInfo() {
                 fullWidth
                 name="password"
                 onChange={handleData}
+                error={!passwordsMatch || !strong}
+                helperText={
+                  !passwordsMatch
+                    ? "Passwords do not match"
+                    : !strong
+                    ? "Password should be at least 8 characters"
+                    : ""
+                }
                 value={formData.password}
               />
             </Stack>
@@ -138,6 +166,8 @@ function AccountInfo() {
                 type="password"
                 fullWidth
                 name="passwordConfirm"
+                error={!passwordsMatch}
+                helperText={!passwordsMatch ? "Passwords do not match" : ""}
                 onChange={handleData}
                 value={formData.passwordConfirm}
               />
@@ -147,9 +177,26 @@ function AccountInfo() {
           <Grid sm={12} xs={1}></Grid>
           <Grid sm={4} xs={1}></Grid>
           <Grid sm={4} xs={6}>
-            <Button variant="contained" fullWidth type="submit">
-              Next
-            </Button>
+            {loading && !err ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Loader />
+              </div>
+            ) : (
+              <Button
+                variant="contained"
+                fullWidth
+                type="submit"
+                disabled={!passwordsMatch || !strong}
+              >
+                Next
+              </Button>
+            )}
           </Grid>
         </Grid>
       </form>

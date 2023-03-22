@@ -67,7 +67,7 @@ function Friends() {
       } catch (err) {
         console.log(err);
         setLoading(false);
-        setErr(true);
+        setErr(err);
       }
     };
     fetchDates();
@@ -130,6 +130,7 @@ function Friends() {
           </div>
         ) : !loading && err ? (
           <h3 className="connections-err-msg">
+            {console.log(err)}
             {err?.response?.data?.message}
             <SentimentVeryDissatisfiedIcon fontSize="large" />
           </h3>
