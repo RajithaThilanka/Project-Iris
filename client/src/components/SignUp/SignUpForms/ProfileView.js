@@ -1,18 +1,27 @@
-import { Box, Button, FormLabel, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormLabel,
+  IconButton,
+  Stack,
+  TextField,
+} from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import "./ProfileView.css";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { uploadImage } from "../../../actions/UploadAction";
 import { signupProfileView } from "../../../api/AuthRequests";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import CancelIcon from "@mui/icons-material/Cancel";
 function ProfileView() {
   const dispatch = useDispatch();
   const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState();
+  const [uploaded, setUploaded] = useState(false);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const { id } = useParams();
   const navigate = useNavigate();
@@ -32,17 +41,21 @@ function ProfileView() {
   const handleUpload = async (e) => {
     e.preventDefault();
     // if there is an image with post
+
     if (image) {
       const data = new FormData();
       const fileName = Date.now() + image.name;
       data.append("name", fileName);
       data.append("file", image);
+
       // newPost.image = fileName;
       setData({ ...formData, profilePhoto: fileName });
       try {
         dispatch(uploadImage(data));
+        setUploaded(true);
       } catch (err) {
         console.log(err);
+        setUploaded(false);
       }
     } else {
       toast.error("No image is chosen", {
@@ -57,7 +70,6 @@ function ProfileView() {
       });
       return;
     }
-    resetShare();
   };
   const resetShare = () => {
     setImage(null);
@@ -65,7 +77,6 @@ function ProfileView() {
 
   const handleChange = (event) => {
     setData({ ...formData, userDescription: event.target.value });
-    console.log(formData.userDescription);
     setWordCount(formData.userDescription.trim().split(" ").length);
   };
   const handleSubmit = async (e) => {
@@ -85,22 +96,23 @@ function ProfileView() {
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (!image) {
+      setPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(image);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [image]);
   return (
     <div className="signup-container">
-      <form
-        style={{
-          width: "80vw",
-          margin: "auto",
-          height: "auto",
-          background: "#fff",
-          boxShadow:
-            "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-        }}
-        method="post"
-        onSubmit={handleSubmit}
-      >
+      <form className="account-info-form" method="post" onSubmit={handleSubmit}>
         <Grid container spacing={3} py={1} px={3} margin={2}>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <div style={{ textAlign: "center" }}>
               <img
                 style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
@@ -109,11 +121,8 @@ function ProfileView() {
               />
             </div>
           </Grid>
-          <Grid sm={12}>
-            <h3
-              style={{ textAlign: "center", fontSize: "3.4rem" }}
-              className="heading-tertiary"
-            >
+          <Grid sm={12} xs={12}>
+            <h3 className="heading-tertiary signup-heading">
               Let's make your profile glowing
             </h3>
           </Grid>
@@ -122,7 +131,7 @@ function ProfileView() {
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Profile Picture
               </FormLabel>
-              <Box sx={{ display: "flex", gap: "20px" }}>
+              <Box sx={{ display: "flex", gap: "1rem" }}>
                 <input
                   type="file"
                   id="file"
@@ -135,13 +144,43 @@ function ProfileView() {
                   variant="contained"
                   onClick={handleUpload}
                   sx={{ fontSize: "1rem" }}
+                  disabled={uploaded || !image}
                 >
-                  Click to Upload
+                  Upload
                 </Button>
               </Box>
             </Stack>
           </Grid>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
+            <div className="image-preview-container">
+              {image && <img src={preview} alt="profile" />}
+              {image && !uploaded && (
+                <IconButton
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    background: "rgba(0,0,0,0.6)",
+                    borderRadius: 0,
+                    color: "#fff",
+                    "&:hover": {
+                      background: "rgba(0,0,0,0.6)",
+                    },
+                  }}
+                  onClick={() => {
+                    setImage(undefined);
+                  }}
+                >
+                  <CancelIcon />
+                </IconButton>
+              )}
+
+              {uploaded && image && (
+                <h3 className="image-uploaded-logo">Image Uploaded</h3>
+              )}
+            </div>
+          </Grid>
+          <Grid sm={12} xs={12}>
             <Stack spacing={1.7}>
               <FormLabel>
                 Tell us something about yourself (minimum 50 words)
@@ -167,17 +206,16 @@ function ProfileView() {
               />
             </Stack>
           </Grid>
-          <Grid sm={12}></Grid>
-
-          <Grid sm={4}></Grid>
-          <Grid sm={4}>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={4} xs={1}></Grid>
+          <Grid sm={4} xs={8}>
             <Button
               variant="contained"
               fullWidth
               type="submit"
               disabled={wordCount < 50}
             >
-              Finish
+              Next
             </Button>
           </Grid>
         </Grid>

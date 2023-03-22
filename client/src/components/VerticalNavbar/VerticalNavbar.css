@@ -136,7 +136,9 @@
     background-color: #eee;
     color: #000;
     font-weight: 400;
-    margin: auto;
+
+    margin-left: auto;
+    margin-top: 0.5rem;
   }
   .multi-chip {
     font-size: 1.3rem !important;

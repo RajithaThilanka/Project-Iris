@@ -4,13 +4,14 @@ input[type="file"] {
 
 input[type="file"] + label {
   color: white;
-  height: auto;
-  width: auto;
-  padding: 0.5rem 4rem;
+  height: 3rem !important;
+  width: 3rem !important;
+  padding: 2rem;
+
   background-color: var(--color-primary);
   cursor: pointer;
-  border-radius: 5rem;
-  margin: auto;
+  border-radius: 50% !important;
+  /* margin: auto; */
   font-size: 2rem;
   display: flex;
   justify-content: center;

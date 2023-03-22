@@ -1,5 +1,5 @@
 import "./Login.css";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Unstable_Grid2";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,22 +13,6 @@ import { useState } from "react";
 import { Modal, Typography } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Loader from "../Loading/Loading";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "40vw",
-  height: "60vh",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-  display: "flex",
-  flexDirection: "column",
-  gap: "2rem",
-  alignItems: "center",
-};
 
 function Login() {
   const initialState = {
@@ -67,34 +51,27 @@ function Login() {
   //
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div
-      style={{
-        boxShadow:
-          "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-      }}
-    >
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <form onSubmit={handleSubmit}>
-          <Box sx={style}>
-            <div className="cancel-btn-container">
-              <IconButton onClick={handleClose} className="cancel-btn">
-                <CloseIcon fontSize="medium" />
-              </IconButton>
-            </div>
-            <div style={{ textAlign: "center" }}>
+    <div className="login-container-main">
+      <form onSubmit={handleSubmit} className="login-form-main" method="post">
+        <Grid container rowSpacing={3} px={3} margin={2}>
+          <Grid item sm={12} xs={12}>
+            <div
+              style={{ textAlign: "center", cursor: "pointer" }}
+              onClick={handleClose}
+            >
               <img
                 style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
                 src={serverPublic + "irislogo.png"}
                 alt="logo"
               />
             </div>
-            <h1 className="login-title">Login</h1>
-
+          </Grid>
+          <Grid item sm={12} xs={12}>
+            <h3 className="heading-tertiary login-heading">
+              Login to your account
+            </h3>
+          </Grid>
+          <Grid item sm={12} xs={12}>
             <TextField
               label="Email"
               color="secondary"
@@ -106,6 +83,8 @@ function Login() {
               required
               type="email"
             />
+          </Grid>
+          <Grid item sm={12} xs={12}>
             <TextField
               label="Password"
               color="secondary"
@@ -117,8 +96,18 @@ function Login() {
               type="password"
               required
             />
+          </Grid>
+          <Grid item sm={12} xs={12}>
             {loading ? (
-              <Loader />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Loader />
+              </div>
             ) : (
               <Button
                 type="submit"
@@ -129,7 +118,8 @@ function Login() {
                 Login
               </Button>
             )}
-
+          </Grid>
+          <Grid item sm={12} xs={12}>
             {error && (
               <div className="error-container">
                 <p className="error-msg">
@@ -142,9 +132,9 @@ function Login() {
                 </p>
               </div>
             )}
-          </Box>
-        </form>
-      </Modal>
+          </Grid>
+        </Grid>
+      </form>
     </div>
   );
 }

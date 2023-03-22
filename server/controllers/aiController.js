@@ -47,17 +47,22 @@ const generateUserSuggestions = async userId => {
         $and: [
           { gender: lookingFor.gender },
           {
-            dob: {
-              $gte: minYear,
-              $lte: maxYear,
-            },
+            $or: [
+              {
+                dob: {
+                  $gte: minYear,
+                  $lte: maxYear,
+                },
+              },
+              {
+                height: {
+                  $gte: minHeight,
+                  $lte: maxHeight,
+                },
+              },
+            ],
           },
-          {
-            height: {
-              $gte: minHeight,
-              $lte: maxHeight,
-            },
-          },
+
           {
             active: true,
           },
@@ -98,7 +103,7 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
   const Age = Math.abs(ageDate.getUTCFullYear() - 1970);
   const userData = {
     Bios: passions.profileDescription,
-    Religion: user.religion,
+    Religion: user.religion.charAt(0).toUpperCase() + user.religion.slice(1),
     Politics: passions.politics,
     Movies: passions.movies,
     Music: passions.music,
@@ -122,6 +127,7 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
     await User.findByIdAndUpdate(req.user._id, { isClustered: true });
     // const filteredUsers = filterByLookingFor(aiSuggestedUsers);
     // suggestions = suggestions.slice(0, 10);
+
     const connections = await Connection.find({
       $or: [{ senderId: req.user._id }, { receiverId: req.user._id }],
     });

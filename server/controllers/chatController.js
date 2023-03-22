@@ -75,7 +75,7 @@ exports.fetchChats = catchAsync(async (req, res, next) => {
           const hasDeleted = currentChat.invisibleArr.find(
             c =>
               c.userId + '' == req.user._id &&
-              currentChat.latestMessage.createdAt <= c.deletedAt
+              currentChat?.latestMessage?.createdAt <= c?.deletedAt
           );
           return !hasDeleted;
         });
@@ -217,7 +217,7 @@ exports.deleteChat = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      data: newChat,
+      data: null,
     },
   });
 });

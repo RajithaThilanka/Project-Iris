@@ -264,7 +264,16 @@ exports.signupUserInfo = catchAsync(async (req, res, next) => {
     },
   });
 });
+const getLatestIndex = async id => {
+  const options = {
+    method: 'GET',
+    url: 'http://127.0.0.1:9000/api/v1/users/get-lastest-index',
+    json: true,
+  };
 
+  const sendRequest = await request(options);
+  return sendRequest + 1;
+};
 exports.signupProfileView = catchAsync(async (req, res, next) => {
   const notAllowed = [
     'role',
@@ -316,10 +325,12 @@ exports.verify = catchAsync(async (req, res, next) => {
   }
   userVerify.uniqueString = undefined;
   await userVerify.save();
+  const index = await getLatestIndex(id);
   const updatedUser = await User.findByIdAndUpdate(
     id,
     {
       verified: true,
+      index: index,
     },
     {
       runValidators: false,
@@ -469,18 +480,6 @@ exports.updatePassword = async (req, res, next) => {
   await user.save();
   createSendToken(user, 200, res);
 };
-
-exports.getLatestIndex = catchAsync(async (req, res, next) => {
-  const options = {
-    method: 'GET',
-    url: 'http://127.0.0.1:9000/api/v1/users/get-lastest-index',
-    json: true,
-  };
-
-  const sendRequest = await request(options);
-  req.body.index = sendRequest + 1;
-  next();
-});
 
 exports.checkManualVerification = catchAsync(async (req, res, next) => {
   const verification = await ManualVerification.findOne({
