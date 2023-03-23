@@ -1,9 +1,11 @@
 import React from "react";
+import "./popUpStyle.css"
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import FormGroup from "@mui/material/FormGroup";
-
+import { InputLabel, Input } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -40,7 +42,8 @@ import { useState, useEffect } from "react";
 import TempleBuddhistIcon from "@mui/icons-material/TempleBuddhist";
 import { getMe } from "../../../api/UserRequests";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { UpdateMe } from "../../../api/UserRequests";
+import { updateMe } from "../../api/UserRequests";
+
 
 export default function Factfile() {
   const [showPopup1, setShowPopup1] = useState(false);
@@ -53,51 +56,165 @@ export default function Factfile() {
   const [showPopup8, setShowPopup8] = useState(false);
   const [showPopup9, setShowPopup9] = useState(false);
   const [showPopup10, setShowPopup10] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleUpdateClick = () => {
+    // Perform update logic here, and if successful:
+    setSuccessMessage("Update successful!");
+  };
+  const handleUpdateerrClick = () => {
+    // Perform update logic here, and if successful:
+    setSuccessMessage("Update unsuccessful!");
+  };
+
+  const [user, setUser] = useState(null);
+  const [dbvar, setDBVar] = useState("");
+  const [formdata, setfData] = useState("");
+  const [checkedValues, setCheckedValues] = useState({});
+
+
+  const handleChange1 = (event) => {
+    setfData(event.target.value);
+    setDBVar("firstname");
+  };
+  const handleChange2 = (event) => {
+    setfData(event.target.value);
+    setDBVar("callTag");
+  };
+  const handleChange3 = (date) => {
+    setfData(date);
+    setDBVar("dob");
+  };
+  const handleChange4 = (event) => {
+    setfData(event.target.value);
+    setDBVar("occupation");
+  };
+  const handleChange5 = (event) => {
+    setfData(event.target.value);
+    setDBVar("height");
+  };
+  const handleChange6 = (event) => {
+    setfData(event.target.value);
+    setDBVar("educationLevel");
+  };
+
+
+  const handleChange7 = (event) => {
+    setCheckedValues({
+      ...checkedValues,
+      [event.target.name]: event.target.checked,
+    });
+    setDBVar("languages");
+
+  };
+  const handleChange8 = (event) => {
+    setfData(event.target.value);
+    setDBVar("monthlyIncome");
+  };
+  const handleChange9 = (event) => {
+    setfData(event.target.value);
+    setDBVar("hasChildren");
+  };
+  const handleChange10 = (event) => {
+    setfData(event.target.value);
+    setDBVar("religion");
+  };
+
+
 
   const nametogglePopup = () => {
     setShowPopup1(!showPopup1);
+    setSuccessMessage("");
+    setfData("");
+    setDBVar("");
   };
 
   const callnametogglePopup = () => {
     setShowPopup2(!showPopup2);
+    setSuccessMessage("");
+    setfData("");
+    setDBVar("");
+
   };
 
   const dobtogglePopup = () => {
     setShowPopup3(!showPopup3);
+    setSuccessMessage(" ");
+    setfData(" ");
+    setDBVar("");
   };
   const occtogglePopup = () => {
     setShowPopup4(!showPopup4);
+    setSuccessMessage("");
+    setfData("");
+    setDBVar("");
   };
   const bodytogglePopup = () => {
     setShowPopup5(!showPopup5);
+    setSuccessMessage("");
+    setfData("");
+    setDBVar("");
   };
   const educationtogglePopup = () => {
     setShowPopup6(!showPopup6);
+    setSuccessMessage(" ");
+    setfData(" ");
+    setDBVar("");
   };
   const languagedobtogglePopup = () => {
     setShowPopup7(!showPopup7);
+    setSuccessMessage(" ");
+    setfData(" ");
+    setDBVar("");
   };
   const maritaltogglePopup = () => {
     setShowPopup8(!showPopup8);
+    setSuccessMessage(" ");
+    setfData(" ");
+    setDBVar("");
   };
   const haschildentogglePopup = () => {
     setShowPopup9(!showPopup9);
+    setSuccessMessage("");
+    setfData("");
+    setDBVar("");
   };
   const religiontogglePopup = () => {
     setShowPopup10(!showPopup10);
+    setSuccessMessage(" ");
+    setfData(" ");
+    setDBVar("");
   };
 
-  // const setName = () => {
-  //   UpdateMe({ firstname: "Rajitha" })
-  //     .then((response) => {
-  //       console.log("Name updated successfully", response);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Failed to update user", error);
-  //     });
-  // };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      [dbvar]: formdata,
+    };
 
-  const [user, setUser] = useState(null);
+    updateMe(data)
+      .then((response) => {
+        handleUpdateClick();
+      })
+      .catch((error) => {
+        handleUpdateerrClick();
+      });
+  };
+
+  const handleSubmit2 = (event) => {
+    event.preventDefault();
+    const arrdata = {
+      [dbvar]: checkedValues,
+    };
+
+    updateMe(arrdata)
+      .then((response) => {
+        handleUpdateClick();
+      })
+      .catch((error) => {
+        handleUpdateerrClick();
+      });
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -118,7 +235,7 @@ export default function Factfile() {
 
   return (
     <div>
-      {/* Call  Name popup */}
+      {/* Name popup */}
       {showPopup1 && (
         <Box sx={{ width: "250px", height: "600px" }}>
           <div className="popup-overlay">
@@ -132,21 +249,15 @@ export default function Factfile() {
                 </Stack>
 
                 <TextField
-                  id="current-password-input"
-                  type="text"
-                  autoComplete="current-password"
-                  //value={currentpassword}
-                  // onChange={handleCurrentPasswordChange}
-                  //error={currentpasswordError}
-                  // helperText={
-                  //   currentpasswordError ? "Please enter current password" : ""
-                  // }
+                  label="Enter your first name"
+                  value={formdata}
+                  onChange={handleChange1}
                 />
                 <Stack direction="row" spacing={2}>
                   <Button
                     sx={{ width: "100%" }}
                     variant="outlined"
-                    onClick={""}
+                    onClick={nametogglePopup}
                   >
                     Cancel
                   </Button>
@@ -154,10 +265,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -181,12 +294,8 @@ export default function Factfile() {
                   id="current-password-input"
                   type="text"
                   autoComplete="current-password"
-                  //value={currentpassword}
-                  // onChange={handleCurrentPasswordChange}
-                  //error={currentpasswordError}
-                  // helperText={
-                  //   currentpasswordError ? "Please enter current password" : ""
-                  // }
+                  value={formdata}
+                  onChange={handleChange2}
                 />
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -200,11 +309,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -225,7 +335,7 @@ export default function Factfile() {
                 </Stack>
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateCalendar />
+                  <DateCalendar onChange={handleChange3} />
                 </LocalizationProvider>
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -239,11 +349,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -264,16 +375,13 @@ export default function Factfile() {
                 </Stack>
 
                 <TextField
-                  id="current-password-input"
+
                   type="text"
-                  autoComplete="current-password"
-                  //value={currentpassword}
-                  // onChange={handleCurrentPasswordChange}
-                  //error={currentpasswordError}
-                  // helperText={
-                  //   currentpasswordError ? "Please enter current password" : ""
-                  // }
+                  label="Enter your occupation"
+                  value={formdata}
+                  onChange={handleChange4}
                 />
+
                 <Stack direction="row" spacing={2}>
                   <Button
                     sx={{ width: "100%" }}
@@ -286,11 +394,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -311,15 +420,9 @@ export default function Factfile() {
                 </Stack>
 
                 <TextField
-                  id="current-password-input"
-                  type="text"
-                  autoComplete="current-password"
-                  //value={currentpassword}
-                  // onChange={handleCurrentPasswordChange}
-                  //error={currentpasswordError}
-                  // helperText={
-                  //   currentpasswordError ? "Please enter current password" : ""
-                  // }
+                  label="Enter Your Height (Feet.inches)"
+                  value={formdata}
+                  onChange={handleChange5}
                 />
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -333,11 +436,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -361,31 +465,31 @@ export default function Factfile() {
 
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="University/college degree(s)"
-                  name="radio-buttons-group"
+                  value={formdata}
+                  onChange={handleChange6}
                 >
                   <FormControlLabel
-                    value="1"
+                    value="University/college degree(s)"
                     control={<Radio />}
                     label="University/college degree(s)"
                   />
                   <FormControlLabel
-                    value="2"
+                    value="High school"
                     control={<Radio />}
                     label="High school"
                   />
                   <FormControlLabel
-                    value="3"
+                    value="Technical/vocational school"
                     control={<Radio />}
                     label="Technical/vocational school"
                   />
                   <FormControlLabel
-                    value="4"
+                    value="Did not complete high school"
                     control={<Radio />}
                     label="Did not complete high school"
                   />
                   <FormControlLabel
-                    value="5"
+                    value="No formal qualifications"
                     control={<Radio />}
                     label="No formal qualifications"
                   />
@@ -402,11 +506,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -429,11 +534,21 @@ export default function Factfile() {
                   </IconButton>
                 </Stack>
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox />} label="Singhala" />
-                  <FormControlLabel control={<Checkbox />} label="Tamil" />
-                  <FormControlLabel control={<Checkbox />} label="English" />
-                  <FormControlLabel control={<Checkbox />} label="Japan" />
-                  <FormControlLabel control={<Checkbox />} label="Hindi" />
+                  <FormControlLabel control={<Checkbox />} label="Singhala" name="sinhala"
+                    checked={checkedValues.sinhala || false}
+                    onChange={handleChange7} />
+                  <FormControlLabel control={<Checkbox />} label="Tamil" name="tamil"
+                    checked={checkedValues.tamil || false}
+                    onChange={handleChange7} />
+                  <FormControlLabel control={<Checkbox />} label="English" name="english"
+                    checked={checkedValues.english || false}
+                    onChange={handleChange7} />
+                  <FormControlLabel control={<Checkbox />} label="Japan" name="japan"
+                    checked={checkedValues.japan || false}
+                    onChange={handleChange7} />
+                  <FormControlLabel control={<Checkbox />} label="Hindi" name="hindi"
+                    checked={checkedValues.hindi || false}
+                    onChange={handleChange7} />
                 </FormGroup>
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -447,18 +562,19 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit2}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
         </Box>
       )}
 
-      {/* Marital Status  */}
+      {/* Monthly Income */}
       {showPopup8 && (
         <Box sx={{ width: "250px", height: "600px" }}>
           <div className="popup-overlay">
@@ -473,28 +589,34 @@ export default function Factfile() {
 
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="Single"
                   name="radio-buttons-group"
+                  value={formdata}
+                  onChange={handleChange8}
                 >
                   <FormControlLabel
-                    value="1"
+                    value="below Rs.25,000"
                     control={<Radio />}
-                    label="Single"
+                    label="below Rs.25,000"
                   />
                   <FormControlLabel
-                    value="2"
+                    value="between Rs.25,000 & Rs.50,000"
                     control={<Radio />}
-                    label="Separatedd"
+                    label="between Rs.25,000 & Rs.50,000"
                   />
                   <FormControlLabel
-                    value="3"
+                    value="between Rs.50,000 & Rs.75,000"
                     control={<Radio />}
-                    label="Divorced"
+                    label="between Rs.50,000 & Rs.75,000"
                   />
                   <FormControlLabel
-                    value="4"
+                    value="between Rs.75,000 & Rs.100,000"
                     control={<Radio />}
-                    label="Widowed"
+                    label="between Rs.75,000 & Rs.100,000"
+                  />
+                  <FormControlLabel
+                    value="above Rs.100,000"
+                    control={<Radio />}
+                    label="above Rs.100,000"
                   />
                 </RadioGroup>
                 <Stack direction="row" spacing={2}>
@@ -509,11 +631,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -535,29 +658,17 @@ export default function Factfile() {
 
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="Single"
-                  name="radio-buttons-group"
+                  value={formdata} name="radio-buttons-group"
+                  onChange={handleChange9}
                 >
                   <FormControlLabel
-                    value="1"
+                    value="true"
                     control={<Radio />}
-                    label="Single"
-                  />
+                    label="Yes" />
                   <FormControlLabel
-                    value="2"
+                    value="false"
                     control={<Radio />}
-                    label="Separatedd"
-                  />
-                  <FormControlLabel
-                    value="3"
-                    control={<Radio />}
-                    label="Divorced"
-                  />
-                  <FormControlLabel
-                    value="4"
-                    control={<Radio />}
-                    label="Widowed"
-                  />
+                    label="No" />
                 </RadioGroup>
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -571,11 +682,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -597,33 +709,33 @@ export default function Factfile() {
 
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="Buddhist"
-                  name="radio-buttons-group"
+                  value={formdata}
+                  onChange={handleChange10}
                 >
                   <FormControlLabel
-                    value="1"
+                    value="Buddhist"
                     control={<Radio />}
                     label="Buddhist"
                   />
                   <FormControlLabel
-                    value="2"
+                    value="Muslim"
                     control={<Radio />}
                     label="Muslim"
                   />
                   <FormControlLabel
-                    value="3"
+                    value="Hindu"
                     control={<Radio />}
                     label="Hindu"
                   />
                   <FormControlLabel
-                    value="4"
+                    value="Other religion"
                     control={<Radio />}
                     label="Other religion"
                   />
                   <FormControlLabel
-                    value="5"
+                    value="Prefer not to specify"
                     control={<Radio />}
-                    label="Other religion"
+                    label="Prefer not to specify"
                   />
                 </RadioGroup>
                 <Stack direction="row" spacing={2}>
@@ -638,11 +750,12 @@ export default function Factfile() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -791,7 +904,7 @@ export default function Factfile() {
             sx={{ justifyContent: "space-between" }}
           >
             <Typography spacing={2}>
-              <WcIcon /> Merital Status : {user?.maritalStatus}
+              <AttachMoneyIcon /> Monthly Income : {user?.monthlyIncome}
             </Typography>
 
             <Button
@@ -807,7 +920,7 @@ export default function Factfile() {
             sx={{ justifyContent: "space-between" }}
           >
             <Typography spacing={2}>
-              <ChildCareIcon /> Has Children : {user?.hasChildren}
+              <ChildCareIcon /> Has Children : {user?.hasChildren ? "Yes" : "No"}
             </Typography>
 
             <Button
@@ -832,6 +945,7 @@ export default function Factfile() {
               onClick={religiontogglePopup}
             ></Button>
           </Stack>
+          <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
         </Stack>
       </Box>
     </div>

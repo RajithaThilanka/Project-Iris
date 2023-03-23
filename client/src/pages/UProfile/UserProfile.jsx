@@ -1,7 +1,5 @@
 import React from "react";
-
 import Bar from "../../components/Appbar/MainAppbar";
-
 import { Stack, Typography, Grid } from "@mui/material";
 import ProfilHeader from "../../components/Profile/Header/ProfileHeader";
 import "./profilestyle.css";

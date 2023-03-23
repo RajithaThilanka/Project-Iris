@@ -184,8 +184,8 @@ function App() {
               user ? (
                 <Navigate to="/me/dashboard" />
               ) : (
-                <Navigate to="/auth/login" />
-              )
+                  <Navigate to="/auth/login" />
+                )
             }
           ></Route>
           <Route

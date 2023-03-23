@@ -19,10 +19,11 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "40vw",
-  height: "60vh",
+  height: "80vh",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
+  borderRadius: 2,
   p: 4,
   display: "flex",
   flexDirection: "column",
@@ -93,7 +94,7 @@ function AdminLogin() {
                 alt="logo"
               />
             </div>
-            <h1 className="login-title"> Admin  Login</h1>
+            <h1 className="login-title"> Admin Login</h1>
 
             <TextField
               label="Email"
@@ -126,7 +127,7 @@ function AdminLogin() {
                 disabled={loading}
                 fullWidth
               >
-               Login
+                Login
               </Button>
             )}
 
@@ -135,7 +136,6 @@ function AdminLogin() {
                 <p className="error-msg">
                   Please check your credentials and Try again
                 </p>
-
               </div>
             )}
           </Box>
