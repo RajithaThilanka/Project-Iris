@@ -14,89 +14,63 @@ import { useState, useEffect } from "react";
 import jsonData from "./AllData.json"; // Import the JSON file
 import { getProfileReports } from "../../../api/AdminRequests";
 
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "firstname",
-    headerName: "Full Name",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "reportType",
-    headerName: "Report Type",
-    type: "number",
-    width: 110,
-    editable: false,
-  },
-
-  {
-    field: "action",
-    headerName: "Action",
-    width: 180,
-    sortable: false,
-    disableClickEventBubbling: true,
-
-    renderCell: (params) => {
-      const onClick = (e) => {
-        const currentRow = params.row;
-      };
-
-      return (
-        <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick}>
-            <MessageIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <VisibilityIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <DeleteIcon />
-          </IconButton>
-        </Stack>
-      );
-    },
-  },
-  {
-    field: "occupation",
-    headerName: "Occupation",
-    type: "string",
-    width: 110,
-    editable: false,
-  },
-  {
-    field: "country",
-    headerName: "Country",
-    type: "string",
-    width: 110,
-    editable: false,
-  },
-];
 
 export default function Profilereports() {
+
   const [rows, setRows] = useState([]);
+  const [des, setDes] = useState("");
+  const columns = [
+    { field: "_id", headerName: "ID", width: 90 },
+    {
+      field: "userNotified",
+      headerName: " User Notified",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "reason",
+      headerName: "Reason",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "reviewStatus",
+      headerName: "Review Status",
+      width: 110,
+      editable: false,
+    },
 
-  // useEffect(() => {
-  //   // Parse the JSON data
-  //   const data = JSON.parse(JSON.stringify(jsonData));
+    {
+      field: "action",
+      headerName: "Action",
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
 
-  //   // Create the rows array
-  //   const rowsArray = data.map((item) => ({
-  //     id: item.id,
-  //     fullname: item.fullname,
-  //     email: item.email,
-  //     reportType: item.reportType,
-  //   }));
+      renderCell: (params) => {
 
-  //   // Set the rows state
-  //   setRows(rowsArray);
-  // }, []);
+        const showReports = (e) => {
+          const description = params.row.description;
+          setDes(description);
+        };
+
+        return (
+          <Stack direction="row" spacing={1}>
+            <IconButton size="small" onClick={showReports}>
+              <MessageIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showReports}>
+              <VisibilityIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showReports}>
+              <DeleteIcon />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+  ];
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;;
 
   ///API call
   useEffect(() => {
@@ -130,15 +104,16 @@ export default function Profilereports() {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={10}
+            pageSize={20}
             rowsPerPageOptions={[]}
             checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
+            getRowId={(row) => row._id}
           />
         </Box>
         <Box>
-          <ProfileReportReason />
+          <ProfileReportReason desc={des} />
         </Box>
       </Stack>
     </>
