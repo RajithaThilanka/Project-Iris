@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import SaveIcon from "@mui/icons-material/Save";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 import {
   Card,
@@ -27,6 +29,12 @@ import { getMe } from "../../../api/UserRequests";
 import GppBadIcon from "@mui/icons-material/GppBad";
 
 export default function ProfileAbout() {
+  const [showPopup1, setShowPopup1] = useState(false);
+
+  const togglePopup = () => {
+    setShowPopup1(!showPopup1);
+  };
+
   const ProfileData = require("../../../components/Profile/profileData.json");
 
   const [activeStat1, activeState1] = useState(1);
@@ -55,11 +63,58 @@ export default function ProfileAbout() {
 
   return (
     <div>
+      {/* Call  Name popup */}
+      {showPopup1 && (
+        <Box sx={{ width: "250px", height: "600px" }}>
+          <div className="popup-overlay">
+            <div className="popup-content">
+              <Stack direction="column" spacing={2}>
+                <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+                  <Typography variant="h5"> Enter About: </Typography>
+                  <IconButton variant="outline" onClick={togglePopup}>
+                    <CloseIcon />
+                  </IconButton>
+                </Stack>
+
+                <TextField
+                  id="current-password-input"
+                  type="text"
+                  autoComplete="current-password"
+                  //value={currentpassword}
+                  // onChange={handleCurrentPasswordChange}
+                  //error={currentpasswordError}
+                  // helperText={
+                  //   currentpasswordError ? "Please enter current password" : ""
+                  // }
+                />
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    sx={{ width: "100%" }}
+                    variant="outlined"
+                    onClick={togglePopup}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    sx={{ width: "100%" }}
+                    variant="contained"
+                    type="submit"
+                    //onClick={handleSubmit}
+                  >
+                    Save
+                  </Button>
+                </Stack>
+              </Stack>
+            </div>
+          </div>
+        </Box>
+      )}
+
       <Grid
         container
         display="flex"
         justifyContent="center"
-        alignItems="center"
+        alignItems="flex-start"
         marginTop={3}
         paddingLeft={10}
         paddingRight={10}
@@ -100,20 +155,9 @@ export default function ProfileAbout() {
               <Button
                 variant="outlined"
                 endIcon={<ArrowForwardIosIcon />}
-                onClick={() => {
-                  activeState2(0);
-                }}
+                onClick={togglePopup}
               >
                 Edit
-              </Button>
-              <Button
-                variant="outlined"
-                endIcon={<SaveIcon />}
-                onClick={() => {
-                  activeState2(1);
-                }}
-              >
-                Save
               </Button>
             </Stack>
           </Box>
@@ -206,15 +250,6 @@ export default function ProfileAbout() {
                 >
                   Edit
                 </Button>
-                <Button
-                  variant="outlined"
-                  endIcon={<SaveIcon />}
-                  onClick={() => {
-                    activeState2(1);
-                  }}
-                >
-                  Save
-                </Button>
               </Stack>
             </Box>
             <Box
@@ -240,6 +275,7 @@ export default function ProfileAbout() {
                   label="INTERESTS MOVIES"
                   multiline
                   variant="standard"
+                  defaultValue=" "
                   rows={3}
                   value={user?.interests.movies}
                   disabled={activeStat3}
@@ -261,15 +297,6 @@ export default function ProfileAbout() {
                   >
                     Edit
                   </Button>
-                  <Button
-                    variant="outlined"
-                    endIcon={<SaveIcon />}
-                    onClick={() => {
-                      activeState3(1);
-                    }}
-                  >
-                    Save
-                  </Button>
                 </Stack>
 
                 <TextField
@@ -278,6 +305,7 @@ export default function ProfileAbout() {
                   multiline
                   rows={3}
                   variant="standard"
+                  defaultValue=" "
                   disabled={activeStat4}
                   value={user?.interests.sports}
                   sx={{ width: "100%" }}
@@ -298,55 +326,11 @@ export default function ProfileAbout() {
                   >
                     Edit
                   </Button>
-                  <Button
-                    variant="outlined"
-                    endIcon={<SaveIcon />}
-                    onClick={() => {
-                      activeState4(1);
-                    }}
-                  >
-                    Save
-                  </Button>
                 </Stack>
 
                 <TextField
                   id="outlined-multiline-static"
                   label="MUSIC"
-                  multiline
-                  rows={3}
-                  variant="standard"
-                  disabled={activeStat5}
-                  value={user?.interests.music}
-                  sx={{ width: "100%" }}
-                />
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  justifyContent="right"
-                  marginTop={2}
-                >
-                  <Button
-                    variant="outlined"
-                    endIcon={<ArrowForwardIosIcon />}
-                    onClick={() => {
-                      activeState5(0);
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    endIcon={<SaveIcon />}
-                    onClick={() => {
-                      activeState5(1);
-                    }}
-                  >
-                    Save
-                  </Button>
-                </Stack>
-                <TextField
-                  id="outlined-multiline-static"
-                  label="SOCIAL MEDIA"
                   multiline
                   rows={3}
                   variant="standard"
@@ -370,14 +354,32 @@ export default function ProfileAbout() {
                   >
                     Edit
                   </Button>
+                </Stack>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="SOCIAL MEDIA"
+                  multiline
+                  rows={3}
+                  variant="standard"
+                  defaultValue=" "
+                  disabled={activeStat5}
+                  value={user?.interests.socialMedia}
+                  sx={{ width: "100%" }}
+                />
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="right"
+                  marginTop={2}
+                >
                   <Button
                     variant="outlined"
-                    endIcon={<SaveIcon />}
+                    endIcon={<ArrowForwardIosIcon />}
                     onClick={() => {
-                      activeState5(1);
+                      activeState5(0);
                     }}
                   >
-                    Save
+                    Edit
                   </Button>
                 </Stack>
               </Stack>
