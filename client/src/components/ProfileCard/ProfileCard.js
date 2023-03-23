@@ -222,7 +222,10 @@ function ProfileCard({ conUser, cardType }) {
         }}
       >
         <Tooltip title="View Profile" placement="bottom">
-          <IconButton style={{ color: "#fff" }} onClick={viewPro}>
+          <IconButton
+            style={{ color: "#fff" }}
+            //onClick={navigate(`/users/profile ${id}`)}
+          >
             <AccountCircleIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>

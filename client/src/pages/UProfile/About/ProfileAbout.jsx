@@ -27,12 +27,26 @@ import ProComplete from "../../../components/Profile/ProfileComplete/profilecomp
 import Factfile from "../../../components/Profile/ProfileFactfiles/Factfile";
 import { getMe } from "../../../api/UserRequests";
 import GppBadIcon from "@mui/icons-material/GppBad";
+import Lookingfor from "../../../components/Profile/Lookingfor/Lookingfor";
 
 export default function ProfileAbout() {
   const [showPopup1, setShowPopup1] = useState(false);
+  const [showPopup2, setShowPopup2] = useState(false);
+  const [showPopup3, setShowPopup3] = useState(false);
+  const [showPopup4, setShowPopup4] = useState(false);
+  const [showPopup5, setShowPopup5] = useState(false);
+  const [showPopup6, setShowPopup6] = useState(false);
 
-  const togglePopup = () => {
+  const abouttogglePopup = () => {
     setShowPopup1(!showPopup1);
+  };
+
+  const desctogglePopup = () => {
+    setShowPopup2(!showPopup2);
+  };
+
+  const intertogglePopup = () => {
+    setShowPopup3(!showPopup3);
   };
 
   const ProfileData = require("../../../components/Profile/profileData.json");
@@ -65,13 +79,13 @@ export default function ProfileAbout() {
     <div>
       {/* Call  Name popup */}
       {showPopup1 && (
-        <Box sx={{ width: "250px", height: "600px" }}>
+        <Box sx={{ width: "250px", height: "500px" }}>
           <div className="popup-overlay">
             <div className="popup-content">
               <Stack direction="column" spacing={2}>
                 <Stack direction="row" sx={{ justifyContent: "space-between" }}>
                   <Typography variant="h5"> Enter About: </Typography>
-                  <IconButton variant="outline" onClick={togglePopup}>
+                  <IconButton variant="outline" onClick={abouttogglePopup}>
                     <CloseIcon />
                   </IconButton>
                 </Stack>
@@ -80,18 +94,18 @@ export default function ProfileAbout() {
                   id="current-password-input"
                   type="text"
                   autoComplete="current-password"
-                  //value={currentpassword}
-                  // onChange={handleCurrentPasswordChange}
-                  //error={currentpasswordError}
-                  // helperText={
-                  //   currentpasswordError ? "Please enter current password" : ""
-                  // }
+                //value={currentpassword}
+                // onChange={handleCurrentPasswordChange}
+                //error={currentpasswordError}
+                // helperText={
+                //   currentpasswordError ? "Please enter current password" : ""
+                // }
                 />
                 <Stack direction="row" spacing={2}>
                   <Button
                     sx={{ width: "100%" }}
                     variant="outlined"
-                    onClick={togglePopup}
+                    onClick={abouttogglePopup}
                   >
                     Cancel
                   </Button>
@@ -99,7 +113,54 @@ export default function ProfileAbout() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                    //onClick={handleSubmit}
+                  //onClick={handleSubmit}
+                  >
+                    Save
+                  </Button>
+                </Stack>
+              </Stack>
+            </div>
+          </div>
+        </Box>
+      )}
+
+      {/* Descroption */}
+      {showPopup2 && (
+        <Box sx={{ width: "250px", height: "500px" }}>
+          <div className="popup-overlay">
+            <div className="popup-content">
+              <Stack direction="column" spacing={2}>
+                <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+                  <Typography variant="h5"> Enter Descroption: </Typography>
+                  <IconButton variant="outline" onClick={desctogglePopup}>
+                    <CloseIcon />
+                  </IconButton>
+                </Stack>
+
+                <TextField
+                  id="current-password-input"
+                  type="text"
+                  autoComplete="current-password"
+                //value={currentpassword}
+                // onChange={handleCurrentPasswordChange}
+                //error={currentpasswordError}
+                // helperText={
+                //   currentpasswordError ? "Please enter current password" : ""
+                // }
+                />
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    sx={{ width: "100%" }}
+                    variant="outlined"
+                    onClick={desctogglePopup}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    sx={{ width: "100%" }}
+                    variant="contained"
+                    type="submit"
+                  //onClick={handleSubmit}
                   >
                     Save
                   </Button>
@@ -155,7 +216,7 @@ export default function ProfileAbout() {
               <Button
                 variant="outlined"
                 endIcon={<ArrowForwardIosIcon />}
-                onClick={togglePopup}
+                onClick={abouttogglePopup}
               >
                 Edit
               </Button>
@@ -244,9 +305,7 @@ export default function ProfileAbout() {
                 <Button
                   variant="outlined"
                   endIcon={<ArrowForwardIosIcon />}
-                  onClick={() => {
-                    activeState2(0);
-                  }}
+                  onClick={desctogglePopup}
                 >
                   Edit
                 </Button>
@@ -389,6 +448,7 @@ export default function ProfileAbout() {
 
         <Grid item xs={4}>
           <Stack spacing={2} direction={"column"}>
+            <Lookingfor />
             <Factfile />
           </Stack>
         </Grid>

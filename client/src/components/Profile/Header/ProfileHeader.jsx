@@ -36,7 +36,7 @@ function ProfilHeader() {
         className="Header"
         sx={{
           display: "flex",
-          height: 300,
+          // height: 300,
           padding: "2",
           borderradius: "5",
         }}
@@ -56,6 +56,7 @@ function ProfilHeader() {
               alignItems="center"
             >
               <Avatar
+                className="profileavatar custom-avatar"
                 style={{
                   border: "4px solid white",
                   margin: "1px",
@@ -64,11 +65,18 @@ function ProfilHeader() {
                 // {user?.profilePhoto}
                 src={serverPublic + user?.profilePhoto}
                 // src="https://images.unsplash.com/profile-1446404465118-3a53b909cc82?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=64&w=64&s=3ef46b07bb19f68322d027cb8f9ac99f"
-                sx={{ width: 150, height: 150 }}
+                sx={{
+                  width: { xs: 64, sm: 96, md: 128, lg: 150 },
+                  height: { xs: 64, sm: 96, md: 128, lg: 150 },
+                }}
               />
 
-              <Button component="label" variant="contained">
-                Update profile picture
+              <Button
+                component="label"
+                variant="contained"
+                className="prouploadbutton custom-button"
+              >
+                Update
                 <input hidden accept="image/*" multiple type="file" />
               </Button>
               <br />
