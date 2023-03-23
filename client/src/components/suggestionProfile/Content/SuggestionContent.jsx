@@ -1,11 +1,11 @@
 import React from "react";
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import SuggessionFactfiles from "../SuggessionFactfiles/SuggessionFactfiles";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 
-export default function SuggestionContent() {
+export default function SuggestionContent(props) {
   return (
     <div>
       <Grid
@@ -16,7 +16,7 @@ export default function SuggestionContent() {
         sx={{
           boxShadow: 4,
           height: "100%",
-          width: { xl: 850, lg: 850, md: 650, sm: 550, xs: 350 },
+          width: { xl: 1000, lg: 1000, md: 650, sm: 550, xs: 350 },
           borderRadius: 2,
           textAlign: "center",
           bgcolor: "white",
@@ -41,13 +41,25 @@ export default function SuggestionContent() {
             >
               <Typography variant="h6">About</Typography>
               <Typography sx={{ overflowX: "auto" }} variant="subtitle">
-                This is David, a 29-year-old graphic designer from London. He is
-                a creative and detail-oriented individual who is passionate
-                about visual storytelling. David enjoys exploring new design
-                techniques and staying up-to-date with the latest design trends.
-                In his free time, he likes to experiment with photography and
-                travel to new places. David is also a foodie and enjoys trying
-                new restaurants and cuisines
+                {props.about}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: 2,
+                textAlign: "center",
+                bgcolor: "white",
+                border: 5,
+                justifyContent: "center",
+                borderColor: "#FFD7EC",
+                padding: 2,
+              }}
+            >
+              <Typography variant="h6">Profile Description</Typography>
+              <Typography sx={{ overflowX: "auto" }} variant="subtitle">
+                {props.pdes}
               </Typography>
             </Box>
             <Box
@@ -113,7 +125,50 @@ export default function SuggestionContent() {
                 borderColor: "#FFD7EC",
               }}
             >
-              <Typography variant="h6">Life Style</Typography>
+              <Typography variant="h6">Interests</Typography>
+              <Stack direction="column" spacing={1}>
+                <TextField
+                  label="INTERESTS MOVIES"
+                  multiline
+                  variant="standard"
+                  defaultValue=" "
+                  rows={2}
+                  disabled
+                  value={props.movies}
+                  sx={{ width: "100%" }}
+                />
+                <TextField
+                  label="INTERESTS MUISIC"
+                  multiline
+                  variant="standard"
+                  defaultValue=" "
+                  rows={2}
+                  disabled
+                  value={props.music}
+                  sx={{ width: "100%" }}
+                />
+                <TextField
+                  label="INTERESTS SOCIAL MEDIA"
+                  multiline
+                  variant="standard"
+                  defaultValue=" "
+                  rows={2}
+                  disabled
+                  value={props.smedia}
+                  sx={{ width: "100%" }}
+                />
+                <TextField
+                  label="INTERESTS SPORTS"
+                  multiline
+                  variant="standard"
+                  defaultValue=" "
+                  rows={2}
+                  disabled
+                  value={props.sport}
+                  sx={{ width: "100%" }}
+                />
+
+              </Stack>
             </Box>
           </Stack>
         </Grid>
@@ -121,7 +176,7 @@ export default function SuggestionContent() {
           <Stack direction="column">
             <Box
               sx={{
-                width: "100%",
+                width: "300px",
                 height: "100%",
                 borderRadius: 2,
                 textAlign: "center",
@@ -133,7 +188,7 @@ export default function SuggestionContent() {
               }}
             >
               <Typography variant="h6">
-                <SuggessionFactfiles />
+                <SuggessionFactfiles Height={props.Height} callName={props.callName} Ethnicity={props.Ethnicity} Dob={props.Dob} Education={props.Education} Language={props.Language} Income={props.Income} Haschildren={props.Haschildren} Religion={props.Religion} />
               </Typography>
             </Box>
           </Stack>

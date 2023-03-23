@@ -18,6 +18,7 @@ export default function SuggessionPage() {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const { id } = useParams()
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -40,7 +41,14 @@ export default function SuggessionPage() {
     <div className="suggesstionPage">
       <Stack direction="column">
         <Navbar user={user} />
-        <SugHeader />
+        <SugHeader
+          Verified={profile?.verified}
+          imageid={profile?.profilePhoto}
+          name={profile?.firstname}
+          occupation={profile?.occupation}
+
+
+        />
       </Stack>
 
       <Stack
@@ -49,7 +57,23 @@ export default function SuggessionPage() {
           alignItems: "center",
         }}
       >
-        <SugContent />
+        <SugContent
+          callName={profile?.callTag}
+          Ethnicity={profile?.ethnicity}
+          Dob={profile?.dob.substring(0, 10)}
+          Education={profile?.educationLevel}
+          Language={profile?.languages}
+          Income={profile?.monthlyIncome}
+          Haschildren={profile?.hasChildren}
+          Religion={profile?.religion}
+          Height={profile?.height}
+          about={profile?.userDescription}
+          pdes={profile?.interests.profileDescription}
+          movies={profile?.interests.movies}
+          music={profile?.interests.music}
+          smedia={profile?.interests.socialMedia}
+          sport={profile?.interests.sports}
+        />
       </Stack>
     </div>
   );
