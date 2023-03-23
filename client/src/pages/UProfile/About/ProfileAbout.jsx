@@ -5,7 +5,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { InputLabel, Input } from "@mui/material";
 import {
   Card,
   CardContent,
@@ -28,6 +28,7 @@ import Factfile from "../../../components/Profile/ProfileFactfiles/Factfile";
 import { getMe } from "../../../api/UserRequests";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import Lookingfor from "../../../components/Profile/Lookingfor/Lookingfor";
+import { updateMe } from "../../../components/api/UserRequests";
 
 export default function ProfileAbout() {
   const [showPopup1, setShowPopup1] = useState(false);
@@ -37,16 +38,27 @@ export default function ProfileAbout() {
   const [showPopup5, setShowPopup5] = useState(false);
   const [showPopup6, setShowPopup6] = useState(false);
 
+
   const abouttogglePopup = () => {
     setShowPopup1(!showPopup1);
+    setSuccessMessage("");
+    setfData("");
+    setDBVar("");
   };
+
 
   const desctogglePopup = () => {
     setShowPopup2(!showPopup2);
+    setSuccessMessage("");
+    setfData("");
+    setDBVar("");
   };
 
   const intertogglePopup = () => {
     setShowPopup3(!showPopup3);
+    setSuccessMessage("");
+    setfData("");
+    setDBVar("");
   };
 
   const ProfileData = require("../../../components/Profile/profileData.json");
@@ -56,8 +68,33 @@ export default function ProfileAbout() {
   const [activeStat3, activeState3] = useState(1);
   const [activeStat4, activeState4] = useState(1);
   const [activeStat5, activeState5] = useState(1);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [user, setUser] = useState(null);
+
+  const [dbvar, setDBVar] = useState("");
+  const [formdata, setfData] = useState("");
+
+
+  const handleUpdateClick = () => {
+
+    setSuccessMessage("Update successful!");
+  };
+  const handleUpdateerrClick = () => {
+
+    setSuccessMessage("Update unsuccessful!");
+  };
+
+  const handleChangeabout = (event) => {
+    setfData(event.target.value);
+    setDBVar("userDescription");
+  };
+
+  const handleChangedescription = (event) => {
+    setfData(event.target.value);
+    setDBVar();
+  };
+
 
   useEffect(() => {
     const getData = async () => {
@@ -75,9 +112,26 @@ export default function ProfileAbout() {
     getData();
   }, []);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      [dbvar]: formdata,
+    };
+
+    updateMe(data)
+      .then((response) => {
+        // Reload data after successful update
+        handleUpdateClick();
+
+      })
+      .catch((error) => {
+        handleUpdateerrClick();
+      });
+  };
+
   return (
     <div>
-      {/* Call  Name popup */}
+      {/*About change popup */}
       {showPopup1 && (
         <Box sx={{ width: "250px", height: "500px" }}>
           <div className="popup-overlay">
@@ -91,15 +145,12 @@ export default function ProfileAbout() {
                 </Stack>
 
                 <TextField
-                  id="current-password-input"
-                  type="text"
-                  autoComplete="current-password"
-                //value={currentpassword}
-                // onChange={handleCurrentPasswordChange}
-                //error={currentpasswordError}
-                // helperText={
-                //   currentpasswordError ? "Please enter current password" : ""
-                // }
+                  id="outlined-multiline-static"
+                  label="Enter about you "
+                  multiline
+                  rows={5}
+                  value={formdata}
+                  onChange={handleChangeabout}
                 />
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -113,11 +164,12 @@ export default function ProfileAbout() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                  //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
@@ -138,15 +190,12 @@ export default function ProfileAbout() {
                 </Stack>
 
                 <TextField
-                  id="current-password-input"
-                  type="text"
-                  autoComplete="current-password"
-                //value={currentpassword}
-                // onChange={handleCurrentPasswordChange}
-                //error={currentpasswordError}
-                // helperText={
-                //   currentpasswordError ? "Please enter current password" : ""
-                // }
+                  id="outlined-multiline-static"
+                  label="Enter Profile Description"
+                  multiline
+                  rows={5}
+                  value={formdata}
+                  onChange={handleChangedescription}
                 />
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -160,11 +209,12 @@ export default function ProfileAbout() {
                     sx={{ width: "100%" }}
                     variant="contained"
                     type="submit"
-                  //onClick={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>

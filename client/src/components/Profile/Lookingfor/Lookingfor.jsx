@@ -2,7 +2,7 @@ import React from 'react'
 import { TextField, Box, Typography, Button, Stack, IconButton } from "@mui/material";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { updateMe } from "../../api/UserRequests";
+
 import { useState, useEffect } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -12,7 +12,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { InputLabel, Input } from "@mui/material";
 import "./popUpStyle.css"
 import { getMe } from "../../../api/UserRequests";
-
+import { updateMe } from '../../api/UserRequests';
+//import { updateMe } from "../../api/UserRequests";
 export default function Lookingfor() {
     const [user, setUser] = useState(null);
     const [dbvar, setDBVar] = useState("");
@@ -22,15 +23,13 @@ export default function Lookingfor() {
     const [showPopup1, setShowPopup1] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const handleUpdateClick = () => {
-        // Perform update logic here, and if successful:
+
         setSuccessMessage("Update successful!");
     };
     const handleUpdateerrClick = () => {
-        // Perform update logic here, and if successful:
+
         setSuccessMessage("Update unsuccessful!");
     };
-
-
 
     const handleChange1 = (event) => {
         setfData(event.target.value);
@@ -46,7 +45,7 @@ export default function Lookingfor() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = {
-            [dbvar]: formdata,
+            [dbvar]: formdata
         };
         updateMe(data)
             .then((response) => {
@@ -56,7 +55,6 @@ export default function Lookingfor() {
                 handleUpdateerrClick();
             });
     };
-
     useEffect(() => {
         const getData = async () => {
             try {

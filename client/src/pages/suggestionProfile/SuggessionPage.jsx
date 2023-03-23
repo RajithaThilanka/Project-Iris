@@ -5,11 +5,36 @@ import SugContent from "../../components/suggestionProfile/Content/SuggestionCon
 import "./suggesstionStyle.css";
 import { useSelector } from "react-redux";
 import Navbar from "../../components/Appbar/Navbar";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { getUser } from "../../components/api/UserRequests";
+import { useState } from "react";
 
 export default function SuggessionPage() {
+  //const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
+
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+  const { id } = useParams()
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getUser(id);
+        setProfile(data)
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData()
+  }, []);
+
 
   return (
     <div className="suggesstionPage">
