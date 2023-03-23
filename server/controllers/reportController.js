@@ -1,4 +1,5 @@
 const Report = require('../models/reportModel');
+const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const { genderateRandom, generateRandom } = require('../utils/utilFuncs');
@@ -61,6 +62,7 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
   })
     .populate('reportedByUser')
     .populate('reportedUser');
+
   // await Report.updateMany(
   //   {
   //     $and: [
@@ -79,6 +81,47 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
     nReports: reportWarnings.length,
     data: {
       data: reportWarnings,
+    },
+  });
+});
+
+exports.getToBeBlockedAccounts = catchAsync(async (req, res, next) => {
+  const accounts = await Report.aggregate([
+    {
+      $match: { reviewStatus: 'positive' },
+    },
+    {
+      $group: {
+        _id: '$reportedUser',
+        reportCount: { $sum: 1 },
+      },
+    },
+  ]);
+  await User.populate(accounts, { path: '_id' });
+  const filtered = accounts.filter(acc => acc.reportCount >= 2);
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: filtered,
+    },
+  });
+});
+
+exports.suspendAccount = catchAsync(async (req, res, next) => {
+  const { userId } = req.body;
+
+  const suspenededAcc = await User.findByIdAndUpdate(
+    userId,
+    {
+      active: false,
+    },
+    { new: true }
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: suspenededAcc,
     },
   });
 });

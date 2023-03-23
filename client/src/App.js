@@ -32,6 +32,7 @@ import AdminLogin from "./pages/AdminAuth/AdminLogin";
 import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
+import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -166,7 +167,7 @@ function App() {
             path="/users/reset-password/:token"
             element={<ResetPassword />}
           ></Route>
-
+          <Route path="/users/submit-request" element={<ActivationRequest />} />
           <Route path="/home" element={<Welcome />}></Route>
           <Route path="/" element={<Navigate to="/home" />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>

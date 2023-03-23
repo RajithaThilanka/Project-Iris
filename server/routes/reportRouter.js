@@ -14,4 +14,8 @@ router
 router
   .route('/fetch-warnings')
   .get(authController.protect, reportController.fetchWarnings);
+
+router
+  .route('/get-to-delete-accounts')
+  .get(authController.adminProtect, reportController.getToBeBlockedAccounts);
 module.exports = router;
