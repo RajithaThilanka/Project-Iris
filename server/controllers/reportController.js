@@ -62,25 +62,35 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
   })
     .populate('reportedByUser')
     .populate('reportedUser');
+  // console.log(reportWarnings);
+  let count = false;
+  const filteredWarnings = reportWarnings.filter(report => {
+    if (report.reason != 'Hate Speech') return true;
+    if (!count) {
+      count = true;
+      return true;
+    }
+    return false;
+  });
 
-  // await Report.updateMany(
-  //   {
-  //     $and: [
-  //       { reportedUser: userId },
-  //       { reviewStatus: 'positive' },
-  //       { userNotified: false },
-  //       { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
-  //     ],
-  //   },
-  //   {
-  //     userNotified: true,
-  //   }
-  // );
+  await Report.updateMany(
+    {
+      $and: [
+        { reportedUser: userId },
+        { reviewStatus: 'positive' },
+        { userNotified: false },
+        { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
+      ],
+    },
+    {
+      userNotified: true,
+    }
+  );
   res.status(200).json({
     status: 'success',
     nReports: reportWarnings.length,
     data: {
-      data: reportWarnings,
+      data: filteredWarnings,
     },
   });
 });

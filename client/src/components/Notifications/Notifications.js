@@ -33,12 +33,13 @@ function Notifications({ handleCloseNotMenu }) {
   // }, [notification]);
   return (
     <div className="notif-container">
-      {notification.map((not) => {
+      {notification.map((not, index) => {
         return (
           <ChatNotification
-            key={not._id}
+            key={index}
             notData={not}
             handleCloseNotMenu={handleCloseNotMenu}
+            isWarning={false}
           />
         );
       })}
@@ -47,6 +48,7 @@ function Notifications({ handleCloseNotMenu }) {
           key={not._id}
           notData={not}
           handleCloseNotMenu={handleCloseNotMenu}
+          isWarning={true}
         />
       ))}
     </div>
