@@ -482,7 +482,10 @@ function Dashboard2() {
                 </Box>
               </div>
             ) : !err && loading ? (
-              <div className="dashboard-loading-container">
+              <div
+                className="dashboard-loading-container"
+                style={{ height: "100vh" }}
+              >
                 <div className="dashboard-loading-photo">
                   <img
                     src={serverPublic + user.profilePhoto}
