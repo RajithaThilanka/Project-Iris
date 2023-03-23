@@ -334,25 +334,40 @@ function Navbar({ user }) {
                   </div>
                 </MenuItem>
               }
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
             </Menu>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                // onClick={handleCloseNavMenu}
-                onClick={() => navigate("/about-us")}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+
+            <Button
+
+              //onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Explore
+            </Button>
+            <Button
+
+              //onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Safety Tips
+            </Button>
+            <Button
+
+              onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              About Us
+            </Button>
+            <Button
+
+              onClick={() => navigate("/me/dashboard")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              HOME
+            </Button>
+
           </Box>
 
           {/* Connection requests */}
