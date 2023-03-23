@@ -108,3 +108,5 @@ export const postponeDate = (id, scheduledAt) =>
   API.patch(`/users/me/dates/postpone/${id}`, { scheduledAt });
 
 export const fetchWarnings = () => API.get("/report/fetch-warnings");
+
+export const reportUser = (data) => API.post("/report", data);

@@ -626,7 +626,7 @@
     /* width: % !important; */
     padding: 0.9rem 0.5rem !important;
     border-radius: 20px;
-    width: 15% !important;
+    width: 15%;
   }
   .more-info-btn {
     display: flex !important;

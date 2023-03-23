@@ -6,7 +6,7 @@ const Admin = require('../models/adminModel');
 const APIFeatures = require('../utils/apiFeatures');
 
 exports.reportUser = catchAsync(async (req, res, next) => {
-  const { reportedUser, reason } = req.body;
+  const { reportedUser, reason, description, evidence } = req.body;
   const admins = await Admin.find({});
   const adminId = admins[generateRandom(0, admins.length)]._id;
 
@@ -14,6 +14,8 @@ exports.reportUser = catchAsync(async (req, res, next) => {
     reportedByUser: req.user._id,
     reportedUser,
     reason,
+    description,
+    evidence,
     adminId,
   });
   newReport = await newReport
