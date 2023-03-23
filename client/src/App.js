@@ -182,15 +182,18 @@ function App() {
             path="/me/friends"
             element={user ? <Friends /> : <Navigate to="/auth/login" />}
           ></Route>
-          <Route path="/me/dates" element={<Dates />}></Route>
+          <Route
+            path="/me/dates"
+            element={user ? <Dates /> : <Navigate to="/auth/login" />}
+          ></Route>
           <Route
             path="/me"
             element={
               user ? (
                 <Navigate to="/me/dashboard" />
               ) : (
-                  <Navigate to="/auth/login" />
-                )
+                <Navigate to="/auth/login" />
+              )
             }
           ></Route>
           <Route
