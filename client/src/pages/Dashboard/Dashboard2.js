@@ -35,6 +35,8 @@ import "swiper/css/thumbs";
 import SwiperCore, { EffectCoverflow, Navigation } from "swiper/core";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import { logout } from "../../actions/AuthActions";
+import { FlagCircle, ForkRight } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
@@ -93,6 +95,7 @@ function Dashboard2() {
     });
     return filteredSugs;
   };
+  const navigate = useNavigate();
   const {
     setSocketConnected,
     activeUsers,
@@ -247,6 +250,26 @@ function Dashboard2() {
                     </IconButton>
                   )}
                   <div className="profile--header">
+                    <IconButton
+                      style={{
+                        background: "rgba(0, 0, 0, 0.4)",
+                        borderRadius: "50%",
+                        width: "4rem",
+                        height: "4rem",
+                        color: "red",
+                        position: "absolute",
+                        right: "1rem",
+                        top: 0,
+                      }}
+                      onClick={() =>
+                        navigate(
+                          `/users/report/${filtered[currentProfile]._id}`
+                        )
+                      }
+                    >
+                      <FlagCircle fontSize="large" />
+                    </IconButton>
+
                     <h6 className="profile--name">
                       {filtered[currentProfile]?.callTag}
 

@@ -31,6 +31,7 @@ import AdminLogin from "./pages/AdminAuth/AdminLogin";
 
 import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
+import Report from "./components/Report/Report";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -135,6 +136,10 @@ function App() {
                 desc=" Please follow the link attached to your email to reset your password"
               />
             }
+          ></Route>
+          <Route
+            path="/users/report/:id"
+            element={user ? <Report /> : <Navigate to="/auth/login" />}
           ></Route>
           <Route
             path="/email-confirm/success"
