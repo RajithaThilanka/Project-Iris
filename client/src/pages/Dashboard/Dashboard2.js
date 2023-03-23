@@ -9,7 +9,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import WorkIcon from "@mui/icons-material/Work";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getMatches, sendConRequest } from "../../api/UserRequests";
 import SchoolIcon from "@mui/icons-material/School";
 import HeightIcon from "@mui/icons-material/Height";
@@ -34,6 +34,7 @@ import "swiper/css/thumbs";
 
 import SwiperCore, { EffectCoverflow, Navigation } from "swiper/core";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
+import { logout } from "../../actions/AuthActions";
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
@@ -41,6 +42,7 @@ let socket;
 function Dashboard2() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   const [err, setErr] = useState(null);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   setActiveTab(0);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -142,6 +144,9 @@ function Dashboard2() {
         console.log(err);
         setLoading(false);
         setErr(err);
+        if (err.response.status === 401) {
+          dispatch(logout());
+        }
       }
     };
     generateSuggestions();

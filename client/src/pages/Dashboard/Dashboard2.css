@@ -20,7 +20,7 @@
 }
 
 .suggestions-container {
-  height: 100vh;
+  /* height: 100vh; */
   background-color: rgba(0, 0, 0, 0);
   max-width: 100rem;
   width: 100%;
@@ -32,7 +32,7 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2rem;
 
   background-color: rgba(0, 0, 0, 0);
 
@@ -75,7 +75,7 @@
 .swiper-slide {
   background-size: cover;
   background-position: center;
-  height: 100% !important;
+  height: 17rem !important;
   border-radius: 15px !important;
 }
 
@@ -139,21 +139,21 @@
 .current-profile {
   padding: 0 0 2rem 0.5rem;
   border-bottom: 2px solid #000;
-  height: 70%;
+  height: 47rem;
 
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-around;
 }
 .sugg-card {
   /* max-width: 32rem;
   min-width: 24rem; */
   width: 40%;
-  height: 100%;
+  height: 45rem;
   position: relative;
   border-radius: 15px;
   background-size: cover;
-  background-position: top;
+  background-position: center;
   max-height: 49rem;
 }
 .profile--header {
@@ -175,7 +175,7 @@
 }
 .profileContent {
   width: 50%;
-  height: 100%;
+  height: 45rem;
 
   padding: 1.5rem 2rem;
   border-radius: 10px;
@@ -560,6 +560,7 @@
   .current-profile {
     padding: 0;
     position: relative;
+    height: 65%;
   }
   /* .profile--header {
     padding: 0;
@@ -590,7 +591,7 @@
     margin-top: 0;
   }
   .suggestions-container {
-    /* height: 92vh; */
+    height: calc(100vh - 90px);
   }
   .swiper-button-next,
   .swiper-button-prev {
@@ -657,5 +658,17 @@
   }
   .dashboard-err-msg {
     font-size: 3rem;
+  }
+  .swiper {
+    height: 35%;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    top: 40% !important;
+    /* left: 1rem !important; */
+    /* right: 10px; */
+
+    /* border-radius: 50%; */
   }
 }
