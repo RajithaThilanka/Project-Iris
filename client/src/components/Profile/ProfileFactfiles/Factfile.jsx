@@ -1,8 +1,8 @@
 import React from "react";
-import "./popUpStyle.css"
+import "./popUpStyle.css";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import FormGroup from "@mui/material/FormGroup";
 import { InputLabel, Input } from "@mui/material";
@@ -44,7 +44,6 @@ import { getMe } from "../../../api/UserRequests";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { updateMe } from "../../api/UserRequests";
 
-
 export default function Factfile() {
   const [showPopup1, setShowPopup1] = useState(false);
   const [showPopup2, setShowPopup2] = useState(false);
@@ -59,11 +58,9 @@ export default function Factfile() {
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleUpdateClick = () => {
-
     setSuccessMessage("Update successful!");
   };
   const handleUpdateerrClick = () => {
-
     setSuccessMessage("Update unsuccessful!");
   };
 
@@ -71,7 +68,6 @@ export default function Factfile() {
   const [dbvar, setDBVar] = useState("");
   const [formdata, setfData] = useState("");
   const [checkedValues, setCheckedValues] = useState({});
-
 
   const handleChange1 = (event) => {
     setfData(event.target.value);
@@ -98,14 +94,12 @@ export default function Factfile() {
     setDBVar("educationLevel");
   };
 
-
   const handleChange7 = (event) => {
     setCheckedValues({
       ...checkedValues,
       [event.target.name]: event.target.checked,
     });
     setDBVar("languages");
-
   };
   const handleChange8 = (event) => {
     setfData(event.target.value);
@@ -120,8 +114,6 @@ export default function Factfile() {
     setDBVar("religion");
   };
 
-
-
   const nametogglePopup = () => {
     setShowPopup1(!showPopup1);
     setSuccessMessage("");
@@ -134,7 +126,6 @@ export default function Factfile() {
     setSuccessMessage("");
     setfData("");
     setDBVar("");
-
   };
 
   const dobtogglePopup = () => {
@@ -186,7 +177,6 @@ export default function Factfile() {
     setDBVar("");
   };
 
-
   const handleSubmit2 = (event) => {
     event.preventDefault();
     const arrdata = {
@@ -200,7 +190,6 @@ export default function Factfile() {
       .catch((error) => {
         handleUpdateerrClick();
       });
-
   };
 
   useEffect(() => {
@@ -230,7 +219,6 @@ export default function Factfile() {
       .then((response) => {
         // Reload data after successful update
         handleUpdateClick();
-
       })
       .catch((error) => {
         handleUpdateerrClick();
@@ -379,7 +367,6 @@ export default function Factfile() {
                 </Stack>
 
                 <TextField
-
                   type="text"
                   label="Enter your occupation"
                   value={formdata}
@@ -538,21 +525,41 @@ export default function Factfile() {
                   </IconButton>
                 </Stack>
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox />} label="Singhala" name="sinhala"
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Singhala"
+                    name="sinhala"
                     checked={checkedValues.sinhala || false}
-                    onChange={handleChange7} />
-                  <FormControlLabel control={<Checkbox />} label="Tamil" name="tamil"
+                    onChange={handleChange7}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Tamil"
+                    name="tamil"
                     checked={checkedValues.tamil || false}
-                    onChange={handleChange7} />
-                  <FormControlLabel control={<Checkbox />} label="English" name="english"
+                    onChange={handleChange7}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="English"
+                    name="english"
                     checked={checkedValues.english || false}
-                    onChange={handleChange7} />
-                  <FormControlLabel control={<Checkbox />} label="Japan" name="japan"
+                    onChange={handleChange7}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Japan"
+                    name="japan"
                     checked={checkedValues.japan || false}
-                    onChange={handleChange7} />
-                  <FormControlLabel control={<Checkbox />} label="Hindi" name="hindi"
+                    onChange={handleChange7}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Hindi"
+                    name="hindi"
                     checked={checkedValues.hindi || false}
-                    onChange={handleChange7} />
+                    onChange={handleChange7}
+                  />
                 </FormGroup>
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -662,17 +669,20 @@ export default function Factfile() {
 
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  value={formdata} name="radio-buttons-group"
+                  value={formdata}
+                  name="radio-buttons-group"
                   onChange={handleChange9}
                 >
                   <FormControlLabel
                     value="true"
                     control={<Radio />}
-                    label="Yes" />
+                    label="Yes"
+                  />
                   <FormControlLabel
                     value="false"
                     control={<Radio />}
-                    label="No" />
+                    label="No"
+                  />
                 </RadioGroup>
                 <Stack direction="row" spacing={2}>
                   <Button
@@ -924,7 +934,8 @@ export default function Factfile() {
             sx={{ justifyContent: "space-between" }}
           >
             <Typography spacing={2}>
-              <ChildCareIcon /> Has Children : {user?.hasChildren ? "Yes" : "No"}
+              <ChildCareIcon /> Has Children :{" "}
+              {user?.hasChildren ? "Yes" : "No"}
             </Typography>
 
             <Button

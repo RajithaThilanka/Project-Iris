@@ -47,8 +47,6 @@ export default function AdminSettings() {
               />
             </LocalizationProvider>
           </Box>
-
-          {/* {currentDateTime && <p>{currentDateTime}</p>} */}
         </Stack>
         <Stack direction="column" spacing={2} alignItems="center" padding={25}>
           <Typography variant="h5">Hate Speech Check Now</Typography>
