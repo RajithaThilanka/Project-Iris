@@ -58,6 +58,16 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+  const {
+    receivedConRequests,
+    setreceivedConRequests,
+    receivedFriendRequests,
+    setreceivedFriendRequests,
+    setsentConRequests,
+    sentConRequests,
+    setsentFriendRequests,
+    sentFriendRequests,
+  } = useContext(MatchesContext);
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
@@ -90,11 +100,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     fetchMessages();
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
-  useEffect(() => {
-    return () => {
-      socket.off();
-    };
-  });
+
   useEffect(() => {
     socket.on("message recieved", async (newMessageRecieved) => {
       if (
@@ -155,7 +161,29 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       }
     }, timerLength);
   };
+  useEffect(() => {
+    socket.on("new-con-req-received", (newConReq) => {
+      if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedConRequests([newConReq, ...receivedConRequests]);
+      }
+    });
 
+    socket.on("new-friend-req-received", (newConReq) => {
+      if (!receivedFriendRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedFriendRequests([newConReq, ...receivedFriendRequests]);
+      }
+    });
+    socket.on("new-con-req-accepted", (newConReq) => {
+      setsentConRequests(
+        sentConRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+    socket.on("new-friend-req-accepted", (newConReq) => {
+      setsentFriendRequests(
+        sentFriendRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+  });
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",
@@ -186,9 +214,9 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   }));
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  // useEffect(() => {
-  //   selectedChat && inputRef?.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [selectedChat]);
+  useEffect(() => {
+    selectedChat && inputRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [selectedChat]);
   return (
     <>
       {selectedChat ? (

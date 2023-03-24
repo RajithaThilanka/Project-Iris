@@ -32,29 +32,6 @@ function Dates() {
     setsentFriendRequests,
     sentFriendRequests,
   } = useContext(MatchesContext);
-  useEffect(() => {
-    socket.on("new-con-req-received", (newConReq) => {
-      if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
-        setreceivedConRequests([newConReq, ...receivedConRequests]);
-      }
-    });
-
-    socket.on("new-friend-req-received", (newConReq) => {
-      if (!receivedFriendRequests.some((req) => req._id === newConReq._id)) {
-        setreceivedFriendRequests([newConReq, ...receivedFriendRequests]);
-      }
-    });
-    socket.on("new-con-req-accepted", (newConReq) => {
-      setsentConRequests(
-        sentConRequests.filter((req) => req._id !== newConReq._id)
-      );
-    });
-    socket.on("new-friend-req-accepted", (newConReq) => {
-      setsentFriendRequests(
-        sentFriendRequests.filter((req) => req._id !== newConReq._id)
-      );
-    });
-  });
 
   useEffect(() => {
     const fetchDates = async () => {
@@ -100,6 +77,30 @@ function Dates() {
       if (!notification.includes(newMessageRecieved)) {
         setNotification([newMessageRecieved, ...notification]);
       }
+    });
+  });
+
+  useEffect(() => {
+    socket.on("new-con-req-received", (newConReq) => {
+      if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedConRequests([newConReq, ...receivedConRequests]);
+      }
+    });
+
+    socket.on("new-friend-req-received", (newConReq) => {
+      if (!receivedFriendRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedFriendRequests([newConReq, ...receivedFriendRequests]);
+      }
+    });
+    socket.on("new-con-req-accepted", (newConReq) => {
+      setsentConRequests(
+        sentConRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+    socket.on("new-friend-req-accepted", (newConReq) => {
+      setsentFriendRequests(
+        sentFriendRequests.filter((req) => req._id !== newConReq._id)
+      );
     });
   });
   useEffect(() => {

@@ -132,6 +132,7 @@ function FriendRequests({ socket }) {
               data={req}
               reqType="received"
               handleAcceptClick={() => handleAccept(req?.senderId?._id)}
+              handleCancelClick={() => handleCancel(req?.senderId?._id)}
             />
           ))
         ) : (
