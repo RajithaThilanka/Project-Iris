@@ -162,7 +162,7 @@ function Friends() {
   return (
     <>
       {socketConnected && <Navbar user={user} socket={socket} />}
-      {socketConnected && (
+      {socketConnected ? (
         <div
           className="friends-container"
           style={{
@@ -200,6 +200,16 @@ function Friends() {
           )}
 
           <BottomNavbar />
+        </div>
+      ) : (
+        <div
+          className="dashboard-loading-container"
+          style={{ height: "100vh" }}
+          ref={containerRef}
+        >
+          <div className="dashboard-loading-photo">
+            <img src={serverPublic + "irislogo.png"} alt="loading-user" />
+          </div>
         </div>
       )}
     </>

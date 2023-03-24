@@ -140,7 +140,7 @@ function Dates() {
   return (
     <>
       {socketConnected && <Navbar user={user} socket={socket} />}
-      {socketConnected && (
+      {socketConnected ? (
         <div
           className="dates-container"
           style={{
@@ -178,6 +178,16 @@ function Dates() {
           )}
 
           <BottomNavbar />
+        </div>
+      ) : (
+        <div
+          className="dashboard-loading-container"
+          style={{ height: "100vh" }}
+          ref={containerRef}
+        >
+          <div className="dashboard-loading-photo">
+            <img src={serverPublic + "irislogo.png"} alt="loading-user" />
+          </div>
         </div>
       )}
     </>
