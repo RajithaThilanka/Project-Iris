@@ -55,9 +55,6 @@ export default function SuspendedAccounts() {
         return (
           <Stack direction="row" spacing={1}>
             <IconButton size="small" onClick={showDescription}>
-              <DoneIcon />
-            </IconButton>
-            <IconButton size="small" onClick={showDescription}>
               <VisibilityIcon />
             </IconButton>
             <IconButton size="small" onClick={showDescription}>

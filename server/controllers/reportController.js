@@ -95,6 +95,7 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
   });
 });
 
+//to delete accounts another grid
 exports.getToBeBlockedAccounts = catchAsync(async (req, res, next) => {
   const accounts = await Report.aggregate([
     {
@@ -117,6 +118,7 @@ exports.getToBeBlockedAccounts = catchAsync(async (req, res, next) => {
   });
 });
 
+//delete account
 exports.suspendAccount = catchAsync(async (req, res, next) => {
   const { userId } = req.body;
 
@@ -171,6 +173,7 @@ exports.suspendAccount = catchAsync(async (req, res, next) => {
 //   });
 // });
 
+//review report negative or positive
 exports.reviewReport = catchAsync(async (req, res, next) => {
   const { reportId, reviewStatus } = req.body;
   const updatedReport = await Report.findByIdAndUpdate(reportId, {

@@ -10,9 +10,11 @@ import { IconButton, Typography } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import ProfileReportReason from "../ProfileReportReason/ProfileReportReason";
 import { useState, useEffect } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 import jsonData from "./AllData.json"; // Import the JSON file
 import { getProfileReports } from "../../../api/AdminRequests";
+import { reviewReport } from "../../api/AdminRequests";
 
 export default function Profilereports() {
   const [rows, setRows] = useState([]);
@@ -62,17 +64,38 @@ export default function Profilereports() {
             setDes(description);
           }
         };
-
+        const setReportPositive = (e) => {
+          const reportId = params.row._id;
+          const reviewStatus = "positive"; // convert to lowercase
+          reviewReport(reportId, reviewStatus)
+            .then((response) => {
+              setRows(rows);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+        const setReportNegative = (e) => {
+          const reportId = params.row._id;
+          const reviewStatus = "negative"; // convert to lowercase
+          reviewReport(reportId, reviewStatus)
+            .then((response) => {
+              setRows(rows.filter((u) => u._id + "" !== reportId));
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
         return (
           <Stack direction="row" spacing={1}>
             <IconButton size="small" onClick={showReports}>
-              <MessageIcon />
-            </IconButton>
-            <IconButton size="small" onClick={showReports}>
               <VisibilityIcon />
             </IconButton>
-            <IconButton size="small" onClick={showReports}>
-              <DeleteIcon />
+            <IconButton size="small" onClick={setReportPositive}>
+              <DoneIcon />
+            </IconButton>
+            <IconButton size="small" onClick={setReportNegative}>
+              <CloseIcon />
             </IconButton>
           </Stack>
         );
