@@ -107,6 +107,23 @@ io.on('connection', socket => {
     let id = newConReq.receiverId._id;
     socket.in(id).emit('new-con-req-received', newConReq);
   });
+
+  socket.on('new-friend-request-sent', newConReq => {
+    console.log('sent');
+    let id = newConReq.receiverId._id;
+    socket.in(id).emit('new-friend-req-received', newConReq);
+  });
+
+  socket.on('new-con-request-accepted', newConReq => {
+    let id = newConReq.senderId._id;
+    console.log(id);
+    socket.in(id).emit('new-con-req-accepted', newConReq);
+  });
+  socket.on('new-friend-request-accepted', newConReq => {
+    let id = newConReq.senderId._id;
+    console.log(id);
+    socket.in(id).emit('new-friend-req-accepted', newConReq);
+  });
   socket.off('setup', () => {
     console.log('USER DISCONNECTED');
     console.log('leave now', activeUsers);

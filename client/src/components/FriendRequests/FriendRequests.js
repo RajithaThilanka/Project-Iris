@@ -13,7 +13,7 @@ import "./FriendRequests.css";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import FriendRequest from "../FriendRequest/FriendRequest";
 import MatchesContext from "../../context/matches";
-function FriendRequests() {
+function FriendRequests({ socket }) {
   const {
     sentFriendRequests,
     setsentFriendRequests,
@@ -37,6 +37,7 @@ function FriendRequests() {
       );
       setConnections(connections.filter((u) => u.senderId._id !== id));
       setFriends([...friends, data]);
+      socket.emit("new-friend-request-accepted", data);
     } catch (err) {
       const {
         response: {

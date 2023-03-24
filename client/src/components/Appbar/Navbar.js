@@ -416,7 +416,7 @@ function Navbar({ user, socket }) {
               onClose={handleCloseConnectionMenu}
             >
               <div>
-                <Requests />
+                <Requests socket={socket} />
               </div>
               {/* </MenuItem> */}
             </Menu>
@@ -453,7 +453,7 @@ function Navbar({ user, socket }) {
               onClose={handleCloseFriendMenu}
             >
               <div>
-                <FriendRequests />
+                <FriendRequests socket={socket} />
               </div>
             </Menu>
             {/* Dates */}

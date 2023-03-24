@@ -54,7 +54,14 @@ function Dashboard2() {
   const [swiper, setSwiper] = useState(null);
   const [currentProfile, setCurrentProfile] = useState(0);
   const { filter } = useContext(MatchesContext);
-  const { sentConRequests, setsentConRequests } = useContext(MatchesContext);
+  const {
+    sentConRequests,
+    setsentConRequests,
+    receivedFriendRequests,
+    setreceivedFriendRequests,
+    setsentFriendRequests,
+    sentFriendRequests,
+  } = useContext(MatchesContext);
   const { matches, setMatches } = useContext(MatchesContext);
   const [filtered, setFiltered] = useState([]);
   const profileContentRef = useRef();
@@ -118,6 +125,22 @@ function Dashboard2() {
       if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
         setreceivedConRequests([newConReq, ...receivedConRequests]);
       }
+    });
+
+    socket.on("new-friend-req-received", (newConReq) => {
+      if (!receivedFriendRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedFriendRequests([newConReq, ...receivedFriendRequests]);
+      }
+    });
+    socket.on("new-con-req-accepted", (newConReq) => {
+      setsentConRequests(
+        sentConRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+    socket.on("new-friend-req-accepted", (newConReq) => {
+      setsentFriendRequests(
+        sentFriendRequests.filter((req) => req._id !== newConReq._id)
+      );
     });
   });
 

@@ -89,7 +89,7 @@ function Connections() {
 
         {!loading && !err && connections.length > 0 ? (
           <div className="connections">
-            <ProfileCards cardType="connection" />
+            <ProfileCards cardType="connection" socket={socket} />
           </div>
         ) : !loading && !err && connections.length === 0 ? (
           <h3 className="connections-err-msg">

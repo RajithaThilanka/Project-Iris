@@ -23,7 +23,7 @@ import MatchesContext from "../../context/matches";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../DialogBox/DialogBox";
 
-function ProfileCard({ conUser, cardType }) {
+function ProfileCard({ conUser, cardType, socket }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
@@ -63,6 +63,7 @@ function ProfileCard({ conUser, cardType }) {
         },
       } = await sendFriendRequest(id);
       setsentFriendRequests([...sentFriendRequests, data]);
+      socket.emit("new-friend-request-sent", data);
     } catch (err) {
       toast.error(err.response.data.message, {
         position: "bottom-left",
