@@ -12,8 +12,13 @@ import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import MatchesContext from "../../context/matches";
 import "./Chat.css";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import io from "socket.io-client";
+const ENDPOINT = "http://localhost:5000";
+let socket;
+
 function Chat() {
-  const { setActiveTab } = useContext(MatchesContext);
+  const { setActiveTab, setSocketConnected, setActiveUsers, socketConnected } =
+    useContext(MatchesContext);
   setActiveTab(4);
   const {
     data: { user },
@@ -25,7 +30,15 @@ function Chat() {
   // useEffect(() => {
   //   mychatscroll.current?.scrollIntoView({ behavior: "smooth" });
   // }, []);
-
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("active-users", (activeUsers) => {
+      setActiveUsers(activeUsers);
+      console.log(activeUsers);
+    });
+  }, []);
   useEffect(() => {
     const fetchChats = async () => {
       setErr(null);
@@ -40,31 +53,43 @@ function Chat() {
     };
     fetchChats();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      socket.off();
+      setSocketConnected(false);
+    };
+  }, []);
   return (
     <>
-      <Navbar user={user} />
-      <div style={{ display: "flex" }} className="chat-page-container">
-        <VerticalNavbar />
-        <div className="chat-page">
-          {/* <Sidedrawer /> */}
-          {err ? (
-            <h3 className="connections-err-msg">
-              {err?.response?.data?.message}
-              <SentimentVeryDissatisfiedIcon fontSize="large" />
-            </h3>
-          ) : (
-            <div
-              className="chat-page-sub"
-              // ref={mychatscroll}
-              style={{ background: "#ddd" }}
-            >
-              <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
-              <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
-            </div>
-          )}
+      {socketConnected && <Navbar user={user} socket={socket} />}
+      {socketConnected && (
+        <div style={{ display: "flex" }} className="chat-page-container">
+          <VerticalNavbar />
+          <div className="chat-page">
+            {/* <Sidedrawer /> */}
+            {err ? (
+              <h3 className="connections-err-msg">
+                {err?.response?.data?.message}
+                <SentimentVeryDissatisfiedIcon fontSize="large" />
+              </h3>
+            ) : (
+              <div
+                className="chat-page-sub"
+                // ref={mychatscroll}
+                style={{ background: "#ddd" }}
+              >
+                <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+                <ChatBox
+                  fetchAgain={fetchAgain}
+                  setFetchAgain={setFetchAgain}
+                />
+              </div>
+            )}
+          </div>
+          <BottomNavbar />
         </div>
-        <BottomNavbar />
-      </div>
+      )}
     </>
   );
 }

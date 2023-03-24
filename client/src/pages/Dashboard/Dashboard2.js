@@ -37,6 +37,7 @@ import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import { logout } from "../../actions/AuthActions";
 import { FlagCircle, ForkRight } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import Dates from "../Dates/Dates";
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
@@ -59,6 +60,9 @@ function Dashboard2() {
     setsentConRequests,
     receivedFriendRequests,
     setreceivedFriendRequests,
+    dates,
+    setDates,
+    socketConnected,
     setsentFriendRequests,
     sentFriendRequests,
   } = useContext(MatchesContext);
@@ -110,6 +114,14 @@ function Dashboard2() {
     receivedConRequests,
     setreceivedConRequests,
     notification,
+    receivedDateRequests,
+    setreceivedDateRequests,
+    setFriends,
+    friends,
+    setConnections,
+    connections,
+    sentDateRequests,
+    setsentDateRequests,
     setNotification,
   } = useContext(MatchesContext);
   useEffect(() => {
@@ -136,11 +148,31 @@ function Dashboard2() {
       setsentConRequests(
         sentConRequests.filter((req) => req._id !== newConReq._id)
       );
+      setConnections([...connections, newConReq]);
     });
     socket.on("new-friend-req-accepted", (newConReq) => {
       setsentFriendRequests(
         sentFriendRequests.filter((req) => req._id !== newConReq._id)
       );
+      setFriends([...friends, newConReq]);
+      setConnections(
+        connections.filter(
+          (u) =>
+            u.receiverId._id !== newConReq.receiverId._id &&
+            u.senderId._id !== newConReq.receiverId._id
+        )
+      );
+    });
+    socket.on("new-date-req-received", (newConReq) => {
+      if (!receivedDateRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedDateRequests([newConReq, ...receivedDateRequests]);
+      }
+    });
+    socket.on("new-date-req-accepted", (newConReq) => {
+      setsentDateRequests(
+        sentDateRequests.filter((req) => req._id !== newConReq._id)
+      );
+      setDates([...dates, newConReq]);
     });
   });
 
@@ -171,7 +203,8 @@ function Dashboard2() {
         setLoading(false);
         setErr(err);
         if (err.response.status === 401) {
-          dispatch(logout(socket));
+          socket?.disconnect();
+          dispatch(logout());
         }
       }
     };
@@ -233,7 +266,7 @@ function Dashboard2() {
   }, []);
   return (
     <>
-      <Navbar user={user} socket={socket} />
+      {socketConnected && <Navbar user={user} socket={socket} />}
       <div
         className="dashboard-container"
         style={{

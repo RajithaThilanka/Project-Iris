@@ -62,14 +62,8 @@ const setupAnswerModel = async user => {
 };
 
 exports.setupLookingFor = catchAsync(async (req, res, next) => {
-  const {
-    lookingForGender,
-    minAge,
-    maxAge,
-    minHeight,
-    maxHeight,
-    userId,
-  } = req.body;
+  const { lookingForGender, minAge, maxAge, minHeight, maxHeight, userId } =
+    req.body;
 
   const newLookingFor = await LookingFor.create({
     userId,

@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import jsonData from "./AllData.json"; // Import the JSON file
 
 import { getAllVeriReq } from "../../../api/AdminRequests";
+import { manualVarifyAccount } from "../../api/AdminRequests";
 
 export default function VerificationRequests() {
   const [rows, setRows] = useState([]);
@@ -45,7 +46,19 @@ export default function VerificationRequests() {
         let liveimg;
         let idFront;
         let idBack;
-        const approveRequest = (e) => {};
+        const approveRequest = (e) => {
+          const userId = params.row._id;
+          const status = "verified"; // convert to lowercase
+          manualVarifyAccount(userId, status)
+            .then((response) => {
+              console.log("Verified");
+              setRows(rows.filter((u) => u._id + "" !== userId));
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+
         const showRequest = (e) => {
           liveimg = params.row.liveImage;
           idFront = params.row.nicFront;
@@ -58,7 +71,7 @@ export default function VerificationRequests() {
 
         return (
           <Stack direction="row" spacing={1}>
-            <IconButton size="small" onClick={showRequest} helperText="Done">
+            <IconButton size="small" onClick={approveRequest} helperText="Done">
               <DoneIcon />
             </IconButton>
             <IconButton size="small" onClick={showRequest}>

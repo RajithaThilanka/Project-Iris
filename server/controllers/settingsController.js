@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const fs = require('fs');
 
+//schedule hate speech
 exports.scheduleHatespeech = catchAsync(async (req, res, next) => {
   const { hateSpeechScheduledAt } = req.body;
 

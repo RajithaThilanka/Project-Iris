@@ -41,10 +41,13 @@ export default function ProfileReportReason(props) {
               bgcolor: "gray",
               height: "350px",
               width: "300px",
+              "&:hover": {
+                transform: "scale(1.2)",
+                transition: "transform 0.1s ease-in-out",
+              },
             }}
             component="img"
             alt="NO evidance"
-            // src="https://images.unsplash.com/photo-1677484179240-ff398b0a2d09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
             src={serverPublic + props.evidence}
           />
         </Stack>
