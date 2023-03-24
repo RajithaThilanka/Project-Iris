@@ -67,17 +67,22 @@ function FriendProfileCard({ conUser, cardType, socket }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [scheduleError, setScheduleError] = useState(true);
 
-  const initialDate = {
+  const [dateData, setDateData] = useState({
     scheduledAt: new Date(),
     dateType: "coffee",
-  };
-  const [dateData, setDateData] = useState(initialDate);
+  });
   const handleDateData = (event) => {
     setDateData({ ...dateData, [event.target.name]: event.target.value });
   };
   const handleScheduledAt = (value) => {
-    setDateData({ ...dateData, scheduledAt: value });
+    if (value.getTime() >= Date.now() + 5 * 60 * 60 * 1000) {
+      setDateData({ ...dateData, scheduledAt: value });
+      setScheduleError(false);
+    } else {
+      setScheduleError(true);
+    }
   };
   const {
     dates,
@@ -89,10 +94,7 @@ function FriendProfileCard({ conUser, cardType, socket }) {
     friends,
     chats,
     setChats,
-    selectedChat,
     setSelectedChat,
-    notification,
-    setNotification,
   } = useContext(MatchesContext);
   const navigate = useNavigate();
   const otherUser =
@@ -173,7 +175,6 @@ function FriendProfileCard({ conUser, cardType, socket }) {
   const handleSendDateRequest = async (id) => {
     try {
       setInviteBtnVisible(false);
-
       const {
         data: {
           data: { data },
@@ -226,9 +227,15 @@ function FriendProfileCard({ conUser, cardType, socket }) {
 
             <Stack spacing={2} direction="column">
               <div>
+                {scheduleError && (
+                  <div className="schedule-date-error">
+                    Date must be at least five hours from now!
+                  </div>
+                )}
                 <FormHelperText sx={{ marginLeft: "8px" }}>
                   Schedule your date
                 </FormHelperText>
+
                 {/* <TextField
                   id="date"
                   name="scheduledAt"
@@ -243,7 +250,7 @@ function FriendProfileCard({ conUser, cardType, socket }) {
                 <DateTimePicker
                   value={dateData.scheduledAt}
                   onChange={handleScheduledAt}
-                  minDate={new Date()}
+                  minDate={dateData.scheduledAt}
                 />
               </div>
               <div>
@@ -274,6 +281,7 @@ function FriendProfileCard({ conUser, cardType, socket }) {
               <Button
                 type="contained"
                 onClick={() => handleSendDateRequest(otherUser._id)}
+                disabled={scheduleError}
               >
                 Invite
               </Button>

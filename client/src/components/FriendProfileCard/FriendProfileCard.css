@@ -16,7 +16,12 @@
   height: 100%;
   object-fit: cover;
 }
-
+.schedule-date-error {
+  font-size: 1.1rem;
+  color: red;
+  padding: 0.5rem 0;
+  margin-left: 0.8rem;
+}
 .profile-buttons {
   flex-direction: row;
   align-items: center;
