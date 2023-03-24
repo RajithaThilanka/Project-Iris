@@ -129,18 +129,7 @@ exports.removeConnection = catchAsync(async (req, res, next) => {
   }
 
   await doc.deleteOne();
-  await date.deleteMany({
-    $or: [
-      {
-        senderId: userId,
-        receiverId: removeUserId,
-      },
-      {
-        senderId: removeUserId,
-        receiverId: userId,
-      },
-    ],
-  });
+
   const deletedChat = await Chat.findOneAndDelete({
     $and: [
       { users: { $elemMatch: { $eq: removeUserId } } },
