@@ -182,9 +182,9 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   }));
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  useEffect(() => {
-    selectedChat && inputRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [selectedChat]);
+  // useEffect(() => {
+  //   selectedChat && inputRef?.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [selectedChat]);
   return (
     <>
       {selectedChat ? (

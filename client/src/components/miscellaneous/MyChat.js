@@ -126,8 +126,9 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   };
 
   const handleOpenMessage = async (chat) => {
-    await updateSeenAll(chat._id);
     setSelectedChat(chat);
+    // socket.emit();
+    await updateSeenAll(chat._id);
     if (
       chat?.latestMessage &&
       chat?.latestMessage?.sender?._id != loggedUser._id

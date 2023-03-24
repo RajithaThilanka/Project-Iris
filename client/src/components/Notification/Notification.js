@@ -2,8 +2,9 @@ import { Button } from "@mui/material";
 import React, { useContext } from "react";
 import MatchesContext from "../../context/matches";
 import "./Notification.css";
-function Notification({ notData }) {
-  const { notification, setNotification } = useContext(MatchesContext);
+function Notification({ notData, isWarning }) {
+  const { notification, setNotification, warnings, setWarnings } =
+    useContext(MatchesContext);
   return (
     <div className="notification-cont">
       <h6>Warning!</h6>
@@ -15,11 +16,17 @@ function Notification({ notData }) {
         <Button
           variant="contained"
           sx={{ fontSize: "0.9rem" }}
-          onClick={() =>
-            setNotification(
-              notification.filter((not) => not._id !== notData._id)
-            )
-          }
+          onClick={() => {
+            !isWarning
+              ? setNotification(
+                  notification.filter(
+                    (not) => not._id + "" !== notData._id + ""
+                  )
+                )
+              : setWarnings(
+                  warnings.filter((not) => not._id + "" !== notData._id + "")
+                );
+          }}
         >
           OK
         </Button>

@@ -3,7 +3,9 @@ import Box from "@mui/material/Box";
 import { Typography, Stack } from "@mui/material";
 
 import Button from "@mui/material/Button";
-export default function UserVerificationView() {
+export default function UserVerificationView(props) {
+
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div>
       <Stack
@@ -37,8 +39,9 @@ export default function UserVerificationView() {
                 height: 1,
               }}
               component="img"
-              alt="Id Front side was not uploaded"
-              src="https://www.any.hu/wp-content/uploads/2019/12/sri_lanka_id-1.jpg"
+              //alt="Profile picture was not uploaded"
+              //src="https://images.unsplash.com/photo-1677484179240-ff398b0a2d09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+              src={serverPublic + props.liveimg}
             />
 
             <Box

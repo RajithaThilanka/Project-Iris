@@ -105,7 +105,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
+    suspended: {
+      type: Boolean,
+      default: false,
+    },
     index: {
       type: Number,
     },

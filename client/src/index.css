@@ -61,6 +61,7 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   line-height: 1.7;
+  background-color: #eee;
 }
 
 @media only screen and (max-width: 78em) {

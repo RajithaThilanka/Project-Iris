@@ -67,7 +67,7 @@ function Friends() {
       } catch (err) {
         console.log(err);
         setLoading(false);
-        setErr(true);
+        setErr(err);
       }
     };
     fetchDates();
@@ -91,9 +91,9 @@ function Friends() {
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const containerRef = useRef();
-  useEffect(() => {
-    containerRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  // useEffect(() => {
+  //   containerRef?.current?.scrollIntoView({ behavior: "smooth" });
+  // }, []);
   useEffect(() => {
     return () => {
       socket.off();
@@ -130,6 +130,7 @@ function Friends() {
           </div>
         ) : !loading && err ? (
           <h3 className="connections-err-msg">
+            {console.log(err)}
             {err?.response?.data?.message}
             <SentimentVeryDissatisfiedIcon fontSize="large" />
           </h3>

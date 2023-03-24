@@ -1,5 +1,5 @@
 import React from "react";
-
+import GroupsIcon from '@mui/icons-material/Groups';
 import Typography from "@mui/material/Typography";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import WorkIcon from "@mui/icons-material/Work";
@@ -18,110 +18,132 @@ import { useState, useEffect } from "react";
 import TempleBuddhistIcon from "@mui/icons-material/TempleBuddhist";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import data from "./Data.json";
-
-export default function SuggessionFactfiles() {
+import HeightIcon from '@mui/icons-material/Height';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+export default function SuggessionFactfiles(props) {
   return (
     <div>
-      <Stack direction="column" spacing={2} sx={{ alignItems: "left" }}>
+      <Stack direction="column" spacing={1}
+        justifyContent="flex-start"
+        alignItems="flex-start"
+      >
         <Stack
-          direction="Row"
-          spacing={1}
-          // sx={{ justifyContent: "space-between" }}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
           <Typography spacing={2}>
-            <PersonIcon /> Name : {data[0].name}
+            <PersonIcon /> Call Name :
+          </Typography>
+          <Typography align="left" >
+            <b>{props.callName}</b>
           </Typography>
         </Stack>
         <hr />
 
         <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
-          <Typography spacing={2}>
-            <PersonIcon /> Call Name : {data[0].callname}
+          <Typography spacing={1}>
+            <GroupsIcon /> Ethnicity:
+          </Typography>
+          <Typography align="left" >
+            <b>{props.Ethnicity}</b>
           </Typography>
         </Stack>
         <hr />
         <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
-          <Typography spacing={2}>
-            <CakeIcon /> DOB :{data[0].dob}
+          <Typography spacing={1}>
+            <CakeIcon /> DOB :
+          </Typography>
+          <Typography align="left">
+            <b>{props.Dob}</b>
+          </Typography>
+        </Stack>
+        <hr />
+
+        <Stack
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+        >
+          <Typography spacing={1}>
+            <HeightIcon />
+            Height :
+          </Typography>
+          <Typography align="left" >
+            <b>{props.Height}</b>
           </Typography>
         </Stack>
         <hr />
         <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
-          <Typography spacing={2}>
-            <WorkIcon /> Occupation :{data[0].occupation}
+          <Typography spacing={1}>
+            <SchoolIcon /> Education Level :
+          </Typography>
+          <Typography align="left" >
+            <b>{props.Education}</b>
           </Typography>
         </Stack>
         <hr />
         <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
-          <Typography spacing={2}>
-            <BoyIcon />
-            Body Type :{data[0].bodytype}
+          <Typography spacing={1}>
+            <LanguageIcon /> Language :
+          </Typography>
+          <Typography align="left">
+            <b>{props.Language}</b>
           </Typography>
         </Stack>
         <hr />
         <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
           <Typography spacing={2}>
-            <SchoolIcon /> Education Level :{data[0].education}
+            <AttachMoneyIcon /> Monthly Incone :
+          </Typography>
+          <Typography align="left" >
+            <b>{props.Income}</b>
           </Typography>
         </Stack>
         <hr />
         <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
-          <Typography spacing={2}>
-            <LanguageIcon /> Language :{data[0].language}
+          <Typography spacing={1}>
+            <ChildCareIcon /> Has Children :
+          </Typography>
+          <Typography align="left">
+            <b>{props.Haschildren ? 'Yes' : 'No'}</b>
           </Typography>
         </Stack>
         <hr />
         <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
           <Typography spacing={2}>
-            <WcIcon /> Merital Status :{data[0].maritalstatus}
+            <TempleBuddhistIcon /> Religion :
           </Typography>
-        </Stack>
-        <hr />
-        <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
-        >
-          <Typography spacing={2}>
-            <ChildCareIcon /> Has Children :{data[0].haschildren}
-          </Typography>
-        </Stack>
-        <hr />
-        <Stack
-          direction="Row"
-          spacing={2}
-          sx={{ justifyContent: "space-between" }}
-        >
-          <Typography spacing={2}>
-            <TempleBuddhistIcon /> Religion :{data[0].Religion}
+          <Typography align="left" >
+            <b>{props.Religion}</b>
           </Typography>
         </Stack>
       </Stack>

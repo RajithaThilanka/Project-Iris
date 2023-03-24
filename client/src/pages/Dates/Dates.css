@@ -16,7 +16,7 @@
     flex-direction: column;
   }
   .dates {
-    /* height: 100vh; */
+    padding: 10rem 2rem;
   }
 }
 @media only screen and (max-width: 78em) {
@@ -32,5 +32,8 @@
 @media only screen and (max-width: 41em) {
   .dates-container {
     margin-bottom: 4rem;
+  }
+  .dates {
+    padding: 0.1rem 2rem;
   }
 }

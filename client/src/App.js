@@ -31,6 +31,8 @@ import AdminLogin from "./pages/AdminAuth/AdminLogin";
 
 import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
+import Report from "./components/Report/Report";
+import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -137,6 +139,10 @@ function App() {
             }
           ></Route>
           <Route
+            path="/users/report/:id"
+            element={user ? <Report /> : <Navigate to="/auth/login" />}
+          ></Route>
+          <Route
             path="/email-confirm/success"
             element={<MailConfirmed main="Email successfully verified" />}
           ></Route>
@@ -161,7 +167,7 @@ function App() {
             path="/users/reset-password/:token"
             element={<ResetPassword />}
           ></Route>
-
+          <Route path="/users/submit-request" element={<ActivationRequest />} />
           <Route path="/home" element={<Welcome />}></Route>
           <Route path="/" element={<Navigate to="/home" />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>
@@ -177,7 +183,10 @@ function App() {
             path="/me/friends"
             element={user ? <Friends /> : <Navigate to="/auth/login" />}
           ></Route>
-          <Route path="/me/dates" element={<Dates />}></Route>
+          <Route
+            path="/me/dates"
+            element={user ? <Dates /> : <Navigate to="/auth/login" />}
+          ></Route>
           <Route
             path="/me"
             element={
@@ -194,7 +203,7 @@ function App() {
           ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
           <Route
-            path="/me/suggession/profile"
+            path="/users/profile/:id"
             element={<SuggessionPage />}
           ></Route>
 

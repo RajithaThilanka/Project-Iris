@@ -30,6 +30,9 @@
   .connections-container {
     flex-direction: column;
   }
+  .connections {
+    padding: 10rem 2rem;
+  }
 }
 
 @media only screen and (max-width: 78em) {
@@ -50,5 +53,8 @@
 @media only screen and (max-width: 41em) {
   .connections-err-msg {
     font-size: 3rem;
+  }
+  .connections {
+    padding: 0.1rem 2rem;
   }
 }

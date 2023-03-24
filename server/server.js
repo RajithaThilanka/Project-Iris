@@ -81,8 +81,8 @@ io.on('connection', socket => {
   socket.on('endCall', id => {
     io.to(id).emit('endCall');
   });
-  socket.on('seen', (message, id) => {
-    socket.in(id).emit('message-seen', message);
+  socket.on('seen', id => {
+    socket.in(id).emit('message-seen');
   });
   socket.on('typing', room => socket.in(room).emit('typing'));
   socket.on('stop typing', room => socket.in(room).emit('stop typing'));

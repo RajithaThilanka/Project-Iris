@@ -35,12 +35,16 @@ import {
   getSentDateRequests,
   getSentFriendRequests,
 } from "../../api/UserRequests";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Notifications from "../Notifications/Notifications";
 import { fetchChatNotifications } from "../../api/ChatRequests";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
-const settings = ["Account", "Dashboard"];
+// const settings = ["Account", "Dashboard"];
+const settings = [
+  { label: "Account", to: "/me" },
+  { label: "Dashboard", to: "/me" },
+];
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -334,25 +338,40 @@ function Navbar({ user }) {
                   </div>
                 </MenuItem>
               }
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
             </Menu>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                // onClick={handleCloseNavMenu}
-                onClick={() => navigate("/about-us")}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+
+            <Button
+
+              //onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Explore
+            </Button>
+            <Button
+
+              //onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Safety Tips
+            </Button>
+            <Button
+
+              onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              About Us
+            </Button>
+            <Button
+
+              onClick={() => navigate("/me/dashboard")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              HOME
+            </Button>
+
           </Box>
 
           {/* Connection requests */}
@@ -556,7 +575,17 @@ function Navbar({ user }) {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center">
+                    <Link
+                      style={{
+                        color: "var(--color-primary)",
+                        textDecoration: "none",
+                      }}
+                      to={setting.to}
+                    >
+                      {setting.label}
+                    </Link>
+                  </Typography>
                 </MenuItem>
               ))}
 
