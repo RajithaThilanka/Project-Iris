@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import { Typography, Stack } from "@mui/material";
+import { Typography, Stack, TextField } from "@mui/material";
 
 import Button from "@mui/material/Button";
 
-export default function ProfileReportReason() {
+export default function ProfileReportReason(props) {
   return (
     <div>
       <Stack
@@ -13,19 +13,17 @@ export default function ProfileReportReason() {
         sx={{ width: "100%", height: "100%" }}
       >
         <Typography variant="inherit"> Report Description </Typography>
+        <TextField
+          sx={{ width: '300px' }}
+          multiline
+          disabled
+          rows={2}
+          value={props.desc}
 
-        <Box
-          sx={{
-            width: "400px",
-            height: "400px",
-            border: 1,
-            borderRadius: 0.5,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          Report Description
-        </Box>
+          defaultValue="Default Value"
+        />
+
+
       </Stack>
     </div>
   );

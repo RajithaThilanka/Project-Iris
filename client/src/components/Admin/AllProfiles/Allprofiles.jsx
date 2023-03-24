@@ -18,7 +18,7 @@ import { getAllUsers, deleteaUser } from "../../../api/AdminRequests";
 export default function Profilereports() {
   const [rows, setRows] = useState([]);
   const [imid, setimid] = useState(null);
-  // const [userId, getuserId] = useState(null);
+
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -102,24 +102,7 @@ export default function Profilereports() {
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  // const [user, setUser] = useState([]);
 
-  //Json File load
-  // useEffect(() => {
-  //   // Parse the JSON data
-  //   const data = JSON.parse(JSON.stringify(jsonData));
-
-  //   // Create the rows array
-  //   const rowsArray = data.map((item) => ({
-  //     id: item.id,
-  //     fullname: item.fullname,
-  //     email: item.email,
-  //     status: item.status,
-  //   }));
-
-  //   // Set the rows state
-  //   setRows(rowsArray);
-  // }, []);
 
   ///API call
   useEffect(() => {

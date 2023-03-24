@@ -203,7 +203,7 @@ function App() {
           ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
           <Route
-            path="/me/suggession/profile"
+            path="/users/profile/:id"
             element={<SuggessionPage />}
           ></Route>
 

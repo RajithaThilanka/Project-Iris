@@ -11,6 +11,7 @@ router
 router
   .route('/review-report')
   .patch(authController.adminProtect, reportController.reviewReport);
+
 router
   .route('/fetch-warnings')
   .get(authController.protect, reportController.fetchWarnings);

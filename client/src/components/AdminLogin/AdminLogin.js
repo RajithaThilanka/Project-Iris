@@ -68,59 +68,48 @@ function AdminLogin() {
   //
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div
-      style={{
-        boxShadow:
-          "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-      }}
-    >
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <form onSubmit={handleSubmit}>
-          <Box sx={style}>
-            <div className="cancel-btn-container">
-              <IconButton onClick={handleClose} className="cancel-btn">
-                <CloseIcon fontSize="medium" />
-              </IconButton>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <img
-                style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
-                src={serverPublic + "irislogo.png"}
-                alt="logo"
-              />
-            </div>
-            <h1 className="login-title"> Admin Login</h1>
+    <div className="login-container-main">
+      <form onSubmit={handleSubmit} className="login-form-main">
+        <Box sx={style}>
+          <div className="cancel-btn-container">
+            <IconButton onClick={handleClose} className="cancel-btn">
+              <CloseIcon fontSize="medium" />
+            </IconButton>
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <img
+              style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
+              src={serverPublic + "irislogo.png"}
+              alt="logo"
+            />
+          </div>
+          <h1 className="login-title"> Admin Login</h1>
 
-            <TextField
-              label="Email"
-              color="secondary"
-              name="email"
-              value={data.email}
-              size="small"
-              onChange={handleChange}
-              fullWidth
-              required
-              type="email"
-            />
-            <TextField
-              label="Password"
-              color="secondary"
-              name="password"
-              size="small"
-              value={data.password}
-              onChange={handleChange}
-              fullWidth
-              type="password"
-              required
-            />
-            {loading ? (
-              <Loader />
-            ) : (
+          <TextField
+            label="Email"
+            color="secondary"
+            name="email"
+            value={data.email}
+            size="small"
+            onChange={handleChange}
+            fullWidth
+            required
+            type="email"
+          />
+          <TextField
+            label="Password"
+            color="secondary"
+            name="password"
+            size="small"
+            value={data.password}
+            onChange={handleChange}
+            fullWidth
+            type="password"
+            required
+          />
+          {loading ? (
+            <Loader />
+          ) : (
               <Button
                 type="submit"
                 variant="contained"
@@ -131,16 +120,16 @@ function AdminLogin() {
               </Button>
             )}
 
-            {error && (
-              <div className="error-container">
-                <p className="error-msg">
-                  Please check your credentials and Try again
+          {error && (
+            <div className="error-container">
+              <p className="error-msg">
+                Please check your credentials and Try again
                 </p>
-              </div>
-            )}
-          </Box>
-        </form>
-      </Modal>
+            </div>
+          )}
+        </Box>
+      </form>
+
     </div>
   );
 }

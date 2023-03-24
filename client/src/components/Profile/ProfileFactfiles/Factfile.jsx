@@ -59,11 +59,11 @@ export default function Factfile() {
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleUpdateClick = () => {
-    // Perform update logic here, and if successful:
+
     setSuccessMessage("Update successful!");
   };
   const handleUpdateerrClick = () => {
-    // Perform update logic here, and if successful:
+
     setSuccessMessage("Update unsuccessful!");
   };
 
@@ -186,20 +186,6 @@ export default function Factfile() {
     setDBVar("");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = {
-      [dbvar]: formdata,
-    };
-
-    updateMe(data)
-      .then((response) => {
-        handleUpdateClick();
-      })
-      .catch((error) => {
-        handleUpdateerrClick();
-      });
-  };
 
   const handleSubmit2 = (event) => {
     event.preventDefault();
@@ -214,6 +200,7 @@ export default function Factfile() {
       .catch((error) => {
         handleUpdateerrClick();
       });
+
   };
 
   useEffect(() => {
@@ -232,6 +219,23 @@ export default function Factfile() {
     };
     getData();
   }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      [dbvar]: formdata,
+    };
+
+    updateMe(data)
+      .then((response) => {
+        // Reload data after successful update
+        handleUpdateClick();
+
+      })
+      .catch((error) => {
+        handleUpdateerrClick();
+      });
+  };
 
   return (
     <div>

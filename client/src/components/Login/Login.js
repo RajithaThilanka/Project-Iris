@@ -109,15 +109,15 @@ function Login() {
                 <Loader />
               </div>
             ) : (
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={loading}
-                fullWidth
-              >
-                Login
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={loading}
+                  fullWidth
+                >
+                  Login
               </Button>
-            )}
+              )}
           </Grid>
           <Grid item sm={12} xs={12}>
             {error && (

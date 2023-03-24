@@ -89,7 +89,7 @@ function ProfileCard({ conUser, cardType }) {
       setSelectedChat(data);
       navigate("/me/chat");
       //   toggleDrawer(anchor, false);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   //view suggestion profile
@@ -224,7 +224,7 @@ function ProfileCard({ conUser, cardType }) {
         <Tooltip title="View Profile" placement="bottom">
           <IconButton
             style={{ color: "#fff" }}
-            //onClick={navigate(`/users/profile ${id}`)}
+            onClick={() => navigate(`/users/profile/${otherUser._id}`)}
           >
             <AccountCircleIcon className="profile-card-btn" />
           </IconButton>
@@ -259,15 +259,15 @@ function ProfileCard({ conUser, cardType }) {
             </IconButton>
           </DialogBox>
         ) : (
-          <IconButton
-            onClick={() => handleAcceptFriendRequest(otherUser._id)}
-            style={{ color: "#fff" }}
-          >
-            <Tooltip title="accept request">
-              <PersonAddIcon className="profile-card-btn" />
-            </Tooltip>
-          </IconButton>
-        )}
+              <IconButton
+                onClick={() => handleAcceptFriendRequest(otherUser._id)}
+                style={{ color: "#fff" }}
+              >
+                <Tooltip title="accept request">
+                  <PersonAddIcon className="profile-card-btn" />
+                </Tooltip>
+              </IconButton>
+            )}
 
         <Tooltip title="Message" placement="bottom">
           <IconButton style={{ color: "#fff" }} onClick={accessChat}>
@@ -309,8 +309,8 @@ function ProfileCard({ conUser, cardType }) {
           {activeUsers.some((user) => user.userId === otherUser._id) ? (
             <div className="suggestion-online--dot"></div>
           ) : (
-            <div className="suggestion-offline--dot"></div>
-          )}
+              <div className="suggestion-offline--dot"></div>
+            )}
           <div className="profile-status">
             {" "}
             {activeUsers.some((user) => user.userId === otherUser._id)
