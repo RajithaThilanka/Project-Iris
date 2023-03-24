@@ -148,6 +148,7 @@ function Dashboard2() {
         setLoading(false);
         setErr(err);
         if (err.response.status === 401) {
+          console.log("hey");
           dispatch(logout());
         }
       }
@@ -482,7 +483,10 @@ function Dashboard2() {
                 </Box>
               </div>
             ) : !err && loading ? (
-              <div className="dashboard-loading-container">
+              <div
+                className="dashboard-loading-container"
+                style={{ height: "100vh" }}
+              >
                 <div className="dashboard-loading-photo">
                   <img
                     src={serverPublic + user.profilePhoto}

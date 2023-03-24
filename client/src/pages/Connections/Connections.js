@@ -67,9 +67,9 @@ function Connections() {
     });
   });
 
-  useEffect(() => {
-    containerRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  // useEffect(() => {
+  //   containerRef?.current?.scrollIntoView({ behavior: "smooth" });
+  // }, []);
 
   useEffect(() => {
     return () => {

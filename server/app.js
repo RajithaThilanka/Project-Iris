@@ -7,6 +7,7 @@ const questionRouter = require('./routes/questionRouter');
 const chatRouter = require('./routes/chatRouter');
 const reportRouter = require('./routes/reportRouter');
 const messageRouter = require('./routes/messageRouter');
+const settingsRouter = require('./routes/settingsRouter');
 const cors = require('cors');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
@@ -16,9 +17,10 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const app = express();
+const fs = require('fs');
 const { validateChat } = require('./controllers/aiController');
 const schedule = require('node-schedule');
-
+const { dateToCron } = require('./utils/utilFuncs');
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(mongoSanitize());
@@ -33,8 +35,12 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP! Please try again later',
 });
 
+const date = JSON.parse(
+  fs.readFileSync(`${__dirname}/settings.json`, 'utf-8')
+).hateSpeechScheduledAt;
 // running hate speech detection
-schedule.scheduleJob('0 1 * * *', async function () {
+const expr = dateToCron(new Date(date));
+schedule.scheduleJob(expr, async function () {
   await validateChat();
   console.log('validated');
 });
@@ -47,6 +53,7 @@ app.use('/api/v1/questions', questionRouter);
 app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/message', messageRouter);
 app.use('/api/v1/report', reportRouter);
+app.use('/api/v1/settings', settingsRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));

@@ -70,6 +70,7 @@ input[type="file"] + label {
   max-width: 93rem;
   margin: auto;
   height: 100%;
+  position: relative;
   overflow: scroll;
   background-color: #fff;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,

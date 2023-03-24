@@ -21,10 +21,10 @@ function Chat() {
   const [fetchAgain, setFetchAgain] = useState(false);
   const [err, setErr] = useState(null);
 
-  const mychatscroll = useRef();
-  useEffect(() => {
-    mychatscroll.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  // const mychatscroll = useRef();
+  // useEffect(() => {
+  //   mychatscroll.current?.scrollIntoView({ behavior: "smooth" });
+  // }, []);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -55,7 +55,7 @@ function Chat() {
           ) : (
             <div
               className="chat-page-sub"
-              ref={mychatscroll}
+              // ref={mychatscroll}
               style={{ background: "#ddd" }}
             >
               <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />

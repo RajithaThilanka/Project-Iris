@@ -35,12 +35,16 @@ import {
   getSentDateRequests,
   getSentFriendRequests,
 } from "../../api/UserRequests";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Notifications from "../Notifications/Notifications";
 import { fetchChatNotifications } from "../../api/ChatRequests";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
-const settings = ["Account", "Dashboard"];
+// const settings = ["Account", "Dashboard"];
+const settings = [
+  { label: "Account", to: "/me" },
+  { label: "Dashboard", to: "/me" },
+];
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -565,7 +569,17 @@ function Navbar({ user }) {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center">
+                    <Link
+                      style={{
+                        color: "var(--color-primary)",
+                        textDecoration: "none",
+                      }}
+                      to={setting.to}
+                    >
+                      {setting.label}
+                    </Link>
+                  </Typography>
                 </MenuItem>
               ))}
 
