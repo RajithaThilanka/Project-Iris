@@ -90,7 +90,11 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     fetchMessages();
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
-
+  useEffect(() => {
+    return () => {
+      socket.off();
+    };
+  });
   useEffect(() => {
     socket.on("message recieved", async (newMessageRecieved) => {
       if (

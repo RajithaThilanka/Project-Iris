@@ -148,8 +148,7 @@ function Dashboard2() {
         setLoading(false);
         setErr(err);
         if (err.response.status === 401) {
-          console.log("hey");
-          dispatch(logout());
+          dispatch(logout(socket));
         }
       }
     };
@@ -211,7 +210,7 @@ function Dashboard2() {
   }, []);
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} socket={socket} />
       <div
         className="dashboard-container"
         style={{

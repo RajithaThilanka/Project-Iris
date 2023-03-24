@@ -74,7 +74,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
   },
 }));
-function Navbar({ user }) {
+function Navbar({ user, socket }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElFriend, setAnchorElFriend] = useState(null);
@@ -342,36 +342,30 @@ function Navbar({ user }) {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-
             <Button
-
               //onClick={() => navigate("/about-us")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Explore
             </Button>
             <Button
-
               //onClick={() => navigate("/about-us")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Safety Tips
             </Button>
             <Button
-
               onClick={() => navigate("/about-us")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               About Us
             </Button>
             <Button
-
               onClick={() => navigate("/me/dashboard")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               HOME
             </Button>
-
           </Box>
 
           {/* Connection requests */}
@@ -594,7 +588,14 @@ function Navbar({ user }) {
               </MenuItem>
 
               <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
-                <Button onClick={() => dispatch(logout())}>Logout</Button>
+                <Button
+                  onClick={() => {
+                    socket.disconnect();
+                    dispatch(logout());
+                  }}
+                >
+                  Logout
+                </Button>
               </MenuItem>
             </Menu>
           </Box>

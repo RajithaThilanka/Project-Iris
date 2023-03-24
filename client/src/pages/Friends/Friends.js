@@ -101,7 +101,7 @@ function Friends() {
   }, []);
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} socket={socket} />
       <div
         className="friends-container"
         style={{

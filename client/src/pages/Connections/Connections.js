@@ -78,7 +78,7 @@ function Connections() {
   }, []);
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} socket={socket} />
       <div
         className="connections-container"
         style={{

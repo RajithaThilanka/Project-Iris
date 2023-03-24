@@ -75,7 +75,7 @@ function Dates() {
   }, []);
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} socket={socket} />
       <div
         className="dates-container"
         style={{
