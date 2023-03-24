@@ -14,17 +14,22 @@ import jsonData from "./AllData.json"; // Import the JSON file
 
 import { getAllVeriReq } from "../../../api/AdminRequests";
 
-
 export default function VerificationRequests() {
-
   const [rows, setRows] = useState([]);
   const [liveimg, setLiveimg] = useState(null);
-
+  const [idFront, setidFront] = useState(null);
+  const [idBack, setidBack] = useState(null);
   const columns = [
     { field: "_id", headerName: "ID", width: 90 },
     {
       field: "status",
       headerName: "Status",
+      width: 100,
+      editable: false,
+    },
+    {
+      field: "completeion",
+      headerName: "Completetion",
       width: 150,
       editable: false,
     },
@@ -37,11 +42,19 @@ export default function VerificationRequests() {
       disableClickEventBubbling: true,
 
       renderCell: (params) => {
-        let liveimid;
+        let liveimg;
+        let idFront;
+        let idBack;
+        const approveRequest = (e) => {};
         const showRequest = (e) => {
-          liveimid = params.row.nicPhoto;
-          setLiveimg(liveimid);
+          liveimg = params.row.liveImage;
+          idFront = params.row.nicFront;
+          idBack = params.row.nicBack;
+          setLiveimg(liveimg);
+          setidFront(idFront);
+          setidBack(idBack);
         };
+        const deleteRequest = (e) => {};
 
         return (
           <Stack direction="row" spacing={1}>
@@ -58,12 +71,9 @@ export default function VerificationRequests() {
         );
       },
     },
-
   ];
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
-
 
   ///API call
   useEffect(() => {
@@ -88,7 +98,7 @@ export default function VerificationRequests() {
         <Box
           sx={{
             height: 500,
-            width: 800,
+            width: 600,
             justifyContent: "center",
             textAlign: "center",
           }}
@@ -106,7 +116,11 @@ export default function VerificationRequests() {
           />
         </Box>
         <Box>
-          <UserVerificationView liveimg={liveimg} />
+          <UserVerificationView
+            liveimg={liveimg}
+            idFront={idFront}
+            idBack={idBack}
+          />
         </Box>
       </Stack>
     </>

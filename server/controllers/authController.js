@@ -62,8 +62,14 @@ const setupAnswerModel = async user => {
 };
 
 exports.setupLookingFor = catchAsync(async (req, res, next) => {
-  const { lookingForGender, minAge, maxAge, minHeight, maxHeight, userId } =
-    req.body;
+  const {
+    lookingForGender,
+    minAge,
+    maxAge,
+    minHeight,
+    maxHeight,
+    userId,
+  } = req.body;
 
   const newLookingFor = await LookingFor.create({
     userId,
@@ -584,11 +590,12 @@ exports.requestManualVerify = catchAsync(async (req, res, next) => {
       }
     }
   }
-  const { liveFeed, nicPhoto } = req.body;
+  const { liveImage, nicFront, nicBack } = req.body;
   const manualVerificationRequest = await ManualVerification.create({
     userId,
-    liveFeed,
-    nicPhoto,
+    liveImage,
+    nicFront,
+    nicBack,
   });
 
   res.status(200).json({

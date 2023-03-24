@@ -41,7 +41,7 @@ export default function UserVerificationView(props) {
               }}
               component="img"
               alt="Id Front side was not uploaded"
-              src="https://www.any.hu/wp-content/uploads/2019/12/sri_lanka_id-1.jpg"
+              src={serverPublic + props.idFront}
             />
 
             <Box
@@ -51,7 +51,7 @@ export default function UserVerificationView(props) {
               }}
               component="img"
               alt="Id Back side was not uploaded"
-              src="https://www.any.hu/wp-content/uploads/2019/12/sri_lanka_id-1.jpg"
+              src={serverPublic + props.idBack}
             />
           </Stack>
         </Box>
@@ -84,7 +84,7 @@ export default function UserVerificationView(props) {
                   }}
                   component="img"
                   alt="Live image  was not uploaded"
-                  src="https://images.unsplash.com/photo-1677484179240-ff398b0a2d09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                  src={serverPublic + props.liveimg}
                 />
               </Stack>
             </Stack>
