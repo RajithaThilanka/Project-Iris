@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const User = require(`../models/userModel`);
 const Answer = require('../models/answerModel');
+const Date = require('../models/dateModel');
 
 const dotenv = require('dotenv');
 
@@ -16,6 +17,7 @@ const DB = process.env.DATABASE.replace(
 const Chat = require('../models/chatModel');
 const Message = require('../models/messageModel');
 const LookingFor = require('../models/lookingForModel');
+const Connection = require('../models/connectionsModel');
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -32,6 +34,8 @@ const deleteDevData = async () => {
     // await LookingFor.deleteMany();
     await Chat.deleteMany();
     await Message.deleteMany();
+    await Connection.deleteMany();
+    await Date.deleteMany();
     // await Answer.deleteMany();
   } catch (error) {
     console.log(error);
