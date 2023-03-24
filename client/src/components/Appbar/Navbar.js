@@ -489,7 +489,7 @@ function Navbar({ user, socket }) {
               onClose={handleCloseDateMenu}
             >
               <div>
-                <DateRequests />
+                <DateRequests socket={socket} />
               </div>
             </Menu>
 
@@ -590,7 +590,7 @@ function Navbar({ user, socket }) {
               <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
                 <Button
                   onClick={() => {
-                    socket.disconnect();
+                    socket?.disconnect();
                     dispatch(logout());
                   }}
                 >

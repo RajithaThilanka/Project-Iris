@@ -50,7 +50,7 @@ const style = {
   p: 4,
 };
 
-function FriendProfileCard({ conUser, cardType }) {
+function FriendProfileCard({ conUser, cardType, socket }) {
   //view suggestion profile
   const viewPro = async () => {
     try {
@@ -59,8 +59,6 @@ function FriendProfileCard({ conUser, cardType }) {
       console.log(error);
     }
   };
-
-
 
   const {
     data: { user },
@@ -183,6 +181,8 @@ function FriendProfileCard({ conUser, cardType }) {
       } = await sendDateRequest(id, dateData);
       setsentDateRequests([...sentDateRequests, data]);
       setDates([...dates, data]);
+
+      socket.emit("new-date-request-sent", data);
       handleClose();
     } catch (error) {
       console.log(error);
@@ -296,8 +296,10 @@ function FriendProfileCard({ conUser, cardType }) {
         }}
       >
         <Tooltip title="View Profile" placement="bottom">
-          <IconButton style={{ color: "#fff" }}
-            onClick={() => navigate(`/users/profile/${otherUser._id}`)}>
+          <IconButton
+            style={{ color: "#fff" }}
+            onClick={() => navigate(`/users/profile/${otherUser._id}`)}
+          >
             <AccountCircleIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
@@ -313,22 +315,22 @@ function FriendProfileCard({ conUser, cardType }) {
             </IconButton>
           </Tooltip>
         ) : (
-            <DialogBox
-              title="Confirm Cancel"
-              content="Are you sure to cancel date invitation?"
-              YesBtn="Confirm"
-              NoBtn="Cancel"
-              handleYes={() => {
-                handleCancelDate(otherUser._id);
-              }}
-            >
-              <Tooltip title={"Cancel date invite"} placement="bottom">
-                <IconButton style={{ color: "#fff" }} disabled={alreadyHasDate}>
-                  <CancelIcon className="profile-card-btn" />
-                </IconButton>
-              </Tooltip>
-            </DialogBox>
-          )}
+          <DialogBox
+            title="Confirm Cancel"
+            content="Are you sure to cancel date invitation?"
+            YesBtn="Confirm"
+            NoBtn="Cancel"
+            handleYes={() => {
+              handleCancelDate(otherUser._id);
+            }}
+          >
+            <Tooltip title={"Cancel date invite"} placement="bottom">
+              <IconButton style={{ color: "#fff" }} disabled={alreadyHasDate}>
+                <CancelIcon className="profile-card-btn" />
+              </IconButton>
+            </Tooltip>
+          </DialogBox>
+        )}
 
         {/* <Tooltip
           title={inviteBtnVisible ? "Invite date" : "Cancel date invite"}
@@ -384,8 +386,8 @@ function FriendProfileCard({ conUser, cardType }) {
           {activeUsers.some((user) => user.userId === otherUser._id) ? (
             <div className="suggestion-online--dot"></div>
           ) : (
-              <div className="suggestion-offline--dot"></div>
-            )}
+            <div className="suggestion-offline--dot"></div>
+          )}
           <div className="profile-status">
             {activeUsers.some((user) => user.userId === otherUser._id)
               ? "Online"
