@@ -84,6 +84,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     socket.on("stop typing", () => setIsTyping(false));
     socket.on("active-users", (activeUsers) => {
       setActiveUsers(activeUsers);
+      console.log(activeUsers);
     });
   }, []);
 
@@ -246,6 +247,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   useEffect(() => {
     return () => {
       // socket.off();
+
       setSocketConnected(false);
     };
   }, []);

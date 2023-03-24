@@ -25,7 +25,7 @@ const server = app.listen(port, () => {
 let activeUsers = [];
 let vidUsers = [];
 const io = require('socket.io')(server, {
-  pingTimeout: 15 * 60 * 1000,
+  pingTimeout: 40 * 60 * 1000,
   cors: {
     origin: 'http://localhost:3000',
   },

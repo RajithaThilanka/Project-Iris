@@ -37,6 +37,7 @@ import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import { logout } from "../../actions/AuthActions";
 import { FlagCircle, ForkRight } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import Dates from "../Dates/Dates";
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
@@ -59,6 +60,8 @@ function Dashboard2() {
     setsentConRequests,
     receivedFriendRequests,
     setreceivedFriendRequests,
+    dates,
+    setDates,
     socketConnected,
     setsentFriendRequests,
     sentFriendRequests,
@@ -169,6 +172,7 @@ function Dashboard2() {
       setsentDateRequests(
         sentDateRequests.filter((req) => req._id !== newConReq._id)
       );
+      setDates([...dates, newConReq]);
     });
   });
 
