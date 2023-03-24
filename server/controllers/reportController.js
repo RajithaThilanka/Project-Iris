@@ -124,6 +124,7 @@ exports.suspendAccount = catchAsync(async (req, res, next) => {
     userId,
     {
       active: false,
+      suspended: true,
     },
     { new: true }
   );

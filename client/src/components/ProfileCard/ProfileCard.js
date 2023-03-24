@@ -23,13 +23,13 @@ import MatchesContext from "../../context/matches";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../DialogBox/DialogBox";
 
-function ProfileCard({ conUser, cardType }) {
+function ProfileCard({ conUser, cardType, socket }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const otherUser =
     conUser.senderId._id === user._id ? conUser.receiverId : conUser.senderId;
-  const { activeUsers } = useContext(MatchesContext);
+  const { activeUsers, dates, setDates } = useContext(MatchesContext);
   const {
     sentFriendRequests,
     setsentFriendRequests,
@@ -40,6 +40,7 @@ function ProfileCard({ conUser, cardType }) {
     friends,
     setFriends,
     chats,
+
     setChats,
     selectedChat,
     setSelectedChat,
@@ -62,6 +63,7 @@ function ProfileCard({ conUser, cardType }) {
         },
       } = await sendFriendRequest(id);
       setsentFriendRequests([...sentFriendRequests, data]);
+      socket.emit("new-friend-request-sent", data);
     } catch (err) {
       toast.error(err.response.data.message, {
         position: "bottom-left",
@@ -89,7 +91,7 @@ function ProfileCard({ conUser, cardType }) {
       setSelectedChat(data);
       navigate("/me/chat");
       //   toggleDrawer(anchor, false);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   //view suggestion profile
@@ -108,6 +110,36 @@ function ProfileCard({ conUser, cardType }) {
       setConnections(
         connections.filter((con) => {
           return con._id !== conUser._id;
+        })
+      );
+      // setDates(
+      //   dates.filter((dt) => {
+      //     return (
+      //       dt.senderId + "" != otherUser._id + "" &&
+      //       dt.receiverId + "" != otherUser._id + ""
+      //     );
+      //   })
+      // );
+      setsentFriendRequests(
+        sentFriendRequests.filter(
+          (req) =>
+            req.senderId._id + "" != otherUser._id + "" &&
+            req.receiverId._id + "" != otherUser._id + ""
+        )
+      );
+
+      setreceivedFriendRequests(
+        receivedFriendRequests.filter(
+          (req) =>
+            req.senderId._id + "" != otherUser._id + "" &&
+            req.receiverId._id + "" != otherUser._id + ""
+        )
+      );
+
+      setChats(
+        chats.filter((ch) => {
+          const users = ch.users.map((u) => u._id);
+          return !users.includes(otherUser._id);
         })
       );
     } catch (err) {
@@ -259,15 +291,15 @@ function ProfileCard({ conUser, cardType }) {
             </IconButton>
           </DialogBox>
         ) : (
-              <IconButton
-                onClick={() => handleAcceptFriendRequest(otherUser._id)}
-                style={{ color: "#fff" }}
-              >
-                <Tooltip title="accept request">
-                  <PersonAddIcon className="profile-card-btn" />
-                </Tooltip>
-              </IconButton>
-            )}
+          <IconButton
+            onClick={() => handleAcceptFriendRequest(otherUser._id)}
+            style={{ color: "#fff" }}
+          >
+            <Tooltip title="accept request">
+              <PersonAddIcon className="profile-card-btn" />
+            </Tooltip>
+          </IconButton>
+        )}
 
         <Tooltip title="Message" placement="bottom">
           <IconButton style={{ color: "#fff" }} onClick={accessChat}>
@@ -309,8 +341,8 @@ function ProfileCard({ conUser, cardType }) {
           {activeUsers.some((user) => user.userId === otherUser._id) ? (
             <div className="suggestion-online--dot"></div>
           ) : (
-              <div className="suggestion-offline--dot"></div>
-            )}
+            <div className="suggestion-offline--dot"></div>
+          )}
           <div className="profile-status">
             {" "}
             {activeUsers.some((user) => user.userId === otherUser._id)

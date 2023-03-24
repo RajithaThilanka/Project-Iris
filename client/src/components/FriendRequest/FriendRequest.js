@@ -48,7 +48,12 @@ function FriendRequest({
               >
                 Accept
               </Button>
-              <Button variant="contained" size="small" color="otherColors">
+              <Button
+                variant="contained"
+                size="small"
+                color="otherColors"
+                onClick={handleCancelClick}
+              >
                 Decline
               </Button>
             </>

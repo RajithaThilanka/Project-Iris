@@ -22,6 +22,17 @@ function Dates() {
     useContext(MatchesContext);
   const containerRef = useRef();
   const { dates, setDates } = useContext(MatchesContext);
+  const {
+    receivedConRequests,
+    setreceivedConRequests,
+    receivedFriendRequests,
+    setreceivedFriendRequests,
+    setsentConRequests,
+    sentConRequests,
+    setsentFriendRequests,
+    sentFriendRequests,
+  } = useContext(MatchesContext);
+
   useEffect(() => {
     const fetchDates = async () => {
       setLoading(true);
@@ -68,6 +79,30 @@ function Dates() {
       }
     });
   });
+
+  useEffect(() => {
+    socket.on("new-con-req-received", (newConReq) => {
+      if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedConRequests([newConReq, ...receivedConRequests]);
+      }
+    });
+
+    socket.on("new-friend-req-received", (newConReq) => {
+      if (!receivedFriendRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedFriendRequests([newConReq, ...receivedFriendRequests]);
+      }
+    });
+    socket.on("new-con-req-accepted", (newConReq) => {
+      setsentConRequests(
+        sentConRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+    socket.on("new-friend-req-accepted", (newConReq) => {
+      setsentFriendRequests(
+        sentFriendRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+  });
   useEffect(() => {
     return () => {
       socket.off();
@@ -75,7 +110,7 @@ function Dates() {
   }, []);
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} socket={socket} />
       <div
         className="dates-container"
         style={{
