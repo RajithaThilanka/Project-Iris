@@ -25,7 +25,16 @@ function Friends() {
 
   const { setSocketConnected, setActiveUsers, notification, setNotification } =
     useContext(MatchesContext);
-
+  const {
+    receivedConRequests,
+    setreceivedConRequests,
+    receivedFriendRequests,
+    setreceivedFriendRequests,
+    setsentConRequests,
+    sentConRequests,
+    setsentFriendRequests,
+    sentFriendRequests,
+  } = useContext(MatchesContext);
   setActiveTab(2);
   useEffect(() => {
     const fetchFriends = async () => {
@@ -80,6 +89,31 @@ function Friends() {
       setActiveUsers(activeUsers);
     });
   }, [user]);
+
+  useEffect(() => {
+    socket.on("new-con-req-received", (newConReq) => {
+      if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedConRequests([newConReq, ...receivedConRequests]);
+      }
+    });
+
+    socket.on("new-friend-req-received", (newConReq) => {
+      if (!receivedFriendRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedFriendRequests([newConReq, ...receivedFriendRequests]);
+      }
+    });
+    socket.on("new-con-req-accepted", (newConReq) => {
+      setsentConRequests(
+        sentConRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+    socket.on("new-friend-req-accepted", (newConReq) => {
+      setsentFriendRequests(
+        sentFriendRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+  });
+
   useEffect(() => {
     socket.on("message recieved", async (newMessageRecieved) => {
       if (!notification.includes(newMessageRecieved)) {
@@ -101,7 +135,7 @@ function Friends() {
   }, []);
   return (
     <>
-      <Navbar user={user} />
+      <Navbar user={user} socket={socket} />
       <div
         className="friends-container"
         style={{

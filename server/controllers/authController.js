@@ -355,15 +355,14 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
-  if (!user.active) {
-    return next(
-      new AppError('User belonging to this account does no longer exist', 401)
-    );
-  }
-
   if (user.suspended) {
     return next(
       new AppError('Your account has been blocked by the moderators', 401)
+    );
+  }
+  if (!user.active) {
+    return next(
+      new AppError('User belonging to this account does no longer exist', 401)
     );
   }
 
@@ -386,7 +385,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   const currentUser = await User.findById(decoded.id).select('+active');
-  if (!currentUser || currentUser.active === false || currentUser.suspended) {
+  if (!currentUser || currentUser.suspended || currentUser.active === false) {
     return next(
       new AppError('The user belonging to this token does no longer exist', 401)
     );

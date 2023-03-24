@@ -1,4 +1,5 @@
 const Connection = require('../models/connectionsModel');
+const date = require('../models/dateModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const User = require('../models/userModel');
@@ -138,6 +139,18 @@ exports.removeFriend = catchAsync(async (req, res, next) => {
   if (!updatedConnection) {
     return next(new AppError('No friend found', 404));
   }
+  await date.deleteMany({
+    $or: [
+      {
+        senderId: userId,
+        receiverId: removeUserId,
+      },
+      {
+        senderId: removeUserId,
+        receiverId: userId,
+      },
+    ],
+  });
 
   res.status(200).json({
     status: 'success',

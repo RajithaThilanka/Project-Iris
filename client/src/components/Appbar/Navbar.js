@@ -74,7 +74,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
   },
 }));
-function Navbar({ user }) {
+function Navbar({ user, socket }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElFriend, setAnchorElFriend] = useState(null);
@@ -416,7 +416,7 @@ function Navbar({ user }) {
               onClose={handleCloseConnectionMenu}
             >
               <div>
-                <Requests />
+                <Requests socket={socket} />
               </div>
               {/* </MenuItem> */}
             </Menu>
@@ -453,7 +453,7 @@ function Navbar({ user }) {
               onClose={handleCloseFriendMenu}
             >
               <div>
-                <FriendRequests />
+                <FriendRequests socket={socket} />
               </div>
             </Menu>
             {/* Dates */}
@@ -588,7 +588,14 @@ function Navbar({ user }) {
               </MenuItem>
 
               <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
-                <Button onClick={() => dispatch(logout())}>Logout</Button>
+                <Button
+                  onClick={() => {
+                    socket.disconnect();
+                    dispatch(logout());
+                  }}
+                >
+                  Logout
+                </Button>
               </MenuItem>
             </Menu>
           </Box>

@@ -49,6 +49,9 @@ io.on('connection', socket => {
 
     if (!activeUsers.some(user => user.userId === userData._id)) {
       activeUsers.push({ userId: userData._id, socketId: socket.id });
+    } else {
+      const u = activeUsers.find(usr => usr.userId === userData._id);
+      u.socketId = socket.id;
     }
 
     socket.emit('connected');
@@ -57,6 +60,9 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     // remove user from active users
+
+    console.log(socket.id);
+    console.log(activeUsers.filter(user => user.socketId !== socket.id));
     activeUsers = activeUsers.filter(user => user.socketId !== socket.id);
     vidUsers = vidUsers.filter(user => user.socketId !== socket.id);
     console.log('User Disconnected', activeUsers);
@@ -100,6 +106,23 @@ io.on('connection', socket => {
     console.log('sent');
     let id = newConReq.receiverId._id;
     socket.in(id).emit('new-con-req-received', newConReq);
+  });
+
+  socket.on('new-friend-request-sent', newConReq => {
+    console.log('sent');
+    let id = newConReq.receiverId._id;
+    socket.in(id).emit('new-friend-req-received', newConReq);
+  });
+
+  socket.on('new-con-request-accepted', newConReq => {
+    let id = newConReq.senderId._id;
+    console.log(id);
+    socket.in(id).emit('new-con-req-accepted', newConReq);
+  });
+  socket.on('new-friend-request-accepted', newConReq => {
+    let id = newConReq.senderId._id;
+    console.log(id);
+    socket.in(id).emit('new-friend-req-accepted', newConReq);
   });
   socket.off('setup', () => {
     console.log('USER DISCONNECTED');
