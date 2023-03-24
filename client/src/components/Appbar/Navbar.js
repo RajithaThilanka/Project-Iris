@@ -338,36 +338,30 @@ function Navbar({ user }) {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-
             <Button
-
+              onClick={() => navigate("/me/dashboard")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              HOME
+            </Button>
+            <Button
               //onClick={() => navigate("/about-us")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Explore
             </Button>
             <Button
-
               //onClick={() => navigate("/about-us")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Safety Tips
             </Button>
             <Button
-
               onClick={() => navigate("/about-us")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               About Us
             </Button>
-            <Button
-
-              onClick={() => navigate("/me/dashboard")}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              HOME
-            </Button>
-
           </Box>
 
           {/* Connection requests */}

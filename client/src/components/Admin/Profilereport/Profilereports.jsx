@@ -14,23 +14,22 @@ import { useState, useEffect } from "react";
 import jsonData from "./AllData.json"; // Import the JSON file
 import { getProfileReports } from "../../../api/AdminRequests";
 
-
 export default function Profilereports() {
-
   const [rows, setRows] = useState([]);
   const [des, setDes] = useState("");
+  const [evidence, setEvidence] = useState(null);
   const columns = [
     { field: "_id", headerName: "ID", width: 90 },
     {
       field: "userNotified",
       headerName: " User Notified",
-      width: 150,
+      width: 100,
       editable: false,
     },
     {
       field: "reason",
       headerName: "Reason",
-      width: 150,
+      width: 250,
       editable: false,
     },
     {
@@ -48,10 +47,20 @@ export default function Profilereports() {
       disableClickEventBubbling: true,
 
       renderCell: (params) => {
-
         const showReports = (e) => {
           const description = params.row.description;
-          setDes(description);
+          const evidence = params.row.evidence;
+
+          if (evidence == "") {
+            setEvidence("");
+          } else {
+            setEvidence(evidence);
+          }
+          if (description === "") {
+            setDes("No description");
+          } else {
+            setDes(description);
+          }
         };
 
         return (
@@ -70,7 +79,7 @@ export default function Profilereports() {
       },
     },
   ];
-  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;;
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   ///API call
   useEffect(() => {
@@ -113,7 +122,7 @@ export default function Profilereports() {
           />
         </Box>
         <Box>
-          <ProfileReportReason desc={des} />
+          <ProfileReportReason desc={des} evidence={evidence} />
         </Box>
       </Stack>
     </>

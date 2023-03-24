@@ -18,7 +18,9 @@ import { getAllUsers, deleteaUser } from "../../../api/AdminRequests";
 export default function Profilereports() {
   const [rows, setRows] = useState([]);
   const [imid, setimid] = useState(null);
-
+  const [liveimg, setLiveimg] = useState(null);
+  const [idFront, setidFront] = useState(null);
+  const [idBack, setidBack] = useState(null);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -52,14 +54,23 @@ export default function Profilereports() {
       renderCell: (params) => {
         let imageid;
         let userId;
+        let liveimg;
+        let idFront;
+        let idBack;
         const showProfileImage = (e) => {
           imageid = params.row.profilePhoto;
+          liveimg = params.row.liveImage;
+          idFront = params.row.nicFront;
+          idBack = params.row.nicBack;
+          setLiveimg(liveimg);
+          setidFront(idFront);
+          setidBack(idBack);
           setimid(imageid);
         };
 
         const deleteProfile = async () => {
           const userId = params.row._id;
-          // getuserId(userId);
+
           try {
             console.log(userId);
             await deleteaUser(userId);
@@ -102,8 +113,6 @@ export default function Profilereports() {
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
-
-
   ///API call
   useEffect(() => {
     const getData = async () => {
@@ -144,7 +153,12 @@ export default function Profilereports() {
           />
         </Box>
         <Box>
-          <AllProfileData imid={imid} />
+          <AllProfileData
+            imid={imid}
+            liveimg={liveimg}
+            idFront={idFront}
+            idBack={idBack}
+          />
         </Box>
       </Stack>
     </>
