@@ -45,8 +45,20 @@ function Connections() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-  const { setSocketConnected, setActiveUsers, notification, setNotification } =
-    useContext(MatchesContext);
+  const {
+    setSocketConnected,
+    setActiveUsers,
+    notification,
+    setNotification,
+    receivedConRequests,
+    setreceivedConRequests,
+    receivedFriendRequests,
+    setreceivedFriendRequests,
+    setsentConRequests,
+    sentConRequests,
+    setsentFriendRequests,
+    sentFriendRequests,
+  } = useContext(MatchesContext);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const containerRef = useRef();
   useEffect(() => {
@@ -57,6 +69,30 @@ function Connections() {
       setActiveUsers(activeUsers);
     });
   }, [user]);
+
+  useEffect(() => {
+    socket.on("new-con-req-received", (newConReq) => {
+      if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedConRequests([newConReq, ...receivedConRequests]);
+      }
+    });
+
+    socket.on("new-friend-req-received", (newConReq) => {
+      if (!receivedFriendRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedFriendRequests([newConReq, ...receivedFriendRequests]);
+      }
+    });
+    socket.on("new-con-req-accepted", (newConReq) => {
+      setsentConRequests(
+        sentConRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+    socket.on("new-friend-req-accepted", (newConReq) => {
+      setsentFriendRequests(
+        sentFriendRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+  });
 
   useEffect(() => {
     socket.on("message recieved", async (newMessageRecieved) => {
