@@ -91,9 +91,9 @@ function Friends() {
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const containerRef = useRef();
-  useEffect(() => {
-    containerRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  // useEffect(() => {
+  //   containerRef?.current?.scrollIntoView({ behavior: "smooth" });
+  // }, []);
   useEffect(() => {
     return () => {
       socket.off();

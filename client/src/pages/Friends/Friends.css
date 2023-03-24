@@ -14,7 +14,7 @@
     flex-direction: column;
   }
   .friends {
-    /* height: 100vh; */
+    padding: 10rem 2rem;
   }
 }
 @media only screen and (max-width: 78em) {
@@ -30,5 +30,8 @@
 @media only screen and (max-width: 41em) {
   .friends-container {
     margin-bottom: 4rem;
+  }
+  .friends {
+    padding: 0.1rem 2rem;
   }
 }

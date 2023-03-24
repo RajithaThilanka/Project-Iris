@@ -148,6 +148,7 @@ function Dashboard2() {
         setLoading(false);
         setErr(err);
         if (err.response.status === 401) {
+          console.log("hey");
           dispatch(logout());
         }
       }

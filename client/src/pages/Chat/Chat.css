@@ -43,6 +43,9 @@
   .chat-page-container {
     margin-top: 7.5rem;
   }
+  .chat-page {
+    padding: 10rem 2rem;
+  }
 }
 @media only screen and (max-width: 67em) {
   .chat-page-container {
@@ -60,6 +63,7 @@
     position: absolute;
     height: 86.4%;
     top: 7.6rem;
+    padding: 0;
   }
   .chat-page-sub {
     height: 100%;
