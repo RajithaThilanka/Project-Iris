@@ -420,7 +420,7 @@
   align-items: center;
 }
 .dashboard-err-msg {
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -655,6 +655,7 @@
   }
   .dashboard-err-msg {
     font-size: 3rem;
+    height: 100%;
   }
   .swiper {
     height: 35%;

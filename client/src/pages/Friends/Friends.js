@@ -179,16 +179,6 @@ function Friends() {
               No any friends yet
               <SentimentVeryDissatisfiedIcon fontSize="large" />
             </h3>
-          ) : loading && !err ? (
-            <div
-              className="dashboard-loading-container"
-              style={{ height: "100vh" }}
-              ref={containerRef}
-            >
-              <div className="dashboard-loading-photo">
-                <img src={serverPublic + "irislogo.png"} alt="loading-user" />
-              </div>
-            </div>
           ) : !loading && err ? (
             <h3 className="connections-err-msg">
               {console.log(err)}
@@ -201,7 +191,7 @@ function Friends() {
 
           <BottomNavbar />
         </div>
-      ) : (
+      ) : (loading && !err) || !socketConnected ? (
         <div
           className="dashboard-loading-container"
           style={{ height: "100vh" }}
@@ -211,6 +201,8 @@ function Friends() {
             <img src={serverPublic + "irislogo.png"} alt="loading-user" />
           </div>
         </div>
+      ) : (
+        ""
       )}
     </>
   );
