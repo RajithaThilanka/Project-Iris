@@ -287,12 +287,13 @@ exports.signupProfileView = catchAsync(async (req, res, next) => {
     if (Object.keys(req.body).includes(field)) delete req.body[field];
   });
 
-  const { profilePhoto, userDescription, userId } = req.body;
+  const { profilePhoto, userDescription, userId, photos } = req.body;
   const existingUser = await User.findByIdAndUpdate(
     userId,
     {
       profilePhoto,
       userDescription,
+      photos,
     },
     { new: true }
   );

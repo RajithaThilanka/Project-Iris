@@ -14,27 +14,77 @@ import { useDispatch } from "react-redux";
 import { uploadImage } from "../../../actions/UploadAction";
 import { signupProfileView } from "../../../api/AuthRequests";
 import { useNavigate, useParams } from "react-router-dom";
+import DoneIcon from "@mui/icons-material/Done";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CancelIcon from "@mui/icons-material/Cancel";
 function ProfileView() {
   const dispatch = useDispatch();
   const [image, setImage] = useState(null);
+  const [otherImage1, setOtherImage1] = useState(null);
+  const [otherImage2, setOtherImage2] = useState(null);
+  const [otherImage3, setOtherImage3] = useState(null);
+  const [otherImage4, setOtherImage4] = useState(null);
+  const [otherImage5, setOtherImage5] = useState(null);
   const [preview, setPreview] = useState();
+  const [otherImagePreview1, setOtherImagePreview1] = useState();
+  const [otherImagePreview2, setOtherImagePreview2] = useState();
+  const [otherImagePreview3, setOtherImagePreview3] = useState();
+  const [otherImagePreview4, setOtherImagePreview4] = useState();
+  const [otherImagePreview5, setOtherImagePreview5] = useState();
   const [uploaded, setUploaded] = useState(false);
+  const [otherUploaded1, setOtherUploaded1] = useState(false);
+  const [otherUploaded2, setOtherUploaded2] = useState(false);
+  const [otherUploaded3, setOtherUploaded3] = useState(false);
+  const [otherUploaded4, setOtherUploaded4] = useState(false);
+  const [otherUploaded5, setOtherUploaded5] = useState(false);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const { id } = useParams();
   const navigate = useNavigate();
+
   const onImageChange = (event) => {
+    console.log(event.target.files);
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       setImage(img);
+    }
+  };
+
+  const onOtherImageChange1 = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let otherImage1 = event.target.files[0];
+      setOtherImage1(otherImage1);
+    }
+  };
+  const onOtherImageChange2 = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let otherImage2 = event.target.files[0];
+      setOtherImage2(otherImage2);
+    }
+  };
+  const onOtherImageChange3 = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let otherImage3 = event.target.files[0];
+      setOtherImage3(otherImage3);
+    }
+  };
+  const onOtherImageChange4 = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let otherImage4 = event.target.files[0];
+      setOtherImage4(otherImage4);
+    }
+  };
+  const onOtherImageChange5 = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let otherImage5 = event.target.files[0];
+      setOtherImage5(otherImage5);
     }
   };
   const [wordCount, setWordCount] = useState(0);
   const [formData, setData] = useState({
     profilePhoto: "",
     userDescription: "",
+    photos: [],
     userId: id,
   });
   const imageRef = useRef();
@@ -71,6 +121,176 @@ function ProfileView() {
       return;
     }
   };
+
+  const handleOtherUpload1 = async (e) => {
+    e.preventDefault();
+    // if there is an image with post
+
+    if (otherImage1) {
+      const data = new FormData();
+      const fileName = Date.now() + otherImage1.name;
+      data.append("name", fileName);
+      data.append("file", otherImage1);
+
+      // newPost.image = fileName;
+      setData({ ...formData, photos: [...formData.photos, fileName] });
+
+      try {
+        dispatch(uploadImage(data));
+        setOtherUploaded1(true);
+      } catch (err) {
+        console.log(err);
+        setOtherUploaded1(false);
+      }
+    } else {
+      toast.error("No image is chosen", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+  };
+
+  const handleOtherUpload2 = async (e) => {
+    e.preventDefault();
+    // if there is an image with post
+
+    if (otherImage2) {
+      const data = new FormData();
+      const fileName = Date.now() + otherImage2.name;
+      data.append("name", fileName);
+      data.append("file", otherImage2);
+
+      // newPost.image = fileName;
+      setData({ ...formData, photos: [...formData.photos, fileName] });
+      try {
+        dispatch(uploadImage(data));
+        setOtherUploaded2(true);
+      } catch (err) {
+        console.log(err);
+        setOtherUploaded2(false);
+      }
+    } else {
+      toast.error("No image is chosen", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+  };
+
+  const handleOtherUpload3 = async (e) => {
+    e.preventDefault();
+    // if there is an image with post
+
+    if (otherImage3) {
+      const data = new FormData();
+      const fileName = Date.now() + otherImage3.name;
+      data.append("name", fileName);
+      data.append("file", otherImage3);
+
+      // newPost.image = fileName;
+      setData({ ...formData, photos: [...formData.photos, fileName] });
+      try {
+        dispatch(uploadImage(data));
+        setOtherUploaded3(true);
+      } catch (err) {
+        console.log(err);
+        setOtherUploaded3(false);
+      }
+    } else {
+      toast.error("No image is chosen", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+  };
+  const handleOtherUpload4 = async (e) => {
+    e.preventDefault();
+    // if there is an image with post
+
+    if (otherImage4) {
+      const data = new FormData();
+      const fileName = Date.now() + otherImage4.name;
+      data.append("name", fileName);
+      data.append("file", otherImage4);
+
+      // newPost.image = fileName;
+      setData({ ...formData, photos: [...formData.photos, fileName] });
+      try {
+        dispatch(uploadImage(data));
+        setOtherUploaded4(true);
+      } catch (err) {
+        console.log(err);
+        setOtherUploaded4(false);
+      }
+    } else {
+      toast.error("No image is chosen", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+  };
+  const handleOtherUpload5 = async (e) => {
+    e.preventDefault();
+    // if there is an image with post
+
+    if (otherImage5) {
+      const data = new FormData();
+      const fileName = Date.now() + otherImage5.name;
+      data.append("name", fileName);
+      data.append("file", otherImage5);
+
+      // newPost.image = fileName;
+      setData({ ...formData, photos: [...formData.photos, fileName] });
+      try {
+        dispatch(uploadImage(data));
+        setOtherUploaded5(true);
+      } catch (err) {
+        console.log(err);
+        setOtherUploaded5(false);
+      }
+    } else {
+      toast.error("No image is chosen", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+  };
+
   const resetShare = () => {
     setImage(null);
   };
@@ -80,9 +300,10 @@ function ProfileView() {
     setWordCount(formData.userDescription.trim().split(" ").length);
   };
   const handleSubmit = async (e) => {
+    console.log(formData);
     e.preventDefault();
-    if (wordCount < 50) {
-      console.log("word count must be at least 50");
+    if (wordCount < 10) {
+      console.log("word count must be at least 10");
       return;
     }
     try {
@@ -91,7 +312,7 @@ function ProfileView() {
           data: { data },
         },
       } = await signupProfileView(formData);
-      navigate(`/auth/signup/lookingfor-info/${id}`);
+      navigate(`/auth/signup/lookingfor-info/${id}`, { replace: true });
     } catch (error) {
       console.log(error);
     }
@@ -108,6 +329,69 @@ function ProfileView() {
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [image]);
+
+  useEffect(() => {
+    if (!otherImage1) {
+      setOtherImagePreview1(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(otherImage1);
+    setOtherImagePreview1(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [otherImage1]);
+
+  useEffect(() => {
+    if (!otherImage2) {
+      setOtherImagePreview2(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(otherImage2);
+    setOtherImagePreview2(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [otherImage2]);
+  useEffect(() => {
+    if (!otherImage3) {
+      setOtherImagePreview3(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(otherImage3);
+    setOtherImagePreview3(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [otherImage3]);
+  useEffect(() => {
+    if (!otherImage4) {
+      setOtherImagePreview4(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(otherImage4);
+    setOtherImagePreview4(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [otherImage4]);
+  useEffect(() => {
+    if (!otherImage5) {
+      setOtherImagePreview5(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(otherImage5);
+    setOtherImagePreview5(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [otherImage5]);
+
   return (
     <div className="signup-container">
       <form className="account-info-form" method="post" onSubmit={handleSubmit}>
@@ -180,10 +464,377 @@ function ProfileView() {
               )}
             </div>
           </Grid>
+
+          <Grid sm={12} xs={12}>
+            <Stack spacing={1.7}>
+              <FormLabel sx={{ marginLeft: "0.7rem" }}>Images</FormLabel>
+              <Box sx={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                <div
+                  className="other-images-container"
+                  style={{ position: "relative" }}
+                >
+                  {!otherImage1 ? (
+                    <input
+                      type="file"
+                      name="other-1"
+                      id="other-1"
+                      accept="image/*"
+                      onChange={onOtherImageChange1}
+                    />
+                  ) : (
+                    <img
+                      src={otherImagePreview1}
+                      alt="profile"
+                      style={{
+                        width: "12rem",
+                        height: "20rem",
+                        borderRadius: "15px",
+                      }}
+                    />
+                  )}
+                  {!otherImage1 ? (
+                    <label for="other-1" id="profile-view-images-upload">
+                      {<CloudUploadIcon />}
+                    </label>
+                  ) : otherImage1 && !otherUploaded1 ? (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={() => {
+                        setOtherImage1(undefined);
+                      }}
+                    >
+                      <CancelIcon fontSize="small" />
+                    </IconButton>
+                  ) : otherImage1 && otherUploaded1 ? (
+                    <h3 className="image-uploaded-logo">Image Uploaded</h3>
+                  ) : (
+                    ""
+                  )}
+                  {otherImage1 && !otherUploaded1 && (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={handleOtherUpload1}
+                    >
+                      <DoneIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </div>
+
+                <div
+                  className="other-images-container"
+                  style={{ position: "relative" }}
+                >
+                  {!otherImage2 ? (
+                    <input
+                      type="file"
+                      name="other-2"
+                      id="other-2"
+                      accept="image/*"
+                      onChange={onOtherImageChange2}
+                    />
+                  ) : (
+                    <img
+                      src={otherImagePreview2}
+                      alt="profile"
+                      style={{
+                        width: "12rem",
+                        height: "20rem",
+                        borderRadius: "15px",
+                      }}
+                    />
+                  )}
+                  {!otherImage2 ? (
+                    <label for="other-2" id="profile-view-images-upload">
+                      {<CloudUploadIcon />}
+                    </label>
+                  ) : otherImage2 && !otherUploaded2 ? (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={() => {
+                        setOtherImage2(undefined);
+                      }}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  ) : otherImage2 && otherUploaded2 ? (
+                    <h3 className="image-uploaded-logo">Image Uploaded</h3>
+                  ) : (
+                    ""
+                  )}
+                  {otherImage2 && !otherUploaded2 && (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={handleOtherUpload2}
+                    >
+                      <DoneIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </div>
+
+                <div
+                  className="other-images-container"
+                  style={{ position: "relative" }}
+                >
+                  {!otherImage3 ? (
+                    <input
+                      type="file"
+                      name="other-3"
+                      id="other-3"
+                      accept="image/*"
+                      onChange={onOtherImageChange3}
+                    />
+                  ) : (
+                    <img
+                      src={otherImagePreview3}
+                      alt="profile"
+                      style={{
+                        width: "12rem",
+                        height: "20rem",
+                        borderRadius: "15px",
+                      }}
+                    />
+                  )}
+                  {!otherImage3 ? (
+                    <label for="other-3" id="profile-view-images-upload">
+                      {<CloudUploadIcon />}
+                    </label>
+                  ) : otherImage3 && !otherUploaded3 ? (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={() => {
+                        setOtherImage3(undefined);
+                      }}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  ) : otherImage3 && otherUploaded3 ? (
+                    <h3 className="image-uploaded-logo">Image Uploaded</h3>
+                  ) : (
+                    ""
+                  )}
+                  {otherImage3 && !otherUploaded3 && (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={handleOtherUpload3}
+                    >
+                      <DoneIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </div>
+
+                <div
+                  className="other-images-container"
+                  style={{ position: "relative" }}
+                >
+                  {!otherImage4 ? (
+                    <input
+                      type="file"
+                      name="other-4"
+                      id="other-4"
+                      accept="image/*"
+                      onChange={onOtherImageChange4}
+                    />
+                  ) : (
+                    <img
+                      src={otherImagePreview4}
+                      alt="profile"
+                      style={{
+                        width: "12rem",
+                        height: "20rem",
+                        borderRadius: "15px",
+                      }}
+                    />
+                  )}
+                  {!otherImage4 ? (
+                    <label for="other-4" id="profile-view-images-upload">
+                      {<CloudUploadIcon />}
+                    </label>
+                  ) : otherImage4 && !otherUploaded4 ? (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={() => {
+                        setOtherImage4(undefined);
+                      }}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  ) : otherImage4 && otherUploaded4 ? (
+                    <h3 className="image-uploaded-logo">Image Uploaded</h3>
+                  ) : (
+                    ""
+                  )}
+                  {otherImage4 && !otherUploaded4 && (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={handleOtherUpload4}
+                    >
+                      <DoneIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </div>
+                <div
+                  className="other-images-container"
+                  style={{ position: "relative" }}
+                >
+                  {!otherImage5 ? (
+                    <input
+                      type="file"
+                      name="other-5"
+                      id="other-5"
+                      accept="image/*"
+                      onChange={onOtherImageChange5}
+                    />
+                  ) : (
+                    <img
+                      src={otherImagePreview5}
+                      alt="profile"
+                      style={{
+                        width: "12rem",
+                        height: "20rem",
+                        borderRadius: "15px",
+                      }}
+                    />
+                  )}
+                  {!otherImage5 ? (
+                    <label for="other-5" id="profile-view-images-upload">
+                      {<CloudUploadIcon />}
+                    </label>
+                  ) : otherImage5 && !otherUploaded5 ? (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={() => {
+                        setOtherImage5(undefined);
+                      }}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  ) : otherImage5 && otherUploaded5 ? (
+                    <h3 className="image-uploaded-logo">Image Uploaded</h3>
+                  ) : (
+                    ""
+                  )}
+                  {otherImage5 && !otherUploaded5 && (
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        background: "rgba(0,0,0,0.6)",
+                        borderRadius: 0,
+                        color: "#fff",
+                        "&:hover": {
+                          background: "rgba(0,0,0,0.6)",
+                        },
+                      }}
+                      onClick={handleOtherUpload5}
+                    >
+                      <DoneIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </div>
+              </Box>
+            </Stack>
+          </Grid>
+
           <Grid sm={12} xs={12}>
             <Stack spacing={1.7}>
               <FormLabel>
-                Tell us something about yourself (minimum 50 words)
+                Tell us something about yourself (minimum 10 words)
               </FormLabel>
               <p
                 style={{
@@ -213,7 +864,7 @@ function ProfileView() {
               variant="contained"
               fullWidth
               type="submit"
-              disabled={wordCount < 50}
+              disabled={wordCount < 10}
             >
               Next
             </Button>

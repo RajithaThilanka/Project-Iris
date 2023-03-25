@@ -534,6 +534,17 @@ function Dashboard2() {
                     <div className="profile--description">
                       {filtered[currentProfile]?.userDescription}
                     </div>
+                    <div className="profile-fav-songs">
+                      <iframe
+                        width="100%"
+                        height="233.2"
+                        src="https://www.youtube.com/embed/3YxaaGgTQYM"
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen="allowfullscreen"
+                      ></iframe>
+                    </div>
                   </Zoom>
                 </Box>
               </div>
