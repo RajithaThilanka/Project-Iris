@@ -137,6 +137,10 @@ io.on('connection', socket => {
     console.log('leave now', activeUsers);
     socket.leave(userData._id);
   });
+  socket.on('message-seen', chat => {
+    const id = chat?.latestMessage?.sender?._id;
+    socket.in(id).emit('message-seen', chat);
+  });
 });
 process.on('unhandledRejection', err => {
   console.log(err.name, err.message);

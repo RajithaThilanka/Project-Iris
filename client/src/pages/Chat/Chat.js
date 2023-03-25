@@ -87,7 +87,11 @@ function Chat() {
                 // ref={mychatscroll}
                 style={{ background: "#ddd" }}
               >
-                <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+                <MyChat
+                  fetchAgain={fetchAgain}
+                  setFetchAgain={setFetchAgain}
+                  socket={socket}
+                />
                 <ChatBox
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
