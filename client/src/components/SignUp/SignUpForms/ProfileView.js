@@ -17,7 +17,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import DoneIcon from "@mui/icons-material/Done";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
+import FormDialogBox from "../../FormDialogBox/FormDialogBox";
 function ProfileView() {
   const dispatch = useDispatch();
   const [image, setImage] = useState(null);
@@ -85,6 +87,7 @@ function ProfileView() {
     profilePhoto: "",
     userDescription: "",
     photos: [],
+    urls: [],
     userId: id,
   });
   const imageRef = useRef();
@@ -467,7 +470,9 @@ function ProfileView() {
 
           <Grid sm={12} xs={12}>
             <Stack spacing={1.7}>
-              <FormLabel sx={{ marginLeft: "0.7rem" }}>Images</FormLabel>
+              <FormLabel sx={{ marginLeft: "0.7rem" }}>
+                More pictures (Up to 5)
+              </FormLabel>
               <Box sx={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                 <div
                   className="other-images-container"
@@ -830,7 +835,62 @@ function ProfileView() {
               </Box>
             </Stack>
           </Grid>
+          <Grid sm={12} xs={12}>
+            <Stack spacing={1.7}>
+              <FormLabel>
+                Add links to your favorite videos (Ex:Movie trailers, Music,
+                Funny videos, etc)
+              </FormLabel>
+              <FormDialogBox
+                title="Video URL"
+                message="Enter a valid and embeddable url of the video"
+                setData={setData}
+                formData={formData}
+              >
+                <IconButton
+                  style={{
+                    color: "#fff",
+                    background: "var(--color-primary)",
+                    width: "5rem",
+                    height: "5rem",
+                    borderRadius: "50%",
+                    margin: "1rem auto",
+                  }}
+                >
+                  <AddIcon fontSize="large" />
+                </IconButton>
+              </FormDialogBox>
+              {/* <TextField
+                id="filled-multiline-static"
+                rows={10}
+                variant="filled"
+                value={formData.userDescription}
+                onChange={handleChange}
+                required
+              /> */}
 
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                {formData?.urls.length > 0 &&
+                  formData.urls.map((vidLink, index) => {
+                    return (
+                      <div
+                        key={index}
+                        style={{
+                          fontSize: "1.3rem",
+                          color: "#fff",
+                          background: "var(--color-primary)",
+                          display: "inline-block",
+                          borderRadius: "15px",
+                          padding: "0.5rem 1rem",
+                        }}
+                      >
+                        {vidLink}
+                      </div>
+                    );
+                  })}
+              </div>
+            </Stack>
+          </Grid>
           <Grid sm={12} xs={12}>
             <Stack spacing={1.7}>
               <FormLabel>

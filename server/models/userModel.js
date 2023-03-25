@@ -96,6 +96,10 @@ const userSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    urls: {
+      type: [String],
+      default: [],
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
