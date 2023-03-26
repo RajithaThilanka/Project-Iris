@@ -1,4 +1,6 @@
 import React from "react";
+import AddIcon from "@mui/icons-material/Add";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import {
   Grid,
   Typography,
@@ -16,62 +18,17 @@ import { useDispatch } from "react-redux";
 import Badge from "@mui/material/Badge";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import IconButton from "@mui/material/IconButton";
-import { getMe } from "../../../api/UserRequests";
+
 import { useState, useEffect } from "react";
+import { getMe } from "../../../api/UserRequests";
 import { toast } from "react-toastify";
 import { uploadImage } from "../../../actions/UploadAction";
+import { updateMe } from "../../api/UserRequests";
+
 function ProfilHeader() {
-  const [image, setImage] = useState(null);
-
-  const [uploaded, setUploaded] = useState(false);
-  const [user, setUser] = useState(null);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  const [formData, setData] = useState({
-    profilePhoto: "",
-  });
-
-  const dispatch = useDispatch();
-
-  const handleFileChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
-      setImage(img);
-      console.log(img);
-    }
-  };
-
-  const handleUpload = async (e) => {
-    if (image) {
-      const data = new FormData();
-      const fileName = Date.now() + image.name;
-      data.append("name", fileName);
-      data.append("file", image);
-
-      // newPost.image = fileName;
-      setData({ ...formData, profilePhoto: fileName });
-      try {
-        dispatch(uploadImage(data));
-        setUploaded(true);
-      } catch (err) {
-        console.log(err);
-        setUploaded(false);
-      }
-    } else {
-      toast.error("No image is chosen", {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      return;
-    }
-  };
-
+  //get my details
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -88,6 +45,47 @@ function ProfilHeader() {
     };
     getData();
   }, []);
+
+  const [image, setImage] = useState(null);
+  const [uploaded, setUploaded] = useState(false);
+
+  const [formData, setData] = useState({
+    profilePhoto: "",
+  });
+
+  const dispatch = useDispatch();
+
+  //set image
+  const handleFileChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      setImage(img);
+      console.log(img);
+    }
+  };
+
+  const [fileName, SetImageNewName] = useState("");
+  //Upload image and rename and new name upload
+  const handleUploadAndImageNameUpdate = async (e) => {
+    if (image) {
+      const data = new FormData();
+      const newImageName = Date.now() + image.name;
+      data.append("name", newImageName);
+      data.append("file", image);
+
+      try {
+        await dispatch(uploadImage(data));
+        setData({ ...formData, profilePhoto: newImageName });
+        await updateMe({ profilePhoto: newImageName });
+        console.log("image upload and name update success");
+      } catch (err) {
+        console.log(err);
+        console.log("image upload and name update unsuccess");
+      }
+    } else {
+      console.log("Upload Error");
+    }
+  };
 
   return (
     <div>
@@ -114,38 +112,59 @@ function ProfilHeader() {
               justifyContent="center"
               alignItems="center"
             >
-              <Avatar
-                className="profileavatar custom-avatar"
-                style={{
-                  border: "4px solid white",
-                  margin: "1px",
-                }}
-                alt="The image"
-                src={serverPublic + user?.profilePhoto}
-                sx={{
-                  width: { xs: 64, sm: 96, md: 128, lg: 150 },
-                  height: { xs: 64, sm: 96, md: 128, lg: 150 },
-                }}
-              />
-              <Stack direction="row">
-                <input
-                  id="file"
-                  accept="image/*"
-                  type="file"
-                  onChange={handleFileChange}
+              <div style={{ position: "relative", backgroundColor: "none" }}>
+                <Avatar
+                  className="profileavatar custom-avatar"
+                  style={{
+                    border: "4px solid white",
+                    margin: "1px",
+                  }}
+                  alt="The image"
+                  src={serverPublic + user?.profilePhoto}
+                  sx={{
+                    width: { xs: 64, sm: 96, md: 128, lg: 150 },
+                    height: { xs: 64, sm: 96, md: 128, lg: 150 },
+                  }}
                 />
-                <label htmlFor="file">
-                  <IconButton color="primary" component="span">
-                    <PhotoCamera />
-                  </IconButton>
-                </label>
-
+                <IconButton
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    // backgroundColor: "#5f0937",
+                    color: "white",
+                  }}
+                >
+                  <label htmlFor="file-upload">
+                    <Avatar
+                      sx={{
+                        bgcolor: "primary.main",
+                        width: 27,
+                        height: 27,
+                        border: "4px solid #fff",
+                        "&:hover": {
+                          cursor: "pointer",
+                        },
+                      }}
+                    >
+                      <ControlPointIcon />
+                    </Avatar>
+                  </label>
+                  <input
+                    id="file-upload"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
+                </IconButton>
+              </div>
+              <Stack direction="row">
                 <InputAdornment position="end">
                   <Button
                     component="label"
                     variant="contained"
                     className="prouploadbutton custom-button"
-                    onClick={handleUpload}
+                    onClick={handleUploadAndImageNameUpdate}
                   >
                     Update
                   </Button>
