@@ -11,12 +11,8 @@
     "@mui/material": "^5.11.13",
     "@mui/styled-engine-sc": "^5.11.0",
     "@mui/styles": "^5.11.11",
-<<<<<<< HEAD
-    "@mui/x-data-grid": "^5.17.26",
-=======
     "@mui/x-data-grid": "^5.17.25",
-    "@mui/x-date-pickers": "^6.0.1",
->>>>>>> 7351ca6fc62ff501fd951da658e27209538b0b92
+    "@mui/x-date-pickers": "^6.0.3",
     "@react-spring/web": "^9.6.1",
     "@syncfusion/ej2-react-calendars": "^20.4.52",
     "@testing-library/jest-dom": "^5.16.5",
