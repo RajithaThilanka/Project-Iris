@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {getAllQuestions } from "../../api/QuestionRequests";
+import {getQuestionArray } from "../../api/QuestionRequests";
 
 
 function QuestionHeader(){
@@ -7,16 +7,36 @@ function QuestionHeader(){
     const [allQuestions, setAllQuestions] = useState(null)
     useEffect(() => {
     const fetchQuestions = async () => {
-    const { data: { data: { data },},} = await getAllQuestions();
+    const { data: { data: { data },},} = await getQuestionArray();
       setAllQuestions(data);
     };
 
     fetchQuestions();
 
-    }, [allQuestions]);
+    }, []);
+
+    // const [randomQuestion, setQuestionArray] = useState(null)
+    // const randomQuestons = e => {
+    // const len = allQuestions.length;
+    // setQuestionArray(Math.floor(Math.random() * len));
+    // };
+
     return (
 
       <div>
+        {/* {randomQuestion ? (
+        // <ul> 
+        //   {randomQuestion.map(question =>{
+        //       return (<li key={question.id}>{question.question} </li> );
+        //       }
+        //     )
+        //   }
+        // </ul>
+        <h2>{randomQuestion}</h2>
+        ) : (
+        <p>Loading questions...</p>
+        )} */}
+
         {allQuestions ? (
         <ul> 
           {allQuestions.map(question =>{

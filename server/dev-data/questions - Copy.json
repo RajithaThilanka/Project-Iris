@@ -3,31 +3,36 @@
     {
         "question": "What are your favorite sports?",
         "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "answerTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
         "questionType": "sports"
     },
     
     {
         "question": "What are the social media platforms you mostly use?",
         "optionTags": ["Facebook", "Youtube", "TikTok", "SnapChat", "Instagram","Twitter", "LinkedIn", "Reddit"],
+        "answerTags": ["Facebook", "Youtube", "TikTok", "SnapChat", "Instagram","Twitter", "LinkedIn", "Reddit"],
         "questionType": "socialMedia"
     },
     
     {
         "question": "What are your favorite movie genres?",
         "optionTags": ["Action", "Comedy", "Drama", "Adventure", "Thriller"],
+        "answerTags": ["Action", "Comedy", "Drama", "Adventure", "Thriller"],
         "questionType": "movies"
     },
     
     {
         "question": "What type of music do you like to listen to?",
         "optionTags": ["Pop", "Country", "HipHop", "Rock"],
+        "answerTags": ["Pop", "Country", "HipHop", "Rock"],
         "questionType": "music"
     },
     
     {
         "question": "What is your idea about politics?",
         "optionTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
+        "answerTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
         "questionType": "politics"
-    },
+    }
 
 ]

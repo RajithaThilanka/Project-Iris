@@ -34,20 +34,20 @@ function QuestionPage() {
     return (
 
     //   <div>
-    //     {allQuestions ? (
-    //     <ul> 
-    //       {allQuestions.map(question =>{
-    //           return (<li key={question.id}>{question.question} </li> );
-    //           }
-    //         )
-    //       }
-    //     </ul>
-    //     ) : (
-    //     <p>Loading questions...</p>
-    //     )}
+        // {allQuestions ? (
+        // <ul> 
+        //   {allQuestions.map(question =>{
+        //       return (<li key={question.id}>{question.question} </li> );
+        //       }
+        //     )
+        //   }
+        // </ul>
+        // ) : (
+        // <p>Loading questions...</p>
+        // )}
     // </div>
         <div className="Question">
-            <h2>Let us know your preferences...</h2>
+            <h2>Let us know about you...</h2>
             {/* <QuestionHeader /> */}
             
             <Box
@@ -64,7 +64,9 @@ function QuestionPage() {
                 >
                   Hello-box
                   
-                <Paper elevation={3}>
+                <Paper elevation={3}
+                
+                xs={6}>
                   Hello-paper
                 
                 

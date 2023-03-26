@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import QuestionHeader from "../../components/Question/QuestionHeader";
-
+import QuestionAnswers from "./QuestionAnswers";
 
 function Question(){
     return(
@@ -31,7 +31,8 @@ function Question(){
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small">Learn More</Button>
+            <Button variant="contained">Contained</Button>
+            {/* <QuestionAnswers/> */}
         </CardActions>
         </Card>
     </Paper>
