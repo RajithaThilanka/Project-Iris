@@ -91,7 +91,7 @@ function App() {
       <>
         <Routes>
           <Route
-	          path="/"
+	          path="/question"
 	          element={<QuestionPage />}
           ></Route>
           <Route

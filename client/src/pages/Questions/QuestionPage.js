@@ -1,32 +1,54 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Container } from '@mui/material';
 import Question from "../../components/Question/Question";
-
+//import QuestionHeader from "../../components/Question/QuestionHeader";
+//import QuestionAnswers from "../../components/Question/QuestionAnswers";
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { useEffect } from "react";
 
-const ENDPOINT = "http://localhost:5000";
+
+//import { getAllQuestions } from "../../api/QuestionRequests";
 function QuestionPage() {
 
-const [question, setQuestion] = useState(null)
-useEffect(() => {
-  const fetchQuestion = async () => {
-    const response = await fetch('/api/v1/question')
-    const json = await response.json()
-      if (response.ok){
-      setQuestion(json)
-      }
-    }
+// const [question, setQuestion] = useState(null);
+// const [allQuestions, setAllQuestions] = useState(null)
+// useEffect(() => {
+//   const fetchQuestions = async () => {
+//     const { data: { data: { data },},} = await getAllQuestions();
+//       setAllQuestions(data);
+//     };
 
-  fetchQuestion()
+//   fetchQuestions();
 
-}, [])
+// }, [allQuestions]);
 
+// useEffect(() => {
+//   const fetchQuestion = async () => {
+//     const { data: { data: { data },},} = await getQuestionById();
+//     setQuestion(data);
+//   };
+//   fetchQuestion();
+// }, []);
+
+//console.log("hello", allQuestions);
     return (
+
+    //   <div>
+    //     {allQuestions ? (
+    //     <ul> 
+    //       {allQuestions.map(question =>{
+    //           return (<li key={question.id}>{question.question} </li> );
+    //           }
+    //         )
+    //       }
+    //     </ul>
+    //     ) : (
+    //     <p>Loading questions...</p>
+    //     )}
+    // </div>
         <div className="Question">
-            <h2>Questions</h2>
-            <p> {question.question}</p>
+            <h2>Let us know your preferences...</h2>
+            {/* <QuestionHeader /> */}
             
             <Box
                 sx={{
@@ -48,12 +70,10 @@ useEffect(() => {
                 
                 
                 </Paper>
-                {/* <Question>
-                  Hello-question
-                </Question> */}
+                <Question/>
             </Box>
         </div>
-    )
-};
+    );
+}
 
 export default QuestionPage;
