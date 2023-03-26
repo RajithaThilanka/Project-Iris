@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUserChats } from "../../api/UserRequests";
 
 import Navbar from "../../components/Appbar/Navbar";
@@ -13,6 +13,7 @@ import MatchesContext from "../../context/matches";
 import "./Chat.css";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import io from "socket.io-client";
+import { logout } from "../../actions/AuthActions";
 const ENDPOINT = "http://localhost:5000";
 let socket;
 
@@ -20,6 +21,7 @@ function Chat() {
   const { setActiveTab, setSocketConnected, setActiveUsers, socketConnected } =
     useContext(MatchesContext);
   setActiveTab(4);
+  const dispatch = useDispatch();
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
@@ -49,6 +51,10 @@ function Chat() {
       } catch (error) {
         console.log(error);
         setErr(error);
+        if (error.response.status === 401) {
+          socket?.disconnect();
+          dispatch(logout());
+        }
       }
     };
     fetchChats();
@@ -60,10 +66,12 @@ function Chat() {
       setSocketConnected(false);
     };
   }, []);
+
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <>
       {socketConnected && <Navbar user={user} socket={socket} />}
-      {socketConnected && (
+      {socketConnected ? (
         <div style={{ display: "flex" }} className="chat-page-container">
           <VerticalNavbar />
           <div className="chat-page">
@@ -79,7 +87,11 @@ function Chat() {
                 // ref={mychatscroll}
                 style={{ background: "#ddd" }}
               >
-                <MyChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+                <MyChat
+                  fetchAgain={fetchAgain}
+                  setFetchAgain={setFetchAgain}
+                  socket={socket}
+                />
                 <ChatBox
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
@@ -89,6 +101,17 @@ function Chat() {
           </div>
           <BottomNavbar />
         </div>
+      ) : !socketConnected ? (
+        <div
+          className="dashboard-loading-container"
+          style={{ height: "100vh" }}
+        >
+          <div className="dashboard-loading-photo">
+            <img src={serverPublic + "irislogo.png"} alt="loading-user" />
+          </div>
+        </div>
+      ) : (
+        ""
       )}
     </>
   );

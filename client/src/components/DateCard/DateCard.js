@@ -120,13 +120,16 @@ function DateCard({ dateInfo }) {
             Go to date
           </Button>
 
-          <Button
-            variant="contained"
-            className="postpone-btn"
-            onClick={handleOpen}
-          >
-            Postpone
-          </Button>
+          {new Date(dateInfo.scheduledAt).getTime() >
+            Date.now() - 2 * 60 * 60 * 1000 && (
+            <Button
+              variant="contained"
+              className="postpone-btn"
+              onClick={handleOpen}
+            >
+              Postpone
+            </Button>
+          )}
         </div>
       </div>
     </div>

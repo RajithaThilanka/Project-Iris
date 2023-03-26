@@ -18,6 +18,25 @@ input[type="file"] + label {
   align-items: center;
   font-family: inherit;
 }
+
+#profile-view-images-upload {
+  color: white;
+  height: 20rem !important;
+  width: 12rem !important;
+  padding: 2rem;
+
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 20px !important;
+  border: 2px dashed #ccc;
+  /* margin: auto; */
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+}
+
 .signup-container {
   width: 100vw;
   height: auto;
