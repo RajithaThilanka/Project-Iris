@@ -15,14 +15,16 @@ import {
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { signUp } from "../../../actions/AuthActions";
 import { signupLookingforInfo } from "../../../api/AuthRequests";
 
 import { StyledFormControlLabel } from "../../UIComponents/Radio";
 
 function LookingFor() {
-  const { id } = useParams();
+  const {
+    state: { id },
+  } = useLocation();
   const dispatch = useDispatch();
   const [formData, setData] = useState({
     lookingForGender: "male",

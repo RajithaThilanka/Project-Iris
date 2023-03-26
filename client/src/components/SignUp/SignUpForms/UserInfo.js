@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { signupUserInfo } from "../../../api/AuthRequests";
 
 import { getCountries } from "../../../api/CountryRequest";
@@ -24,7 +24,10 @@ import MultipleSelectChip from "../../UIComponents/MultipleSelectChip";
 import { StyledFormControlLabel } from "../../UIComponents/Radio";
 
 function UserInfo() {
-  const { id } = useParams();
+  const {
+    state: { id },
+  } = useLocation();
+
   const [formData, setData] = useState({
     gender: "male",
     country: "",
@@ -52,7 +55,12 @@ function UserInfo() {
           data: { data },
         },
       } = await signupUserInfo(formData);
-      navigate(`/auth/signup/profileview-info/${data._id}`, { replace: true });
+      navigate(`/auth/signup/profileview-info`, {
+        replace: true,
+        state: {
+          id: data._id,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
