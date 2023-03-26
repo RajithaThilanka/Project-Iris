@@ -4,6 +4,7 @@ import Question from "../../components/Question/Question";
 //import QuestionHeader from "../../components/Question/QuestionHeader";
 //import QuestionAnswers from "../../components/Question/QuestionAnswers";
 import Box from '@mui/material/Box';
+import Grid from "@mui/material/Unstable_Grid2";
 import Paper from '@mui/material/Paper';
 
 
@@ -50,7 +51,7 @@ function QuestionPage() {
             <h2>Let us know about you...</h2>
             {/* <QuestionHeader /> */}
             
-            <Box
+            {/* <Box
                 sx={{
                     display: 'flex',
                     flexWrap: 'wrap',
@@ -63,8 +64,26 @@ function QuestionPage() {
                   }}
                 >
                 
-                <Question/>
-            </Box>
+                
+            </Box> */}
+            {/* <Grid container rowSpacing={3} px={3} margin={2} alignItems="flex-end" justify="center">
+                
+            </Grid> */}
+            <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            style={{ minHeight: '100vh' }}
+            >
+
+            <Grid item xs={3}>
+            <Question/>
+            </Grid>   
+            
+            </Grid> 
+            
         </div>
     );
 }

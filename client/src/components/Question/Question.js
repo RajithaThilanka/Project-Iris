@@ -10,7 +10,7 @@ import QuestionHeader from "../../components/Question/QuestionHeader";
 import QuestionAnswers from "./QuestionAnswers";
 
 function Question(){
-    return(
+    return (
     <Paper elevation={3} >
         <Card sx={{ minWidth: 275 }} >
         <CardContent>
