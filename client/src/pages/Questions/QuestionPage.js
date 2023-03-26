@@ -56,22 +56,13 @@ function QuestionPage() {
                     flexWrap: 'wrap',
                     '& > :not(style)': {
                       m: 1,
-                      width: 128,
+                      width: 500,
                       height: 500,
                     },
                     
                   }}
                 >
-                  Hello-box
-                  
-                <Paper elevation={3}
                 
-                xs={6}>
-                  Hello-paper
-                
-                
-                
-                </Paper>
                 <Question/>
             </Box>
         </div>

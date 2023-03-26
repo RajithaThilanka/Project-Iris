@@ -33,6 +33,11 @@
         "optionTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
         "answerTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
         "questionType": "politics"
+    },
+    {
+        "question": "What kind of hobbies do you have?",
+        "optionTags": ["Sports","Cinema","travel enthusiast","Art","Food aficionado","Passionate gamer","Crafts","Carpentry/DIY","Dancing","Photography","music fan","Writer","Extreme reader"],
+        "answerTags": ["Sports","Cinema","Traveling","Art","Cooking","Gaming","Crafts","Carpentry/DIY","Dancing","Photography","Music","Writing","Reading"],
+        "questionType": "profileDescription"
     }
-
 ]

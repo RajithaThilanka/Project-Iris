@@ -12,7 +12,7 @@ import QuestionAnswers from "./QuestionAnswers";
 function Question(){
     return(
     <Paper elevation={3} >
-        <Card sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275 }} >
         <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             
@@ -31,7 +31,7 @@ function Question(){
             </Typography> */}
         </CardContent>
         <CardActions>
-            <Button variant="contained">Contained</Button>
+            <Button variant="contained">Answer</Button>
             {/* <QuestionAnswers/> */}
         </CardActions>
         </Card>
