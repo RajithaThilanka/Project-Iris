@@ -70,6 +70,7 @@ function Dashboard2() {
   const [filtered, setFiltered] = useState([]);
   const profileContentRef = useRef();
   const [btnClicked, setBtnClicked] = useState(false);
+  const [currentPhoto, setCurrentPhoto] = useState(0);
   const applyFilter = () => {
     const lookingForGenders = [];
     filter.gender.male && lookingForGenders.push("male");
@@ -259,6 +260,13 @@ function Dashboard2() {
     setBtnClicked(false);
   };
 
+  const handleTap = (e) => {
+    // e.stopPropogation();
+    if (e.currentTarget != e.target) return;
+    setCurrentPhoto(
+      (currentPhoto + 1) % (filtered[currentProfile]?.photos?.length + 1)
+    );
+  };
   useEffect(() => {
     return () => {
       socket.off();
@@ -286,9 +294,13 @@ function Dashboard2() {
                   className="sugg-card"
                   style={{
                     backgroundImage: `url(${
-                      serverPublic + filtered[currentProfile]?.profilePhoto
+                      currentPhoto === 0
+                        ? serverPublic + filtered[currentProfile]?.profilePhoto
+                        : serverPublic +
+                          filtered[currentProfile]?.photos[currentPhoto - 1]
                     })`,
                   }}
+                  onClick={handleTap}
                 >
                   {!btnClicked ? (
                     <IconButton
@@ -305,6 +317,33 @@ function Dashboard2() {
                       <CloseIcon fontSize="large" sx={{ color: "#eee" }} />
                     </IconButton>
                   )}
+                  <div className="dashboard-other-images-container">
+                    <div
+                      className={
+                        currentPhoto === 0
+                          ? "horizonal-photo-line--active"
+                          : "horizonal-photo-line"
+                      }
+                      onClick={() => setCurrentPhoto(0)}
+                    ></div>
+                    {filtered[currentProfile]?.photos?.length > 0 &&
+                      filtered[currentProfile].photos.map((photo, index) => {
+                        return (
+                          // <div className="dashboard-other-image">
+                          //   <img src={serverPublic + photo} alt="others" />
+                          // </div>
+                          <div
+                            className={
+                              currentPhoto !== 0 && currentPhoto === index + 1
+                                ? "horizonal-photo-line--active"
+                                : "horizonal-photo-line"
+                            }
+                            key={index}
+                            onClick={() => setCurrentPhoto(index + 1)}
+                          ></div>
+                        );
+                      })}
+                  </div>
                   <div className="profile--header">
                     <IconButton
                       style={{
@@ -376,6 +415,7 @@ function Dashboard2() {
                     </Button>
                   </div>
                 </div>
+
                 <Box className="profileContent" ref={profileContentRef}>
                   <Zoom>
                     <Divider>
