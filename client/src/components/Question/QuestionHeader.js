@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 function QuestionHeader(){
     //const [question, setQuestion] = useState(null);
     const [allQuestions, setAllQuestions] = useState(null)
+    
     useEffect(() => {
     const fetchQuestions = async () => {
     const { data: { data: { data },},} = await getQuestionArray();
@@ -22,8 +23,21 @@ function QuestionHeader(){
     // setQuestionArray(Math.floor(Math.random() * len));
     // };
  console.log('hello', allQuestions);
-     const QuestionAnswersArray = allQuestions.map(({question: {answerTags}}) => ({answerTags}));
+    // const [displayQuestion, setDisplayQuestion] = useState(null)
+    // let len = allQuestions.length;
+    // const data = allQuestions[1]
+    // setDisplayQuestion (data);
 
+    // useEffect(() => {
+    // const displayQuestions = async () => {
+    // const { data: { data: { data },},} = await getQuestionArray();
+    //   setAllQuestions(data);
+    // };
+
+    // fetchQuestions();
+
+    // }, []);
+    // console.log('helloDisplay', displayQuestion);
     return (
 
       <div>
@@ -42,11 +56,12 @@ function QuestionHeader(){
         <div>
             {allQuestions ? (
             <div> 
-            {allQuestions.map(question =>{
+            {/* {allQuestions.map(question =>{
               return (<li key={question.id}>{question.question} </li> );
               }
             )
-            }
+            } */}
+            {allQuestions[1].question}
             </div>
             ) : (
             <p>Loading questions...</p>
