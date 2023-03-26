@@ -39,40 +39,42 @@ function QuestionHeader(){
         ) : (
         <p>Loading questions...</p>
         )} */}
-
-        {allQuestions ? (
-        <div> 
-          {allQuestions.map(question =>{
+        <div>
+            {allQuestions ? (
+            <div> 
+            {allQuestions.map(question =>{
               return (<li key={question.id}>{question.question} </li> );
               }
             )
-          }
+            }
+            </div>
+            ) : (
+            <p>Loading questions...</p>
+            )}
         </div>
-        ) : (
-        <p>Loading questions...</p>
-        )}
+        
         <div>
-        {QuestionAnswersArray ? (
-        <div>
-            {QuestionAnswersArray.map((item, index) => (
-        <Button variant="contained" key={index}>{item}</Button>
-      ))}
-            {/* {QuestionAnswersArray.map(question => (
-                    // question.map((item, index) => (
-                    //     <Button variant="contained" key={index}>{item}</Button>
-                    //     ))
-                    <Button variant="contained" key={question.id} onClick={() => alert(`You clicked the ${question.answerTags} button`)}>
-                        {question.answerTags}
-                        
-                    </Button>
+            {QuestionAnswersArray ? (
+            <div>
+                {QuestionAnswersArray.map((item, index) => (
+            <Button variant="contained" key={index}>{item}</Button>
+            ))}
+                {/* {QuestionAnswersArray.map(question => (
+                        // question.map((item, index) => (
+                        //     <Button variant="contained" key={index}>{item}</Button>
+                        //     ))
+                        <Button variant="contained" key={question.id} onClick={() => alert(`You clicked the ${question.answerTags} button`)}>
+                            {question.answerTags}
+                            
+                        </Button>
+                        )
                     )
-                )
-            } */}
+                } */}
+            </div>
+            ) : (
+            <p>Loading answers...</p>
+            )}
         </div>
-        ) : (
-        <p>Loading answers...</p>
-        )}
-    </div>
     </div>
     )
 }
