@@ -662,7 +662,10 @@ function Dashboard2() {
                 }}
                 modules={[Pagination]}
                 className="mySwiper"
-                onSlideChange={(el) => setCurrentProfile(el.realIndex)}
+                onSlideChange={(el) => {
+                  setCurrentProfile(el.realIndex);
+                  setCurrentPhoto(0);
+                }}
                 initialSlide={currentProfile}
                 onSwiper={setSwiper}
                 grabCursor={true}
