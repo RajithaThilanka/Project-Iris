@@ -32,7 +32,7 @@ function Question(){
         </CardContent>
         <CardActions>
             <Button variant="contained">Contained</Button>
-            <QuestionAnswers/>
+            {/* <QuestionAnswers/> */}
         </CardActions>
         </Card>
     </Paper>
