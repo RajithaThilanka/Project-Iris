@@ -28,6 +28,9 @@ import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminPage from "./pages/Admin/AdminPage";
 import AdminLogin from "./pages/AdminAuth/AdminLogin";
+import IdVerification from "./pages/UserVerification/IdVerification";
+import UploadImage from "./pages/UserVerification/UploadImage";
+import SelfiPhoto from "./pages/UserVerification/SelfiPhoto";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -183,6 +186,9 @@ function App() {
             element={<SuggessionPage />}
           ></Route>
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
+          <Route path="verification" element={<IdVerification/>} />
+          <Route path="uploadimage" element={<UploadImage/>} />
+          <Route path="selfiPhoto" element={<SelfiPhoto/>}/>
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}
