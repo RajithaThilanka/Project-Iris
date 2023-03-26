@@ -20,7 +20,7 @@ function QuestionHeader(){
     // const len = allQuestions.length;
     // setQuestionArray(Math.floor(Math.random() * len));
     // };
-
+ console.log('hello', allQuestions);
     return (
 
       <div>

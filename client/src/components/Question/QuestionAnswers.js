@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Button from '@mui/material/Button';
 import {getQuestionArray } from "../../api/QuestionRequests";
+//import {QuestionHeader} from "./QuestionHeader";
 
 
 function QuestionAnswers(){
@@ -15,15 +16,15 @@ function QuestionAnswers(){
 
     }, []);
     console.log('hello', allQuestions);
-    const [QuestionAnswersArray] = allQuestions.question.answerTags;
-    //const QuestionAnswersArray = allQuestions.map(({id, name, address: {city}}) => ({id, name, city}));
+    //const [QuestionAnswersArray] = allQuestions.question.answerTags;
+    //const QuestionAnswersArray = QuestionHeader.allQuestions.map(({id, name, address: {city}}) => ({id, name, city}));
     return (
     <div>
-        {QuestionAnswersArray ? (
+        {allQuestions ? (
         <div>
-            {QuestionAnswersArray.map((answerTags, index) => (
-                    <Button variant="contained" key={index} onClick={() => alert(`You clicked the ${answerTags} button`)}>
-                        {answerTags}
+            {allQuestions.map(question => (
+                    <Button variant="contained" key={question.id} onClick={() => alert(`You clicked the ${question.answerTags} button`)}>
+                        {question.answerTags}
                     </Button>
                     )
                 )
