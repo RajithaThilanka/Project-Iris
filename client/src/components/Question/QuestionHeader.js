@@ -53,28 +53,7 @@ function QuestionHeader(){
             )}
         </div>
         
-        <div>
-            {QuestionAnswersArray ? (
-            <div>
-                {QuestionAnswersArray.map((item, index) => (
-            <Button variant="contained" key={index}>{item}</Button>
-            ))}
-                {/* {QuestionAnswersArray.map(question => (
-                        // question.map((item, index) => (
-                        //     <Button variant="contained" key={index}>{item}</Button>
-                        //     ))
-                        <Button variant="contained" key={question.id} onClick={() => alert(`You clicked the ${question.answerTags} button`)}>
-                            {question.answerTags}
-                            
-                        </Button>
-                        )
-                    )
-                } */}
-            </div>
-            ) : (
-            <p>Loading answers...</p>
-            )}
-        </div>
+        
     </div>
     )
 }
