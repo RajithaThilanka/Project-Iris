@@ -16,7 +16,7 @@ const authReducer = (
       return { ...state, authData: action.data, loading: false, error: false };
 
     case "AUTH_FAIL":
-      return { ...state, loading: false, error: true };
+      return { ...state, loading: false, error: action.data };
     case "AUTH_RESET":
       return { ...state, authData: null, loading: false, error: false };
     case "LOG_OUT":

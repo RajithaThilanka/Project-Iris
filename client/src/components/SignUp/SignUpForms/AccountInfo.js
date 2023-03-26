@@ -7,10 +7,11 @@ import {
   TextField,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../Loading/Loading";
 import { signupAccountInfo } from "../../../api/AuthRequests";
-
+import "./AccountInfo.css";
 function AccountInfo() {
   const [formData, setData] = useState({
     firstname: "",
@@ -19,6 +20,10 @@ function AccountInfo() {
     password: "",
     passwordConfirm: "",
   });
+  const [err, setErr] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
+  const [strong, setStrong] = useState(false);
 
   const resetForm = () => {
     setData({
@@ -35,6 +40,8 @@ function AccountInfo() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setErr(null);
     if (formData.password === formData.passwordConfirm) {
       try {
         const {
@@ -43,30 +50,31 @@ function AccountInfo() {
           },
         } = await signupAccountInfo(formData);
         resetForm();
+        setErr(null);
+        setLoading(false);
         navigate(`/auth/signup/user-info/${data._id}`);
       } catch (error) {
         console.log(error);
+        setErr(error);
+        setLoading(false);
       }
     } else {
       console.log("Passwords do not match");
     }
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  useEffect(() => {
+    setPasswordsMatch(formData.password === formData.passwordConfirm);
+  }, [formData.password, formData.passwordConfirm]);
+
+  useEffect(() => {
+    setStrong(formData.password.length >= 8);
+  }, [formData.password]);
   return (
-    <div className="signup-container" style={{ height: "100vh" }}>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          width: "80vw",
-          margin: "auto",
-          height: "auto",
-          background: "#fff",
-          boxShadow:
-            "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-        }}
-      >
-        <Grid container spacing={3} py={4} px={3} margin={2}>
-          <Grid sm={12}>
+    <div className="signup-container">
+      <form onSubmit={handleSubmit} className="account-info-form" method="post">
+        <Grid container spacing={3} px={3} margin={2}>
+          <Grid sm={12} xs={12}>
             <div style={{ textAlign: "center" }}>
               <img
                 style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
@@ -75,15 +83,10 @@ function AccountInfo() {
               />
             </div>
           </Grid>
-          <Grid sm={12}>
-            <h3
-              style={{ textAlign: "center", fontSize: "3.4rem" }}
-              className="heading-tertiary"
-            >
-              Let's begin
-            </h3>
+          <Grid sm={12} xs={12}>
+            <h3 className="heading-tertiary signup-heading">Let's begin</h3>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>First Name</FormLabel>
               <TextField
@@ -97,7 +100,7 @@ function AccountInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Last Name</FormLabel>
               <TextField
@@ -111,7 +114,7 @@ function AccountInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Email</FormLabel>
               <TextField
@@ -121,12 +124,14 @@ function AccountInfo() {
                 fullWidth
                 name="email"
                 type="email"
+                error={err ? true : false}
+                helperText={err ? err?.response?.data?.message : ""}
                 onChange={handleData}
                 value={formData.email}
               />
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Password</FormLabel>
               <TextField
@@ -137,11 +142,19 @@ function AccountInfo() {
                 fullWidth
                 name="password"
                 onChange={handleData}
+                error={!passwordsMatch || !strong}
+                helperText={
+                  !passwordsMatch
+                    ? "Passwords do not match"
+                    : !strong
+                    ? "Password should be at least 8 characters"
+                    : ""
+                }
                 value={formData.password}
               />
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={3}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Confirm Password
@@ -153,18 +166,37 @@ function AccountInfo() {
                 type="password"
                 fullWidth
                 name="passwordConfirm"
+                error={!passwordsMatch}
+                helperText={!passwordsMatch ? "Passwords do not match" : ""}
                 onChange={handleData}
                 value={formData.passwordConfirm}
               />
             </Stack>
           </Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={4}></Grid>
-          <Grid sm={4}>
-            <Button variant="contained" fullWidth type="submit">
-              Next
-            </Button>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={4} xs={1}></Grid>
+          <Grid sm={4} xs={6}>
+            {loading && !err ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Loader />
+              </div>
+            ) : (
+              <Button
+                variant="contained"
+                fullWidth
+                type="submit"
+                disabled={!passwordsMatch || !strong}
+              >
+                Next
+              </Button>
+            )}
           </Grid>
         </Grid>
       </form>

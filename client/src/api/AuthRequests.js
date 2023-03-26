@@ -25,3 +25,6 @@ export const forgotPassword = (email) =>
 
 export const resetPassword = (formData, token) =>
   API.patch(`/users/reset-password/${token}`, formData);
+
+export const adminLogin = (formData) =>
+  API.post("/users/admin/login", formData);

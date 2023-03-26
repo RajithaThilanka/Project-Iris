@@ -7,7 +7,7 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import MatchesContext from "../../context/matches";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-function Requests() {
+function Requests({ socket }) {
   const {
     sentConRequests,
     setsentConRequests,
@@ -28,16 +28,7 @@ function Requests() {
         receivedConRequests.filter((req) => req.senderId._id !== id)
       );
       setConnections([...connections, data]);
-      toast.success(`Connected`, {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      socket.emit("new-con-request-accepted", data);
     } catch (err) {
       const { message } = err;
 
@@ -63,16 +54,6 @@ function Requests() {
       setreceivedConRequests(
         receivedConRequests.filter((req) => req.senderId._id !== id)
       );
-      toast.success(`Friend Invitation Cancelled`, {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     } catch (err) {
       const { message } = err;
 

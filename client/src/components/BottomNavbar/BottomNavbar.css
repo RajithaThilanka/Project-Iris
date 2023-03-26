@@ -1,0 +1,32 @@
+.bottom-nav-container {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #eee;
+}
+.bottom-sidebar {
+  width: 100%;
+}
+.bottom-side-nav__item {
+  cursor: pointer;
+}
+
+.bottom-side-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  list-style: none;
+}
+.bottom-side-nav__item--active .MuiSvgIcon-root {
+  color: var(--color-primary) !important;
+}
+@media only screen and (max-width: 41em) {
+  .bottom-nav-container {
+    display: flex;
+  }
+}

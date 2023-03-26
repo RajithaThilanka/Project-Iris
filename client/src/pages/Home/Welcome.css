@@ -860,9 +860,11 @@ body {
 }
 
 .bg-video {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
+  right: 0;
   height: 100%;
   width: 100%;
   z-index: -1;
@@ -1077,9 +1079,9 @@ body {
       from(#ffb900),
       to(#ff7730)
     ),
-    url("../../../public/img/nat-5.jpg");
+    url("https://live.staticflickr.com/65535/52755781739_4e262fefde_o.jpg");
   background-image: linear-gradient(to right bottom, #ffb900, #ff7730),
-    url("../../../public/img/nat-5.jpg");
+    url("https://live.staticflickr.com/65535/52755781739_4e262fefde_o.jpg");
 }
 
 .card__picture--2 {
@@ -1090,9 +1092,9 @@ body {
       from(#7ed56f),
       to(#28b485)
     ),
-    url("../../../public/img/nat-6.jpg");
+    url("https://live.staticflickr.com/65535/52755942865_8b8ab0bb32_o.jpg");
   background-image: linear-gradient(to right bottom, #7ed56f, #28b485),
-    url("../../../public/img/nat-6.jpg");
+    url("https://live.staticflickr.com/65535/52755942865_8b8ab0bb32_o.jpg");
 }
 
 .card__picture--3 {
@@ -1103,9 +1105,9 @@ body {
       from(#2998ff),
       to(#5643fa)
     ),
-    url("../../../public/img/nat-7.jpg");
+    url("https://live.staticflickr.com/65535/52754995307_36c059a6d0_o.jpg");
   background-image: linear-gradient(to right bottom, #2998ff, #5643fa),
-    url("../../../public/img/nat-7.jpg");
+    url("https://live.staticflickr.com/65535/52754995307_36c059a6d0_o.jpg");
 }
 
 .card__heading {
@@ -1900,13 +1902,13 @@ body {
       from(var(--color-primary)),
       to(var(--color-secondary))
     ),
-    url("../../../public/img/header-wall.jpg");
+    url("https://live.staticflickr.com/65535/52756025158_e3b4297d46_o.jpg");
   background-image: linear-gradient(
       to right bottom,
       var(--color-grey-dark-3),
       transparent
     ),
-    url("../../../public/img/header-wall.jpg");
+    url("https://live.staticflickr.com/65535/52756025158_e3b4297d46_o.jpg");
   background-size: cover;
   background-position: top;
   position: relative;
@@ -1921,7 +1923,7 @@ body {
   }
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+/* @media only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
   only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
   only screen and (min-width: 125em) {
   .header {
@@ -1940,7 +1942,7 @@ body {
       ),
       url("../../../public/img/hero.jpg");
   }
-}
+} */
 
 @media only screen and (max-width: 37.5em) {
   .header {
@@ -1969,6 +1971,17 @@ body {
   padding: 0.4rem 4rem !important;
   vertical-align: middle;
 }
+
+@media only screen and (max-width: 56.25em) {
+  .btn-login {
+    font-size: 1.3rem !important;
+    color: var(--color-primary) !important;
+    background-color: #fff !important;
+    padding: 0.4rem 3rem !important;
+    vertical-align: middle;
+  }
+}
+
 .logo-content {
   color: #fff;
   font-size: 3.5rem;
@@ -2195,7 +2208,7 @@ body {
     padding: 20rem 0;
   }
 }
-
+/* [url=https://flic.kr/p/2onPWok][img][/img][/url][url=https://flic.kr/p/2onPWok]man and woman on romantic vacation walking together[/url] by [url=https://www.flickr.com/photos/197841762@N03/]Iris Team[/url], on Flickr */
 .section-features {
   padding: 20rem 0;
   background-image: -webkit-gradient(
@@ -2205,13 +2218,14 @@ body {
       from(var(--color-primary)),
       to(var(--color-primary-dark))
     ),
-    url("../../../public/img/nat-4.jpg");
+    url("https://live.staticflickr.com/65535/52754995452_e51b541606_o.jpg");
   background-image: linear-gradient(to right bottom, #ccc, transparent),
-    url("../../../public/img/features.jpg");
+    url("https://live.staticflickr.com/65535/52755541071_5185cbb302_o.jpg");
   background-size: cover;
   -webkit-transform: skewY(-7deg);
   transform: skewY(-7deg);
   margin-top: -10rem;
+  background-position: center;
 }
 
 .section-features > * {
@@ -2265,15 +2279,15 @@ body {
     padding: 10rem 0;
   }
 }
-
+/* [url=https://flic.kr/p/2onTpwE][img][/img][/url][url=https://flic.kr/p/2onTpwE]beautiful-couple-spending-time-together[/url] by [url=https://www.flickr.com/photos/197841762@N03/]Iris Team[/url], on Flickr */
 .book {
   background-image: linear-gradient(
       105deg,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(255, 255, 255, 0.9) 50%,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0.6) 50%,
       transparent 50%
     ),
-    url("../../../public/img/nat-10.jpg");
+    url("https://live.staticflickr.com/65535/52756217718_27b7318f11_o.jpg");
   background-size: 100%;
   border-radius: 3px;
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
@@ -2284,11 +2298,11 @@ body {
   .book {
     background-image: linear-gradient(
         105deg,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.9) 65%,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.6) 65%,
         transparent 65%
       ),
-      url("../../../public/img/nat-10.jpg");
+      url("https://live.staticflickr.com/65535/52756217718_27b7318f11_o.jpg");
     background-size: cover;
   }
 }
@@ -2299,16 +2313,16 @@ body {
         linear,
         left top,
         right top,
-        from(rgba(255, 255, 255, 0.9)),
-        to(rgba(255, 255, 255, 0.9))
+        from(rgba(255, 255, 255, 0.6)),
+        to(rgba(255, 255, 255, 0.6))
       ),
-      url("../../../public/img/nat-10.jpg");
+      url("https://live.staticflickr.com/65535/52756217718_27b7318f11_o.jpg");
     background-image: linear-gradient(
         to right,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.9) 100%
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.6) 100%
       ),
-      url("../../../public/img/nat-10.jpg");
+      url("https://live.staticflickr.com/65535/52756217718_27b7318f11_o.jpg");
   }
 }
 

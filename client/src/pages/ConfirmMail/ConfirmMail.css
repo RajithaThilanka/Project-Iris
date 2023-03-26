@@ -8,8 +8,22 @@
     var(--color-primary-dark)
   );
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+.confirm-mail-logo-container {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  top: 0;
+}
+.confirm-mail-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .confirm-mail-container h2 {
   font-size: 4rem;
@@ -17,7 +31,7 @@
   padding: 1.2rem 2rem;
   box-shadow: 0px 0px 5rem rgba(0, 0, 0, 0.5);
   border-radius: 4rem;
-  width: 75vw;
+  width: 40%;
   text-align: center;
 }
 
@@ -25,4 +39,21 @@
   font-size: 2rem;
   margin-top: 2rem;
   text-align: center;
+  font-weight: 600;
+}
+@media only screen and (max-width: 38.75em) {
+  .confirm-mail-container h2 {
+    font-size: 2.5rem;
+    padding: 1.2rem 1rem;
+  }
+  .confirm-mail-container p {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 22em) {
+  .confirm-mail-container h2 {
+    width: 100%;
+    border-radius: 0;
+  }
 }

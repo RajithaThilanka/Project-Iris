@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider, responsiveFontSizes } from "@mui/material";
 
 import Welcome from "./pages/Home/Welcome";
 import VerifyMail from "./pages/VerifyMail/VerifyMail";
@@ -29,6 +29,12 @@ import Friends from "./pages/Friends/Friends";
 import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminPage from "./pages/Admin/AdminPage";
+import AdminLogin from "./pages/AdminAuth/AdminLogin";
+
+import Dashboard2 from "./pages/Dashboard/Dashboard2";
+import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
+import Report from "./components/Report/Report";
+import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -49,9 +55,10 @@ const theme = createTheme({
   },
   breakpoints: {
     values: {
+      // xxs: 0,
       xs: 0,
       sm: 600,
-      md: 1088,
+      md: 900,
       lg: 1200,
       xl: 1536,
     },
@@ -73,17 +80,19 @@ const theme = createTheme({
     fontWeightBold: 500,
     fontWeightLight: 300,
     fontWeightRegular: 400,
+  },
 
-    button: {
-      fontFamily: "Poppins, sans-serif",
-      fontWeight: 400,
-      fontSize: "1.3rem",
-      lineHeight: 1.75,
-      letterSpacing: "0.17em",
-      textTransform: "uppercase",
-    },
+  button: {
+    fontFamily: "Poppins, sans-serif",
+    fontWeight: 400,
+    fontSize: "1.3rem",
+    lineHeight: 1.75,
+    letterSpacing: "0.17em",
+    textTransform: "uppercase",
+    textAlign: "left",
   },
 });
+
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
   return (
@@ -110,6 +119,7 @@ function App() {
             path="/auth/signup/lookingfor-info/:id"
             element={<LookingFor />}
           ></Route>
+
           <Route
             path="/auth/login"
             element={user ? <Navigate to="/me" /> : <Auth action="login" />}
@@ -120,7 +130,7 @@ function App() {
             path="/confirm-email"
             element={
               <ConfirmMail
-                main="Mail successfully sent"
+                main="SUCCESS"
                 desc=" Please follow the link attached to your email to verify your account"
               />
             }
@@ -129,28 +139,47 @@ function App() {
             path="/reset-message"
             element={
               <ConfirmMail
-                main="Mail successfully sent"
+                main="SUCCESS"
                 desc=" Please follow the link attached to your email to reset your password"
               />
             }
+          ></Route>
+          <Route
+            path="/users/report/:id"
+            element={user ? <Report /> : <Navigate to="/auth/login" />}
+          ></Route>
+          <Route
+            path="/email-confirm/success"
+            element={<MailConfirmed main="Email successfully verified" />}
+          ></Route>
+          <Route
+            path="/password-reset/success"
+            element={<MailConfirmed main="Password changed successfully" />}
           ></Route>
           <Route
             path="/users/verify/:userId/:token"
             element={<VerifyMail />}
           ></Route>
           {/* <Route path="/me/profile" element={<UserProfile />}></Route> */}
-          <Route path="/admin" element={<AdminPage />}></Route>
+          <Route
+            path="/login/admin"
+            element={user ? <AdminPage /> : <AdminLogin />}
+          />
+          <Route
+            path="/admin"
+            element={user ? <AdminPage /> : <Navigate to="/login/admin" />}
+          ></Route>
           <Route
             path="/users/reset-password/:token"
             element={<ResetPassword />}
           ></Route>
-
+          <Route path="/users/submit-request" element={<ActivationRequest />} />
           <Route path="/home" element={<Welcome />}></Route>
           <Route path="/" element={<Navigate to="/home" />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>
           <Route
             path="/me/dashboard"
-            element={user ? <Dashboard /> : <Navigate to="/auth/login" />}
+            element={user ? <Dashboard2 /> : <Navigate to="/auth/login" />}
           ></Route>
           <Route
             path="/me/connections"
@@ -160,7 +189,10 @@ function App() {
             path="/me/friends"
             element={user ? <Friends /> : <Navigate to="/auth/login" />}
           ></Route>
-          <Route path="/me/dates" element={<Dates />}></Route>
+          <Route
+            path="/me/dates"
+            element={user ? <Dates /> : <Navigate to="/auth/login" />}
+          ></Route>
           <Route
             path="/me"
             element={
@@ -171,12 +203,16 @@ function App() {
               )
             }
           ></Route>
-          <Route path="/me/chat" element={<Chat />}></Route>
+          <Route
+            path="/me/chat"
+            element={user ? <Chat /> : <Navigate to="/auth/login" />}
+          ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
           <Route
-            path="/me/suggession/profile"
+            path="/users/profile/:id"
             element={<SuggessionPage />}
           ></Route>
+
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>

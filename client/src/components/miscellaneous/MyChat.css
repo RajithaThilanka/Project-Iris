@@ -1,19 +1,12 @@
 .chat {
   display: flex;
-
   flex-direction: column;
   align-items: center;
   padding-top: 2.4rem;
   width: 100%;
-  border-radius: 15px;
-  border-width: 1px;
-  max-width: 35rem;
-  margin: 0 auto;
-  height: 90%;
-  max-height: 65rem;
-  border-radius: 15px !important;
-  background-color: rgba(0, 0, 0, 0.4) !important;
-  flex: 0 0 40%;
+  background-color: #fff;
+  max-height: 100vh;
+  position: relative;
 }
 .contacts_card {
   font-size: 28px;
@@ -36,37 +29,91 @@
   flex: 1;
   justify-content: center;
   align-items: center;
+  padding: 0.5rem 0;
+
+  border-bottom: 1px solid #fff;
 }
 
 .search__input {
   font-family: inherit;
-  font-size: 1.4rem;
-  background-color: var(--color-grey-light-2);
+  font-size: 1.2rem;
+  background-color: #eee;
   border: none;
   color: inherit;
   padding: 0.7rem 2rem;
-  width: 50%;
-  border-radius: 100px;
+  width: 60%;
+  border-radius: 10rem;
   transition: all 0.2s;
   margin-right: -3.5rem;
 }
+.chat-friend-list-mob {
+  bottom: 10%;
+  right: 5%;
+  position: fixed;
+  color: #fff;
+  background-color: var(--color-primary);
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.chat-contact-container {
+  display: flex;
+  padding-right: 0.9rem;
+  border-bottom: 1px solid #ccc;
+}
 
+.chat-contact {
+  cursor: pointer;
+  color: #000;
+  height: 6rem;
+}
+.chat-contact-card-username {
+  font-size: 1.3rem;
+  padding: 0.1rem 1rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.chat-contact-latest-msg {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
 .search__input:focus {
   outline: none;
   width: 80%;
-  background-color: var(--color-grey-light-3);
+  background-color: #fff;
 }
 .search__input::-webkit-input-placeholder {
   font-weight: 400;
   color: var(--color-grey-light-4);
 }
-/* .search__button {
-  border: none;
-  background-color: var(--color-grey-light-2);
-} */
+
 .search__button:focus {
   outline: none;
 }
-.chat-contact:hover {
-  background-color: rgba(0, 0, 0, 0.4) !important;
+.chat-contact-container:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+@media only screen and (max-width: 78em) {
+  .chat {
+    margin: 0;
+  }
+  .chatbox-container {
+    margin: 0;
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 56em) {
+  .chat-friend-list-mob {
+    display: flex;
+  }
 }

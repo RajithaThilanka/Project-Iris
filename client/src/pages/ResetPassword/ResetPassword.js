@@ -1,5 +1,4 @@
 import "./ResetPassword.css";
-import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,26 +8,12 @@ import FormLabel from "@mui/material/FormLabel";
 import { logIn, resetPassword } from "../../actions/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { useState } from "react";
 import { Modal, Typography } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Grid from "@mui/material/Unstable_Grid2";
 import Loader from "../../components/Loading/Loading";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "40vw",
-  height: "50vh",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-  display: "flex",
-  flexDirection: "column",
-  gap: "2rem",
-  alignItems: "center",
-};
 
 function ResetPassword() {
   const initialState = {
@@ -42,10 +27,8 @@ function ResetPassword() {
   const dispatch = useDispatch();
   const [data, setData] = useState(initialState);
 
-  const [open, setOpen] = useState(true);
   const handleClose = () => {
     resetForm();
-    setOpen(false);
     navigate(`/home`);
   };
   // Reset form fields
@@ -73,22 +56,21 @@ function ResetPassword() {
   //
 
   return (
-    <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <form onSubmit={handleSubmit}>
-          <Box sx={style}>
-            <div className="cancel-btn-container">
-              <IconButton onClick={handleClose} className="cancel-btn">
-                <CloseIcon fontSize="medium" />
-              </IconButton>
+    <div className="reset-password-container-main">
+      <form method="post" className="reset-form-main" onSubmit={handleSubmit}>
+        <Grid container rowSpacing={3} px={3} margin={2}>
+          <Grid item sm={12} xs={12}>
+            <div style={{ textAlign: "center", marginTop: "-2rem" }}>
+              <VpnKeyIcon
+                sx={{ fontSize: "8rem", color: "var(--color-primary)" }}
+              />
             </div>
-            <h1 className="login-title">Reset Password</h1>
+          </Grid>
+          <Grid item sm={12} xs={12}>
+            <h3 className="heading-tertiary reset-heading">Reset Password</h3>
+          </Grid>
 
+          <Grid item sm={12} xs={12}>
             <TextField
               label="New Password"
               color="secondary"
@@ -100,6 +82,8 @@ function ResetPassword() {
               required
               type="password"
             />
+          </Grid>
+          <Grid item sm={12} xs={12}>
             <TextField
               label="Confirm Password"
               color="secondary"
@@ -111,8 +95,18 @@ function ResetPassword() {
               type="password"
               required
             />
+          </Grid>
+          <Grid item sm={12} xs={12}>
             {loading ? (
-              <Loader />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Loader />
+              </div>
             ) : (
               <Button
                 type="submit"
@@ -120,10 +114,11 @@ function ResetPassword() {
                 disabled={loading}
                 fullWidth
               >
-                Reset
+                Send
               </Button>
             )}
-
+          </Grid>
+          <Grid item sm={12} xs={12}>
             {!passwordMatch && (
               <div className="error-container">
                 <p className="error-msg">
@@ -131,14 +126,16 @@ function ResetPassword() {
                 </p>
               </div>
             )}
+          </Grid>
+          <Grid item sm={12} xs={12}>
             {error && (
               <div className="error-container">
                 <p className="error-msg">{error.message}</p>
               </div>
             )}
-          </Box>
-        </form>
-      </Modal>
+          </Grid>
+        </Grid>
+      </form>
     </div>
   );
 }

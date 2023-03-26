@@ -1,33 +1,136 @@
 .messages {
   display: flex;
   flex-direction: column;
-  /* padding: 5rem; */
   overflow-y: scroll;
+  font-family: "Roboto", sans-serif;
+  font-weight: 200;
+  top: 8.4%;
+  height: 75%;
+  position: absolute;
+  left: 0;
+  width: 100%;
 }
-
+.styles_scrollable-div__prSCv {
+  max-height: auto !important;
+  height: auto !important;
+}
 .chat-user-header {
-  font-size: 2rem;
-
   width: 100%;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  padding: 1rem 0;
-  height: 18%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid #ccc;
+  padding: 0.6rem 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 
+.single-chat-user-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-right: 3rem;
+}
+.single-chat-username {
+  font-size: 1.2rem;
+  font-weight: 400;
+  font-family: inherit;
+}
 .chat-container {
   display: flex;
   padding: 0 1.4rem;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: rgba(0, 0, 0, 0.2);
   width: 100%;
   height: 100%;
   overflow: hidden;
+  position: relative;
+}
+.lottie-container {
+  height: 17%;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+
+.input-emoji-chat-container {
+  display: flex;
+  margin-bottom: 0.9rem;
+  position: absolute;
+  bottom: 20%;
+  left: 0%;
+  width: 100%;
+}
+.lottie {
+  margin-left: auto;
+  display: inline-block;
+  position: absolute;
+  left: 0.5rem;
+  top: 0.6rem;
+}
+@media only screen and (max-width: 41em) {
+  .chat-container {
+    height: 100%;
+    position: relative;
+  }
+  .messages {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 8.4%;
+    height: 75%;
+  }
+  .styles_scrollable-div__prSCv {
+    max-height: auto !important;
+    height: auto !important;
+  }
+  .lottie-container {
+    position: absolute;
+    height: 15%;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  .input-emoji-chat-container {
+  }
+}
+
+@media only screen and (max-width: 41em) {
+  .chat-container {
+    height: 100%;
+    position: relative;
+  }
+  .messages {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 8.4%;
+    height: 75%;
+  }
+  .styles_scrollable-div__prSCv {
+    max-height: auto !important;
+    height: auto !important;
+  }
+  .lottie-container {
+    position: absolute;
+    height: 15%;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  .input-emoji-chat-container {
+  }
+}
+@media only screen and (max-width: 41rem) {
+  .lottie {
+    margin-left: auto;
+    display: inline-block;
+    position: absolute;
+    top: -1rem;
+  }
 }

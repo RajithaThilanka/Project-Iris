@@ -25,7 +25,7 @@ const server = app.listen(port, () => {
 let activeUsers = [];
 let vidUsers = [];
 const io = require('socket.io')(server, {
-  pingTimeout: 20000,
+  pingTimeout: 40 * 60 * 1000,
   cors: {
     origin: 'http://localhost:3000',
   },
@@ -49,6 +49,9 @@ io.on('connection', socket => {
 
     if (!activeUsers.some(user => user.userId === userData._id)) {
       activeUsers.push({ userId: userData._id, socketId: socket.id });
+    } else {
+      const u = activeUsers.find(usr => usr.userId === userData._id);
+      u.socketId = socket.id;
     }
 
     socket.emit('connected');
@@ -57,6 +60,9 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     // remove user from active users
+
+    console.log(socket.id);
+    console.log(activeUsers.filter(user => user.socketId !== socket.id));
     activeUsers = activeUsers.filter(user => user.socketId !== socket.id);
     vidUsers = vidUsers.filter(user => user.socketId !== socket.id);
     console.log('User Disconnected', activeUsers);
@@ -78,7 +84,12 @@ io.on('connection', socket => {
   socket.on('answerCall', data => {
     io.to(data.to).emit('callAccepted', data.signal);
   });
-
+  socket.on('endCall', id => {
+    io.to(id).emit('endCall');
+  });
+  socket.on('seen', id => {
+    socket.in(id).emit('message-seen');
+  });
   socket.on('typing', room => socket.in(room).emit('typing'));
   socket.on('stop typing', room => socket.in(room).emit('stop typing'));
   socket.on('new message', newMessageRecieved => {
@@ -92,14 +103,43 @@ io.on('connection', socket => {
   });
 
   socket.on('new-con-request-sent', newConReq => {
-    console.log('sent');
     let id = newConReq.receiverId._id;
     socket.in(id).emit('new-con-req-received', newConReq);
+  });
+
+  socket.on('new-friend-request-sent', newConReq => {
+    let id = newConReq.receiverId._id;
+    socket.in(id).emit('new-friend-req-received', newConReq);
+  });
+
+  socket.on('new-con-request-accepted', newConReq => {
+    let id = newConReq.senderId._id;
+
+    socket.in(id).emit('new-con-req-accepted', newConReq);
+  });
+  socket.on('new-friend-request-accepted', newConReq => {
+    let id = newConReq.senderId._id;
+
+    socket.in(id).emit('new-friend-req-accepted', newConReq);
+  });
+  socket.on('new-date-request-sent', newConReq => {
+    console.log(newConReq);
+    let id = newConReq.receiverId._id;
+    socket.in(id).emit('new-date-req-received', newConReq);
+  });
+  socket.on('new-date-request-accepted', newConReq => {
+    let id = newConReq.senderId._id;
+    console.log(id);
+    socket.in(id).emit('new-date-req-accepted', newConReq);
   });
   socket.off('setup', () => {
     console.log('USER DISCONNECTED');
     console.log('leave now', activeUsers);
     socket.leave(userData._id);
+  });
+  socket.on('message-seen', chat => {
+    const id = chat?.latestMessage?.sender?._id;
+    socket.in(id).emit('message-seen', chat);
   });
 });
 process.on('unhandledRejection', err => {

@@ -29,7 +29,7 @@ function Navigation() {
             </Link>
           </li>
           <li className="navigation__item">
-            <Link to="/admin/login" className="navigation__link">
+            <Link to="/login/admin" className="navigation__link">
               <span>04</span>Admin Login
             </Link>
           </li>

@@ -8,78 +8,110 @@ import { Stack, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { IconButton } from "@mui/material";
 import UserVerificationView from "../UserVerificationData/UserVerificationView";
+import { useState, useEffect } from "react";
 
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "fullName",
-    headerName: "Full Name",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    type: "number",
-    width: 110,
-    editable: false,
-  },
+import jsonData from "./AllData.json"; // Import the JSON file
 
-  {
-    field: "action",
-    headerName: "Action",
-    width: 180,
-    sortable: false,
-    disableClickEventBubbling: true,
-
-    renderCell: (params) => {
-      const onClick = (e) => {
-        const currentRow = params.row;
-        // return alert(JSON.stringify(currentRow, null, 4));
-      };
-
-      return (
-        <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick} helperText="Done">
-            <DoneIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <VisibilityIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <DeleteIcon />
-          </IconButton>
-        </Stack>
-      );
-    },
-  },
-];
-
-const rows = [
-  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "Verified" },
-
-  {
-    id: 2,
-    fullName: "Lannister",
-    email: "Cersei@gmail.com",
-    status: "Verified",
-  },
-];
+import { getAllVeriReq } from "../../../api/AdminRequests";
+import { manualVarifyAccount } from "../../api/AdminRequests";
 
 export default function VerificationRequests() {
+  const [rows, setRows] = useState([]);
+  const [liveimg, setLiveimg] = useState(null);
+  const [idFront, setidFront] = useState(null);
+  const [idBack, setidBack] = useState(null);
+  const columns = [
+    { field: "_id", headerName: "ID", width: 90 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 100,
+      editable: false,
+    },
+    {
+      field: "completeion",
+      headerName: "Completetion",
+      width: 150,
+      editable: false,
+    },
+
+    {
+      field: "action",
+      headerName: "Action",
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
+
+      renderCell: (params) => {
+        let liveimg;
+        let idFront;
+        let idBack;
+        const approveRequest = (e) => {
+          const userId = params.row._id;
+          const status = "verified"; // convert to lowercase
+          manualVarifyAccount(userId, status)
+            .then((response) => {
+              console.log("Verified");
+              setRows(rows.filter((u) => u._id + "" !== userId));
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+
+        const showRequest = (e) => {
+          liveimg = params.row.liveImage;
+          idFront = params.row.nicFront;
+          idBack = params.row.nicBack;
+          setLiveimg(liveimg);
+          setidFront(idFront);
+          setidBack(idBack);
+        };
+        const deleteRequest = (e) => {};
+
+        return (
+          <Stack direction="row" spacing={1}>
+            <IconButton size="small" onClick={approveRequest} helperText="Done">
+              <DoneIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showRequest}>
+              <VisibilityIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showRequest}>
+              <DeleteIcon />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+  ];
+
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  ///API call
+  useEffect(() => {
+    const getVerReqData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getAllVeriReq();
+        setRows(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getVerReqData();
+  }, []);
+
   return (
     <>
       <Stack direction="row" spacing={3}>
         <Box
           sx={{
-            height: 400,
-            width: 800,
+            height: 500,
+            width: 600,
             justifyContent: "center",
             textAlign: "center",
           }}
@@ -93,10 +125,15 @@ export default function VerificationRequests() {
             checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
+            getRowId={(row) => row._id}
           />
         </Box>
         <Box>
-          <UserVerificationView />
+          <UserVerificationView
+            liveimg={liveimg}
+            idFront={idFront}
+            idBack={idBack}
+          />
         </Box>
       </Stack>
     </>

@@ -12,72 +12,90 @@ import BlockIcon from "@mui/icons-material/Block";
 import { useState, useEffect } from "react";
 import ProfileSuspeneReason from "../ProfileSuspendReason/ProfileSuspeneReason";
 
-// import { getMe } from "../../../api/UserRequests";
-
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "fullName",
-    headerName: "Full Name",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    type: "string",
-    width: 110,
-    editable: false,
-  },
-
-  {
-    field: "action",
-    headerName: "Action",
-    width: 180,
-    sortable: false,
-    disableClickEventBubbling: true,
-
-    renderCell: (params) => {
-      const onClick = (e) => {
-        const currentRow = params.row;
-        // return alert(JSON.stringify(currentRow, null, 4));
-      };
-
-      return (
-        <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick}>
-            <DoneIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <VisibilityIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <DeleteIcon />
-          </IconButton>
-        </Stack>
-      );
-    },
-  },
-];
-
-const rows = [
-  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "unverified" },
-
-  {
-    id: 2,
-    fullName: "Lannister",
-    email: "Cersei@gmail.com",
-    status: "verified",
-  },
-];
+import jsonData from "./AllData.json"; // Import the JSON file
 
 export default function SuspendedAccounts() {
+  const columns = [
+    { field: "id", headerName: "ID", width: 90 },
+    {
+      field: "firstname",
+      headerName: "Full Name",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "verified",
+      headerName: "Verified",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
+
+    {
+      field: "action",
+      headerName: "Action",
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
+
+      renderCell: (params) => {
+        let des;
+        const showDescription = (e) => {
+          des = params.row.description;
+          //console.log(des);
+          // setDecription(des);
+        };
+
+        return (
+          <Stack direction="row" spacing={1}>
+            <IconButton size="small" onClick={showDescription}>
+              <VisibilityIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showDescription}>
+              <DeleteIcon />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "occupation",
+      headerName: "Occupation",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
+    {
+      field: "country",
+      headerName: "Country",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
+  ];
+  const [rows, setRows] = useState([]);
+  const [description, setDecription] = useState("");
+  useEffect(() => {
+    // Parse the JSON data
+    const data = JSON.parse(JSON.stringify(jsonData));
+
+    // Create the rows array
+    const rowsArray = data.map((item) => ({
+      id: item.id,
+      fullname: item.fullname,
+      email: item.email,
+      status: item.status,
+    }));
+
+    // Set the rows state
+    setRows(rowsArray);
+  }, []);
   return (
     <div>
       <Stack direction="row" spacing={2}>
@@ -101,7 +119,7 @@ export default function SuspendedAccounts() {
           />
         </Box>
         <Box>
-          <ProfileSuspeneReason />
+          <ProfileSuspeneReason description={description} />
         </Box>
       </Stack>
     </div>

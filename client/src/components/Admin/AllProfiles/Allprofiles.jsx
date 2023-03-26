@@ -11,100 +11,131 @@ import MessageIcon from "@mui/icons-material/Message";
 import BlockIcon from "@mui/icons-material/Block";
 import { useState, useEffect } from "react";
 import AllProfileData from "../AllProfileData/AllProfileData";
+import jsonData from "./AllData.json"; // Import the JSON file
 
-// import { getMe } from "../../../api/UserRequests";
-
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "fullName",
-    headerName: "Full Name",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    type: "string",
-    width: 110,
-    editable: false,
-  },
-
-  {
-    field: "action",
-    headerName: "Action",
-    width: 180,
-    sortable: false,
-    disableClickEventBubbling: true,
-
-    renderCell: (params) => {
-      const onClick = (e) => {
-        const currentRow = params.row;
-        // return alert(JSON.stringify(currentRow, null, 4));
-      };
-
-      return (
-        <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick}>
-            <BlockIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <VisibilityIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <DeleteIcon />
-          </IconButton>
-        </Stack>
-      );
-    },
-  },
-];
-
-const rows = [
-  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "unverified" },
-
-  {
-    id: 2,
-    fullName: "Lannister",
-    email: "Cersei@gmail.com",
-    status: "verified",
-  },
-];
+import { getAllUsers, deleteaUser } from "../../../api/AdminRequests";
 
 export default function Profilereports() {
-  const [admindata, setAdminData] = useState(null);
+  const [rows, setRows] = useState([]);
+  const [imid, setimid] = useState(null);
+  const [liveimg, setLiveimg] = useState(null);
+  const [idFront, setidFront] = useState(null);
+  const [idBack, setidBack] = useState(null);
 
-  // useEffect(() => {
-  //   const getAdminData = async () => {
-  //     try {
-  //       const {
-  //         data: {
-  //           data: { data },
-  //         },
-  //       } = await getProfiles();
-  //       setAdminData(data);
-  //       console.log(data);
-  //       // console.log(user.userDescription)
+  const columns = [
+    { field: "id", headerName: "ID", width: 90 },
+    {
+      field: "firstname",
+      headerName: "Full Name",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "verified",
+      headerName: "Verified",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
 
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   };
-  //   getAdminData();
-  // }, []);
+    {
+      field: "action",
+      headerName: "Action",
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
+
+      renderCell: (params) => {
+        let imageid;
+        let userId;
+        let liveimg;
+        let idFront;
+        let idBack;
+        const showProfileImage = (e) => {
+          imageid = params.row.profilePhoto;
+          liveimg = params.row.liveImage;
+          idFront = params.row.nicFront;
+          idBack = params.row.nicBack;
+          setLiveimg(liveimg);
+          setidFront(idFront);
+          setidBack(idBack);
+          setimid(imageid);
+        };
+
+        const deleteProfile = async () => {
+          const userId = params.row._id;
+
+          try {
+            console.log(userId);
+            await deleteaUser(userId);
+            setRows(rows.filter((u) => u._id + "" !== userId));
+          } catch (error) {
+            console.log(error);
+          }
+        };
+
+        return (
+          <Stack direction="row" spacing={1}>
+            <IconButton size="small" onClick={showProfileImage}>
+              <BlockIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showProfileImage}>
+              <VisibilityIcon />
+            </IconButton>
+            <IconButton size="small" onClick={deleteProfile}>
+              <DeleteIcon />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "occupation",
+      headerName: "Occupation",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
+    {
+      field: "country",
+      headerName: "Country",
+      type: "string",
+      width: 110,
+      editable: false,
+    },
+  ];
+
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  ///API call
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getAllUsers();
+        setRows(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
 
   return (
     <>
-      <Stack direction="row" spacing={3}>
+      <Stack direction="row" spacing={2}>
         <Box
           sx={{
-            height: 400,
+            height: 500,
             width: 800,
             justifyContent: "center",
             textAlign: "center",
@@ -114,7 +145,7 @@ export default function Profilereports() {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={10}
+            pageSize={20}
             rowsPerPageOptions={[]}
             checkboxSelection
             disableSelectionOnClick
@@ -122,7 +153,12 @@ export default function Profilereports() {
           />
         </Box>
         <Box>
-          <AllProfileData />
+          <AllProfileData
+            imid={imid}
+            liveimg={liveimg}
+            idFront={idFront}
+            idBack={idBack}
+          />
         </Box>
       </Stack>
     </>

@@ -3,7 +3,7 @@ import { Avatar, Badge } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useContext } from "react";
 import MatchesContext from "../../../context/matches";
-
+import "./UserListItem.css";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
@@ -41,21 +41,18 @@ function UserListItem({ user, handleFunction }) {
       onClick={handleFunction}
       style={{
         cursor: "pointer",
-        borderRadius: "50px",
         width: "100%",
       }}
+      className="user-list-item-container"
     >
       <h6
         style={{
-          backgroundColor: "var(--color-primary)",
-          color: "#fff",
-          fontSize: "1.4rem",
-          padding: "1rem 2rem",
-          borderRadius: "50px",
-          fontWeight: 400,
           display: "flex",
+          flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-between",
+          gap: "10px",
+          padding: " 10px 24px",
+          borderBottom: "1px solid #fff",
         }}
       >
         <StyledBadge
@@ -66,14 +63,81 @@ function UserListItem({ user, handleFunction }) {
           }}
           variant={activeUsers.some((u) => u.userId === user._id) ? "dot" : ""}
         >
-          <Avatar alt="user avatar" src={serverPublic + user.profilePhoto} />
+          <Avatar
+            alt="user avatar"
+            src={serverPublic + user.profilePhoto}
+            sx={{
+              width: "5rem",
+              height: "5rem",
+              border: "1px solid #fff",
+            }}
+          />
         </StyledBadge>
-        <span style={{ flex: 1, textAlign: "center" }}>
+        <h6
+          style={{
+            fontSize: "1.3rem",
+            padding: "0.1rem 1rem",
+            color: "#000",
+            fontWeight: 600,
+            flex: 1,
+          }}
+        >
           {user.firstname + " " + user.lastname}
-        </span>
+        </h6>
       </h6>
     </div>
   );
 }
 
 export default UserListItem;
+
+// <div
+//                     style={{
+//                       display: "flex",
+//                       flexDirection: "row",
+//                       alignItems: "center",
+//                       gap: "10px",
+//                       padding: " 10px 24px",
+//                     }}
+//                   >
+//                     <StyledBadge
+//                       overlap="circular"
+//                       anchorOrigin={{
+//                         vertical: "bottom",
+//                         horizontal: "right",
+//                       }}
+//                       variant={
+//                         activeUsers.some(
+//                           (u) =>
+//                             u.userId === getSenderFull(user, chat?.users)._id
+//                         )
+//                           ? "dot"
+//                           : ""
+//                       }
+//                     >
+//                       <Avatar
+//                         alt="user avatar"
+//                         src={
+//                           serverPublic +
+//                           getSenderFull(loggedUser, chat.users).profilePhoto
+//                         }
+//                         sx={{
+//                           width: "6rem",
+//                           height: "6rem",
+//                           border: "1px solid #fff",
+//                         }}
+//                       />
+//                     </StyledBadge>
+
+//                     <h6
+//                       style={{
+//                         fontSize: "1.4rem",
+//                         padding: "0.1rem 1rem",
+
+//                         fontWeight: 600,
+//                         flex: 1,
+//                       }}
+//                     >
+//                       {getSenderFull(loggedUser, chat.users).firstname +
+//                         " " +
+//                         getSenderFull(loggedUser, chat.users).lastname}

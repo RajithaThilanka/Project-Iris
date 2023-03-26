@@ -1,5 +1,7 @@
 {
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.accessibilityPageSize": 9,
+    "editor.formatOnType": true
 }

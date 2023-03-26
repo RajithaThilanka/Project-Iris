@@ -32,13 +32,19 @@ router
 router
   .route('/me/update')
   .patch(authController.protect, userController.updateMe);
-router
-  .route('/me/suggestions')
-  .get(
-    authController.protect,
-    authController.checkManualVerification,
-    aiController.generateUserSuggestions
-  );
+// router
+//   .route('/me/suggestions')
+//   .get(
+//     authController.protect,
+//     authController.checkManualVerification,
+//     aiController.generateUserSuggestions
+//   );
+router.route('/me/suggestions/ai').get(
+  authController.protect,
+  // authController.checkManualVerification,
+  aiController.generateSuggestions
+);
+
 router
   .route('/me/manual-verify')
   .post(authController.protect, authController.requestManualVerify);
@@ -65,7 +71,7 @@ router
   .route('/verify-account/:id')
   .patch(authController.adminProtect, authController.verifyAccount);
 
-router.route('/').get(authController.protect, userController.getUsers);
+router.route('/').get(authController.adminProtect, userController.getUsers);
 router
   .route('/con')
   .get(authController.protect, userController.fetchConnections);

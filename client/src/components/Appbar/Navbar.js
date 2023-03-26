@@ -35,11 +35,16 @@ import {
   getSentDateRequests,
   getSentFriendRequests,
 } from "../../api/UserRequests";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Notifications from "../Notifications/Notifications";
+import { fetchChatNotifications } from "../../api/ChatRequests";
 
 const pages = ["Explore", "Safety Tips", "About Us"];
-const settings = ["Profile", "Account", "Dashboard"];
+// const settings = ["Account", "Dashboard"];
+const settings = [
+  { label: "Account", to: "/me" },
+  { label: "Dashboard", to: "/me" },
+];
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -69,7 +74,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
   },
 }));
-function Navbar({ user }) {
+function Navbar({ user, socket }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElFriend, setAnchorElFriend] = useState(null);
@@ -134,6 +139,10 @@ function Navbar({ user }) {
     setreceivedDateRequests,
     notification,
     setNotification,
+    warnings,
+    setWarnings,
+    fetchNots,
+    setFetchNots,
   } = useContext(MatchesContext);
   useEffect(() => {
     const fetchsentConRequests = async () => {
@@ -165,6 +174,7 @@ function Navbar({ user }) {
           data: { data },
         },
       } = await getSentFriendRequests();
+
       setsentFriendRequests(data);
     };
     fetchsentFriendRequests();
@@ -213,19 +223,34 @@ function Navbar({ user }) {
           data: { data },
         },
       } = await fetchWarnings();
-      setNotification(data);
+
+      setWarnings(data);
     };
     fetchNewWarnings();
   }, []);
+  useEffect(() => {
+    const fetchChatNots = async () => {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await fetchChatNotifications();
 
+      setFetchNots(false);
+      setNotification(data);
+    };
+    fetchNots && fetchChatNots();
+  }, []);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         width: "100vw",
         backgroundColor: "var(--color-grey-dark-1)",
+        top: 0,
+        left: 0,
       }}
     >
       <Container
@@ -293,24 +318,54 @@ function Navbar({ user }) {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {
+                <MenuItem
+                  className="home-menu-item"
+                  onClick={() => navigate("/home")}
+                >
+                  <div>
+                    <div style={{ width: "4rem", height: "4rem" }}>
+                      <img
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: "50%",
+                        }}
+                        src={serverPublic + "irislogo.png"}
+                        alt=""
+                      />
+                    </div>
+                  </div>
                 </MenuItem>
-              ))}
+              }
             </Menu>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button
+              onClick={() => navigate("/me/dashboard")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              HOME
+            </Button>
+            <Button
+              //onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Explore
+            </Button>
+            <Button
+              //onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Safety Tips
+            </Button>
+            <Button
+              onClick={() => navigate("/about-us")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              About Us
+            </Button>
           </Box>
 
           {/* Connection requests */}
@@ -361,7 +416,7 @@ function Navbar({ user }) {
               onClose={handleCloseConnectionMenu}
             >
               <div>
-                <Requests />
+                <Requests socket={socket} />
               </div>
               {/* </MenuItem> */}
             </Menu>
@@ -398,7 +453,7 @@ function Navbar({ user }) {
               onClose={handleCloseFriendMenu}
             >
               <div>
-                <FriendRequests />
+                <FriendRequests socket={socket} />
               </div>
             </Menu>
             {/* Dates */}
@@ -434,28 +489,29 @@ function Navbar({ user }) {
               onClose={handleCloseDateMenu}
             >
               <div>
-                <DateRequests />
+                <DateRequests socket={socket} />
               </div>
             </Menu>
 
             {/* Notifications */}
-            <Tooltip title="Open date invitations">
+            <Tooltip title="Open new notifications">
               <IconButton onClick={handleOpenNotMenu} sx={{ p: 0 }}>
                 <NotificationsIcon
                   sx={{ color: "#fff", marginTop: "0.5rem" }}
                 />
                 <div className="num-req-count main-notification-count">
-                  {notification.length}
+                  {warnings.length + notification.length}
                 </div>
               </IconButton>
             </Tooltip>
             <Menu
               PaperProps={{
                 sx: {
-                  width: "30rem",
-                  height: "92%",
+                  width: "25rem",
+                  height: "50%",
                   mt: "35px",
                   overflow: "scroll",
+                  background: "#eee",
                 },
               }}
               id="menu-appbar"
@@ -473,7 +529,7 @@ function Navbar({ user }) {
               onClose={handleCloseNotMenu}
             >
               <div>
-                <Notifications />
+                <Notifications handleCloseNotMenu={handleCloseNotMenu} />
               </div>
             </Menu>
 
@@ -513,12 +569,33 @@ function Navbar({ user }) {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center">
+                    <Link
+                      style={{
+                        color: "var(--color-primary)",
+                        textDecoration: "none",
+                      }}
+                      to={setting.to}
+                    >
+                      {setting.label}
+                    </Link>
+                  </Typography>
                 </MenuItem>
               ))}
+
+              <MenuItem key={"Profile"} onClick={handleCloseUserMenu}>
+                <Button onClick={() => navigate("/me/profile")}>Profile</Button>
+              </MenuItem>
+
               <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
-                {/* <Typography textAlign="center">{setting}</Typography> */}
-                <Button onClick={() => dispatch(logout())}>Logout</Button>
+                <Button
+                  onClick={() => {
+                    socket?.disconnect();
+                    dispatch(logout());
+                  }}
+                >
+                  Logout
+                </Button>
               </MenuItem>
             </Menu>
           </Box>

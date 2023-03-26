@@ -9,81 +9,124 @@ import { styled } from "@mui/material/styles";
 import { IconButton, Typography } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import ProfileReportReason from "../ProfileReportReason/ProfileReportReason";
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "fullName",
-    headerName: "Full Name",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "reportType",
-    headerName: "Report Type",
-    type: "number",
-    width: 110,
-    editable: false,
-  },
+import { useState, useEffect } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
-  {
-    field: "action",
-    headerName: "Action",
-    width: 180,
-    sortable: false,
-    disableClickEventBubbling: true,
-
-    renderCell: (params) => {
-      const onClick = (e) => {
-        const currentRow = params.row;
-        // return alert(JSON.stringify(currentRow, null, 4));
-      };
-
-      return (
-        <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick}>
-            <MessageIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <VisibilityIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <DeleteIcon />
-          </IconButton>
-        </Stack>
-      );
-    },
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    fullName: "Snow",
-    email: "Jon@gmail.com",
-    reportType: "Fake profile",
-  },
-
-  {
-    id: 2,
-    fullName: "Lannister",
-    email: "Cersei@gmail.com",
-    reportType: "hatespeech",
-  },
-];
+import jsonData from "./AllData.json"; // Import the JSON file
+import { getProfileReports } from "../../../api/AdminRequests";
+import { reviewReport } from "../../api/AdminRequests";
 
 export default function Profilereports() {
+  const [rows, setRows] = useState([]);
+  const [des, setDes] = useState("");
+  const [evidence, setEvidence] = useState(null);
+  const columns = [
+    { field: "_id", headerName: "ID", width: 90 },
+    {
+      field: "userNotified",
+      headerName: " User Notified",
+      width: 100,
+      editable: false,
+    },
+    {
+      field: "reason",
+      headerName: "Reason",
+      width: 250,
+      editable: false,
+    },
+    {
+      field: "reviewStatus",
+      headerName: "Review Status",
+      width: 110,
+      editable: false,
+    },
+
+    {
+      field: "action",
+      headerName: "Action",
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
+
+      renderCell: (params) => {
+        const showReports = (e) => {
+          const description = params.row.description;
+          const evidence = params.row.evidence;
+
+          if (evidence == "") {
+            setEvidence("");
+          } else {
+            setEvidence(evidence);
+          }
+          if (description === "") {
+            setDes("No description");
+          } else {
+            setDes(description);
+          }
+        };
+        const setReportPositive = (e) => {
+          const reportId = params.row._id;
+          const reviewStatus = "positive"; // convert to lowercase
+          reviewReport(reportId, reviewStatus)
+            .then((response) => {
+              setRows(rows);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+        const setReportNegative = (e) => {
+          const reportId = params.row._id;
+          const reviewStatus = "negative"; // convert to lowercase
+          reviewReport(reportId, reviewStatus)
+            .then((response) => {
+              setRows(rows.filter((u) => u._id + "" !== reportId));
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+        return (
+          <Stack direction="row" spacing={1}>
+            <IconButton size="small" onClick={showReports}>
+              <VisibilityIcon />
+            </IconButton>
+            <IconButton size="small" onClick={setReportPositive}>
+              <DoneIcon />
+            </IconButton>
+            <IconButton size="small" onClick={setReportNegative}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+  ];
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  ///API call
+  useEffect(() => {
+    const getReportData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getProfileReports();
+        setRows(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getReportData();
+  }, []);
+
   return (
     <>
       <Stack direction="row" spacing={2}>
         <Box
           sx={{
-            height: 400,
+            height: 500,
             width: 800,
             justifyContent: "center",
             textAlign: "center",
@@ -93,15 +136,16 @@ export default function Profilereports() {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={10}
+            pageSize={20}
             rowsPerPageOptions={[]}
             checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
+            getRowId={(row) => row._id}
           />
         </Box>
         <Box>
-          <ProfileReportReason />
+          <ProfileReportReason desc={des} evidence={evidence} />
         </Box>
       </Stack>
     </>

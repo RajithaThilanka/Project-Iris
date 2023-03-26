@@ -19,10 +19,31 @@ function ContextProvider({ children }) {
   const [chats, setChats] = useState([]);
   const [dateChats, setDateChats] = useState([]);
   const [notification, setNotification] = useState([]);
+  const [warnings, setWarnings] = useState([]);
   const [socketConnected, setSocketConnected] = useState(false);
   const [activeUsers, setActiveUsers] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
+  const [fetchNots, setFetchNots] = useState(true);
+  const [matches, setMatches] = useState([]);
+  const [filter, setFilter] = useState({
+    age: [18, 120],
+    gender: {
+      male: true,
+      female: true,
+    },
+    countries: [],
+    languages: [],
+    online: false,
+  });
   const valueToShare = {
+    fetchNots,
+    setFetchNots,
+    warnings,
+    setWarnings,
+    matches,
+    setMatches,
+    filter,
+    setFilter,
     sentConRequests,
     receivedDateRequests,
     setreceivedDateRequests,

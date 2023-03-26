@@ -14,6 +14,14 @@ const reportSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    evidence: {
+      type: String,
+      default: '',
+    },
+    description: {
+      type: String,
+      default: '',
+    },
     reviewStatus: {
       type: String,
       enum: {

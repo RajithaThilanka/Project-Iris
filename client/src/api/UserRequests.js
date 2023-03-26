@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
 
 export const getUser = (userId) => API.get(`/users/${userId}`);
 
-export const getMatches = () => API.get("/users/me/suggestions");
+export const getMatches = () => API.get("/users/me/suggestions/ai");
 export const sendConRequest = (id) =>
   API.post(`/users/me/connections/invite/${id}`);
 export const getSentConRequests = () => API.get(`/users/me/connections/sent`);
@@ -29,6 +29,7 @@ export const getReceivedFriendRequests = () =>
   API.get(`/users/me/friends/received`);
 
 export const acceptFriend = (id) => API.patch(`/users/me/friends/accept/${id}`);
+
 export const cancelFriendRequest = (id) =>
   API.patch(`/users/me/friends/cancel/${id}`);
 
@@ -55,7 +56,7 @@ export const searchUser = (username) =>
   API.get(`/users/con?search=${username}`);
 
 export const createChat = (userId) => API.post(`/chat`, { userId });
-
+export const deleteChat = (id) => API.delete(`/chat/delete-chat/${id}`);
 export const accessDateChat = (dateId) =>
   API.get(`/users/me/dates/chat`, { dateId });
 
@@ -107,3 +108,5 @@ export const postponeDate = (id, scheduledAt) =>
   API.patch(`/users/me/dates/postpone/${id}`, { scheduledAt });
 
 export const fetchWarnings = () => API.get("/report/fetch-warnings");
+
+export const reportUser = (data) => API.post("/report", data);

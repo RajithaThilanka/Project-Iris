@@ -1,5 +1,18 @@
-.profilePage{
+.profilePage {
+  background-color: white;
+}
 
-  background-color:white;
+@media screen and (max-width: 320px) {
+  /* CSS code for mobile portrait view */
+}
 
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* CSS code for tablet portrait view */
+}
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+  /* CSS code for small desktop view */
+}
+
+@media screen and (min-width: 1201px) {
+  /* CSS code for large desktop view */
 }

@@ -5,6 +5,7 @@ const AppError = require('../utils/appError');
 
 const APIFeatures = require('../utils/apiFeatures');
 const LookingFor = require('../models/lookingForModel');
+const Answer = require('../models/answerModel');
 
 const filterObj = (obj, ...notAllowedFields) => {
   const newObj = {};
@@ -101,13 +102,13 @@ exports.getConnections = catchAsync(async (req, res, next) => {
 //admin controllers
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+  const user = await User.findById(req.params.id);
   if (!user) {
     return next(new AppError('No user found with that ID', 404));
   }
   res.status(200).json({
     status: 'success',
-    data: null,
+    data: user,
   });
 });
 
@@ -133,6 +134,13 @@ exports.getUser = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError('No user found with that ID', 404));
   }
+  const l = await LookingFor.findOne({ userId: req.params.id });
+  const p = await Answer.findOne({ userId: req.params.id });
+
+  user = { ...user, lookingFor: l, interests: p };
+  const { _doc, lookingFor, interests } = user;
+  user = { ..._doc, lookingFor: lookingFor, interests: interests };
+
   res.status(200).json({
     status: 'success',
     data: {

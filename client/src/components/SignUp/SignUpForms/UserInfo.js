@@ -84,21 +84,9 @@ function UserInfo() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="signup-container">
-      <form
-        style={{
-          width: "80vw",
-          margin: "auto",
-          height: "auto",
-          boxShadow:
-            "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-          overflow: "scroll",
-          zIndex: 100,
-          background: "#fff",
-        }}
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit} className="account-info-form">
         <Grid container spacing={3} py={1} px={3} margin={2}>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <div style={{ textAlign: "center" }}>
               <img
                 style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
@@ -107,16 +95,13 @@ function UserInfo() {
               />
             </div>
           </Grid>
-          <Grid sm={12}>
-            <h3
-              style={{ textAlign: "center", fontSize: "3.4rem" }}
-              className="heading-tertiary"
-            >
+          <Grid sm={12} xs={12}>
+            <h3 className="heading-tertiary signup-heading">
               Tell us about yourself
             </h3>
           </Grid>
 
-          <Grid sm={3}>
+          <Grid sm={3} xs={12}>
             <Stack spacing={2}>
               <FormLabel>Gender</FormLabel>
               <RadioGroup
@@ -141,7 +126,7 @@ function UserInfo() {
               </RadioGroup>
             </Stack>
           </Grid>
-          <Grid sm={3}>
+          <Grid sm={3} xs={12}>
             <Stack spacing={1.5}>
               <FormLabel sx={{ marginLeft: "0.7rem" }} required>
                 Height
@@ -174,7 +159,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel>Country</FormLabel>
 
@@ -203,7 +188,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={1.5}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Birthday</FormLabel>
               <TextField
@@ -221,7 +206,7 @@ function UserInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={1.5}>
               <FormLabel>Languages you speak</FormLabel>
               <FormControl>
@@ -229,11 +214,12 @@ function UserInfo() {
                   names={["English", "Tamil", "Hindi"]}
                   onChange={handleData}
                   value={formData.languages}
+                  name="languages"
                 />
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>What you do?</FormLabel>
               <FormControl sx={{ m: 1 }} fullWidth size="small" required>
@@ -256,7 +242,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Education</FormLabel>
               <FormControl sx={{ m: 1 }} fullWidth size="small" required>
@@ -279,7 +265,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Religion</FormLabel>
               <FormControl sx={{ m: 1 }} fullWidth size="small" required>
@@ -302,7 +288,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Ethnicity</FormLabel>
               <FormControl sx={{ m: 1 }} fullWidth size="small" required>
@@ -322,7 +308,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Monthly Income
@@ -368,7 +354,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Do you have children?
@@ -400,10 +386,10 @@ function UserInfo() {
               </RadioGroup>
             </Stack>
           </Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={4}></Grid>
-          <Grid sm={4}>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={4} xs={1}></Grid>
+          <Grid sm={4} xs={6}>
             <Button variant="contained" fullWidth type="submit">
               Next
             </Button>
