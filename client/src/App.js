@@ -108,6 +108,7 @@ function App() {
               state ? <UserInfo /> : <Navigate to="/auth/signup/account-info" />
             }
           ></Route>
+
           <Route
             path="/auth/signup/profileview-info"
             element={

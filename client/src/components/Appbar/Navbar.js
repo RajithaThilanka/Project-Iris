@@ -511,7 +511,7 @@ function Navbar({ user, socket }) {
                   height: "50%",
                   mt: "35px",
                   overflow: "scroll",
-                  background: "#eee",
+                  background: "#fff",
                 },
               }}
               id="menu-appbar"
