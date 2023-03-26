@@ -218,6 +218,24 @@
   background-color: #fff;
   color: #000;
 }
+.profile-fav-songs {
+  padding: 1rem 1rem;
+  margin: 0.5rem;
+  /* background-color: #fff; */
+  /* background-color: var(--color-secondary); */
+  border-radius: 20px;
+}
+.profile-fav-songs iframe {
+  /* background-color: #fff; */
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+}
+.dashboard-profile-vid-container {
+  display: flex;
+  padding: 0.5rem;
+  /* gap: 0.5rem; */
+  flex-direction: column;
+}
 .profile--header {
   font-size: 3.5rem;
   background-image: linear-gradient(
@@ -420,7 +438,7 @@
   align-items: center;
 }
 .dashboard-err-msg {
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -488,7 +506,44 @@
     opacity: 0.1;
   }
 }
+.dashboard-other-images-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
 
+  padding: 0.7rem 1rem;
+  position: absolute;
+
+  top: 0;
+  column-gap: 1rem;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+.horizonal-photo-line {
+  height: 0.3rem;
+  background-color: #fff;
+  /* width: 2rem; */
+}
+
+.horizonal-photo-line--active {
+  /* height: 0.3rem; */
+  height: 0.3rem;
+  background-color: #eb2f64;
+  /* width: 2rem; */
+}
+.dashboard-other-image {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 15px;
+}
+.dashboard-other-image img {
+  object-fit: cover;
+  width: 100%;
+  border-radius: 15px;
+  height: 100%;
+}
 .dashboard-loading-photo::before {
   width: 100%;
   content: "";
@@ -618,6 +673,10 @@
     border-radius: 0;
     max-height: 100%;
   }
+  .dashboard-other-images-container {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
   .profile--header .MuiButtonBase-root {
     font-size: 1rem !important;
     /* width: % !important; */
@@ -655,6 +714,7 @@
   }
   .dashboard-err-msg {
     font-size: 3rem;
+    height: 100%;
   }
   .swiper {
     height: 35%;
@@ -668,4 +728,9 @@
 
     /* border-radius: 50%; */
   }
+}
+
+.react-swipeable-view-container {
+  height: 100% !important;
+  width: 100% !important;
 }

@@ -50,7 +50,7 @@ const style = {
   p: 4,
 };
 
-function FriendProfileCard({ conUser, cardType }) {
+function FriendProfileCard({ conUser, cardType, socket }) {
   //view suggestion profile
   const viewPro = async () => {
     try {
@@ -60,8 +60,6 @@ function FriendProfileCard({ conUser, cardType }) {
     }
   };
 
-
-
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
@@ -69,17 +67,22 @@ function FriendProfileCard({ conUser, cardType }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [scheduleError, setScheduleError] = useState(true);
 
-  const initialDate = {
+  const [dateData, setDateData] = useState({
     scheduledAt: new Date(),
     dateType: "coffee",
-  };
-  const [dateData, setDateData] = useState(initialDate);
+  });
   const handleDateData = (event) => {
     setDateData({ ...dateData, [event.target.name]: event.target.value });
   };
   const handleScheduledAt = (value) => {
-    setDateData({ ...dateData, scheduledAt: value });
+    if (value.getTime() >= Date.now() + 5 * 60 * 60 * 1000) {
+      setDateData({ ...dateData, scheduledAt: value });
+      setScheduleError(false);
+    } else {
+      setScheduleError(true);
+    }
   };
   const {
     dates,
@@ -91,10 +94,7 @@ function FriendProfileCard({ conUser, cardType }) {
     friends,
     chats,
     setChats,
-    selectedChat,
     setSelectedChat,
-    notification,
-    setNotification,
   } = useContext(MatchesContext);
   const navigate = useNavigate();
   const otherUser =
@@ -175,7 +175,6 @@ function FriendProfileCard({ conUser, cardType }) {
   const handleSendDateRequest = async (id) => {
     try {
       setInviteBtnVisible(false);
-
       const {
         data: {
           data: { data },
@@ -183,6 +182,8 @@ function FriendProfileCard({ conUser, cardType }) {
       } = await sendDateRequest(id, dateData);
       setsentDateRequests([...sentDateRequests, data]);
       setDates([...dates, data]);
+
+      socket.emit("new-date-request-sent", data);
       handleClose();
     } catch (error) {
       console.log(error);
@@ -226,9 +227,15 @@ function FriendProfileCard({ conUser, cardType }) {
 
             <Stack spacing={2} direction="column">
               <div>
+                {scheduleError && (
+                  <div className="schedule-date-error">
+                    Date must be at least five hours from now!
+                  </div>
+                )}
                 <FormHelperText sx={{ marginLeft: "8px" }}>
                   Schedule your date
                 </FormHelperText>
+
                 {/* <TextField
                   id="date"
                   name="scheduledAt"
@@ -243,7 +250,7 @@ function FriendProfileCard({ conUser, cardType }) {
                 <DateTimePicker
                   value={dateData.scheduledAt}
                   onChange={handleScheduledAt}
-                  minDate={new Date()}
+                  minDate={dateData.scheduledAt}
                 />
               </div>
               <div>
@@ -274,6 +281,7 @@ function FriendProfileCard({ conUser, cardType }) {
               <Button
                 type="contained"
                 onClick={() => handleSendDateRequest(otherUser._id)}
+                disabled={scheduleError}
               >
                 Invite
               </Button>
@@ -296,8 +304,10 @@ function FriendProfileCard({ conUser, cardType }) {
         }}
       >
         <Tooltip title="View Profile" placement="bottom">
-          <IconButton style={{ color: "#fff" }}
-            onClick={() => navigate(`/users/profile/${otherUser._id}`)}>
+          <IconButton
+            style={{ color: "#fff" }}
+            onClick={() => navigate(`/users/profile/${otherUser._id}`)}
+          >
             <AccountCircleIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
@@ -313,22 +323,22 @@ function FriendProfileCard({ conUser, cardType }) {
             </IconButton>
           </Tooltip>
         ) : (
-            <DialogBox
-              title="Confirm Cancel"
-              content="Are you sure to cancel date invitation?"
-              YesBtn="Confirm"
-              NoBtn="Cancel"
-              handleYes={() => {
-                handleCancelDate(otherUser._id);
-              }}
-            >
-              <Tooltip title={"Cancel date invite"} placement="bottom">
-                <IconButton style={{ color: "#fff" }} disabled={alreadyHasDate}>
-                  <CancelIcon className="profile-card-btn" />
-                </IconButton>
-              </Tooltip>
-            </DialogBox>
-          )}
+          <DialogBox
+            title="Confirm Cancel"
+            content="Are you sure to cancel date invitation?"
+            YesBtn="Confirm"
+            NoBtn="Cancel"
+            handleYes={() => {
+              handleCancelDate(otherUser._id);
+            }}
+          >
+            <Tooltip title={"Cancel date invite"} placement="bottom">
+              <IconButton style={{ color: "#fff" }} disabled={alreadyHasDate}>
+                <CancelIcon className="profile-card-btn" />
+              </IconButton>
+            </Tooltip>
+          </DialogBox>
+        )}
 
         {/* <Tooltip
           title={inviteBtnVisible ? "Invite date" : "Cancel date invite"}
@@ -384,8 +394,8 @@ function FriendProfileCard({ conUser, cardType }) {
           {activeUsers.some((user) => user.userId === otherUser._id) ? (
             <div className="suggestion-online--dot"></div>
           ) : (
-              <div className="suggestion-offline--dot"></div>
-            )}
+            <div className="suggestion-offline--dot"></div>
+          )}
           <div className="profile-status">
             {activeUsers.some((user) => user.userId === otherUser._id)
               ? "Online"

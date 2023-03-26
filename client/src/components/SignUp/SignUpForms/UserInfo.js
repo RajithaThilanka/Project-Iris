@@ -41,6 +41,7 @@ function UserInfo() {
     userId: id,
   });
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setData({ ...formData, height: formData.ft + formData.in * 0.0833333 });
@@ -61,14 +62,176 @@ function UserInfo() {
     const getAllCountries = async () => {
       try {
         const { data } = await getCountries();
-
-        setCountries(data);
+        let c = data;
+        c.sort(function (a, b) {
+          return ("" + a.name.common).localeCompare(b.name.common);
+        });
+        setCountries(c);
       } catch (err) {
         console.log(err);
       }
     };
     getAllCountries();
   }, []);
+
+  const languages = [
+    "Abkhazian",
+    "Afar",
+    "Afrikaans",
+    "Akan",
+    "Albanian",
+    "Amharic",
+    "Arabic",
+    "Armenian",
+    "Assamese",
+    "Awadhi",
+    "Aymara",
+    "Azerbaijani",
+    "Balochi",
+    "Bashkir",
+    "Basque",
+    "Belarussian",
+    "Bengali",
+    "Bhojpuri",
+    "Bhutani",
+    "Bihari",
+    "Bislama",
+    "Breton",
+    "Bulgarian",
+    "Burmese",
+    "Catalan",
+    "Cebuano",
+    "Chechen",
+    "Chinese",
+    "Corsican",
+    "Croatian",
+    "Czech",
+    "Dakhini",
+    "Danish",
+    "Dutch",
+    "English",
+    "Esperanto",
+    "Estonian",
+    "Faeroese",
+    "Fiji",
+    "Finnish",
+    "French",
+    "Frisian",
+    "Galician",
+    "Georgian",
+    "German",
+    "Greek",
+    "Greenlandic",
+    "Guarani",
+    "Gujarati",
+    "Haitian Creole",
+    "Hausa",
+    "Hebrew",
+    "Hindi",
+    "Hungarian",
+    "Icelandic",
+    "Indonesian",
+    "Interlingua",
+    "Interlingue",
+    "Inupiak",
+    "Irish",
+    "Italian",
+    "Japanese",
+    "Javanese",
+    "Kabyle",
+    "Kannada",
+    "Kashmiri",
+    "Kazakh",
+    "Khmer",
+    "Kinyarwanda",
+    "Kirghiz",
+    "Kirundi",
+    "Konkani",
+    "Korean",
+    "Kurdish",
+    "Laothian",
+    "Latin",
+    "Latvian",
+    "Lingala",
+    "Lithuanian",
+    "Lombard",
+    "Luxembourgish",
+    "Macedonian",
+    "Maithili",
+    "Makhuwa",
+    "Malagasy",
+    "Malay",
+    "Malayalam",
+    "Maltese",
+    "Maori",
+    "Marathi",
+    "Marwari",
+    "Moldavian",
+    "Mongolian",
+    "Nauru",
+    "Nepali",
+    "Norwegian",
+    "Occitan",
+    "Oriya",
+    "Oromo",
+    "Pashto",
+    "Persian",
+    "Polish",
+    "Portuguese",
+    "Punjabi",
+    "Quechua",
+    "Rhaeto-Romance",
+    "Rifian",
+    "Romanian",
+    "Russian",
+    "Samoan",
+    "Sangro",
+    "Sanskrit",
+    "Scottish Gaelic",
+    "Serbian",
+    "Serbo-Croatian",
+    "Sesotho",
+    "Setswana",
+    "Shona",
+    "Sindhi",
+    "Sinhalese",
+    "Siswati",
+    "Slovak",
+    "Slovenian",
+    "Somali",
+    "Spanish",
+    "Sundanese",
+    "Swahili",
+    "Swedish",
+    "Tagalog",
+    "Tajik",
+    "Tamazight",
+    "Tamil",
+    "Tatar",
+    "Telugu",
+    "Thai",
+    "Tibetan",
+    "Tigrinya",
+    "Tonga",
+    "Tsonga",
+    "Tuareg",
+    "Turkish",
+    "Turkmen",
+    "Twi",
+    "Ukrainian",
+    "Urdu",
+    "Uyghur",
+    "Uzbek",
+    "Vietnamese",
+    "Volapuk",
+    "Welsh",
+    "Wolof",
+    "Xhosa",
+    "Yiddish",
+    "Yoruba",
+    "Zulu",
+  ];
+
   const handleData = (event) => {
     if (event.target.name === "hasChildren") {
       event.target.value === "true"
@@ -211,7 +374,7 @@ function UserInfo() {
               <FormLabel>Languages you speak</FormLabel>
               <FormControl>
                 <MultipleSelectChip
-                  names={["English", "Tamil", "Hindi"]}
+                  names={languages}
                   onChange={handleData}
                   value={formData.languages}
                   name="languages"
@@ -253,6 +416,12 @@ function UserInfo() {
                 >
                   <MenuItem value="">
                     <em>Not Specified</em>
+                  </MenuItem>
+                  <MenuItem key="high school" value="high school">
+                    High school
+                  </MenuItem>
+                  <MenuItem key="college" value="college">
+                    Some college
                   </MenuItem>
                   <MenuItem key="bachelor's degree" value="bachelor">
                     Bachelor's degree

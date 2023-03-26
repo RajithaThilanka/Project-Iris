@@ -26,6 +26,7 @@ function ProfileCards({ cardType, socket }) {
             conUser={user}
             cardType={cardType}
             key={user._id}
+            socket={socket}
           />
         );
       }));

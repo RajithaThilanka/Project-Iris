@@ -35,7 +35,11 @@ function FriendRequests({ socket }) {
       setreceivedFriendRequests(
         receivedFriendRequests.filter((req) => req.senderId._id !== id)
       );
-      setConnections(connections.filter((u) => u.senderId._id !== id));
+      setConnections(
+        connections.filter(
+          (u) => u.senderId._id !== id && u.receiverId._id !== id
+        )
+      );
       setFriends([...friends, data]);
       socket.emit("new-friend-request-accepted", data);
     } catch (err) {

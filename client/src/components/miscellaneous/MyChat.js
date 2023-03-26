@@ -18,7 +18,7 @@ import ChatFriendsList from "./ChatFriendsList/ChatFriendsList";
 import ChatIcon from "@mui/icons-material/Chat";
 import { updateSeenAll } from "../../api/ChatRequests";
 
-function MyChat({ fetchAgain, setFetchAgain }) {
+function MyChat({ fetchAgain, setFetchAgain, socket }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
@@ -106,7 +106,21 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   useEffect(() => {
     handleSearch();
   }, [search]);
-
+  useEffect(() => {
+    socket.on("message-seen", (chat) => {
+      // chat.latestMessage.isSeen = true;
+      setChats(
+        chats.filter((ch) => {
+          if (ch._id !== chat._id) {
+            return true;
+          } else {
+            ch.latestMessage.isSeen = true;
+            return true;
+          }
+        })
+      );
+    });
+  });
   const handleDeleteChat = async (id) => {
     try {
       await deleteChat(id);
@@ -127,7 +141,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
 
   const handleOpenMessage = async (chat) => {
     setSelectedChat(chat);
-    // socket.emit();
+
     await updateSeenAll(chat._id);
     if (
       chat?.latestMessage &&
@@ -135,6 +149,7 @@ function MyChat({ fetchAgain, setFetchAgain }) {
     ) {
       chat.latestMessage.isSeen = true;
     }
+    socket.emit("message-seen", chat);
     setNotification(notification.filter((not) => not.chat._id !== chat._id));
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;

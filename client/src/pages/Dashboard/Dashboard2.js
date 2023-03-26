@@ -37,6 +37,7 @@ import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import { logout } from "../../actions/AuthActions";
 import { FlagCircle, ForkRight } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import Dates from "../Dates/Dates";
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
@@ -59,6 +60,9 @@ function Dashboard2() {
     setsentConRequests,
     receivedFriendRequests,
     setreceivedFriendRequests,
+    dates,
+    setDates,
+    socketConnected,
     setsentFriendRequests,
     sentFriendRequests,
   } = useContext(MatchesContext);
@@ -66,6 +70,7 @@ function Dashboard2() {
   const [filtered, setFiltered] = useState([]);
   const profileContentRef = useRef();
   const [btnClicked, setBtnClicked] = useState(false);
+  const [currentPhoto, setCurrentPhoto] = useState(0);
   const applyFilter = () => {
     const lookingForGenders = [];
     filter.gender.male && lookingForGenders.push("male");
@@ -110,6 +115,14 @@ function Dashboard2() {
     receivedConRequests,
     setreceivedConRequests,
     notification,
+    receivedDateRequests,
+    setreceivedDateRequests,
+    setFriends,
+    friends,
+    setConnections,
+    connections,
+    sentDateRequests,
+    setsentDateRequests,
     setNotification,
   } = useContext(MatchesContext);
   useEffect(() => {
@@ -136,11 +149,31 @@ function Dashboard2() {
       setsentConRequests(
         sentConRequests.filter((req) => req._id !== newConReq._id)
       );
+      setConnections([...connections, newConReq]);
     });
     socket.on("new-friend-req-accepted", (newConReq) => {
       setsentFriendRequests(
         sentFriendRequests.filter((req) => req._id !== newConReq._id)
       );
+      setFriends([...friends, newConReq]);
+      setConnections(
+        connections.filter(
+          (u) =>
+            u.receiverId._id !== newConReq.receiverId._id &&
+            u.senderId._id !== newConReq.receiverId._id
+        )
+      );
+    });
+    socket.on("new-date-req-received", (newConReq) => {
+      if (!receivedDateRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedDateRequests([newConReq, ...receivedDateRequests]);
+      }
+    });
+    socket.on("new-date-req-accepted", (newConReq) => {
+      setsentDateRequests(
+        sentDateRequests.filter((req) => req._id !== newConReq._id)
+      );
+      setDates([...dates, newConReq]);
     });
   });
 
@@ -171,6 +204,7 @@ function Dashboard2() {
         setLoading(false);
         setErr(err);
         if (err.response.status === 401) {
+          socket?.disconnect();
           dispatch(logout());
         }
       }
@@ -226,6 +260,13 @@ function Dashboard2() {
     setBtnClicked(false);
   };
 
+  const handleTap = (e) => {
+    // e.stopPropogation();
+    if (e.currentTarget != e.target) return;
+    setCurrentPhoto(
+      (currentPhoto + 1) % (filtered[currentProfile]?.photos?.length + 1)
+    );
+  };
   useEffect(() => {
     return () => {
       socket.off();
@@ -233,7 +274,7 @@ function Dashboard2() {
   }, []);
   return (
     <>
-      <Navbar user={user} socket={socket} />
+      {socketConnected && <Navbar user={user} socket={socket} />}
       <div
         className="dashboard-container"
         style={{
@@ -253,9 +294,13 @@ function Dashboard2() {
                   className="sugg-card"
                   style={{
                     backgroundImage: `url(${
-                      serverPublic + filtered[currentProfile]?.profilePhoto
+                      currentPhoto === 0
+                        ? serverPublic + filtered[currentProfile]?.profilePhoto
+                        : serverPublic +
+                          filtered[currentProfile]?.photos[currentPhoto - 1]
                     })`,
                   }}
+                  onClick={handleTap}
                 >
                   {!btnClicked ? (
                     <IconButton
@@ -272,6 +317,33 @@ function Dashboard2() {
                       <CloseIcon fontSize="large" sx={{ color: "#eee" }} />
                     </IconButton>
                   )}
+                  <div className="dashboard-other-images-container">
+                    <div
+                      className={
+                        currentPhoto === 0
+                          ? "horizonal-photo-line--active"
+                          : "horizonal-photo-line"
+                      }
+                      onClick={() => setCurrentPhoto(0)}
+                    ></div>
+                    {filtered[currentProfile]?.photos?.length > 0 &&
+                      filtered[currentProfile].photos.map((photo, index) => {
+                        return (
+                          // <div className="dashboard-other-image">
+                          //   <img src={serverPublic + photo} alt="others" />
+                          // </div>
+                          <div
+                            className={
+                              currentPhoto !== 0 && currentPhoto === index + 1
+                                ? "horizonal-photo-line--active"
+                                : "horizonal-photo-line"
+                            }
+                            key={index}
+                            onClick={() => setCurrentPhoto(index + 1)}
+                          ></div>
+                        );
+                      })}
+                  </div>
                   <div className="profile--header">
                     <IconButton
                       style={{
@@ -343,6 +415,7 @@ function Dashboard2() {
                     </Button>
                   </div>
                 </div>
+
                 <Box className="profileContent" ref={profileContentRef}>
                   <Zoom>
                     <Divider>
@@ -501,6 +574,34 @@ function Dashboard2() {
                     <div className="profile--description">
                       {filtered[currentProfile]?.userDescription}
                     </div>
+                    <Divider>
+                      <Chip
+                        label="Check these out!"
+                        style={{
+                          background: "var(--color-secondary)",
+                          fontSize: "1.1rem",
+                          fontWeight: 600,
+                        }}
+                      ></Chip>
+                    </Divider>
+                    <div className="dashboard-profile-vid-container">
+                      {filtered[currentProfile]?.urls.length > 0 &&
+                        filtered[currentProfile]?.urls.map((vidUrl) => {
+                          return (
+                            <div className="profile-fav-songs">
+                              <iframe
+                                width="100%"
+                                height="233.2"
+                                src={vidUrl}
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen="allowfullscreen"
+                              ></iframe>
+                            </div>
+                          );
+                        })}
+                    </div>
                   </Zoom>
                 </Box>
               </div>
@@ -561,7 +662,10 @@ function Dashboard2() {
                 }}
                 modules={[Pagination]}
                 className="mySwiper"
-                onSlideChange={(el) => setCurrentProfile(el.realIndex)}
+                onSlideChange={(el) => {
+                  setCurrentProfile(el.realIndex);
+                  setCurrentPhoto(0);
+                }}
                 initialSlide={currentProfile}
                 onSwiper={setSwiper}
                 grabCursor={true}

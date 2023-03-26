@@ -25,7 +25,7 @@ const server = app.listen(port, () => {
 let activeUsers = [];
 let vidUsers = [];
 const io = require('socket.io')(server, {
-  pingTimeout: 15 * 60 * 1000,
+  pingTimeout: 40 * 60 * 1000,
   cors: {
     origin: 'http://localhost:3000',
   },
@@ -103,31 +103,43 @@ io.on('connection', socket => {
   });
 
   socket.on('new-con-request-sent', newConReq => {
-    console.log('sent');
     let id = newConReq.receiverId._id;
     socket.in(id).emit('new-con-req-received', newConReq);
   });
 
   socket.on('new-friend-request-sent', newConReq => {
-    console.log('sent');
     let id = newConReq.receiverId._id;
     socket.in(id).emit('new-friend-req-received', newConReq);
   });
 
   socket.on('new-con-request-accepted', newConReq => {
     let id = newConReq.senderId._id;
-    console.log(id);
+
     socket.in(id).emit('new-con-req-accepted', newConReq);
   });
   socket.on('new-friend-request-accepted', newConReq => {
     let id = newConReq.senderId._id;
-    console.log(id);
+
     socket.in(id).emit('new-friend-req-accepted', newConReq);
+  });
+  socket.on('new-date-request-sent', newConReq => {
+    console.log(newConReq);
+    let id = newConReq.receiverId._id;
+    socket.in(id).emit('new-date-req-received', newConReq);
+  });
+  socket.on('new-date-request-accepted', newConReq => {
+    let id = newConReq.senderId._id;
+    console.log(id);
+    socket.in(id).emit('new-date-req-accepted', newConReq);
   });
   socket.off('setup', () => {
     console.log('USER DISCONNECTED');
     console.log('leave now', activeUsers);
     socket.leave(userData._id);
+  });
+  socket.on('message-seen', chat => {
+    const id = chat?.latestMessage?.sender?._id;
+    socket.in(id).emit('message-seen', chat);
   });
 });
 process.on('unhandledRejection', err => {

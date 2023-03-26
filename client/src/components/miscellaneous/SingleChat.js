@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { getSender, getSenderFull } from "../../config/ChatLogics";
@@ -26,6 +26,7 @@ import styled from "@emotion/styled";
 import DuoIcon from "@mui/icons-material/Duo";
 import InputEmoji from "react-input-emoji";
 import { updateSeen } from "../../api/ChatRequests";
+import { logout } from "../../actions/AuthActions";
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
 
@@ -58,13 +59,20 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+  const dispatch = useDispatch();
   const {
     receivedConRequests,
     setreceivedConRequests,
+    setsentDateRequests,
     receivedFriendRequests,
     setreceivedFriendRequests,
+    sentDateRequests,
     setsentConRequests,
     sentConRequests,
+    friends,
+    setFriends,
+    connections,
+    setConnections,
     setsentFriendRequests,
     sentFriendRequests,
   } = useContext(MatchesContext);
@@ -76,6 +84,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     socket.on("stop typing", () => setIsTyping(false));
     socket.on("active-users", (activeUsers) => {
       setActiveUsers(activeUsers);
+      console.log(activeUsers);
     });
   }, []);
 
@@ -93,6 +102,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
       console.log(error);
+      if (error.response.status === 401) {
+        socket?.disconnect();
+        dispatch(logout());
+      }
     }
   };
 
@@ -177,10 +190,24 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       setsentConRequests(
         sentConRequests.filter((req) => req._id !== newConReq._id)
       );
+      setConnections([...connections, newConReq]);
     });
     socket.on("new-friend-req-accepted", (newConReq) => {
       setsentFriendRequests(
         sentFriendRequests.filter((req) => req._id !== newConReq._id)
+      );
+      setFriends([...friends, newConReq]);
+      setConnections(
+        connections.filter(
+          (u) =>
+            u.receiverId._id !== newConReq.receiverId._id &&
+            u.senderId._id !== newConReq.receiverId._id
+        )
+      );
+    });
+    socket.on("new-date-req-accepted", (newConReq) => {
+      setsentDateRequests(
+        sentDateRequests.filter((req) => req._id !== newConReq._id)
       );
     });
   });
@@ -217,6 +244,13 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   useEffect(() => {
     selectedChat && inputRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [selectedChat]);
+  useEffect(() => {
+    return () => {
+      // socket.off();
+
+      setSocketConnected(false);
+    };
+  }, []);
   return (
     <>
       {selectedChat ? (

@@ -92,7 +92,14 @@ const userSchema = new mongoose.Schema(
     userDescription: {
       type: String,
     },
-
+    photos: {
+      type: [String],
+      default: [],
+    },
+    urls: {
+      type: [String],
+      default: [],
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
