@@ -5,12 +5,30 @@ import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
 import { useState } from "react";
 import { Typography, Stack, Box, Button } from "@mui/material";
 import dayjs from "dayjs";
+import { setHatespeech } from "../../api/AdminRequests";
 
+function CustomToolbar(props) {
+  return null;
+}
 export default function AdminSettings() {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [convertdate, setConvertDate] = useState(null);
+  const handleButtonClick = () => {
+    // Call the setHatespeech function with the appropriate parameter value
+    setHatespeech("2022-04-01T10:00:00.000Z")
+      .then((response) => {
+        console.log(response.data); // Output the response data to the console
+        // Handle the API response as needed
+      })
+      .catch((error) => {
+        console.log(error.response.data); // Output the error data to the console
+        // Handle the API error as needed
+      });
+  };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setConvertDate(dayjs(selectedDate).format("YYYY, MMMM D,h:mm A"));
   };
 
   const [currentDateTime, setCurrentDateTime] = useState(null);
@@ -26,9 +44,7 @@ export default function AdminSettings() {
           <Typography variant="h5">
             Schedule Hatespeech Detect Date and Time
           </Typography>
-          <Typography variant="h6">
-            {dayjs(selectedDate).format("dddd, MMMM D, YYYY h:mm A")}
-          </Typography>
+          <Typography variant="h6">{convertdate}</Typography>
           <Box
             sx={{
               border: 1,
@@ -44,14 +60,15 @@ export default function AdminSettings() {
                 orientation="landscape"
                 value={selectedDate}
                 onChange={handleDateChange}
+                ToolbarComponent={CustomToolbar}
               />
             </LocalizationProvider>
           </Box>
         </Stack>
         <Stack direction="column" spacing={2} alignItems="center" padding={25}>
-          <Typography variant="h5">Hate Speech Check Now</Typography>
-          <Button variant="outlined" onClick={handleClick}>
-            Check Now
+          <Typography variant="h5">Hate Speech Schedule</Typography>
+          <Button variant="outlined" onClick={handleButtonClick}>
+            Schedule Now
           </Button>
         </Stack>
       </Stack>

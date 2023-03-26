@@ -25,6 +25,7 @@ function ProfileView() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const { id } = useParams();
   const navigate = useNavigate();
+
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];

@@ -1,18 +1,77 @@
 import React from "react";
-import { Grid, Typography, Stack, Button, Box } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Stack,
+  Button,
+  Box,
+  InputAdornment,
+} from "@mui/material";
+import { PhotoCamera } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import "./PHeaderstyle.css";
+import { useDispatch } from "react-redux";
 import Badge from "@mui/material/Badge";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import IconButton from "@mui/material/IconButton";
 import { getMe } from "../../../api/UserRequests";
 import { useState, useEffect } from "react";
-
+import { toast } from "react-toastify";
+import { uploadImage } from "../../../actions/UploadAction";
 function ProfilHeader() {
+  const [image, setImage] = useState(null);
+
+  const [uploaded, setUploaded] = useState(false);
   const [user, setUser] = useState(null);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const [formData, setData] = useState({
+    profilePhoto: "",
+  });
+
+  const dispatch = useDispatch();
+
+  const handleFileChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      setImage(img);
+      console.log(img);
+    }
+  };
+
+  const handleUpload = async (e) => {
+    if (image) {
+      const data = new FormData();
+      const fileName = Date.now() + image.name;
+      data.append("name", fileName);
+      data.append("file", image);
+
+      // newPost.image = fileName;
+      setData({ ...formData, profilePhoto: fileName });
+      try {
+        dispatch(uploadImage(data));
+        setUploaded(true);
+      } catch (err) {
+        console.log(err);
+        setUploaded(false);
+      }
+    } else {
+      toast.error("No image is chosen", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+  };
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -62,23 +121,37 @@ function ProfilHeader() {
                   margin: "1px",
                 }}
                 alt="The image"
-                // {user?.profilePhoto}
                 src={serverPublic + user?.profilePhoto}
-                // src="https://images.unsplash.com/profile-1446404465118-3a53b909cc82?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=64&w=64&s=3ef46b07bb19f68322d027cb8f9ac99f"
                 sx={{
                   width: { xs: 64, sm: 96, md: 128, lg: 150 },
                   height: { xs: 64, sm: 96, md: 128, lg: 150 },
                 }}
               />
+              <Stack direction="row">
+                <input
+                  id="file"
+                  accept="image/*"
+                  type="file"
+                  onChange={handleFileChange}
+                />
+                <label htmlFor="file">
+                  <IconButton color="primary" component="span">
+                    <PhotoCamera />
+                  </IconButton>
+                </label>
 
-              <Button
-                component="label"
-                variant="contained"
-                className="prouploadbutton custom-button"
-              >
-                Update
-                <input hidden accept="image/*" multiple type="file" />
-              </Button>
+                <InputAdornment position="end">
+                  <Button
+                    component="label"
+                    variant="contained"
+                    className="prouploadbutton custom-button"
+                    onClick={handleUpload}
+                  >
+                    Update
+                  </Button>
+                </InputAdornment>
+              </Stack>
+
               <br />
             </Stack>
           </Grid>

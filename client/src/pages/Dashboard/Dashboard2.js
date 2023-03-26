@@ -171,7 +171,7 @@ function Dashboard2() {
         setLoading(false);
         setErr(err);
         if (err.response.status === 401) {
-          dispatch(logout(socket));
+          dispatch(logout());
         }
       }
     };
