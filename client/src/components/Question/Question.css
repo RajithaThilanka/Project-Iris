@@ -1,10 +1,10 @@
-.question {
+.question-container {
   height: 100vh !important;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.question-container {
+.question {
   width: 80vw;
   max-width: 93rem;
   margin: auto;
@@ -26,7 +26,7 @@
   height: 100%;
   object-fit: cover;
 }
-.signup-heading {
+.question-heading {
   text-align: center;
   font-size: 2.5rem;
   margin-top: -2rem;
@@ -43,10 +43,10 @@
   top: 50%;
 }
 @media only screen and (max-width: 60em) {
-  .question {
+  .question-container {
     padding: 0 0 !important;
   }
-  .question-container {
+  .question {
     height: 100%;
     max-width: 100%;
     width: 100%;
@@ -54,7 +54,7 @@
 }
 
 @media only screen and (max-width: 37.5em) {
-  .signup-heading {
+  .question-heading {
     font-size: 2rem;
     /* margin-top: 0; */
   }

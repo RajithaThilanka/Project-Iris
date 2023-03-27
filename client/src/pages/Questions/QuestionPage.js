@@ -47,7 +47,7 @@ function QuestionPage() {
         // <p>Loading questions...</p>
         // )}
     // </div>
-        <div className="Question">
+        <div className="question">
             <h2>Let us know about you...</h2>
             {/* <QuestionHeader /> */}
             
@@ -69,18 +69,11 @@ function QuestionPage() {
             {/* <Grid container rowSpacing={3} px={3} margin={2} alignItems="flex-end" justify="center">
                 
             </Grid> */}
-            <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            style={{ minHeight: '100vh' }}
-            >
-
-            <Grid item xs={3}>
-            <Question/>
-            </Grid>   
+            <Grid className="question-container">
+                
+            <Grid  container spacing={3} px={3} margin={2}>
+                <Question/>
+            </Grid >   
             
             </Grid> 
             

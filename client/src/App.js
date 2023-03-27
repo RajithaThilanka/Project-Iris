@@ -35,6 +35,8 @@ import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
 import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
+import Question from "./components/Question/Question";
+
 const theme = createTheme({
   palette: {
     type: "light",
@@ -101,7 +103,7 @@ function App() {
         <Routes>
           <Route
 	          path="/question"
-	          element={<QuestionPage />}
+	          element={<Question />}
           ></Route>
           <Route
             path="/auth/signup/account-info"
