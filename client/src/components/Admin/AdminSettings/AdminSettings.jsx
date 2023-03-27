@@ -5,12 +5,27 @@ import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
 import { useState } from "react";
 import { Typography, Stack, Box, Button } from "@mui/material";
 import dayjs from "dayjs";
-import { setHatespeech } from "../../api/AdminRequests";
+import { setHatespeech, hateSpeechChechNow } from "../../api/AdminRequests";
 
 function CustomToolbar(props) {
   return null;
 }
 export default function AdminSettings() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlehateSpeechClick = async () => {
+    setIsLoading(true);
+    try {
+      const response = await hateSpeechChechNow();
+      // handle the response as needed
+    } catch (error) {
+      console.error(error);
+      // handle the error as needed
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [convertdate, setConvertDate] = useState(null);
   const handleButtonClick = () => {
@@ -73,7 +88,7 @@ export default function AdminSettings() {
             //padding={25}
           >
             <Typography variant="h5">Hate Speech Schedule</Typography>
-            <Button variant="outlined" onClick={handleButtonClick}>
+            <Button variant="contained" onClick={handleButtonClick}>
               Schedule Now
             </Button>
           </Stack>
@@ -85,8 +100,12 @@ export default function AdminSettings() {
             //padding={25}
           >
             <Typography variant="h5">Hate Speech Check Now</Typography>
-            <Button variant="outlined" onClick={""}>
-              Check Now
+            <Button
+              variant="contained"
+              onClick={handlehateSpeechClick}
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Check Hate Speech Now"}
             </Button>
           </Stack>
         </Stack>

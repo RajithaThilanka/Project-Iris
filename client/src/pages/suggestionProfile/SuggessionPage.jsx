@@ -17,7 +17,7 @@ export default function SuggessionPage() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-  const { id } = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     const getData = async () => {
@@ -27,15 +27,14 @@ export default function SuggessionPage() {
             data: { data },
           },
         } = await getUser(id);
-        setProfile(data)
+        setProfile(data);
         console.log(data);
       } catch (error) {
         console.log(error);
       }
     };
-    getData()
+    getData();
   }, []);
-
 
   return (
     <div className="suggesstionPage">
@@ -46,8 +45,6 @@ export default function SuggessionPage() {
           imageid={profile?.profilePhoto}
           name={profile?.firstname}
           occupation={profile?.occupation}
-
-
         />
       </Stack>
 
@@ -58,6 +55,7 @@ export default function SuggessionPage() {
         }}
       >
         <SugContent
+          profilePhoto={profile?.profilePhoto}
           callName={profile?.callTag}
           Ethnicity={profile?.ethnicity}
           Dob={profile?.dob.substring(0, 10)}

@@ -173,7 +173,7 @@ function UploadImages() {
           <Button onClick={handleUploadAndImageNameUpdate} variant="contained">
             Upload
           </Button>
-          <ContinueCard nextpage={"/selfiPhoto"} />
+          <ContinueCard nextpage={"/me/selfiPhoto"} />
         </Stack>
         <Typography
           sx={{ fontSize: 22, fontFamily: "Poppins, sans-serif", color: "red" }}

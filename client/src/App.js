@@ -208,9 +208,9 @@ function App() {
           <Route path="/users/profile/:id" element={<SuggessionPage />}></Route>
 
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
-          <Route path="verification" element={<IdVerification />} />
-          <Route path="uploadimages" element={<UploadImages />} />
-          <Route path="selfiPhoto" element={<SelfiPhoto />} />
+          <Route path="/me/verification" element={<IdVerification />} />
+          <Route path="/me/uploadimages" element={<UploadImages />} />
+          <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}
