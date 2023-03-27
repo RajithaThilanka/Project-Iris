@@ -325,6 +325,7 @@ function Navbar({ user, socket }) {
                 display: { xs: "block", md: "none" },
                 // background: "red",
               }}
+              PaperProps={{ className: "mob-nav-bar" }}
             >
               {
                 <MenuItem
