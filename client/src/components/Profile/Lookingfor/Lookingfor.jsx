@@ -22,6 +22,8 @@ import { getMe } from "../../../api/UserRequests";
 import { updateMe } from "../../api/UserRequests";
 //import { updateMe } from "../../api/UserRequests";
 export default function Lookingfor() {
+  const [userData, setUserData] = useState({});
+
   const [user, setUser] = useState(null);
   const [dbvar, setDBVar] = useState("");
 
@@ -47,19 +49,27 @@ export default function Lookingfor() {
     setDBVar("");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = {
-      [dbvar]: formdata,
+  const GenderUpdate = async () => {
+    // define a new object with the updated gender value
+    const newData = {
+      lookingFor: {
+        ...userData.lookingFor,
+        gender: "male",
+      },
     };
-    updateMe(data)
-      .then((response) => {
-        handleUpdateClick();
-      })
-      .catch((error) => {
-        handleUpdateerrClick();
-      });
+
+    // call the updateMe function with the new data object as an argument
+    const response = await updateMe(newData);
+
+    // handle the response and update the state of your component accordingly
+    if (response.data.status === "success") {
+      setUserData(response.data.data.data);
+      alert("Gender updated successfully!");
+    } else {
+      alert("Error updating gender!");
+    }
   };
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -76,6 +86,7 @@ export default function Lookingfor() {
     };
     getData();
   }, []);
+
   return (
     <div>
       {/*Set Lookingfor */}
@@ -85,7 +96,7 @@ export default function Lookingfor() {
             <div className="popup-content">
               <Stack direction="column" spacing={2}>
                 <Stack direction="row" sx={{ justifyContent: "space-between" }}>
-                  <Typography variant="h5">I am finding :</Typography>
+                  <Typography variant="h5">Show me : </Typography>
                   <IconButton variant="outline" onClick={lookgendertogglePopup}>
                     <CloseIcon />
                   </IconButton>
@@ -124,8 +135,8 @@ export default function Lookingfor() {
                   <Button
                     sx={{ width: "100%" }}
                     variant="contained"
-                    type="submit"
-                    onClick={handleSubmit}
+                    // type="submit"
+                    onClick={GenderUpdate}
                   >
                     Save
                   </Button>
@@ -165,7 +176,7 @@ export default function Lookingfor() {
             sx={{ justifyContent: "space-between" }}
           >
             <Typography spacing={2}>
-              <PersonSearchIcon /> Lookingfor :{user?.lookingFor.gender}
+              <PersonSearchIcon /> Show me : {user?.lookingFor.gender}
             </Typography>
 
             <Button

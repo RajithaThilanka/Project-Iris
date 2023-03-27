@@ -66,10 +66,29 @@ export default function AdminSettings() {
           </Box>
         </Stack>
         <Stack direction="column" spacing={2} alignItems="center" padding={25}>
-          <Typography variant="h5">Hate Speech Schedule</Typography>
-          <Button variant="outlined" onClick={handleButtonClick}>
-            Schedule Now
-          </Button>
+          <Stack
+            direction="column"
+            spacing={2}
+            alignItems="center"
+            //padding={25}
+          >
+            <Typography variant="h5">Hate Speech Schedule</Typography>
+            <Button variant="outlined" onClick={handleButtonClick}>
+              Schedule Now
+            </Button>
+          </Stack>
+
+          <Stack
+            direction="column"
+            spacing={2}
+            alignItems="center"
+            //padding={25}
+          >
+            <Typography variant="h5">Hate Speech Check Now</Typography>
+            <Button variant="outlined" onClick={""}>
+              Check Now
+            </Button>
+          </Stack>
         </Stack>
       </Stack>
     </div>
