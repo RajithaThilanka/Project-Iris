@@ -7,8 +7,8 @@ import {
   TextField,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { getSender, getSenderFull } from "../../config/ChatLogics";
@@ -25,6 +25,8 @@ import animationData from "../../animations/typing.json";
 import styled from "@emotion/styled";
 import DuoIcon from "@mui/icons-material/Duo";
 import InputEmoji from "react-input-emoji";
+import { updateSeen } from "../../api/ChatRequests";
+import { logout } from "../../actions/AuthActions";
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
 
@@ -33,9 +35,15 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const { activeUsers, setActiveUsers } = useContext(MatchesContext);
-
-  const { selectedChat, setSelectedChat, notification, setNotification } =
-    useContext(MatchesContext);
+  const inputRef = useRef();
+  const {
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+    chats,
+    setChats,
+  } = useContext(MatchesContext);
   const [modalOpen, setOpen] = React.useState(false);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -51,6 +59,23 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+  const dispatch = useDispatch();
+  const {
+    receivedConRequests,
+    setreceivedConRequests,
+    setsentDateRequests,
+    receivedFriendRequests,
+    setreceivedFriendRequests,
+    sentDateRequests,
+    setsentConRequests,
+    sentConRequests,
+    friends,
+    setFriends,
+    connections,
+    setConnections,
+    setsentFriendRequests,
+    sentFriendRequests,
+  } = useContext(MatchesContext);
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
@@ -59,6 +84,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     socket.on("stop typing", () => setIsTyping(false));
     socket.on("active-users", (activeUsers) => {
       setActiveUsers(activeUsers);
+      console.log(activeUsers);
     });
   }, []);
 
@@ -76,6 +102,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
       console.log(error);
+      if (error.response.status === 401) {
+        socket?.disconnect();
+        dispatch(logout());
+      }
     }
   };
 
@@ -85,7 +115,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on("message recieved", (newMessageRecieved) => {
+    socket.on("message recieved", async (newMessageRecieved) => {
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -93,11 +123,15 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
         // give notification
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
-
           setFetchAgain(!fetchAgain);
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
+        try {
+          await updateSeen(newMessageRecieved._id);
+        } catch (err) {
+          console.log(err);
+        }
       }
     });
   });
@@ -116,7 +150,6 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
 
         socket.emit("new message", data);
         setMessages([...messages, data]);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -141,7 +174,43 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       }
     }, timerLength);
   };
+  useEffect(() => {
+    socket.on("new-con-req-received", (newConReq) => {
+      if (!receivedConRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedConRequests([newConReq, ...receivedConRequests]);
+      }
+    });
 
+    socket.on("new-friend-req-received", (newConReq) => {
+      if (!receivedFriendRequests.some((req) => req._id === newConReq._id)) {
+        setreceivedFriendRequests([newConReq, ...receivedFriendRequests]);
+      }
+    });
+    socket.on("new-con-req-accepted", (newConReq) => {
+      setsentConRequests(
+        sentConRequests.filter((req) => req._id !== newConReq._id)
+      );
+      setConnections([...connections, newConReq]);
+    });
+    socket.on("new-friend-req-accepted", (newConReq) => {
+      setsentFriendRequests(
+        sentFriendRequests.filter((req) => req._id !== newConReq._id)
+      );
+      setFriends([...friends, newConReq]);
+      setConnections(
+        connections.filter(
+          (u) =>
+            u.receiverId._id !== newConReq.receiverId._id &&
+            u.senderId._id !== newConReq.receiverId._id
+        )
+      );
+    });
+    socket.on("new-date-req-accepted", (newConReq) => {
+      setsentDateRequests(
+        sentDateRequests.filter((req) => req._id !== newConReq._id)
+      );
+    });
+  });
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "#44b700",
@@ -171,25 +240,37 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     },
   }));
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {
+    selectedChat && inputRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [selectedChat]);
+  useEffect(() => {
+    return () => {
+      // socket.off();
+
+      setSocketConnected(false);
+    };
+  }, []);
   return (
     <>
       {selectedChat ? (
         <>
           <div className="chat-user-header">
-            <IconButton style={{}} onClick={() => setSelectedChat("")}>
-              <ArrowBackIosIcon style={{ color: "#fff" }} />
+            <IconButton
+              style={{}}
+              onClick={() => {
+                setSelectedChat("");
+                setFetchAgain(!fetchAgain);
+              }}
+            >
+              <ArrowBackIosIcon
+                style={{ color: "#fff", width: "2rem", height: "2rem" }}
+                fontSize="small"
+              />
             </IconButton>
             {!selectedChat.isGroupChat ? (
               <>
-                <div
-                  style={{
-                    flex: 0.9,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "1.5rem",
-                  }}
-                >
+                <div className="single-chat-user-container">
                   <StyledBadge
                     overlap="circular"
                     anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -211,27 +292,22 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                       }
                       style={{
                         cursor: "pointer",
-                        width: "7rem",
-                        height: "7rem",
+                        width: "4rem",
+                        height: "4rem",
                         border: "1px solid #fff",
                       }}
                       onClick={() => setOpen(true)}
                     />
                   </StyledBadge>
-                  <h6
-                    style={{
-                      fontSize: "1.8rem",
-                      fontWeight: "400",
-                      fontFamily: "inherit",
-                    }}
-                  >
+                  <h6 className="single-chat-username">
                     {getSender(user, selectedChat.users)}
                   </h6>
                   <DuoIcon
-                    fontSize="large"
+                    fontSize="small"
                     sx={{
-                      width: "4rem",
-                      height: "4rem",
+                      width: "2.7rem",
+                      height: "2.7rem",
+                      marginLeft: "auto",
                     }}
                   />
                 </div>
@@ -253,7 +329,22 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
               </>
             )}
           </div>
-          <div className="chat-container">
+          <div
+            className="chat-container"
+            style={{
+              backgroundImage:
+                serverPublic +
+                  getSenderFull(user, selectedChat.users).profilePhoto !==
+                "defaultProfile"
+                  ? `linear-gradient(to bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url(${
+                      serverPublic +
+                      getSenderFull(user, selectedChat.users).profilePhoto
+                    })`
+                  : serverPublic + "chat-background.png",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
             {loading ? (
               <div
                 style={{
@@ -268,39 +359,27 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-            <div>
+            <div className="lottie-container" style={{ position: "relative" }}>
               {isTyping ? (
-                <div>
+                <div style={{}} className="lottie">
                   <Lottie
                     options={defaultOptions}
-                    width={70}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
+                    width={30}
+                    style={{ marginBottom: 15 }}
                   />
                 </div>
               ) : (
                 <></>
               )}
-              {/* <TextField
-                required
-                placeholder="Type a message"
-                size="small"
-                fullWidth
-                onChange={typingHandler}
-                value={newMessage}
-              /> */}
-              <div
-                style={{
-                  display: "flex",
-                  marginBottom: "0.9rem",
-                  marginTop: "1rem",
-                }}
-              >
+
+              <div className="input-emoji-chat-container" ref={inputRef}>
                 <InputEmoji
                   placeholder="Type a message"
                   onChange={typingHandler}
                   value={newMessage}
                   onEnter={sendMessage}
                   theme="dark"
+                  fontSize={12}
                 />
                 <IconButton sx={{ color: "#fff" }} onClick={sendMessage}>
                   <SendIcon />

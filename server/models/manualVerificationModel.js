@@ -6,11 +6,15 @@ const manualVerificationSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
-    liveFeed: {
+    liveImage: {
       type: String,
       required: true,
     },
-    nicPhoto: {
+    nicFront: {
+      type: String,
+      required: true,
+    },
+    nicBack: {
       type: String,
       required: true,
     },

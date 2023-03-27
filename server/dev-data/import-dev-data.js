@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const User = require(`../models/userModel`);
 const Answer = require('../models/answerModel');
+const Date = require('../models/dateModel');
 
 const dotenv = require('dotenv');
 
@@ -16,6 +17,7 @@ const DB = process.env.DATABASE.replace(
 const Chat = require('../models/chatModel');
 const Message = require('../models/messageModel');
 const LookingFor = require('../models/lookingForModel');
+const Connection = require('../models/connectionsModel');
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -29,7 +31,11 @@ const deleteDevData = async () => {
     // await Chat.deleteMany();
     // await Message.deleteMany();
     // await User.deleteMany();
-    await LookingFor.deleteMany();
+    // await LookingFor.deleteMany();
+    await Chat.deleteMany();
+    await Message.deleteMany();
+    await Connection.deleteMany();
+    await Date.deleteMany();
     // await Answer.deleteMany();
   } catch (error) {
     console.log(error);
@@ -176,8 +182,8 @@ const countries = [
 
 // Add the user to the cluster when signing up
 
-const ids = JSON.parse(fs.readFileSync('./userIds.json', 'utf-8'));
-const looking = JSON.parse(fs.readFileSync('./new.json', 'utf-8'));
+// const ids = JSON.parse(fs.readFileSync('./userIds.json', 'utf-8'));
+// const looking = JSON.parse(fs.readFileSync('./new.json', 'utf-8'));
 // const updated = users.map((u, index) => {
 //   return {
 //     ...u,
@@ -209,6 +215,7 @@ const import_data = async () => {
 };
 //     console.log('Data successfully loaded!');
 // deleteDevData();
-import_data();
+// import_data();
 
 // "_id": { "$oid":"dbfe53c3c4d568240378b0c6"}
+deleteDevData();

@@ -1,4 +1,7 @@
 const Connection = require('../models/connectionsModel');
+const date = require('../models/dateModel');
+const Chat = require('../models/chatModel');
+const Message = require('../models/messageModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const User = require('../models/userModel');
@@ -127,6 +130,16 @@ exports.removeConnection = catchAsync(async (req, res, next) => {
 
   await doc.deleteOne();
 
+  const deletedChat = await Chat.findOneAndDelete({
+    $and: [
+      { users: { $elemMatch: { $eq: removeUserId } } },
+      { users: { $elemMatch: { $eq: userId } } },
+    ],
+  });
+  if (deletedChat)
+    await Message.deleteMany({
+      chat: deletedChat._id,
+    });
   res.status(200).json({
     status: 'success',
     data: null,

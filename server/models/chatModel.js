@@ -25,6 +25,17 @@ const chatSchema = new mongoose.Schema(
     invisible: {
       type: [mongoose.Schema.Types.ObjectId],
     },
+    invisibleArr: {
+      type: [
+        {
+          userId: mongoose.Schema.Types.ObjectId,
+          deletedAt: {
+            type: Date,
+            default: Date.now(),
+          },
+        },
+      ],
+    },
   },
   { timestamps: true }
 );

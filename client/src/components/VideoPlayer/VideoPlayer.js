@@ -58,6 +58,7 @@ const VideoPlayer = () => {
   }, [myVideo, stream]);
 
   socket.on("endCall", () => {
+    console.log("yo yo");
     window.location.reload();
   });
   // useEffect(() => {

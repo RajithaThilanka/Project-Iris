@@ -91,7 +91,7 @@ function DateCard({ dateInfo }) {
             alt=""
             className="partner-img"
           />
-          <h3 className="partner-name">{dateInfo.senderId.callTag}</h3>
+          <h7 className="partner-name">{dateInfo.senderId.callTag}</h7>
         </div>
         <div className="partner">
           <img
@@ -99,33 +99,38 @@ function DateCard({ dateInfo }) {
             alt=""
             className="partner-img"
           />
-          <h3 className="partner-name">{dateInfo.receiverId.callTag}</h3>
+          <h7 className="partner-name">{dateInfo.receiverId.callTag}</h7>
         </div>
       </div>
-      <div className="date-scheduled-at">
-        {new Date(dateInfo.scheduledAt).toString()}
-      </div>
-      <div className="date-btn-container">
-        <Button
-          variant="contained"
-          className="go-to-date-btn"
-          onClick={() =>
-            navigate(`/video-date/${otherUser._id}`, { replace: true })
-          }
-          disabled={
-            new Date(Date.parse(dateInfo.scheduledAt)).getTime() > Date.now()
-          }
-        >
-          Go to date
-        </Button>
+      <div className="date-card-main-info">
+        <div className="date-scheduled-at">
+          {new Date(dateInfo.scheduledAt).toString()}
+        </div>
+        <div className="date-btn-container">
+          <Button
+            variant="contained"
+            className="go-to-date-btn"
+            onClick={() =>
+              navigate(`/video-date/${otherUser._id}`, { replace: true })
+            }
+            disabled={
+              new Date(Date.parse(dateInfo.scheduledAt)).getTime() > Date.now()
+            }
+          >
+            Go to date
+          </Button>
 
-        <Button
-          variant="contained"
-          className="postpone-btn"
-          onClick={handleOpen}
-        >
-          Postpone
-        </Button>
+          {new Date(dateInfo.scheduledAt).getTime() >
+            Date.now() - 2 * 60 * 60 * 1000 && (
+            <Button
+              variant="contained"
+              className="postpone-btn"
+              onClick={handleOpen}
+            >
+              Postpone
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 const Connection = require('../models/connectionsModel');
+const date = require('../models/dateModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const User = require('../models/userModel');
@@ -9,23 +10,26 @@ exports.inviteFriend = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const receiverId = req.params.id;
 
-  console.log('hey');
   if (userId === receiverId) {
     return next(new AppError('Request to yourself unauthorized', 401));
   }
   let updatedConnection = await Connection.findOneAndUpdate(
     {
-      $or: [
+      $and: [
         {
-          senderId: userId,
-          receiverId: receiverId,
+          $or: [
+            {
+              senderId: userId,
+              receiverId: receiverId,
+            },
+            {
+              senderId: receiverId,
+              receiverId: userId,
+            },
+          ],
         },
-        {
-          senderId: receiverId,
-          receiverId: userId,
-        },
+        { status: 'connected' },
       ],
-      status: 'connected',
     },
     {
       status: 'friend-req-pending',
@@ -135,6 +139,18 @@ exports.removeFriend = catchAsync(async (req, res, next) => {
   if (!updatedConnection) {
     return next(new AppError('No friend found', 404));
   }
+  await date.deleteMany({
+    $or: [
+      {
+        senderId: userId,
+        receiverId: removeUserId,
+      },
+      {
+        senderId: removeUserId,
+        receiverId: userId,
+      },
+    ],
+  });
 
   res.status(200).json({
     status: 'success',
@@ -149,17 +165,21 @@ exports.cancelFriendInvite = catchAsync(async (req, res, next) => {
   const removeUserId = req.params.id;
   const doc = await Connection.findOneAndUpdate(
     {
-      $or: [
+      $and: [
         {
-          senderId: userId,
-          receiverId: removeUserId,
+          $or: [
+            {
+              senderId: userId,
+              receiverId: removeUserId,
+            },
+            {
+              senderId: removeUserId,
+              receiverId: userId,
+            },
+          ],
         },
-        {
-          senderId: removeUserId,
-          receiverId: userId,
-        },
+        { status: 'friend-req-pending' },
       ],
-      status: 'friend-req-pending',
     },
     {
       status: 'connected',
@@ -232,17 +252,21 @@ exports.checkFriend = catchAsync(async (req, res, next) => {
   const receiverId = req.params.id;
 
   const doc = await Connection.findOne({
-    $or: [
+    $and: [
       {
-        senderId: userId,
-        receiverId,
+        $or: [
+          {
+            senderId: userId,
+            receiverId,
+          },
+          {
+            senderId: receiverId,
+            receiverId: userId,
+          },
+        ],
       },
-      {
-        senderId: receiverId,
-        receiverId: userId,
-      },
+      { status: 'friends' },
     ],
-    status: 'friends',
   });
   if (!doc) {
     return next(new AppError('You are not friends with the user', 401));

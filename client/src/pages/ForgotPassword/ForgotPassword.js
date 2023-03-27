@@ -5,8 +5,11 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Link, useNavigate } from "react-router-dom";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
-import { FormLabel, Grid, TextField } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
+import { FormLabel, TextField } from "@mui/material";
 import { forgotPassword } from "../../api/AuthRequests";
+import "./ForgotPassword.css";
+
 import Loader from "../../components/Loading/Loading";
 const style = {
   position: "absolute",
@@ -26,12 +29,7 @@ export default function ForgotPassword() {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  const [open, setOpen] = React.useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    navigate("/auth/login");
-  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -44,48 +42,37 @@ export default function ForgotPassword() {
       setLoading(false);
     }
   };
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
   return (
-    <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <div style={{ textAlign: "center", marginTop: "-2rem" }}>
-            <VpnKeyIcon
-              sx={{ fontSize: "8rem", color: "var(--color-primary)" }}
-            />
-          </div>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            textAlign="center"
-          >
-            Trouble logging in?
-          </Typography>
-          <p
-            style={{
-              fontSize: "1.3rem",
-              marginTop: "1rem",
-              textAlign: "center",
-            }}
-          >
-            Enter your email and we will send you a link to reset your password
-            get back into your account
-          </p>
-          <form
-            method="post"
-            style={{
-              padding: "1rem 0.5rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-            }}
-            onSubmit={handleSubmit}
-          >
+    <div className="forgot-password-container-main">
+      <form method="post" className="forgot-form-main" onSubmit={handleSubmit}>
+        <Grid container rowSpacing={3} px={3} margin={2}>
+          <Grid item sm={12} xs={12}>
+            <div style={{ textAlign: "center", marginTop: "-2rem" }}>
+              <VpnKeyIcon
+                sx={{ fontSize: "8rem", color: "var(--color-primary)" }}
+              />
+            </div>
+          </Grid>
+          <Grid item sm={12} xs={12}>
+            <h3 className="heading-tertiary forgot-heading">
+              Trouble logging in?
+            </h3>
+          </Grid>
+          <Grid item sm={12} xs={12}>
+            <p
+              style={{
+                fontSize: "1.3rem",
+                marginTop: "1rem",
+                textAlign: "center",
+              }}
+            >
+              Enter your email and we will send you a link to reset your
+              password get back into your account
+            </p>
+          </Grid>
+          <Grid item sm={12} xs={12}>
             <TextField
               label="Email"
               color="secondary"
@@ -99,28 +86,38 @@ export default function ForgotPassword() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+          </Grid>
+          <Grid item sm={12} xs={12}>
             {loading ? (
-              <div style={{ textAlign: "center", marginTop: "1rem" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <Loader />
               </div>
             ) : (
-              <Button type="submit" variant="contained">
+              <Button type="submit" variant="contained" fullWidth>
                 Send
               </Button>
             )}
-          </form>
-          <Typography
-            id="modal-modal-description"
-            sx={{ mt: 2, fontSize: "1.4rem", textAlign: "center" }}
-          >
-            Click{" "}
-            <Link style={{ color: "var(--color-primary)" }} to="/auth/login">
-              here
-            </Link>{" "}
-            to go back to login page
-          </Typography>
-        </Box>
-      </Modal>
+          </Grid>
+          <Grid item sm={12} xs={12}>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, fontSize: "1.4rem", textAlign: "center" }}
+            >
+              Click{" "}
+              <Link style={{ color: "var(--color-primary)" }} to="/auth/login">
+                here
+              </Link>{" "}
+              to go back to login page
+            </Typography>
+          </Grid>
+        </Grid>
+      </form>
     </div>
   );
 }

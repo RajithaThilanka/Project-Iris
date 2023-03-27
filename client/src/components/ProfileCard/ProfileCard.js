@@ -21,14 +21,15 @@ import {
 import { useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
 import { useNavigate } from "react-router-dom";
+import DialogBox from "../DialogBox/DialogBox";
 
-function ProfileCard({ conUser, cardType }) {
+function ProfileCard({ conUser, cardType, socket }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const otherUser =
     conUser.senderId._id === user._id ? conUser.receiverId : conUser.senderId;
-  const { activeUsers } = useContext(MatchesContext);
+  const { activeUsers, dates, setDates } = useContext(MatchesContext);
   const {
     sentFriendRequests,
     setsentFriendRequests,
@@ -39,6 +40,7 @@ function ProfileCard({ conUser, cardType }) {
     friends,
     setFriends,
     chats,
+
     setChats,
     selectedChat,
     setSelectedChat,
@@ -61,16 +63,7 @@ function ProfileCard({ conUser, cardType }) {
         },
       } = await sendFriendRequest(id);
       setsentFriendRequests([...sentFriendRequests, data]);
-      toast.success("Friend request sent", {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      socket.emit("new-friend-request-sent", data);
     } catch (err) {
       toast.error(err.response.data.message, {
         position: "bottom-left",
@@ -104,7 +97,7 @@ function ProfileCard({ conUser, cardType }) {
   //view suggestion profile
   const viewPro = async () => {
     try {
-      navigate("/me/suggession/profile");
+      navigate("/me/suggession/profile/");
     } catch (error) {
       console.log(error);
     }
@@ -119,16 +112,36 @@ function ProfileCard({ conUser, cardType }) {
           return con._id !== conUser._id;
         })
       );
-      toast.success("Connection removed", {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      // setDates(
+      //   dates.filter((dt) => {
+      //     return (
+      //       dt.senderId + "" != otherUser._id + "" &&
+      //       dt.receiverId + "" != otherUser._id + ""
+      //     );
+      //   })
+      // );
+      setsentFriendRequests(
+        sentFriendRequests.filter(
+          (req) =>
+            req.senderId._id + "" != otherUser._id + "" &&
+            req.receiverId._id + "" != otherUser._id + ""
+        )
+      );
+
+      setreceivedFriendRequests(
+        receivedFriendRequests.filter(
+          (req) =>
+            req.senderId._id + "" != otherUser._id + "" &&
+            req.receiverId._id + "" != otherUser._id + ""
+        )
+      );
+
+      setChats(
+        chats.filter((ch) => {
+          const users = ch.users.map((u) => u._id);
+          return !users.includes(otherUser._id);
+        })
+      );
     } catch (err) {
       const {
         response: {
@@ -164,16 +177,6 @@ function ProfileCard({ conUser, cardType }) {
       setConnections(connections.filter((u) => u.senderId._id !== id));
       setFriends([...friends, data]);
       setRequestSent(true);
-      toast.success("Friend request accepted", {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     } catch (err) {
       const {
         response: {
@@ -205,16 +208,6 @@ function ProfileCard({ conUser, cardType }) {
         receivedFriendRequests.filter((req) => req.senderId._id !== id)
       );
       setRequestSent(false);
-      toast.success("Friend request cancelled", {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     } catch (err) {
       const {
         response: {
@@ -245,11 +238,13 @@ function ProfileCard({ conUser, cardType }) {
       onMouseOver={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
     >
-      <img
-        src={serverPublic + otherUser.profilePhoto}
-        alt={otherUser.callTag}
-        className="profile-img"
-      />
+      <div className="image-section">
+        <img
+          src={serverPublic + otherUser.profilePhoto}
+          alt={otherUser.callTag}
+          className="profile-img"
+        />
+      </div>
       <h5 className="profile-call-tag">{otherUser.callTag}</h5>
 
       <div
@@ -260,72 +255,84 @@ function ProfileCard({ conUser, cardType }) {
       >
         <Tooltip title="View Profile" placement="bottom">
           <IconButton
-            style={{ color: "var(--color-primary)" }}
-            onCLick={viewPro}
+            style={{ color: "#fff" }}
+            onClick={() => navigate(`/users/profile/${otherUser._id}`)}
           >
-            <AccountCircleIcon />
+            <AccountCircleIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
 
         {!requestSent ? (
-          <IconButton
-            onClick={() => handleSendFriendRequest(otherUser._id)}
-            style={{ color: "var(--color-primary)" }}
+          <DialogBox
+            title="Confirm Upgrade"
+            content="Are you sure to add this connection as a friend?"
+            YesBtn="Confirm"
+            NoBtn="Cancel"
+            handleYes={() => handleSendFriendRequest(otherUser._id)}
           >
-            <Tooltip title="add friend">
-              <PersonAddIcon />
-            </Tooltip>
-          </IconButton>
+            <IconButton style={{ color: "#fff" }}>
+              <Tooltip title="add friend">
+                <PersonAddIcon className="profile-card-btn" />
+              </Tooltip>
+            </IconButton>
+          </DialogBox>
         ) : requestSent && conUser.senderId._id === user._id ? (
-          <IconButton
-            onClick={() => handleCancelFriendRequest(otherUser._id)}
-            style={{ color: "var(--color-primary)" }}
+          <DialogBox
+            title="Confirm Cancel"
+            content="Are you sure to cancel friend invite?"
+            YesBtn="Confirm"
+            NoBtn="Cancel"
+            handleYes={() => handleCancelFriendRequest(otherUser._id)}
           >
-            <Tooltip title="cancel request">
-              <CancelIcon />
-            </Tooltip>
-          </IconButton>
+            <IconButton style={{ color: "#fff" }}>
+              <Tooltip title="cancel request">
+                <CancelIcon className="profile-card-btn" />
+              </Tooltip>
+            </IconButton>
+          </DialogBox>
         ) : (
           <IconButton
             onClick={() => handleAcceptFriendRequest(otherUser._id)}
-            style={{ color: "var(--color-primary)" }}
+            style={{ color: "#fff" }}
           >
             <Tooltip title="accept request">
-              <PersonAddIcon />
+              <PersonAddIcon className="profile-card-btn" />
             </Tooltip>
           </IconButton>
         )}
 
         <Tooltip title="Message" placement="bottom">
-          <IconButton
-            style={{ color: "var(--color-primary)" }}
-            onClick={accessChat}
-          >
-            <ChatIcon />
+          <IconButton style={{ color: "#fff" }} onClick={accessChat}>
+            <ChatIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
         {cardType === "friend" && (
           <Tooltip title="Invite for a date" placement="bottom">
-            <IconButton style={{ color: "var(--color-primary)" }}>
-              <CoffeeIcon />
+            <IconButton style={{ color: "#fff" }}>
+              <CoffeeIcon className="profile-card-btn" />
             </IconButton>
           </Tooltip>
         )}
 
-        <Tooltip title="Demote" placement="bottom">
-          <IconButton
-            onClick={() => {
-              handleRemoveConnection(otherUser._id);
-            }}
-            style={{ color: "var(--color-primary)" }}
-          >
-            <PersonRemoveAlt1Icon />
-          </IconButton>
-        </Tooltip>
+        <DialogBox
+          title="Confirm Removal"
+          content="Are you sure to remove this connection?"
+          YesBtn="Confirm"
+          NoBtn="Cancel"
+          handleYes={() => {
+            handleRemoveConnection(otherUser._id);
+          }}
+        >
+          <Tooltip title="Demote" placement="bottom">
+            <IconButton style={{ color: "#fff" }}>
+              <PersonRemoveAlt1Icon className="profile-card-btn" />
+            </IconButton>
+          </Tooltip>
+        </DialogBox>
 
         <Tooltip title="Block and Report" placement="bottom">
-          <IconButton style={{ color: "var(--color-primary)" }}>
-            <BlockIcon />
+          <IconButton style={{ color: "#fff" }}>
+            <BlockIcon className="profile-card-btn" />
           </IconButton>
         </Tooltip>
       </div>

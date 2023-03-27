@@ -12,7 +12,7 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import MatchesContext from "../../context/matches";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-function DateRequests() {
+function DateRequests({ socket }) {
   const {
     sentDateRequests,
     setsentDateRequests,
@@ -24,20 +24,16 @@ function DateRequests() {
 
   const handleAccept = async (id) => {
     try {
-      await acceptDate(id);
+      const {
+        data: {
+          data: { data },
+        },
+      } = await acceptDate(id);
       setreceivedDateRequests(
         receivedDateRequests.filter((req) => req.senderId._id !== id)
       );
-      toast.success(`Date Invitation Accepted`, {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+
+      socket.emit("new-date-request-accepted", data);
     } catch (err) {
       const { message } = err;
 
@@ -61,16 +57,6 @@ function DateRequests() {
       );
       await cancelDateRequest(id);
       setDates(dates.filter((date) => date.receiverId._id !== id));
-      toast.success(`Date Invitation Rejected`, {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     } catch (err) {
       const { message } = err;
 

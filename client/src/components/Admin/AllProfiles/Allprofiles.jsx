@@ -16,8 +16,11 @@ import jsonData from "./AllData.json"; // Import the JSON file
 import { getAllUsers, deleteaUser } from "../../../api/AdminRequests";
 
 export default function Profilereports() {
+  const [rows, setRows] = useState([]);
   const [imid, setimid] = useState(null);
-  const [userId, getuserId] = useState(null);
+  const [liveimg, setLiveimg] = useState(null);
+  const [idFront, setidFront] = useState(null);
+  const [idBack, setidBack] = useState(null);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -51,18 +54,27 @@ export default function Profilereports() {
       renderCell: (params) => {
         let imageid;
         let userId;
+        let liveimg;
+        let idFront;
+        let idBack;
         const showProfileImage = (e) => {
           imageid = params.row.profilePhoto;
+          liveimg = params.row.liveImage;
+          idFront = params.row.nicFront;
+          idBack = params.row.nicBack;
+          setLiveimg(liveimg);
+          setidFront(idFront);
+          setidBack(idBack);
           setimid(imageid);
         };
 
         const deleteProfile = async () => {
-          userId = params.row._id;
-          getuserId(userId);
+          const userId = params.row._id;
 
           try {
-            await deleteaUser(userId);
             console.log(userId);
+            await deleteaUser(userId);
+            setRows(rows.filter((u) => u._id + "" !== userId));
           } catch (error) {
             console.log(error);
           }
@@ -99,28 +111,7 @@ export default function Profilereports() {
     },
   ];
 
-  const [rows, setRows] = useState([]);
-
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  // const [user, setUser] = useState([]);
-
-  //Json File load
-  // useEffect(() => {
-  //   // Parse the JSON data
-  //   const data = JSON.parse(JSON.stringify(jsonData));
-
-  //   // Create the rows array
-  //   const rowsArray = data.map((item) => ({
-  //     id: item.id,
-  //     fullname: item.fullname,
-  //     email: item.email,
-  //     status: item.status,
-  //   }));
-
-  //   // Set the rows state
-  //   setRows(rowsArray);
-  // }, []);
 
   ///API call
   useEffect(() => {
@@ -162,7 +153,12 @@ export default function Profilereports() {
           />
         </Box>
         <Box>
-          <AllProfileData imid={imid} />
+          <AllProfileData
+            imid={imid}
+            liveimg={liveimg}
+            idFront={idFront}
+            idBack={idBack}
+          />
         </Box>
       </Stack>
     </>

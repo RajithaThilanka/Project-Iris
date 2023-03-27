@@ -4,19 +4,39 @@ input[type="file"] {
 
 input[type="file"] + label {
   color: white;
-  height: auto;
-  width: auto;
-  padding: 0.5rem 4rem;
+  height: 3rem !important;
+  width: 3rem !important;
+  padding: 2rem;
+
   background-color: var(--color-primary);
   cursor: pointer;
-  border-radius: 5rem;
-  margin: auto;
+  border-radius: 50% !important;
+  /* margin: auto; */
   font-size: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: inherit;
 }
+
+#profile-view-images-upload {
+  color: white;
+  height: 20rem !important;
+  width: 12rem !important;
+  padding: 2rem;
+
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 20px !important;
+  border: 2px dashed #ccc;
+  /* margin: auto; */
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+}
+
 .signup-container {
   width: 100vw;
   height: auto;

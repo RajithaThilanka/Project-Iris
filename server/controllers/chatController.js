@@ -1,4 +1,5 @@
 const Chat = require('../models/chatModel');
+const Message = require('../models/messageModel');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -58,9 +59,6 @@ exports.fetchChats = catchAsync(async (req, res, next) => {
   try {
     Chat.find({
       users: { $elemMatch: { $eq: req.user._id } },
-      invisible: {
-        $nin: req.user._id,
-      },
     })
       .populate('users', '-password')
       .populate('groupAdmin', '-password')
@@ -71,10 +69,20 @@ exports.fetchChats = catchAsync(async (req, res, next) => {
           path: 'latestMessage.sender',
           select: 'firstname profilePhoto email',
         });
+
+        const filteredChats = results.filter(chat => {
+          const currentChat = chat;
+          const hasDeleted = currentChat.invisibleArr.find(
+            c =>
+              c.userId + '' == req.user._id &&
+              currentChat?.latestMessage?.createdAt <= c?.deletedAt
+          );
+          return !hasDeleted;
+        });
         res.status(200).json({
           status: 'success',
           data: {
-            data: results,
+            data: filteredChats,
           },
         });
       });
@@ -186,9 +194,26 @@ exports.removeFromGroup = catchAsync(async (req, res, next) => {
 
 exports.deleteChat = catchAsync(async (req, res, next) => {
   const chatId = req.params.id;
-  await Chat.findByIdAndUpdate(chatId, {
-    $push: { invisible: req.user._id },
-  });
+  // await Chat.findByIdAndUpdate(
+  //   chatId,
+  //   {
+  //     $push: { invisible: req.user._id },
+  //   },
+  //   { new: true }
+  // );
+  const chat = await Chat.findById(chatId);
+  const toBeUpdatedInvisible = chat.invisibleArr.find(
+    obj => obj.userId + '' == req.user._id
+  );
+  if (!toBeUpdatedInvisible) {
+    chat.invisibleArr.push({
+      userId: req.user._id,
+      deletedAt: Date.now(),
+    });
+  } else {
+    toBeUpdatedInvisible.deletedAt = Date.now();
+  }
+  chat.save();
   res.status(200).json({
     status: 'success',
     data: {
@@ -196,6 +221,51 @@ exports.deleteChat = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.fetchChatNotifications = catchAsync(async (req, res, next) => {
+  try {
+    Chat.find({
+      users: { $elemMatch: { $eq: req.user._id } },
+    })
+      .populate('users', '-password')
+      .populate('groupAdmin', '-password')
+      .populate('latestMessage')
+      .sort({ updatedAt: -1 })
+      .then(async results => {
+        results = await User.populate(results, {
+          path: 'latestMessage.sender',
+          select: 'firstname profilePhoto email lastname',
+        });
+        const nots = await Promise.all(
+          results.map(async ch => {
+            const notification = await Message.find({
+              $and: [
+                { chat: ch._id },
+                { sender: { $ne: req.user._id } },
+                { isSeen: false },
+              ],
+            })
+              .populate('sender', 'name firstname profilePhoto email')
+              .populate('chat');
+            if (notification.length === 0) return;
+            return notification;
+          })
+        );
+
+        let updatedNots = nots.filter(not => not);
+        updatedNots = [].concat(...updatedNots);
+        res.status(200).json({
+          status: 'success',
+          data: {
+            data: updatedNots,
+          },
+        });
+      });
+  } catch (error) {
+    return next(new AppError(error, 500));
+  }
+});
+
 // exports.userChats = catchAsync(async (req, res, next) => {
 //   const chat = await Chat.find({
 //     members: { $in: [req.params.userId] },

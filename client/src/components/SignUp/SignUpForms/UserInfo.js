@@ -41,6 +41,7 @@ function UserInfo() {
     userId: id,
   });
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setData({ ...formData, height: formData.ft + formData.in * 0.0833333 });
@@ -61,14 +62,176 @@ function UserInfo() {
     const getAllCountries = async () => {
       try {
         const { data } = await getCountries();
-
-        setCountries(data);
+        let c = data;
+        c.sort(function (a, b) {
+          return ("" + a.name.common).localeCompare(b.name.common);
+        });
+        setCountries(c);
       } catch (err) {
         console.log(err);
       }
     };
     getAllCountries();
   }, []);
+
+  const languages = [
+    "Abkhazian",
+    "Afar",
+    "Afrikaans",
+    "Akan",
+    "Albanian",
+    "Amharic",
+    "Arabic",
+    "Armenian",
+    "Assamese",
+    "Awadhi",
+    "Aymara",
+    "Azerbaijani",
+    "Balochi",
+    "Bashkir",
+    "Basque",
+    "Belarussian",
+    "Bengali",
+    "Bhojpuri",
+    "Bhutani",
+    "Bihari",
+    "Bislama",
+    "Breton",
+    "Bulgarian",
+    "Burmese",
+    "Catalan",
+    "Cebuano",
+    "Chechen",
+    "Chinese",
+    "Corsican",
+    "Croatian",
+    "Czech",
+    "Dakhini",
+    "Danish",
+    "Dutch",
+    "English",
+    "Esperanto",
+    "Estonian",
+    "Faeroese",
+    "Fiji",
+    "Finnish",
+    "French",
+    "Frisian",
+    "Galician",
+    "Georgian",
+    "German",
+    "Greek",
+    "Greenlandic",
+    "Guarani",
+    "Gujarati",
+    "Haitian Creole",
+    "Hausa",
+    "Hebrew",
+    "Hindi",
+    "Hungarian",
+    "Icelandic",
+    "Indonesian",
+    "Interlingua",
+    "Interlingue",
+    "Inupiak",
+    "Irish",
+    "Italian",
+    "Japanese",
+    "Javanese",
+    "Kabyle",
+    "Kannada",
+    "Kashmiri",
+    "Kazakh",
+    "Khmer",
+    "Kinyarwanda",
+    "Kirghiz",
+    "Kirundi",
+    "Konkani",
+    "Korean",
+    "Kurdish",
+    "Laothian",
+    "Latin",
+    "Latvian",
+    "Lingala",
+    "Lithuanian",
+    "Lombard",
+    "Luxembourgish",
+    "Macedonian",
+    "Maithili",
+    "Makhuwa",
+    "Malagasy",
+    "Malay",
+    "Malayalam",
+    "Maltese",
+    "Maori",
+    "Marathi",
+    "Marwari",
+    "Moldavian",
+    "Mongolian",
+    "Nauru",
+    "Nepali",
+    "Norwegian",
+    "Occitan",
+    "Oriya",
+    "Oromo",
+    "Pashto",
+    "Persian",
+    "Polish",
+    "Portuguese",
+    "Punjabi",
+    "Quechua",
+    "Rhaeto-Romance",
+    "Rifian",
+    "Romanian",
+    "Russian",
+    "Samoan",
+    "Sangro",
+    "Sanskrit",
+    "Scottish Gaelic",
+    "Serbian",
+    "Serbo-Croatian",
+    "Sesotho",
+    "Setswana",
+    "Shona",
+    "Sindhi",
+    "Sinhalese",
+    "Siswati",
+    "Slovak",
+    "Slovenian",
+    "Somali",
+    "Spanish",
+    "Sundanese",
+    "Swahili",
+    "Swedish",
+    "Tagalog",
+    "Tajik",
+    "Tamazight",
+    "Tamil",
+    "Tatar",
+    "Telugu",
+    "Thai",
+    "Tibetan",
+    "Tigrinya",
+    "Tonga",
+    "Tsonga",
+    "Tuareg",
+    "Turkish",
+    "Turkmen",
+    "Twi",
+    "Ukrainian",
+    "Urdu",
+    "Uyghur",
+    "Uzbek",
+    "Vietnamese",
+    "Volapuk",
+    "Welsh",
+    "Wolof",
+    "Xhosa",
+    "Yiddish",
+    "Yoruba",
+    "Zulu",
+  ];
+
   const handleData = (event) => {
     if (event.target.name === "hasChildren") {
       event.target.value === "true"
@@ -84,21 +247,9 @@ function UserInfo() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="signup-container">
-      <form
-        style={{
-          width: "80vw",
-          margin: "auto",
-          height: "auto",
-          boxShadow:
-            "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-          overflow: "scroll",
-          zIndex: 100,
-          background: "#fff",
-        }}
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit} className="account-info-form">
         <Grid container spacing={3} py={1} px={3} margin={2}>
-          <Grid sm={12}>
+          <Grid sm={12} xs={12}>
             <div style={{ textAlign: "center" }}>
               <img
                 style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
@@ -107,16 +258,13 @@ function UserInfo() {
               />
             </div>
           </Grid>
-          <Grid sm={12}>
-            <h3
-              style={{ textAlign: "center", fontSize: "3.4rem" }}
-              className="heading-tertiary"
-            >
+          <Grid sm={12} xs={12}>
+            <h3 className="heading-tertiary signup-heading">
               Tell us about yourself
             </h3>
           </Grid>
 
-          <Grid sm={3}>
+          <Grid sm={3} xs={12}>
             <Stack spacing={2}>
               <FormLabel>Gender</FormLabel>
               <RadioGroup
@@ -141,7 +289,7 @@ function UserInfo() {
               </RadioGroup>
             </Stack>
           </Grid>
-          <Grid sm={3}>
+          <Grid sm={3} xs={12}>
             <Stack spacing={1.5}>
               <FormLabel sx={{ marginLeft: "0.7rem" }} required>
                 Height
@@ -174,7 +322,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel>Country</FormLabel>
 
@@ -203,7 +351,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={1.5}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Birthday</FormLabel>
               <TextField
@@ -221,19 +369,20 @@ function UserInfo() {
               />
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={1.5}>
               <FormLabel>Languages you speak</FormLabel>
               <FormControl>
                 <MultipleSelectChip
-                  names={["English", "Tamil", "Hindi"]}
+                  names={languages}
                   onChange={handleData}
                   value={formData.languages}
+                  name="languages"
                 />
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>What you do?</FormLabel>
               <FormControl sx={{ m: 1 }} fullWidth size="small" required>
@@ -256,7 +405,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Education</FormLabel>
               <FormControl sx={{ m: 1 }} fullWidth size="small" required>
@@ -267,6 +416,12 @@ function UserInfo() {
                 >
                   <MenuItem value="">
                     <em>Not Specified</em>
+                  </MenuItem>
+                  <MenuItem key="high school" value="high school">
+                    High school
+                  </MenuItem>
+                  <MenuItem key="college" value="college">
+                    Some college
                   </MenuItem>
                   <MenuItem key="bachelor's degree" value="bachelor">
                     Bachelor's degree
@@ -279,7 +434,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Religion</FormLabel>
               <FormControl sx={{ m: 1 }} fullWidth size="small" required>
@@ -302,7 +457,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>Ethnicity</FormLabel>
               <FormControl sx={{ m: 1 }} fullWidth size="small" required>
@@ -322,7 +477,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Monthly Income
@@ -368,7 +523,7 @@ function UserInfo() {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid sm={6}>
+          <Grid sm={6} xs={12}>
             <Stack spacing={2}>
               <FormLabel sx={{ marginLeft: "0.7rem" }}>
                 Do you have children?
@@ -400,10 +555,10 @@ function UserInfo() {
               </RadioGroup>
             </Stack>
           </Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={12}></Grid>
-          <Grid sm={4}></Grid>
-          <Grid sm={4}>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={12} xs={1}></Grid>
+          <Grid sm={4} xs={1}></Grid>
+          <Grid sm={4} xs={6}>
             <Button variant="contained" fullWidth type="submit">
               Next
             </Button>

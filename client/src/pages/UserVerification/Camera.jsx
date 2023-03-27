@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import Webcam from "react-webcam";
+import { Stack } from "@mui/system";
 
 const videoConstraints = {
   width: 240,
@@ -21,20 +22,22 @@ const Camera = () => {
 
   return (
     <>
-      <Webcam
-        ref={webcamRef}
-        audio={true}
-        screenshotFormat="image/jpeg"
-        videoConstraints={videoConstraints}
-        onUserMedia={onUserMedia}
-      />
-      <button onClick={capturePhoto}>Capture</button>
-      <button onClick={() => setUrl(null)}>Refresh</button>
-      {url && (
-        <div>
-          <img src={url} alt="Screenshot" />
-        </div>
-      )}
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <Webcam
+          ref={webcamRef}
+          audio={false}
+          screenshotFormat="image/jpeg"
+          videoConstraints={videoConstraints}
+          onUserMedia={onUserMedia}
+        />
+        <button onClick={capturePhoto}>Capture</button>
+        <button onClick={() => setUrl(null)}>Refresh</button>
+        {url && (
+          <div>
+            <img src={url} alt="Screenshot" />
+          </div>
+        )}
+      </Stack>
     </>
   );
 };

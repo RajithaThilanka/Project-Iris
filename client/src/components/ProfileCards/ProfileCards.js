@@ -4,7 +4,7 @@ import FriendProfileCard from "../FriendProfileCard/FriendProfileCard";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import "./ProfileCards.css";
 
-function ProfileCards({ cardType }) {
+function ProfileCards({ cardType, socket }) {
   const { connections } = useContext(MatchesContext);
   const { friends } = useContext(MatchesContext);
 
@@ -12,7 +12,12 @@ function ProfileCards({ cardType }) {
   cardType === "connection"
     ? (renderedCards = connections?.map((user) => {
         return (
-          <ProfileCard conUser={user} cardType={cardType} key={user._id} />
+          <ProfileCard
+            conUser={user}
+            cardType={cardType}
+            key={user._id}
+            socket={socket}
+          />
         );
       }))
     : (renderedCards = friends?.map((user) => {
@@ -21,6 +26,7 @@ function ProfileCards({ cardType }) {
             conUser={user}
             cardType={cardType}
             key={user._id}
+            socket={socket}
           />
         );
       }));

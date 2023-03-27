@@ -4,7 +4,7 @@ import { Typography, Stack } from "@mui/material";
 
 import Button from "@mui/material/Button";
 
-export default function ProfileSuspeneReason() {
+export default function ProfileSuspeneReason(props) {
   return (
     <div>
       <Stack
@@ -24,7 +24,7 @@ export default function ProfileSuspeneReason() {
             alignItems: "center",
           }}
         >
-          Suspend Description
+          {props.description}
         </Box>
       </Stack>
     </div>

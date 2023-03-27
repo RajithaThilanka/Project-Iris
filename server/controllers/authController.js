@@ -264,7 +264,16 @@ exports.signupUserInfo = catchAsync(async (req, res, next) => {
     },
   });
 });
+const getLatestIndex = async id => {
+  const options = {
+    method: 'GET',
+    url: 'http://127.0.0.1:9000/api/v1/users/get-lastest-index',
+    json: true,
+  };
 
+  const sendRequest = await request(options);
+  return sendRequest + 1;
+};
 exports.signupProfileView = catchAsync(async (req, res, next) => {
   const notAllowed = [
     'role',
@@ -278,12 +287,14 @@ exports.signupProfileView = catchAsync(async (req, res, next) => {
     if (Object.keys(req.body).includes(field)) delete req.body[field];
   });
 
-  const { profilePhoto, userDescription, userId } = req.body;
+  const { profilePhoto, userDescription, userId, photos, urls } = req.body;
   const existingUser = await User.findByIdAndUpdate(
     userId,
     {
       profilePhoto,
       userDescription,
+      photos,
+      urls,
     },
     { new: true }
   );
@@ -316,10 +327,12 @@ exports.verify = catchAsync(async (req, res, next) => {
   }
   userVerify.uniqueString = undefined;
   await userVerify.save();
+  const index = await getLatestIndex(id);
   const updatedUser = await User.findByIdAndUpdate(
     id,
     {
       verified: true,
+      index: index,
     },
     {
       runValidators: false,
@@ -334,10 +347,21 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new AppError('Please provide an email and a password', 400));
   }
-  const user = await User.findOne({ email: email }).select('+password');
+  const user = await User.findOne({ email: email }).select('+password +active');
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
+  if (user.suspended) {
+    return next(
+      new AppError('Your account has been blocked by the moderators', 401)
+    );
+  }
+  if (!user.active) {
+    return next(
+      new AppError('User belonging to this account does no longer exist', 401)
+    );
+  }
+
   createSendToken(user, 200, res);
 });
 
@@ -356,8 +380,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-  const currentUser = await User.findById(decoded.id);
-  if (!currentUser) {
+  const currentUser = await User.findById(decoded.id).select('+active');
+  if (!currentUser || currentUser.suspended || currentUser.active === false) {
     return next(
       new AppError('The user belonging to this token does no longer exist', 401)
     );
@@ -470,18 +494,6 @@ exports.updatePassword = async (req, res, next) => {
   createSendToken(user, 200, res);
 };
 
-exports.getLatestIndex = catchAsync(async (req, res, next) => {
-  const options = {
-    method: 'GET',
-    url: 'http://127.0.0.1:9000/api/v1/users/get-lastest-index',
-    json: true,
-  };
-
-  const sendRequest = await request(options);
-  req.body.index = sendRequest + 1;
-  next();
-});
-
 exports.checkManualVerification = catchAsync(async (req, res, next) => {
   const verification = await ManualVerification.findOne({
     userId: req.user._id,
@@ -574,11 +586,12 @@ exports.requestManualVerify = catchAsync(async (req, res, next) => {
       }
     }
   }
-  const { liveFeed, nicPhoto } = req.body;
+  const { liveImage, nicFront, nicBack } = req.body;
   const manualVerificationRequest = await ManualVerification.create({
     userId,
-    liveFeed,
-    nicPhoto,
+    liveImage,
+    nicFront,
+    nicBack,
   });
 
   res.status(200).json({

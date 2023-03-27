@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FormHelperText, Stack, TextField } from "@mui/material";
 import DateTimePicker from "react-datetime-picker";
+import Loader from "../Loading/Loading";
 import "./PostponeDate.css";
 import { postponeDate } from "../../api/UserRequests";
 import MatchesContext from "../../context/matches";
@@ -25,8 +26,22 @@ export default function PostponeDate({ open, setOpen, otherUser, dateData }) {
     new Date(Date.parse(dateData.scheduledAt))
   );
   const { dates, setDates } = React.useContext(MatchesContext);
+  const [scheudleErr, setScheduleError] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+
+  const handleScheduledAt = (value) => {
+    if (value.getTime() > new Date(dateData.scheduledAt).getTime()) {
+      setScheduledAt(value);
+      setScheduleError(false);
+    } else {
+      setScheduleError(true);
+    }
+  };
   const handlePostponeDate = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
     try {
       const {
         data: {
@@ -36,10 +51,21 @@ export default function PostponeDate({ open, setOpen, otherUser, dateData }) {
       const filteredDates = dates.filter((dt) => dt._id !== dateData._id);
       filteredDates.push(data);
       setDates(filteredDates);
+      setLoading(false);
+      setSuccess(true);
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      setSuccess(false);
     }
   };
+
+  // React.useEffect(() => {
+  //   return () => {
+  //     setSuccess(false);
+  //     setLoading(false);
+  //   };
+  // }, []);
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div>
       <Modal
@@ -49,21 +75,26 @@ export default function PostponeDate({ open, setOpen, otherUser, dateData }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div className="date-invite-container">
-            <h2>Postpone {otherUser.firstname} date</h2>
+          {!success ? (
+            <div className="date-invite-container">
+              <h2>Postpone {otherUser.firstname} date</h2>
 
-            <Stack spacing={2} direction="column">
-              <form
-                onSubmit={handlePostponeDate}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  gap: "20px",
-                }}
-              >
-                <FormHelperText>Postpone your date</FormHelperText>
-                {/* <TextField
+              <Stack spacing={2} direction="column">
+                <form
+                  onSubmit={handlePostponeDate}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    gap: "20px",
+                  }}
+                >
+                  <p style={{ fontSize: "1.2rem", color: "red" }}>
+                    {scheudleErr &&
+                      "New date must be greater than the current date"}
+                  </p>
+                  <FormHelperText>Postpone your date</FormHelperText>
+                  {/* <TextField
                   id="date"
                   name="scheduledAt"
                   type="datetime-local"
@@ -74,21 +105,41 @@ export default function PostponeDate({ open, setOpen, otherUser, dateData }) {
                   value={dateInfo.scheduledAt}
                   onChange={handleDateData}
                 /> */}
-                <DateTimePicker
-                  value={scheduledAt}
-                  onChange={setScheduledAt}
-                  minDate={
-                    new Date(
-                      new Date(Date.parse(dateData.scheduledAt)).getTime()
-                    )
-                  }
-                />
-                <Button variant="contained" type="submit">
-                  Postpone
-                </Button>
-              </form>
-            </Stack>
-          </div>
+                  <DateTimePicker
+                    value={scheduledAt}
+                    onChange={handleScheduledAt}
+                    minDate={new Date()}
+                  />
+                  {!loading ? (
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      disabled={scheudleErr}
+                    >
+                      Postpone
+                    </Button>
+                  ) : (
+                    <div style={{ textAlign: "center" }}>
+                      <Loader />
+                    </div>
+                  )}
+                </form>
+              </Stack>
+            </div>
+          ) : !loading && success ? (
+            <div style={{ width: "100%", height: "100%" }}>
+              <h3 className="heading-tertiary" style={{ textAlign: "center" }}>
+                Success
+              </h3>
+              <img
+                src={serverPublic + "tick.gif"}
+                alt="tick"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </Box>
       </Modal>
     </div>

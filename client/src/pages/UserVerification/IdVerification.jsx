@@ -74,13 +74,13 @@ function IdVerification({ data, setData }) {
             <div>
               <Stack spacing={2} direction="column">
                 <Button variant="outlined" className="idtype-button">
-                  <Link to="/uploadimage">Identity Card</Link>
+                  <Link to="/uploadimages">Identity Card</Link>
                 </Button>
                 <Button variant="outlined">
-                  <Link to="/uploadimage">Passport</Link>
+                  <Link to="/uploadimages">Passport</Link>
                 </Button>
                 <Button variant="outlined">
-                  <Link to="/uploadimage">Driving Liceense</Link>
+                  <Link to="/uploadimages">Driving Liceense</Link>
                 </Button>
               </Stack>
             </div>

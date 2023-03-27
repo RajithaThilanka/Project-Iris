@@ -39,6 +39,9 @@ function Welcome() {
             />
             <span className="logo-content">IRIS</span>
           </div>
+        </div>
+
+        <div className="header__text-box">
           <Link
             to="/auth/login"
             className="btn btn--white btn--animated btn-login"
@@ -46,9 +49,6 @@ function Welcome() {
           >
             Login
           </Link>
-        </div>
-
-        <div className="header__text-box">
           <h1 className="heading-primary">
             <span className="heading-primary--main">Soulmate</span>
             <span className="heading-primary--sub">is waiting for you</span>
@@ -94,28 +94,32 @@ function Welcome() {
             </div>
             <div className="col-1-of-2">
               <div className="composition">
+                {/*https://live.staticflickr.com/65535/52755782019_cde59a8dbd_o.jpg*/}
                 <img
-                  srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w"
+                  srcset="https://live.staticflickr.com/65535/52755535721_697921abc3_o.jpg 300w, https://live.staticflickr.com/65535/52755782019_cde59a8dbd_o.jpg 1000w"
                   sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"
-                  alt="Photo 1"
+                  alt="1"
                   className="composition__photo composition__photo--p1"
-                  src="img/nat-1-large.jpg"
+                  src=" https://live.staticflickr.com/65535/52755782019_cde59a8dbd_o.jpg"
                 />
-
+                {/* [url=https://flic.kr/p/2onSpDW][img]https://live.staticflickr.com/65535/52756023028_15ae9a1db7_o.jpg[/img][/url][url=https://flic.kr/p/2onSpDW]nat-2-large[/url] by [url=https://www.flickr.com/photos/197841762@N03/]Iris Team[/url], on Flickr*/}
                 <img
-                  srcset="img/nat-2.jpg 300w, img/nat-2-large.jpg 1000w"
+                  srcset="https://live.staticflickr.com/65535/52755781919_94128aa048_o.jpg 300w, https://live.staticflickr.com/65535/52756023028_15ae9a1db7_o.jpg 1000w"
                   sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"
-                  alt="Photo 2"
+                  alt="2"
                   className="composition__photo composition__photo--p2"
-                  src="img/nat-2-large.jpg"
+                  src="https://live.staticflickr.com/65535/52756023028_15ae9a1db7_o.jpg"
                 />
-
+                {/* [url=https://flic.kr/p/2onPUJt][img][/img][/url][url=https://flic.kr/p/2onPUJt]nat-3-large[/url] by [url=https://www.flickr.com/photos/197841762@N03/]Iris Team[/url], on Flickr */}
+                {/* [url=https://flic.kr/p/2onPUJt][img]https://live.staticflickr.com/65535/52755535511_8bdfb052db_o.jpg[/img][/url][url=https://flic.kr/p/2onPUJt]nat-3-large[/url] by [url=https://www.flickr.com/photos/197841762@N03/]Iris Team[/url], on Flickr */}
+                {/* [url=https://flic.kr/p/2onSpDa][img[/img][/url][url=https://flic.kr/p/2onSpDa]nat-3[/url] by [url=https://www.flickr.com/photos/197841762@N03/]Iris Team[/url], on Flickr */}
+                {/* [url=https://flic.kr/p/2onPUJt][img[/img][/url][url=https://flic.kr/p/2onPUJt]nat-3-large[/url] by [url=https://www.flickr.com/photos/197841762@N03/]Iris Team[/url], on Flickr */}
                 <img
-                  srcset="img/nat-3.jpg 300w, img/nat-3-large.jpg 1000w"
+                  srcset="https://live.staticflickr.com/65535/52756022983_3de7eacc24_o.jpg 300w, https://live.staticflickr.com/65535/52755535511_8bdfb052db_o.jpg 1000w"
                   sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"
-                  alt="Photo 3"
+                  alt="3"
                   className="composition__photo composition__photo--p3"
-                  src="img/nat-3-large.jpg"
+                  src="https://live.staticflickr.com/65535/52755535511_8bdfb052db_o.jpg"
                 />
               </div>
             </div>
@@ -309,7 +313,7 @@ function Welcome() {
             <div className="story">
               <figure className="story__shape">
                 <img
-                  src="img/nat-8.jpg"
+                  src="https://live.staticflickr.com/65535/52755942790_9a567da99e_o.jpg"
                   alt="Person on a tour"
                   className="story__img"
                 />
@@ -334,7 +338,7 @@ function Welcome() {
             <div className="story">
               <figure className="story__shape">
                 <img
-                  src="img/nat-9.jpg"
+                  src="https://live.staticflickr.com/65535/52755781469_0cf93eb37f_o.jpg"
                   alt="Person on a tour"
                   className="story__img"
                 />

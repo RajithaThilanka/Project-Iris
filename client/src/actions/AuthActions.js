@@ -6,7 +6,8 @@ export const logIn = (formData, navigate) => async (dispatch) => {
     dispatch({ type: "AUTH_SUCCESS", data: data });
     navigate("/me", { replace: true });
   } catch (error) {
-    dispatch({ type: "AUTH_FAIL" });
+    dispatch({ type: "AUTH_FAIL", data: error });
+    navigate("/auth/login", { replace: true });
   }
 };
 
@@ -27,10 +28,10 @@ export const confirmMail = (userId, token, navigate) => async (dispatch) => {
   try {
     const { data } = await AuthApi.verifyMail(userId, token);
     dispatch({ type: "AUTH_SUCCESS", data: data });
-    navigate("/me", { replace: true });
+    navigate("/email-confirm/success", { replace: true });
   } catch (error) {
     navigate(`/error/${error.response.data.message}`);
-    dispatch({ type: "AUTH_FAIL" });
+    dispatch({ type: "AUTH_FAIL", data: error });
   }
 };
 export const logout = () => async (dispatch) => {
@@ -43,10 +44,10 @@ export const resetPassword =
     try {
       const { data } = await AuthApi.resetPassword(formData, token);
       dispatch({ type: "AUTH_SUCCESS", data: data });
-      navigate("/me", { replace: true });
+      navigate("/password-reset/success", { replace: true });
     } catch (error) {
       navigate(`/error/${error.response.data.message}`);
-      dispatch({ type: "AUTH_FAIL" });
+      dispatch({ type: "AUTH_FAIL", data: error });
     }
   };
 
@@ -57,6 +58,6 @@ export const adminLogIn = (formData, navigate) => async (dispatch) => {
     dispatch({ type: "AUTH_SUCCESS", data: data });
     navigate("/admin", { replace: true });
   } catch (error) {
-    dispatch({ type: "AUTH_FAIL" });
+    dispatch({ type: "AUTH_FAIL", data: error });
   }
 };

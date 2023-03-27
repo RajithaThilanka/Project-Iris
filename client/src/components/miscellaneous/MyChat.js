@@ -2,14 +2,7 @@ import { Avatar, Badge, IconButton } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  createChat,
-  deleteChat,
-  fetchUserChats,
-  getAllConnections,
-  getAllFriends,
-  searchUser,
-} from "../../api/UserRequests";
+import { deleteChat, fetchUserChats, searchUser } from "../../api/UserRequests";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MatchesContext from "../../context/matches";
 
@@ -22,8 +15,10 @@ import CircleIcon from "@mui/icons-material/Circle";
 import "./MyChat.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ChatFriendsList from "./ChatFriendsList/ChatFriendsList";
+import ChatIcon from "@mui/icons-material/Chat";
+import { updateSeenAll } from "../../api/ChatRequests";
 
-function MyChat({ fetchAgain, setFetchAgain }) {
+function MyChat({ fetchAgain, setFetchAgain, socket }) {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
@@ -103,9 +98,6 @@ function MyChat({ fetchAgain, setFetchAgain }) {
       },
     },
   }));
-  const handleBlur = () => {
-    !search && setFocus(false);
-  };
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -114,7 +106,21 @@ function MyChat({ fetchAgain, setFetchAgain }) {
   useEffect(() => {
     handleSearch();
   }, [search]);
-
+  useEffect(() => {
+    socket.on("message-seen", (chat) => {
+      // chat.latestMessage.isSeen = true;
+      setChats(
+        chats.filter((ch) => {
+          if (ch._id !== chat._id) {
+            return true;
+          } else {
+            ch.latestMessage.isSeen = true;
+            return true;
+          }
+        })
+      );
+    });
+  });
   const handleDeleteChat = async (id) => {
     try {
       await deleteChat(id);
@@ -132,15 +138,40 @@ function MyChat({ fetchAgain, setFetchAgain }) {
     setFocus(true);
     setBackBtnVisible(true);
   };
+
+  const handleOpenMessage = async (chat) => {
+    setSelectedChat(chat);
+
+    await updateSeenAll(chat._id);
+    if (
+      chat?.latestMessage &&
+      chat?.latestMessage?.sender?._id != loggedUser._id
+    ) {
+      chat.latestMessage.isSeen = true;
+    }
+    socket.emit("message-seen", chat);
+    setNotification(notification.filter((not) => not.chat._id !== chat._id));
+  };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div className="chat">
+    <div
+      className="chat"
+      style={{
+        backgroundImage: `url(${serverPublic + "chat-background.png"}`,
+        display: window.innerWidth <= 896 && selectedChat ? "none" : "flex",
+      }}
+    >
+      {!backBtnVisible && (
+        <div className="chat-friend-list-mob" onClick={handleFocus}>
+          <ChatIcon fontSize="medium" />
+        </div>
+      )}
       <div className="contacts_card">
         <IconButton
           onClick={handleBackClick}
           style={{ display: backBtnVisible ? "flex" : "none" }}
         >
-          <ArrowBackIcon style={{ color: "#fff", marginLeft: "0.8rem" }} />
+          <ArrowBackIcon style={{ color: "#000", marginLeft: "0.8rem" }} />
         </IconButton>
         <form className="search">
           <input
@@ -181,30 +212,18 @@ function MyChat({ fetchAgain, setFetchAgain }) {
               return (
                 <div
                   style={{
-                    display: "flex",
                     backgroundColor:
                       selectedChat?._id === chat._id
-                        ? "rgba(0, 0, 0, 0.4)"
-                        : "rgba(0,0,0,0.1)",
-                    paddingRight: "0.9rem",
+                        ? "rgba(255,255,255,0.6)"
+                        : "rgba(255,255,255,0.4)",
                   }}
                   className="chat-contact-container"
                 >
                   <div
-                    onClick={() => {
-                      setSelectedChat(chat);
-                      setNotification(
-                        notification.filter((not) => not.chat._id !== chat._id)
-                      );
-                    }}
+                    onClick={() => handleOpenMessage(chat)}
                     key={chat._id}
                     className="chat-contact"
-                    style={{
-                      cursor: "pointer",
-
-                      color: "#fff",
-                      height: "8rem",
-                    }}
+                    style={{}}
                   >
                     {!chat.isGroupChat ? (
                       <div
@@ -239,35 +258,47 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                               getSenderFull(loggedUser, chat.users).profilePhoto
                             }
                             sx={{
-                              width: "6rem",
-                              height: "6rem",
+                              width: "4.3rem",
+                              height: "4.3rem",
                               border: "1px solid #fff",
                             }}
                           />
                         </StyledBadge>
-                        <h6
-                          style={{
-                            fontSize: "1.4rem",
-                            padding: "0.1rem 1rem",
-
-                            fontWeight: 600,
-                            flex: 1,
-                          }}
-                        >
+                        <h6 className="chat-contact-card-username">
                           {getSenderFull(loggedUser, chat.users).firstname +
                             " " +
                             getSenderFull(loggedUser, chat.users).lastname}
-                          <span
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "10px",
+                          <span style={{}} className="chat-contact-latest-msg">
+                            {chat.latestMessage &&
+                              `${
+                                chat.latestMessage.sender._id === loggedUser._id
+                                  ? "You :"
+                                  : chat.latestMessage.sender.firstname[0] +
+                                    ": "
+                              } ${
+                                chat.latestMessage.content.slice(0, 10) + " ..."
+                              }`}
 
-                              fontSize: "1.4rem",
-                              fontWeight: "400",
-                            }}
-                          >
-                            {notification.some(
+                            {chat.latestMessage &&
+                            chat.latestMessage.sender._id != loggedUser._id &&
+                            chat.latestMessage.isSeen === false ? (
+                              <CircleIcon
+                                style={{
+                                  color: "var(--color-primary)",
+                                  height: "1.5rem",
+                                }}
+                              />
+                            ) : chat.latestMessage &&
+                              chat.latestMessage.sender._id == loggedUser._id &&
+                              chat.latestMessage.isSeen === true ? (
+                              <DoneAllIcon
+                                style={{ color: "cyan" }}
+                                fontSize="small"
+                              />
+                            ) : (
+                              ""
+                            )}
+                            {/* {notification.some(
                               (not) => not.chat._id === chat._id
                             ) ? (
                               <CircleIcon
@@ -278,26 +309,18 @@ function MyChat({ fetchAgain, setFetchAgain }) {
                               />
                             ) : (
                               ""
-                            )}
+                            )} */}
 
-                            {chat.latestMessage &&
-                              `${
-                                chat.latestMessage.sender._id === loggedUser._id
-                                  ? "You :"
-                                  : chat.latestMessage.sender.firstname[0] +
-                                    ": "
-                              } ${
-                                chat.latestMessage.content.slice(0, 10) + " ..."
-                              }`}
-                            {notification.some(
+                            {/* {notification.some(
                               (not) => not.chat._id === chat._id
                             ) ? (
                               ""
                             ) : (
                               <DoneAllIcon
-                                style={{ color: "var(--color-primary)" }}
+                                style={{ color: "cyan" }}
+                                fontSize="small"
                               />
-                            )}
+                            )} */}
                           </span>
                         </h6>
                       </div>

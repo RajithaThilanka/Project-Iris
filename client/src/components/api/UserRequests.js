@@ -108,3 +108,12 @@ export const postponeDate = (id, scheduledAt) =>
   API.patch(`/users/me/dates/postpone/${id}`, { scheduledAt });
 
 export const fetchWarnings = () => API.get("/report/fetch-warnings");
+
+export const updateMyPassword = (passwordCurrent, password, passwordConfirm) =>
+  API.patch("/users/me/update-password", {
+    passwordCurrent,
+    password,
+    passwordConfirm,
+  });
+
+export const updateMe = (data) => API.patch(`/users/me/update`, data);

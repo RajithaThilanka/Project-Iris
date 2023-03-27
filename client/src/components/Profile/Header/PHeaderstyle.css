@@ -2,3 +2,85 @@
   justify-content: right;
   justify-items: right;
 }
+
+.Header {
+  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+}
+
+.custom-avatar {
+  width: 150px;
+  height: 150px;
+}
+
+@media screen and (max-width: 320px) {
+  .Header {
+    height: 150px;
+  }
+  .custom-button {
+    width: 70px; /* Change the width to your desired value */
+    height: 23px; /* Change the height to your desired value */
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .Header {
+    height: 180px;
+  }
+
+  .custom-button {
+    width: 70px; /* Change the width to your desired value */
+    height: 25px; /* Change the height to your desired value */
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .Header {
+    height: 220px;
+  }
+
+  .custom-button {
+    width: 70px; /* Change the width to your desired value */
+    height: 25px; /* Change the height to your desired value */
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .Header {
+    height: 250px;
+  }
+  .custom-avatar {
+    width: 100px; /* Change the width to your desired value */
+    height: 100px; /* Change the height to your desired value */
+  }
+  .custom-button {
+    width: 70px; /* Change the width to your desired value */
+    height: 25px; /* Change the height to your desired value */
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+  .Header {
+    height: 280px;
+  }
+
+  .custom-button {
+    width: 70px; /* Change the width to your desired value */
+    height: 25px; /* Change the height to your desired value */
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  .Header {
+    height: 300px;
+  }
+  .custom-avatar {
+    width: 150px; /* Change the width to your desired value */
+    height: 150px; /* Change the height to your desired value */
+  }
+  .custom-button {
+    width: 70px; /* Change the width to your desired value */
+    height: 25px; /* Change the height to your desired value */
+    font-size: 1.2rem;
+  }
+}

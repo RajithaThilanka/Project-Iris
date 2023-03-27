@@ -54,3 +54,50 @@ exports.allMessages = catchAsync(async (req, res, next) => {
     return next(new AppError(error, 400));
   }
 });
+
+exports.setSeen = catchAsync(async (req, res, next) => {
+  try {
+    const updatedMsg = await Message.findOneAndUpdate(
+      {
+        $and: [{ _id: req.params.id }, { sender: { $ne: req.user._id } }],
+      },
+      {
+        isSeen: true,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: updatedMsg,
+      },
+    });
+  } catch (error) {
+    return next(new AppError(error, 400));
+  }
+});
+
+exports.setSeenAll = catchAsync(async (req, res, next) => {
+  try {
+    const updatedMsgs = await Message.updateMany(
+      {
+        $and: [
+          { chat: req.params.id },
+          { isSeen: false },
+          { sender: { $ne: req.user._id } },
+        ],
+      },
+      {
+        isSeen: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: updatedMsgs,
+      },
+    });
+  } catch (error) {
+    return next(new AppError(error, 400));
+  }
+});

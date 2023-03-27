@@ -13,102 +13,80 @@ import { useState, useEffect } from "react";
 import jsonData from "./AllData.json"; // Import the JSON file
 
 import { getAllVeriReq } from "../../../api/AdminRequests";
-
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "firstname",
-    headerName: "Full Name",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 150,
-    editable: false,
-  },
-  {
-    field: "verified",
-    headerName: "Verified",
-    type: "number",
-    width: 110,
-    editable: false,
-  },
-
-  {
-    field: "action",
-    headerName: "Action",
-    width: 180,
-    sortable: false,
-    disableClickEventBubbling: true,
-
-    renderCell: (params) => {
-      const onClick = (e) => {
-        const currentRow = params.row;
-        // return alert(JSON.stringify(currentRow, null, 4));
-      };
-
-      return (
-        <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={onClick} helperText="Done">
-            <DoneIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <VisibilityIcon />
-          </IconButton>
-          <IconButton size="small" onClick={onClick}>
-            <DeleteIcon />
-          </IconButton>
-        </Stack>
-      );
-    },
-  },
-  {
-    field: "occupation",
-    headerName: "Occupation",
-    type: "string",
-    width: 110,
-    editable: false,
-  },
-  {
-    field: "country",
-    headerName: "Country",
-    type: "string",
-    width: 110,
-    editable: false,
-  },
-];
-
-const rows = [
-  { id: 1, fullName: "Snow", email: "Jon@gmail.com", status: "Verified" },
-
-  {
-    id: 2,
-    fullName: "Lannister",
-    email: "Cersei@gmail.com",
-    status: "Verified",
-  },
-];
+import { manualVarifyAccount } from "../../api/AdminRequests";
 
 export default function VerificationRequests() {
   const [rows, setRows] = useState([]);
+  const [liveimg, setLiveimg] = useState(null);
+  const [idFront, setidFront] = useState(null);
+  const [idBack, setidBack] = useState(null);
+  const columns = [
+    { field: "_id", headerName: "ID", width: 90 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 100,
+      editable: false,
+    },
+    {
+      field: "completeion",
+      headerName: "Completetion",
+      width: 150,
+      editable: false,
+    },
 
-  // useEffect(() => {
-  //   // Parse the JSON data
-  //   const data = JSON.parse(JSON.stringify(jsonData));
+    {
+      field: "action",
+      headerName: "Action",
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
 
-  //   // Create the rows array
-  //   const rowsArray = data.map((item) => ({
-  //     id: item.id,
-  //     fullname: item.fullname,
-  //     email: item.email,
-  //     status: item.status,
-  //   }));
+      renderCell: (params) => {
+        let liveimg;
+        let idFront;
+        let idBack;
+        const approveRequest = (e) => {
+          const userId = params.row._id;
+          const status = "verified"; // convert to lowercase
+          manualVarifyAccount(userId, status)
+            .then((response) => {
+              console.log("Verified");
+              setRows(rows.filter((u) => u._id + "" !== userId));
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
 
-  //   // Set the rows state
-  //   setRows(rowsArray);
-  // }, []);
+        const showRequest = (e) => {
+          liveimg = params.row.liveImage;
+          idFront = params.row.nicFront;
+          idBack = params.row.nicBack;
+          setLiveimg(liveimg);
+          setidFront(idFront);
+          setidBack(idBack);
+        };
+        const deleteRequest = (e) => {};
+
+        return (
+          <Stack direction="row" spacing={1}>
+            <IconButton size="small" onClick={approveRequest} helperText="Done">
+              <DoneIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showRequest}>
+              <VisibilityIcon />
+            </IconButton>
+            <IconButton size="small" onClick={showRequest}>
+              <DeleteIcon />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+  ];
+
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   ///API call
   useEffect(() => {
@@ -133,7 +111,7 @@ export default function VerificationRequests() {
         <Box
           sx={{
             height: 500,
-            width: 800,
+            width: 600,
             justifyContent: "center",
             textAlign: "center",
           }}
@@ -147,10 +125,15 @@ export default function VerificationRequests() {
             checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
+            getRowId={(row) => row._id}
           />
         </Box>
         <Box>
-          <UserVerificationView />
+          <UserVerificationView
+            liveimg={liveimg}
+            idFront={idFront}
+            idBack={idBack}
+          />
         </Box>
       </Stack>
     </>
