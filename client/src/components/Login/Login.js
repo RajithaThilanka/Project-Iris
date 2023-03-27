@@ -3,7 +3,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import FormLabel from "@mui/material/FormLabel";
 import { logIn } from "../../actions/AuthActions";
@@ -13,7 +12,10 @@ import { useState } from "react";
 import { Modal, Typography } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Loader from "../Loading/Loading";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 
+import CloseIcon from "@mui/icons-material/Close";
+import Stack from "@mui/material/Stack";
 function Login() {
   const initialState = {
     email: "",
@@ -55,6 +57,15 @@ function Login() {
       <form onSubmit={handleSubmit} className="login-form-main" method="post">
         <Grid container rowSpacing={3} px={3} margin={2}>
           <Grid item sm={12} xs={12}>
+            <Stack
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="flex-start"
+            >
+              <IconButton onClick={handleClose}>
+                <CancelRoundedIcon />
+              </IconButton>
+            </Stack>
             <div
               style={{ textAlign: "center", cursor: "pointer" }}
               onClick={handleClose}
@@ -109,15 +120,15 @@ function Login() {
                 <Loader />
               </div>
             ) : (
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled={loading}
-                  fullWidth
-                >
-                  Login
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={loading}
+                fullWidth
+              >
+                Login
               </Button>
-              )}
+            )}
           </Grid>
           <Grid item sm={12} xs={12}>
             {error && (

@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Modal, Typography } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Loader from "../Loading/Loading";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 const style = {
   position: "absolute",
   top: "50%",
@@ -73,7 +74,7 @@ function AdminLogin() {
         <Box sx={style}>
           <div className="cancel-btn-container">
             <IconButton onClick={handleClose} className="cancel-btn">
-              <CloseIcon fontSize="medium" />
+              <CancelRoundedIcon fontSize="medium" />
             </IconButton>
           </div>
           <div style={{ textAlign: "center" }}>
@@ -110,26 +111,25 @@ function AdminLogin() {
           {loading ? (
             <Loader />
           ) : (
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={loading}
-                fullWidth
-              >
-                Login
-              </Button>
-            )}
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={loading}
+              fullWidth
+            >
+              Login
+            </Button>
+          )}
 
           {error && (
             <div className="error-container">
               <p className="error-msg">
                 Please check your credentials and Try again
-                </p>
+              </p>
             </div>
           )}
         </Box>
       </form>
-
     </div>
   );
 }
