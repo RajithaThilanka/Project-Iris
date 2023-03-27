@@ -5,7 +5,12 @@
   min-height: 4.5rem;
   margin-right: 2rem;
 }
-
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  background-image: linear-gradient(
+    var(--color-primary),
+    var(--color-primary-light)
+  );
+}
 .navbar-logo img {
   width: 100%;
   height: 100%;

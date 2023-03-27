@@ -38,8 +38,15 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Notifications from "../Notifications/Notifications";
 import { fetchChatNotifications } from "../../api/ChatRequests";
+import { Divider } from "@mui/material";
 
-const pages = ["Explore", "Safety Tips", "About Us"];
+// const pages = ["Explore", "Safety Tips", "About Us"];
+
+const pages = [
+  { label: "Explore", to: "/me" },
+  { label: "Safety Tips", to: "/me" },
+  { label: "About Us", to: "/me" },
+];
 // const settings = ["Account", "Dashboard"];
 const settings = [
   { label: "Account", to: "/me" },
@@ -316,6 +323,7 @@ function Navbar({ user, socket }) {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
+                // background: "red",
               }}
             >
               {
@@ -338,6 +346,25 @@ function Navbar({ user, socket }) {
                   </div>
                 </MenuItem>
               }
+              {pages.map((page) => {
+                return (
+                  <>
+                    <MenuItem
+                      key={page.label}
+                      onClick={() => navigate(page.to)}
+                    >
+                      <Typography
+                        sx={{
+                          color: "#fff",
+                        }}
+                      >
+                        {page.label}
+                      </Typography>
+                    </MenuItem>
+                    <Divider />
+                  </>
+                );
+              })}
             </Menu>
           </Box>
 
