@@ -30,7 +30,12 @@ function Question() {
     fetchQuestions();
 
     }, []);
-    console.log('hello', allQuestions);
+    //const QuestionAnswersArray = allQuestions.map(allQuestions[1].question);
+    
+    const QuestionAnswersArray = Object.keys(allQuestions.question).map((key) => {
+    return { name: key, answerTags: allQuestions.question[key].answerTags, };
+    });
+    console.log('hello', QuestionAnswersArray);
     return (
         <div className="question-container">
             <div className="question">
@@ -40,17 +45,34 @@ function Question() {
                     </Grid>
                     <Grid sm={12} xs={12}>
                         <Stack spacing={3}>
-                            <div sx={{ minWidth: 275, marginLeft: "0.7rem" }} >
+                            <div sx={{ marginLeft: "0.7rem" }} >
                                 {allQuestions ? (
-                                <div>
-                                {allQuestions[1].question}
-                                </div>
+                                    <Box>
+                                        {allQuestions[1].question}
+                                    </Box>
+                                
+                                
                                 ) : (
                                 <p>Loading questions...</p>
                                 )}
                                 
                             </div>
                             <Button variant="contained">Answer</Button>
+                            <div>
+                                {/* {QuestionAnswersArray ? (
+                                <div>
+                                    {QuestionAnswersArray.map((item, index) => (
+                                <Button variant="contained" key={index}>{item}</Button>
+                                ))}
+                                </div>
+                                ) : (
+                                <p>Loading answers...</p>
+                                )} */}
+{/* 
+                                {QuestionAnswersArray.map((item, index) => (
+                                <Button variant="contained" key={index}>{item}</Button>
+                                ))} */}
+                            </div>
                         </Stack>
                     </Grid>
                     
