@@ -31,7 +31,7 @@ import AdminLogin from "./pages/AdminAuth/AdminLogin";
 import IdVerification from "./pages/UserVerification/IdVerification";
 import UploadImages from "./pages/UserVerification/UploadImages";
 import SelfiPhoto from "./pages/UserVerification/SelfiPhoto";
-
+import SafetyTips from "./pages/SafetyTips/SafetyTips";
 import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
@@ -211,6 +211,7 @@ function App() {
           <Route path="/me/verification" element={<IdVerification />} />
           <Route path="/me/uploadimages" element={<UploadImages />} />
           <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
+          <Route path="/me/safetytips" element={<SafetyTips />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}
