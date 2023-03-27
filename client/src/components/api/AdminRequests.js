@@ -24,3 +24,6 @@ export const manualVarifyAccount = (userId, status) =>
 
 export const reviewReport = (reportId, reviewStatus) =>
   API.patch("/report/review-report", { reportId, reviewStatus });
+
+export const setHatespeech = (hateSpeechScheduledAt) =>
+  API.patch("/settings/hate-speech", { hateSpeechScheduledAt });

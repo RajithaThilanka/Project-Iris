@@ -1,6 +1,36 @@
-.profilepic {
-  justify-content: right;
-  justify-items: right;
+.upload-container {
+  display: inline-block;
+  position: relative;
+}
+
+.profile-picture-container {
+  display: inline-block;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.upload-button-label {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #428bca;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.upload-button-label i {
+  font-size: 20px;
+}
+
+.upload-button {
+  display: none;
 }
 
 .Header {
