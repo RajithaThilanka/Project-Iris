@@ -59,17 +59,12 @@ function VerificationCard({ title, children, reverse }) {
         <form onSubmit={handleSubmit}>
           <Box sx={style}>
             <div className="cancel-btn-container">
-              <Link to="/me/profile">
-                <IconButton
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    handleClose();
-                  }}
-                  className="cancel-btn"
-                >
-                  <CloseIcon fontSize="medium" />
-                </IconButton>
-              </Link>
+              <IconButton
+                onClick={() => navigate("/me/profile")}
+                className="cancel-btn"
+              >
+                <CloseIcon fontSize="medium" />
+              </IconButton>
             </div>
             <h1 className="login-title">{title}</h1>
             {children}
