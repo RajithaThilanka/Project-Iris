@@ -11,7 +11,6 @@ import { getUser } from "../../components/api/UserRequests";
 import { useState } from "react";
 import Grid from "@mui/material/Grid";
 export default function SuggessionPage() {
-  //const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
 
   const {

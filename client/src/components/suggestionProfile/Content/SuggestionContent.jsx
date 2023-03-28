@@ -36,7 +36,7 @@ export default function SuggestionContent(props) {
         sx={{
           boxShadow: 4,
           height: "100%",
-          width: { xl: 1000, lg: 1000, md: 650, sm: 550, xs: 350 },
+          width: { xl: 1000, lg: 1000, md: 650, sm: 550, xs: 500 },
           borderRadius: 2,
           textAlign: "center",
           bgcolor: "white",
@@ -44,7 +44,7 @@ export default function SuggestionContent(props) {
           marginRight: { xl: 20, lg: 20, md: 10, sm: 5, xs: 5 },
         }}
       >
-        <Grid item xs={8}>
+        <Grid item xs={8} lg={8} md={8} sm={8} xs={12}>
           <Stack direction="column" sx={{ padding: "10px" }} spacing={2}>
             <Box
               sx={{
@@ -79,7 +79,7 @@ export default function SuggestionContent(props) {
             >
               <Typography variant="h6">Profile Description</Typography>
               <Typography sx={{ overflowX: "auto" }} variant="subtitle">
-                {props.pdes}
+                {props?.pdes}
               </Typography>
             </Box>
             <Box
@@ -191,11 +191,17 @@ export default function SuggestionContent(props) {
             </Box>
           </Stack>
         </Grid>
-        <Grid item xs={4} sx={{ padding: "10px" }}>
+        <Grid item xs={4} lg={4} md={4} sm={4} xs={12} sx={{ padding: "10px" }}>
           <Stack direction="column">
             <Box
               sx={{
-                width: "300px",
+                width: {
+                  xl: "300px",
+                  lg: "300px",
+                  md: "200px",
+                  sm: "160px",
+                  xs: "480px",
+                },
                 height: "100%",
                 borderRadius: 2,
                 textAlign: "center",
@@ -208,15 +214,15 @@ export default function SuggestionContent(props) {
             >
               <Typography variant="h6">
                 <SuggessionFactfiles
-                  Height={props.Height}
-                  callName={props.callName}
-                  Ethnicity={props.Ethnicity}
-                  Dob={props.Dob}
-                  Education={props.Education}
-                  Language={props.Language}
-                  Income={props.Income}
-                  Haschildren={props.Haschildren}
-                  Religion={props.Religion}
+                  Height={props?.Height}
+                  callName={props?.callName}
+                  Ethnicity={props?.Ethnicity}
+                  Dob={props?.Dob}
+                  Education={props?.Education}
+                  Language={props?.Language}
+                  Income={props?.Income}
+                  Haschildren={props?.Haschildren}
+                  Religion={props?.Religion}
                 />
               </Typography>
             </Box>
