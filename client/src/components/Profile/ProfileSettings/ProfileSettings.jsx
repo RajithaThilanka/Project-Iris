@@ -8,6 +8,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import { InputLabel, Input } from "@mui/material";
 
 import EmailIcon from "@mui/icons-material/Email";
 import Tooltip from "@mui/material/Tooltip";
@@ -23,11 +24,24 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import InputAdornment from "@mui/material/InputAdornment";
 import "./popupStyle.css";
 
-import updateMyPassword from "../../../api/UserRequests";
+import { updateMe, UpdateMyPassword } from "../../api/UserRequests";
 
 export default function ProfileSettings() {
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleUpdateClick = () => {
+    setSuccessMessage("Update successful!");
+  };
+  const handleUpdateerrClick = () => {
+    setSuccessMessage("Update unsuccessful!");
+  };
+
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup2, setShowPopup2] = useState(false);
+
+  const [newEmail, setNewEmail] = useState("");
+  const [repeatEmail, setRepeatEmail] = useState("");
 
   const [password, setPassword] = useState("");
   const [currentpassword, setcurrentPassword] = useState("");
@@ -65,7 +79,21 @@ export default function ProfileSettings() {
     }
     if (valid) {
       valid = true;
-      // do password reset action here
+
+      const pdata = {
+        passwordCurrent: currentpassword,
+        password: password,
+        passwordConfirm: confirmPassword,
+      };
+
+      UpdateMyPassword(pdata)
+        .then((response) => {
+          handleUpdateClick();
+        })
+        .catch((error) => {
+          handleUpdateerrClick();
+        });
+
       setConfirmPasswordError(false);
       setPasswordError(false);
       setcurrentPasswordError(false);
@@ -78,6 +106,29 @@ export default function ProfileSettings() {
   const togglePopup2 = () => {
     setShowPopup2(!showPopup2);
   };
+
+  const emailSubmit = (event) => {
+    event.preventDefault();
+    if (newEmail.length > 0 && repeatEmail.length > 0) {
+      if (newEmail === repeatEmail) {
+        const data = {
+          email: newEmail,
+        };
+        updateMe(data)
+          .then((response) => {
+            handleUpdateClick();
+          })
+          .catch((error) => {
+            handleUpdateerrClick();
+          });
+      } else {
+        setErrorMessage("Emails do not match.");
+      }
+    } else {
+      setErrorMessage("Please enter an email address.");
+    }
+  };
+
   return (
     <div>
       {/* Password popup */}
@@ -164,11 +215,13 @@ export default function ProfileSettings() {
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>
         </Box>
       )}
+
       {/* Email popup*/}
       {showPopup2 && (
         <Box sx={{ width: "250px", height: "600px" }}>
@@ -181,10 +234,13 @@ export default function ProfileSettings() {
                     <CloseIcon />
                   </IconButton>
                 </Stack>
-                <Typography>Current Email :</Typography>
+                <Typography>New Email :</Typography>
                 <TextField
-                  id="outlined-password-input"
                   type="text"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  error={errorMessage}
+                  helperText={errorMessage}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -193,10 +249,13 @@ export default function ProfileSettings() {
                     ),
                   }}
                 />
-                <Typography>New Email :</Typography>
+                <Typography>Repeat New Email :</Typography>
                 <TextField
-                  id="outlined-email-input"
                   type="text"
+                  value={repeatEmail}
+                  error={errorMessage}
+                  helperText={errorMessage}
+                  onChange={(e) => setRepeatEmail(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -214,10 +273,15 @@ export default function ProfileSettings() {
                   >
                     Cancel
                   </Button>
-                  <Button sx={{ width: "100%" }} variant="contained">
+                  <Button
+                    sx={{ width: "100%" }}
+                    variant="contained"
+                    onClick={emailSubmit}
+                  >
                     Save
                   </Button>
                 </Stack>
+                <InputLabel htmlFor="textbox">{successMessage}</InputLabel>
               </Stack>
             </div>
           </div>

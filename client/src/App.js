@@ -28,7 +28,10 @@ import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminPage from "./pages/Admin/AdminPage";
 import AdminLogin from "./pages/AdminAuth/AdminLogin";
-
+import IdVerification from "./pages/UserVerification/IdVerification";
+import UploadImages from "./pages/UserVerification/UploadImages";
+import SelfiPhoto from "./pages/UserVerification/SelfiPhoto";
+import SafetyTips from "./pages/SafetyTips/SafetyTips";
 import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
@@ -221,6 +224,10 @@ function App() {
           <Route path="/users/profile/:id" element={<SuggessionPage />}></Route>
 
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
+          <Route path="/me/verification" element={<IdVerification />} />
+          <Route path="/me/uploadimages" element={<UploadImages />} />
+          <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
+          <Route path="/me/safetytips" element={<SafetyTips />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
         {/* <Chat /> */}
