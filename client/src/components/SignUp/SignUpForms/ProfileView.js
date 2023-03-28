@@ -13,7 +13,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { uploadImage } from "../../../actions/UploadAction";
 import { signupProfileView } from "../../../api/AuthRequests";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DoneIcon from "@mui/icons-material/Done";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,6 +22,9 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import FormDialogBox from "../../FormDialogBox/FormDialogBox";
 function ProfileView() {
   const dispatch = useDispatch();
+  const {
+    state: { id },
+  } = useLocation();
   const [image, setImage] = useState(null);
   const [otherImage1, setOtherImage1] = useState(null);
   const [otherImage2, setOtherImage2] = useState(null);
@@ -41,7 +44,6 @@ function ProfileView() {
   const [otherUploaded4, setOtherUploaded4] = useState(false);
   const [otherUploaded5, setOtherUploaded5] = useState(false);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-  const { id } = useParams();
   const navigate = useNavigate();
 
   const onImageChange = (event) => {
@@ -315,7 +317,12 @@ function ProfileView() {
           data: { data },
         },
       } = await signupProfileView(formData);
-      navigate(`/auth/signup/lookingfor-info/${id}`, { replace: true });
+      navigate(`/auth/signup/lookingfor-info`, {
+        replace: true,
+        state: {
+          id: data._id,
+        },
+      });
     } catch (error) {
       console.log(error);
     }

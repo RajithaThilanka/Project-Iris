@@ -109,7 +109,7 @@ export const postponeDate = (id, scheduledAt) =>
 
 export const fetchWarnings = () => API.get("/report/fetch-warnings");
 
-export const updateMyPassword = (passwordCurrent, password, passwordConfirm) =>
+export const UpdateMyPassword = (passwordCurrent, password, passwordConfirm) =>
   API.patch("/users/me/update-password", {
     passwordCurrent,
     password,

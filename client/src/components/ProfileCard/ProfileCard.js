@@ -249,9 +249,9 @@ function ProfileCard({ conUser, cardType, socket }) {
 
       <div
         className="profile-buttons"
-        style={{
-          display: visible ? "flex" : "none",
-        }}
+        // style={{
+        //   display: visible ? "flex" : "none",
+        // }}
       >
         <Tooltip title="View Profile" placement="bottom">
           <IconButton

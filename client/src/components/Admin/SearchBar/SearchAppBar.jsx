@@ -85,13 +85,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-
-
 export default function SearchAppBar() {
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    // Dispatch the logout action to the store
     dispatch(logout());
   };
 
@@ -128,17 +126,15 @@ export default function SearchAppBar() {
                 <StyledBadge
                   overlap="circular"
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                // variant={socketConnected ? "dot" : ""}
+                  // variant={socketConnected ? "dot" : ""}
                 >
                   <Avatar
                     alt="user avatar"
-                  //src={serverPublic + user.profilePhoto}
+                    //src={serverPublic + user.profilePhoto}
                   />
                 </StyledBadge>
               </IconButton>
             </Tooltip>
-
-
           </Stack>
         </Toolbar>
       </AppBar>

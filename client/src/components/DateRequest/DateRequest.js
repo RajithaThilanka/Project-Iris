@@ -40,6 +40,11 @@ function DateRequest({ data, reqType, handleAcceptClick, handleCancelClick }) {
                 variant="contained"
                 size="small"
                 onClick={handleAcceptClick}
+                sx={{
+                  color: "var(--color-primary-dark)",
+                  fontWeight: 600,
+                  background: "#fff",
+                }}
               >
                 Accept
               </Button>
@@ -54,6 +59,11 @@ function DateRequest({ data, reqType, handleAcceptClick, handleCancelClick }) {
               fullWidth={false}
               color="otherColors"
               onClick={handleCancelClick}
+              sx={{
+                color: "var(--color-primary-dark)",
+                fontWeight: 600,
+                background: "#fff",
+              }}
             >
               Cancel
             </Button>

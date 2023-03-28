@@ -4,8 +4,28 @@ import Box from "@mui/material/Box";
 import SuggessionFactfiles from "../SuggessionFactfiles/SuggessionFactfiles";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
-
+import { useState, useEffect } from "react";
+import { getMe } from "../../../api/UserRequests";
 export default function SuggestionContent(props) {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getMe();
+        setUser(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
+
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div>
       <Grid
@@ -90,7 +110,7 @@ export default function SuggestionContent(props) {
                       height: { xl: 70, lg: 70, md: 50, sm: 60, xs: 50 },
                     }}
                     alt="Remy Sharp"
-                    src="https://images.unsplash.com/photo-1677484179240-ff398b0a2d09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                    src={serverPublic + props.profilePhoto}
                   />
                   <Avatar
                     sx={{
@@ -107,7 +127,7 @@ export default function SuggestionContent(props) {
                       height: { xl: 70, lg: 70, md: 50, sm: 60, xs: 50 },
                     }}
                     alt="Agnes Walker"
-                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                    src={serverPublic + user?.profilePhoto}
                   />
                 </AvatarGroup>
               </Stack>
@@ -167,7 +187,6 @@ export default function SuggestionContent(props) {
                   value={props.sport}
                   sx={{ width: "100%" }}
                 />
-
               </Stack>
             </Box>
           </Stack>
@@ -188,7 +207,17 @@ export default function SuggestionContent(props) {
               }}
             >
               <Typography variant="h6">
-                <SuggessionFactfiles Height={props.Height} callName={props.callName} Ethnicity={props.Ethnicity} Dob={props.Dob} Education={props.Education} Language={props.Language} Income={props.Income} Haschildren={props.Haschildren} Religion={props.Religion} />
+                <SuggessionFactfiles
+                  Height={props.Height}
+                  callName={props.callName}
+                  Ethnicity={props.Ethnicity}
+                  Dob={props.Dob}
+                  Education={props.Education}
+                  Language={props.Language}
+                  Income={props.Income}
+                  Haschildren={props.Haschildren}
+                  Religion={props.Religion}
+                />
               </Typography>
             </Box>
           </Stack>
