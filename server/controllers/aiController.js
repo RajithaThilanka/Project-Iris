@@ -185,37 +185,40 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
 
 // Hate speech detection
 exports.validateChat = async () => {
-  const newMessages = await Message.find({
-    validated: false,
-  }).populate('sender');
+  try {
+    const newMessages = await Message.find({
+      validated: false,
+    }).populate('sender');
 
-  const updatedMessages = newMessages.map(msg => {
-    return {
-      id: msg.sender._id,
-      text: msg.content,
+    const updatedMessages = newMessages.map(msg => {
+      return {
+        id: msg.sender._id,
+        text: msg.content,
+      };
+    });
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:9000/api/v1/users/detect-hate-speech',
+      body: updatedMessages,
+      json: true,
     };
-  });
+    const response = await request(options);
 
-  const options = {
-    method: 'POST',
-    url: 'http://127.0.0.1:9000/api/v1/users/detect-hate-speech',
-    body: updatedMessages,
-    json: true,
-  };
-  const response = await request(options);
-
-  await Message.updateMany({ validated: false }, { validated: true });
-  console.log(response);
-  response.forEach(async result => {
-    if (result.flagged === 'Hate Speech Detected') {
-      await Report.create({
-        reportedUser: result.id,
-        reason: 'Hate Speech',
-        reviewStatus: 'positive',
-      });
-    }
-  });
-  return response;
+    await Message.updateMany({ validated: false }, { validated: true });
+    console.log(response);
+    response.forEach(async result => {
+      if (result.flagged === 'Hate Speech Detected') {
+        await Report.create({
+          reportedUser: result.id,
+          reason: 'Hate Speech',
+          reviewStatus: 'positive',
+        });
+      }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.getValidatedResponse = catchAsync(async (req, res, next) => {
