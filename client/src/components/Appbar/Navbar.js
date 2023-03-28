@@ -43,7 +43,7 @@ import { Divider } from "@mui/material";
 // const pages = ["Explore", "Safety Tips", "About Us"];
 
 const pages = [
-  { label: "Explore", to: "/me" },
+  { label: "Explore", to: "/explore" },
   { label: "Safety Tips", to: "/me" },
   { label: "About Us", to: "/me" },
 ];
@@ -377,7 +377,7 @@ function Navbar({ user, socket }) {
               HOME
             </Button>
             <Button
-              //onClick={() => navigate("/about-us")}
+              onClick={() => navigate("/explore")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Explore

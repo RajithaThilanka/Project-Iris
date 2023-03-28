@@ -110,3 +110,5 @@ export const postponeDate = (id, scheduledAt) =>
 export const fetchWarnings = () => API.get("/report/fetch-warnings");
 
 export const reportUser = (data) => API.post("/report", data);
+
+export const setNotified = (id) => API.patch("/report/notified", { id });
