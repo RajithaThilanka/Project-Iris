@@ -58,6 +58,9 @@ router
   .route('/me/answers')
   .get(authController.protect, answerController.getAnswers);
 router
+  .route('/me/ver-status')
+  .get(authController.protect, userController.getVerificationStatus);
+router
   .route('/me')
   .get(authController.protect, userController.getMe, userController.getUser);
 

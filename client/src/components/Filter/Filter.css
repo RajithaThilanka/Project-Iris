@@ -80,22 +80,7 @@
   font-size: 1.2rem !important;
 }
 
-@media only screen and (max-width: 78em) {
-  .toggle-btn-container {
-    /* position: absolute; */
-    /* width: 100%; */
-  }
-  .filter-bar {
-    z-index: 10;
-    top: 100%;
-    left: 0;
-    width: 50%;
-  }
-  .filter-form {
-    padding-top: 1.2rem;
-  }
-}
-@media only screen and (max-width: 41em) {
+@media only screen and (max-width: 56.25em) {
   .filter-bar {
     display: flex;
     position: static;

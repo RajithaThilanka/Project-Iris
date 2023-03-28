@@ -6,6 +6,7 @@ const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 const LookingFor = require('../models/lookingForModel');
 const Answer = require('../models/answerModel');
+const ManualVerification = require('../models/manualVerificationModel');
 
 const filterObj = (obj, ...notAllowedFields) => {
   const newObj = {};
@@ -271,6 +272,20 @@ exports.fetchConnections = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       data: finalConnections,
+    },
+  });
+});
+
+exports.getVerificationStatus = catchAsync(async (req, res, next) => {
+  const verificationStatus = await ManualVerification.findOne({
+    userId: req.user._id,
+  });
+  // verificationStatus = verificationStatus || null;
+  console.log('hey');
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: verificationStatus,
     },
   });
 });

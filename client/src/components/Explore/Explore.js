@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MatchesContext from "../../context/matches";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import Navbar from "../../components/Appbar/Navbar";
@@ -9,12 +9,14 @@ import "./Explore.css";
 import Button from "@mui/material/Button";
 import { logout } from "../../actions/AuthActions";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import { getMyVerStatus, getVerStatus } from "../../api/UserRequests";
 const ENDPOINT = "http://localhost:5000";
 let socket;
 function Explore() {
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
+  const [verStatus, setVerStatus] = useState(false);
   const {
     setSocketConnected,
     setActiveUsers,
@@ -95,6 +97,28 @@ function Explore() {
   });
 
   useEffect(() => {
+    const getStatus = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getMyVerStatus();
+        console.log(data);
+        if (data) {
+          data.status === "verified" ? setVerStatus(true) : setVerStatus(false);
+        } else {
+          setVerStatus(false);
+        }
+        //   setVerStatus()
+      } catch (error) {
+        console.log(error);
+        setVerStatus(false);
+      }
+    };
+    getStatus();
+  }, []);
+  useEffect(() => {
     return () => {
       socket.off();
       setSocketConnected(false);
@@ -111,39 +135,42 @@ function Explore() {
         }}
       >
         <div className="explore-card-container">
-          <div
-            className="explore-card-get-verified"
-            style={{
-              backgroundImage: `url(${serverPublic + "verify-person.jpg"})`,
-            }}
-          >
-            <div className="verified-frame">
-              <VerifiedIcon
-                sx={{
-                  color: "#0973d6;",
-                  transform: "translate(18.5rem,-1.6rem)",
+          {!verStatus && (
+            <div
+              className="explore-card-get-verified"
+              style={{
+                backgroundImage: `url(${serverPublic + "verify-person.jpg"})`,
+              }}
+            >
+              <div className="verified-frame">
+                <VerifiedIcon
+                  sx={{
+                    color: "#0973d6;",
+                    transform: "translate(18.5rem,-1.6rem)",
 
-                  borderRadius: "50%",
-                  background: "#fff",
-                }}
-                fontSize="large"
-              />
-            </div>
-
-            <div className="explore-card-verified-info">
-              <div className="explore-card-info-1">
-                <h3 className="heading-secondary verified-card-heading">
-                  Get Verified on IRIS
-                </h3>
-                <h5 className="heading-tertiary verified-card-sub-heading">
-                  Photo Verified
-                </h5>
+                    borderRadius: "50%",
+                    background: "#fff",
+                  }}
+                  fontSize="large"
+                />
               </div>
-              <Button variant="contained" className="verified-card-btn">
-                TRY NOW
-              </Button>
+
+              <div className="explore-card-verified-info">
+                <div className="explore-card-info-1">
+                  <h3 className="heading-secondary verified-card-heading">
+                    Get Verified on{" "}
+                    <span style={{ color: "var(--color-primary)" }}>IRIS</span>
+                  </h3>
+                  <h5 className="heading-tertiary verified-card-sub-heading">
+                    Photo Verified
+                  </h5>
+                </div>
+                <Button variant="contained" className="verified-card-btn">
+                  TRY NOW
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
           <div className="welcome-to-explore-container">
             <h3 className="heading-tertiary">Welcome to Explore</h3>
             <h6>Check out these features as well</h6>
