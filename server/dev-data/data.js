@@ -1,3 +1,4 @@
+const fs = require('fs');
 const languages = [
   'Abkhazian',
   'Afar',
@@ -155,3 +156,11 @@ const languages = [
   'Yoruba',
   'Zulu',
 ];
+
+const arr = JSON.parse(fs.readFileSync('./occupations.json', 'utf-8'));
+
+arr.sort(function (a, b) {
+  return ('' + a).localeCompare(b);
+});
+
+fs.writeFileSync('./occupations.json', JSON.stringify(arr), 'utf-8');

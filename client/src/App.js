@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
@@ -96,6 +96,7 @@ const theme = createTheme({
 
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
+  const { state } = useLocation();
   return (
     <ThemeProvider theme={theme}>
       <>
@@ -105,16 +106,31 @@ function App() {
             element={<AccountInfo />}
           ></Route>
           <Route
-            path="/auth/signup/user-info/:id"
-            element={<UserInfo />}
+            path="/auth/signup/user-info"
+            element={
+              state ? <UserInfo /> : <Navigate to="/auth/signup/account-info" />
+            }
+          ></Route>
+
+          <Route
+            path="/auth/signup/profileview-info"
+            element={
+              state ? (
+                <ProfileView />
+              ) : (
+                <Navigate to="/auth/signup/account-info" />
+              )
+            }
           ></Route>
           <Route
-            path="/auth/signup/profileview-info/:id"
-            element={<ProfileView />}
-          ></Route>
-          <Route
-            path="/auth/signup/lookingfor-info/:id"
-            element={<LookingFor />}
+            path="/auth/signup/lookingfor-info"
+            element={
+              state ? (
+                <LookingFor />
+              ) : (
+                <Navigate to="/auth/signup/account-info" />
+              )
+            }
           ></Route>
 
           <Route

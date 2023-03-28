@@ -34,7 +34,7 @@ const deleteDevData = async () => {
     // await LookingFor.deleteMany();
     await Chat.deleteMany();
     await Message.deleteMany();
-    await Connection.deleteMany();
+    // await Connection.deleteMany();
     await Date.deleteMany();
     // await Answer.deleteMany();
   } catch (error) {

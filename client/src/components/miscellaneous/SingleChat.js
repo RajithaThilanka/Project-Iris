@@ -246,8 +246,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   }, [selectedChat]);
   useEffect(() => {
     return () => {
-      // socket.off();
-
+      socket.off();
       setSocketConnected(false);
     };
   }, []);

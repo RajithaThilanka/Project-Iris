@@ -45,6 +45,11 @@ function FriendRequest({
                 variant="contained"
                 size="small"
                 onClick={handleAcceptClick}
+                sx={{
+                  color: "var(--color-primary-dark)",
+                  fontWeight: 600,
+                  background: "#fff",
+                }}
               >
                 Accept
               </Button>
@@ -53,6 +58,11 @@ function FriendRequest({
                 size="small"
                 color="otherColors"
                 onClick={handleCancelClick}
+                sx={{
+                  color: "var(--color-primary-dark)",
+                  fontWeight: 600,
+                  background: "#fff",
+                }}
               >
                 Decline
               </Button>
@@ -64,6 +74,11 @@ function FriendRequest({
               fullWidth={false}
               color="otherColors"
               onClick={handleCancelClick}
+              sx={{
+                color: "var(--color-primary-dark)",
+                fontWeight: 600,
+                background: "#fff",
+              }}
             >
               Cancel
             </Button>

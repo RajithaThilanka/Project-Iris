@@ -5,6 +5,7 @@ import { createChat } from "../../api/UserRequests";
 import MatchesContext from "../../context/matches";
 import { format } from "timeago.js";
 import "./ChatNotification.css";
+import Zoom from "react-reveal/Zoom";
 function ChatNotification({ notData, handleCloseNotMenu }) {
   const { chats, setChats, setSelectedChat, setNotification, notification } =
     useContext(MatchesContext);
@@ -39,9 +40,12 @@ function ChatNotification({ notData, handleCloseNotMenu }) {
         borderBottom: "1px solid #ccc",
         display: "flex",
         flexDirection: "column",
+        borderRadius: "15px",
+        padding: "0.5rem",
         // backgroundImage:
         //   "linear-gradient(to right bottom,rgba(0,0,0,0.8),rgba(0,0,0,0.4))",
-        background: "#ddd",
+        backgroundImage:
+          "linear-gradient(to right bottom,var(--color-primary-dark), var(--color-primary),var(--color-primary-light))",
       }}
     >
       <div className="chat-notification-container" onClick={accessChat}>

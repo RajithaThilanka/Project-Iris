@@ -57,23 +57,17 @@ function Login() {
       <form onSubmit={handleSubmit} className="login-form-main" method="post">
         <Grid container rowSpacing={3} px={3} margin={2}>
           <Grid item sm={12} xs={12}>
-            <Stack
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="flex-start"
-            >
-              <IconButton onClick={handleClose}>
-                <CancelRoundedIcon />
-              </IconButton>
-            </Stack>
-            <div
-              style={{ textAlign: "center", cursor: "pointer" }}
-              onClick={handleClose}
-            >
+            <div style={{ textAlign: "center" }}>
               <img
-                style={{ borderRadius: "50%", width: "4rem", height: "4rem" }}
+                style={{
+                  borderRadius: "50%",
+                  width: "4rem",
+                  height: "4rem",
+                  cursor: "pointer",
+                }}
                 src={serverPublic + "irislogo.png"}
                 alt="logo"
+                onClick={handleClose}
               />
             </div>
           </Grid>

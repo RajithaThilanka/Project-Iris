@@ -269,6 +269,7 @@ function Dashboard2() {
   };
   useEffect(() => {
     return () => {
+      setSocketConnected(false);
       socket.off();
     };
   }, []);
