@@ -7,6 +7,7 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { InputLabel, Input } from "@mui/material";
 import { Link } from "react-router-dom";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import {
   Card,
@@ -305,7 +306,7 @@ export default function ProfileAbout() {
                 alignItems="center"
                 spacing={2}
               >
-                <VerifiedUserIcon verified={user?.verified} />
+                <VerifiedIcon verified={user?.verified} />
 
                 <Typography>
                   {user?.verified ? "Verified" : "Unverified"}
