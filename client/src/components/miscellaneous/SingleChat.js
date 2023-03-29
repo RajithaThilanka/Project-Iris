@@ -340,8 +340,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                       getSenderFull(user, selectedChat.users).profilePhoto
                     })`
                   : serverPublic + "chat-background.png",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: "auto 100%",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: "#000",
+              backgroundPosition: "50% 50%",
             }}
           >
             {loading ? (
