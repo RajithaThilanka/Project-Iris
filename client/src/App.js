@@ -34,6 +34,7 @@ import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
 import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
 import Explore from "./components/Explore/Explore";
+import ManualSearch from "./components/ManualSearch/ManualSearch";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -138,6 +139,10 @@ function App() {
           <Route
             path="/explore"
             element={user ? <Explore /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/manual-search"
+            element={user ? <ManualSearch /> : <Auth action="login" />}
           ></Route>
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/error/:msg" element={<Error />}></Route>

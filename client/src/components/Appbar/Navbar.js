@@ -46,7 +46,7 @@ const pages = [
   { label: "Home", to: "/me" },
   { label: "Explore", to: "/explore" },
   { label: "Safety Tips", to: "/me" },
-  { label: "About Us", to: "/me" },
+  { label: "About Us", to: "/about-us" },
 ];
 // const settings = ["Account", "Dashboard"];
 const settings = [
