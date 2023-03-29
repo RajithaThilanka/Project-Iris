@@ -107,7 +107,7 @@ function MyChat({ fetchAgain, setFetchAgain, socket }) {
     handleSearch();
   }, [search]);
   useEffect(() => {
-    socket.on("message-seen", (chat) => {
+    socket?.on("message-seen", (chat) => {
       // chat.latestMessage.isSeen = true;
       setChats(
         chats.filter((ch) => {

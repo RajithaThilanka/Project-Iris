@@ -12,8 +12,15 @@
   padding-right: 0.9rem;
 }
 .notification-time {
-  flex: 1;
+  /* flex: 1; */
   text-align: end;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-left: auto;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  /* width: 1rem; */
+  /* display: inline-block; */
+  color: #fff;
 }
 .chat-notification-sender-pic {
   width: 3rem;
@@ -25,6 +32,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  border: 1px solid #fff;
 }
 .chat-notification-msg {
   flex: 1;
@@ -35,11 +43,13 @@
   width: 100%;
   overflow: hidden;
   font-weight: 500;
+  color: #fff;
 }
 
 .chat-notification-sender-name {
   /* background-color: red; */
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
+  color: #fff;
 }

@@ -28,6 +28,10 @@ const adminSchema = new mongoose.Schema(
       minlength: 8,
       select: false,
     },
+    profilePhoto: {
+      type: String,
+      default: 'defaultProfile.png',
+    },
   },
   { timestamps: true }
 );

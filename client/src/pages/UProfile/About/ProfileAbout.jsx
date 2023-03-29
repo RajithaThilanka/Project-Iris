@@ -6,6 +6,8 @@ import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { InputLabel, Input } from "@mui/material";
+import { Link } from "react-router-dom";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import {
   Card,
   CardContent,
@@ -38,14 +40,12 @@ export default function ProfileAbout() {
   const [showPopup5, setShowPopup5] = useState(false);
   const [showPopup6, setShowPopup6] = useState(false);
 
-
   const abouttogglePopup = () => {
     setShowPopup1(!showPopup1);
     setSuccessMessage("");
     setfData("");
     setDBVar("");
   };
-
 
   const desctogglePopup = () => {
     setShowPopup2(!showPopup2);
@@ -75,13 +75,10 @@ export default function ProfileAbout() {
   const [dbvar, setDBVar] = useState("");
   const [formdata, setfData] = useState("");
 
-
   const handleUpdateClick = () => {
-
     setSuccessMessage("Update successful!");
   };
   const handleUpdateerrClick = () => {
-
     setSuccessMessage("Update unsuccessful!");
   };
 
@@ -94,7 +91,6 @@ export default function ProfileAbout() {
     setfData(event.target.value);
     setDBVar();
   };
-
 
   useEffect(() => {
     const getData = async () => {
@@ -122,7 +118,6 @@ export default function ProfileAbout() {
       .then((response) => {
         // Reload data after successful update
         handleUpdateClick();
-
       })
       .catch((error) => {
         handleUpdateerrClick();
@@ -311,9 +306,15 @@ export default function ProfileAbout() {
                 spacing={2}
               >
                 <VerifiedUserIcon verified={user?.verified} />
+
                 <Typography>
                   {user?.verified ? "Verified" : "Unverified"}
                 </Typography>
+                <Link to="/me/verification">
+                  <IconButton>
+                    <ArrowUpwardIcon />
+                  </IconButton>
+                </Link>
               </stack>
             </Stack>
           </Box>
