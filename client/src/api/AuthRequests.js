@@ -28,3 +28,9 @@ export const resetPassword = (formData, token) =>
 
 export const adminLogin = (formData) =>
   API.post("/users/admin/login", formData);
+
+export const addAnswer = (userId, formData) =>
+  API.patch(`/users/me/submit-answer/${userId}`, formData);
+
+export const getAnswers = (formData) =>
+  API.get("/users/me/answers", formData);

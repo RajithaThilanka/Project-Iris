@@ -11,7 +11,8 @@ router
   .delete(authController.adminProtect, questionController.deleteQuestion);
 router
   .route('/')
-  .get(questionController.getAllQuestions)
+  //.get(questionController.getAllQuestions)
+  .get(questionController.getQuestionArray)
   .post(authController.adminProtect, questionController.addQuestion);
 
 module.exports = router;

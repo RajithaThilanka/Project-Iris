@@ -70,3 +70,18 @@ exports.getQuestion = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getQuestionArray = catchAsync( async (req, res, next) => {
+  // Get a random sample of 3 items from the Question collection
+  Question.aggregate([{ $sample: { size: 3 } }], (err, items) => {
+    if (err) {
+      return res.status(500).json({ error: err });
+    }
+    res.status(200).json({
+    status: 'success',
+    data: {
+      data: items,
+    },
+    });
+  });
+});
