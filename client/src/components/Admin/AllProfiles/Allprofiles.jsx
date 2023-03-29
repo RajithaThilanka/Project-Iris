@@ -22,6 +22,8 @@ export default function Profilereports() {
   const [idFront, setidFront] = useState(null);
   const [idBack, setidBack] = useState(null);
 
+  const [selectedRows, setSelectedRows] = useState([]);
+
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -57,6 +59,7 @@ export default function Profilereports() {
         let liveimg;
         let idFront;
         let idBack;
+
         const showProfileImage = (e) => {
           imageid = params.row.profilePhoto;
           liveimg = params.row.liveImage;
@@ -82,9 +85,6 @@ export default function Profilereports() {
 
         return (
           <Stack direction="row" spacing={1}>
-            <IconButton size="small" onClick={showProfileImage}>
-              <BlockIcon />
-            </IconButton>
             <IconButton size="small" onClick={showProfileImage}>
               <VisibilityIcon />
             </IconButton>
@@ -112,6 +112,15 @@ export default function Profilereports() {
   ];
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  // const showProfileImage = () => {
+  //   if (selectedRows.length === 1) {
+  //     const selectedRow = rows.find((row) => row.id === selectedRows[0]);
+  //     const selectedImage = selectedRow.profilePhoto;
+  //     console.log("Row Selected");
+  //     // do something with the selected image
+  //   }
+  // };
 
   ///API call
   useEffect(() => {

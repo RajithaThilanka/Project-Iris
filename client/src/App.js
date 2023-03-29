@@ -10,6 +10,8 @@ import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import QuestionPage from "./pages/Questions/QuestionPage";
+
 import UserProfile from "./pages/UProfile/UserProfile";
 import SuggessionPage from "./pages/suggestionProfile/SuggessionPage";
 
@@ -28,13 +30,18 @@ import Dates from "./pages/Dates/Dates";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AdminPage from "./pages/Admin/AdminPage";
 import AdminLogin from "./pages/AdminAuth/AdminLogin";
-
+import IdVerification from "./pages/UserVerification/IdVerification";
+import UploadImages from "./pages/UserVerification/UploadImages";
+import SelfiPhoto from "./pages/UserVerification/SelfiPhoto";
+import SafetyTips from "./pages/SafetyTips/SafetyTips";
 import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
 import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
 import Explore from "./components/Explore/Explore";
 import ManualSearch from "./components/ManualSearch/ManualSearch";
+import Question from "./components/Question/Question";
+
 const theme = createTheme({
   palette: {
     type: "light",
@@ -119,6 +126,12 @@ function App() {
               ) : (
                 <Navigate to="/auth/signup/account-info" />
               )
+            }
+          ></Route>
+          <Route
+            path="/question"
+            element={
+              state ? <Question /> : <Navigate to="/auth/signup/account-info" />
             }
           ></Route>
           <Route
@@ -231,9 +244,12 @@ function App() {
           <Route path="/users/profile/:id" element={<SuggessionPage />}></Route>
 
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
+          <Route path="/me/verification" element={<IdVerification />} />
+          <Route path="/me/uploadimages" element={<UploadImages />} />
+          <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
+          <Route path="/me/safetytips" element={<SafetyTips />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
-        {/* <Chat /> */}
 
         <ToastContainer
           style={{

@@ -90,7 +90,7 @@ export default function AdminPage() {
               <Tab label="All Profiles" {...a11yProps(0)} />
               <Tab label="Varification Requests" {...a11yProps(1)} />
               <Tab label="Profile Reports" {...a11yProps(2)} />
-              <Tab label="Suspended Acccoounts" {...a11yProps(3)} />
+              <Tab label="Suspended Accounts" {...a11yProps(3)} />
               <Tab label="Admin Settings" {...a11yProps(4)} />
             </Tabs>
             <TabPanel value={value} index={0}>

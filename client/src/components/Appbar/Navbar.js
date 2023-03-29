@@ -297,7 +297,7 @@ function Navbar({ user, socket }) {
             IRIS
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "nonefles" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -384,7 +384,7 @@ function Navbar({ user, socket }) {
               Explore
             </Button>
             <Button
-              //onClick={() => navigate("/about-us")}
+              onClick={() => navigate("/me/safetytips")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Safety Tips

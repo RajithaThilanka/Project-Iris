@@ -9,15 +9,14 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getUser } from "../../components/api/UserRequests";
 import { useState } from "react";
-
+import Grid from "@mui/material/Grid";
 export default function SuggessionPage() {
-  //const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
 
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
-  const { id } = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     const getData = async () => {
@@ -27,29 +26,31 @@ export default function SuggessionPage() {
             data: { data },
           },
         } = await getUser(id);
-        setProfile(data)
+        setProfile(data);
         console.log(data);
       } catch (error) {
         console.log(error);
       }
     };
-    getData()
+    getData();
   }, []);
-
 
   return (
     <div className="suggesstionPage">
-      <Stack direction="column">
-        <Navbar user={user} />
-        <SugHeader
-          Verified={profile?.verified}
-          imageid={profile?.profilePhoto}
-          name={profile?.firstname}
-          occupation={profile?.occupation}
-
-
-        />
-      </Stack>
+      <Grid container spacing={{ xs: 7, sm: 8, md: 8, lg: 8 }}>
+        <Grid item xs={12}>
+          <Navbar user={user} />
+        </Grid>
+        <Grid item xs={12}>
+          <SugHeader
+            Verified={profile?.verified}
+            imageid={profile?.profilePhoto}
+            name={profile?.firstname}
+            occupation={profile?.occupation}
+          />
+        </Grid>
+      </Grid>
+      <Stack direction="column"></Stack>
 
       <Stack
         direction="column"
@@ -58,6 +59,7 @@ export default function SuggessionPage() {
         }}
       >
         <SugContent
+          profilePhoto={profile?.profilePhoto}
           callName={profile?.callTag}
           Ethnicity={profile?.ethnicity}
           Dob={profile?.dob.substring(0, 10)}

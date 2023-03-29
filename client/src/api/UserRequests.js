@@ -114,3 +114,4 @@ export const reportUser = (data) => API.post("/report", data);
 export const setNotified = (id) => API.patch("/report/notified", { id });
 
 export const getMyVerStatus = () => API.get("/users/me/ver-status");
+//export const Camara = () => API.get("/")
