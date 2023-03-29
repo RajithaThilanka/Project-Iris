@@ -6,14 +6,14 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import ChatIcon from "@mui/icons-material/Chat";
 import "./SuggesstionHeaderStyle.css";
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Typography, makeStyles } from "@mui/material";
 import { createStyles } from "@mui/styles";
-import GppBadIcon from '@mui/icons-material/GppBad';
-
+import GppBadIcon from "@mui/icons-material/GppBad";
+import { Link, useNavigate } from "react-router-dom";
 export default function SuggestionHeader(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
+  const navigate = useNavigate();
   return (
     <div className="SuggesstionHeader">
       <Box
@@ -53,7 +53,6 @@ export default function SuggestionHeader(props) {
             }}
             component="img"
             height="140"
-            // src="https://images.unsplash.com/photo-1677484179240-ff398b0a2d09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
             src={serverPublic + props.imageid}
             alt="green iguana"
           ></Box>
@@ -85,8 +84,10 @@ export default function SuggestionHeader(props) {
             <Typography variant="h5">
               {props.Verified ? <VerifiedUserIcon /> : <GppBadIcon />}
             </Typography>
+            {/* /me/chat */}
             <Button
               variant="contained"
+              onClick={() => navigate("/me/chat")}
               sx={{
                 width: "20px",
                 height: { xl: 30, lg: 30, md: 30, sm: 30, xs: 25 },
@@ -97,6 +98,6 @@ export default function SuggestionHeader(props) {
           </Stack>
         </Stack>
       </Box>
-    </div >
+    </div>
   );
 }
