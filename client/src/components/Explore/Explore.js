@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import MatchesContext from "../../context/matches";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
 import Navbar from "../../components/Appbar/Navbar";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import io from "socket.io-client";
@@ -176,7 +178,11 @@ function Explore() {
             <h6>Check out these features as well</h6>
           </div>
           <div className="free-to-night-card">
-            <img src={serverPublic + "night-life.jpg"} alt="" />
+            <LazyLoadImage
+              effect="blur"
+              src={serverPublic + "night-life.jpg"}
+              alt="night-life"
+            />
             <div className="free-to-night-info">
               <h3>Free</h3>
               <h3> Tonight</h3>
@@ -185,7 +191,11 @@ function Explore() {
             </div>
           </div>
           <div className="free-to-night-card">
-            <img src={serverPublic + "letsbefriends.jpg"} alt="" />
+            <LazyLoadImage
+              effect="blur"
+              src={serverPublic + "letsbefriends.jpg"}
+              alt="night-life"
+            />
             <div className="free-to-night-info">
               <h3>Let's be</h3>
               <h3> Friends</h3>
@@ -215,7 +225,11 @@ function Explore() {
           </div>
 
           <div className="explore-passions-card">
-            <img src={serverPublic + "creative.jpg"} alt="" />
+            <LazyLoadImage
+              effect="blur"
+              src={serverPublic + "creative.jpg"}
+              alt="night-life"
+            />
             <div className="passions-card-tag">Creatives</div>
             <div className="explore-passions-card-info">
               <h3>Match Your Aesthetic </h3>
@@ -226,7 +240,11 @@ function Explore() {
             </Button>
           </div>
           <div className="explore-passions-card">
-            <img src={serverPublic + "music.jpg"} alt="" />
+            <LazyLoadImage
+              effect="blur"
+              src={serverPublic + "music.jpg"}
+              alt="night-life"
+            />
             <div className="passions-card-tag">Music Lovers</div>
             <div className="explore-passions-card-info">
               <h3>Split Your Headphones</h3>
@@ -237,7 +255,11 @@ function Explore() {
             </Button>
           </div>
           <div className="explore-passions-card">
-            <img src={serverPublic + "food.jpg"} alt="" />
+            <LazyLoadImage
+              effect="blur"
+              src={serverPublic + "food.jpg"}
+              alt="night-life"
+            />
             <div className="passions-card-tag">Foodies</div>
             <div className="explore-passions-card-info">
               <h3>Looking For A Snack?</h3>
@@ -248,7 +270,11 @@ function Explore() {
             </Button>
           </div>
           <div className="explore-passions-card">
-            <img src={serverPublic + "food.jpg"} alt="" />
+            <LazyLoadImage
+              effect="blur"
+              src={serverPublic + "food.jpg"}
+              alt="night-life"
+            />
             <div className="passions-card-tag">Foodies</div>
             <div className="explore-passions-card-info">
               <h3>Looking For A Snack?</h3>
