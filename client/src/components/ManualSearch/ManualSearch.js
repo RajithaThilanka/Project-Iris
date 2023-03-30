@@ -33,6 +33,7 @@ function ManualSearch() {
   const [resultVisible, setResultVisible] = useState(false);
   const [err, setErr] = useState(null);
   const [tokenErr, setTokenErr] = useState(null);
+  const [searchToken, setSearchToken] = useState(null);
   const dispatch = useDispatch();
 
   const {
@@ -132,6 +133,7 @@ function ManualSearch() {
             data: { data },
           },
         } = await getSearchTokens();
+        setSearchToken(data);
       } catch (error) {
         if (error.response.status === 400) setTokenErr(error);
         else setErr(error);
@@ -184,6 +186,13 @@ function ManualSearch() {
         setUsers(data);
         setErr(null);
         setResultLoading(false);
+        setSearchToken({
+          ...searchToken,
+          searchTokens: {
+            ...searchToken.searchTokens,
+            count: searchToken.searchTokens.count - 1,
+          },
+        });
       } catch (error) {
         console.log(error);
 
@@ -213,6 +222,11 @@ function ManualSearch() {
             className="manual-search"
             style={{ overflowY: tokenErr || err ? "hidden" : "scroll" }}
           >
+            {!tokenErr && err?.response?.status !== 400 && (
+              <span className="tokens-remaining">
+                {searchToken?.searchTokens?.count} tokens left
+              </span>
+            )}
             {!tokenErr && err?.response?.status !== 400 ? (
               <form className="search user-search-form" onSubmit={handleSubmit}>
                 <input
@@ -220,7 +234,7 @@ function ManualSearch() {
                   placeholder="Search..."
                   value={keyword}
                   onChange={handleChange}
-                  className="search__input user-search__input"
+                  className="man-search__input user-search__input"
                   onFocus={() => setGrid(true)}
                   onBlur={() => setGrid(false)}
                 />
@@ -242,6 +256,7 @@ function ManualSearch() {
             ) : (
               <div className="manual-search-err-msg token-err-msg">
                 Tokens are expired.Try again later
+                <SentimentVeryDissatisfiedIcon fontSize="large" />
               </div>
             )}
             {keyword && grid && (
@@ -294,6 +309,7 @@ function ManualSearch() {
               </div>
             )}
           </div>
+          <BottomNavbar />
         </div>
       ) : (
         ""
