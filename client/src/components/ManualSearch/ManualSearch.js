@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import ProfileCards from "../../components/ProfileCards/ProfileCards";
-import { users } from "../../dev-data/users";
-// import "./Connections.css";
-import Pulse from "react-reveal/Pulse";
-import { getAllConnections, getAnyUser } from "../../api/UserRequests";
+import React, { useContext, useEffect, useState } from "react";
+
+import {
+  getAnyUser,
+  getSearchNames,
+  getSearchTokens,
+} from "../../api/UserRequests";
 import SearchIcon from "@mui/icons-material/Search";
 import MatchesContext from "../../context/matches";
 import VerticalNavbar from "../../components/VerticalNavbar/VerticalNavbar";
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import io from "socket.io-client";
+import Loader from "../Loading/Loading";
 import { logout } from "../../actions/AuthActions";
 import ClearIcon from "@mui/icons-material/Clear";
 import "./ManualSearch.css";
@@ -25,36 +27,14 @@ function ManualSearch() {
   const { activeTab, setActiveTab } = useContext(MatchesContext);
   setActiveTab(6);
   const { connections, setConnections } = useContext(MatchesContext);
-  const [loading, setLoading] = useState(true);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [resultLoading, setResultLoading] = useState(false);
 
   const [resultVisible, setResultVisible] = useState(false);
   const [err, setErr] = useState(null);
+  const [tokenErr, setTokenErr] = useState(null);
   const dispatch = useDispatch();
-  useEffect(() => {
-    const fetchConnections = async () => {
-      setLoading(true);
-      setErr(null);
-      try {
-        const {
-          data: {
-            data: { data },
-          },
-        } = await getAllConnections();
-        setConnections(data);
-        setErr(null);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-        setErr(error);
-        if (err.response.status === 401) {
-          socket?.disconnect();
-          dispatch(logout());
-        }
-      }
-    };
-    fetchConnections();
-  }, []);
+
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
@@ -81,7 +61,7 @@ function ManualSearch() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const [keyword, setKeyword] = useState("");
   const [grid, setGrid] = useState(false);
-
+  const [names, setNames] = useState([]);
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
@@ -145,6 +125,21 @@ function ManualSearch() {
   };
 
   useEffect(() => {
+    const getTokenInfo = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getSearchTokens();
+      } catch (error) {
+        if (error.response.status === 400) setTokenErr(error);
+        else setErr(error);
+      }
+    };
+    getTokenInfo();
+  }, []);
+  useEffect(() => {
     return () => {
       socket.off();
       setSocketConnected(false);
@@ -153,24 +148,53 @@ function ManualSearch() {
 
   useEffect(() => {
     const handleSearch = async () => {
+      setErr(null);
       try {
-        setLoading(true);
+        setSearchLoading(true);
         const {
           data: {
             data: { data },
           },
-        } = await getAnyUser(keyword);
-        setUsers(data);
-        setLoading(false);
+        } = await getSearchNames(keyword);
+        setNames(data);
+        setSearchLoading(false);
+        setErr(null);
       } catch (error) {
         console.log(error);
-        setLoading(false);
+        setErr(error);
+        setSearchLoading(false);
+        setKeyword("");
+        setUsers([]);
+        setNames([]);
       }
     };
     keyword && handleSearch();
   }, [keyword]);
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErr(null);
+    const handleSearch = async () => {
+      try {
+        setResultLoading(true);
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getAnyUser(keyword);
+        setUsers(data);
+        setErr(null);
+        setResultLoading(false);
+      } catch (error) {
+        console.log(error);
+
+        setResultLoading(false);
+        setErr(error);
+        setKeyword("");
+        setUsers([]);
+        setNames([]);
+      }
+    };
+    keyword && handleSearch();
     setResultVisible(true);
     setGrid(false);
   };
@@ -185,52 +209,88 @@ function ManualSearch() {
           className="manual-search-container"
         >
           <VerticalNavbar />
-          <div className="manual-search">
-            <form className="search user-search-form" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Search..."
-                value={keyword}
-                onChange={handleChange}
-                className="search__input user-search__input"
-                onFocus={() => setGrid(true)}
-                onBlur={() => setGrid(false)}
-              />
-              <IconButton className="search__button">
-                <SearchIcon className="search__icon" />
-              </IconButton>
-              <IconButton
-                className="search__button"
-                onClick={() => {
-                  setKeyword("");
-                  setUsers([]);
-                  setResultVisible(false);
-                }}
-              >
-                <ClearIcon className="search__icon" />
-              </IconButton>
-            </form>
+          <div
+            className="manual-search"
+            style={{ overflowY: tokenErr ? "hidden" : "scroll" }}
+          >
+            {!tokenErr ? (
+              <form className="search user-search-form" onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={keyword}
+                  onChange={handleChange}
+                  className="search__input user-search__input"
+                  onFocus={() => setGrid(true)}
+                  onBlur={() => setGrid(false)}
+                />
+                <IconButton className="search__button">
+                  <SearchIcon className="search__icon" />
+                </IconButton>
+                <IconButton
+                  className="search__button"
+                  onClick={() => {
+                    setKeyword("");
+                    setNames([]);
+                    setUsers([]);
+                    setResultVisible(false);
+                  }}
+                >
+                  <ClearIcon className="search__icon" />
+                </IconButton>
+              </form>
+            ) : (
+              <div className="manual-search-err-msg token-err-msg">
+                Tokens are expired.Try again later
+              </div>
+            )}
             {keyword && grid && (
               <div className="search-grid">
                 <h5 className="heading-secondary">Recent searches</h5>
                 <div className="search-grid-history">
-                  {users.slice(0, 8).map((u) => {
-                    return (
-                      <div className="search-grid-history-item">
-                        <h6 className="heading-tertiary">
-                          {u.firstname + " " + u.lastname}
-                        </h6>
-                      </div>
-                    );
-                  })}
+                  {!searchLoading && !err ? (
+                    names.slice(0, 8).map((u) => {
+                      return (
+                        <div className="search-grid-history-item">
+                          <h6 className="heading-tertiary">
+                            {u.firstname + " " + u.lastname}
+                          </h6>
+                        </div>
+                      );
+                    })
+                  ) : searchLoading && !err ? (
+                    <div className="manual-search-loader-container">
+                      <Loader />
+                    </div>
+                  ) : !searchLoading && err ? (
+                    <div className="manual-search-err-msg">
+                      Something went wrong!
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             )}
-            {resultVisible && (
+            {resultVisible && !err && (
               <div className="search-result-grid">
-                {users.map((u) => {
-                  return <SearchUserCard cardHolder={u} />;
-                })}
+                {!resultLoading && !err
+                  ? users.map((u) => {
+                      return <SearchUserCard cardHolder={u} />;
+                    })
+                  : ""}
+              </div>
+            )}
+            {resultLoading && !err && (
+              <div className="manual-search-loader-container">
+                <Loader />
+              </div>
+            )}
+            {!resultLoading && err && (
+              <div className="manual-search-err-msg">
+                {err.response.status === 400
+                  ? "Tokens expired.Try again tomorrow"
+                  : "Something went wrong"}
               </div>
             )}
           </div>

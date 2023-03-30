@@ -28,11 +28,22 @@
   align-items: center;
   justify-content: center;
   z-index: 0;
-  font-size: 4rem;
+  font-size: 2rem;
   color: var(--color-grey-dark-2);
-  height: 100vh;
-  width: 100vw;
   text-align: center;
+  width: 100%;
+}
+.token-err-msg {
+  margin: auto;
+  font-size: 3.5rem;
+  height: 100vh;
+}
+.manual-search-loader-container {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 .search-grid {
   background-color: #fff;

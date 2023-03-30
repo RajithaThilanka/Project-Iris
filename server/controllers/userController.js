@@ -195,6 +195,35 @@ exports.getUsers = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getUserNames = catchAsync(async (req, res, next) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          {
+            firstname: {
+              $regex: req.query.search,
+              $options: 'i',
+            },
+          },
+          {
+            email: { $regex: req.query.search, $options: 'i' },
+          },
+        ],
+      }
+    : {};
+  const users = await User.find(keyword)
+    .find({ _id: { $ne: req.user._id } })
+    .select('firstname lastname');
+
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      data: users,
+    },
+  });
+});
+
 exports.fetchConnections = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   console.log(userId);
