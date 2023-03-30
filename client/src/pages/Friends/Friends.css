@@ -8,20 +8,9 @@
   width: 100%;
   min-height: 100vh;
   margin: 0 auto;
+  max-width: 140rem;
 }
-@media only screen and (max-width: 78em) {
-  .friends-container {
-    flex-direction: column;
-  }
-  .friends {
-    padding: 10rem 2rem;
-  }
-}
-@media only screen and (max-width: 78em) {
-  .friends-container {
-    margin-top: 7.5rem;
-  }
-}
+
 @media only screen and (max-width: 67em) {
   .friends-container {
     margin-top: 7.3rem;
@@ -31,6 +20,8 @@
   .friends-container {
     margin-bottom: 4rem;
   }
+}
+@media only screen and (max-width: 41em) {
   .friends {
     padding: 0.1rem 2rem;
   }

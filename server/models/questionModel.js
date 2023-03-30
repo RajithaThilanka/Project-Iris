@@ -4,6 +4,7 @@ const validator = require('validator');
 const questionSchema = new mongoose.Schema({
   question: String,
   optionTags: [String],
+  answerTags: [String],
   questionType: String,
 });
 

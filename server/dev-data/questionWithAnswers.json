@@ -1,0 +1,54 @@
+[
+    {
+        "question": "What you most like between tea and coffee?",
+        "optionTags": ["Tea", "Coffee"],
+        "questionType": "profileDescription"
+    },
+
+    {
+        "question": "What are your favorite sports?",
+        "answerTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "questionType": "sports"
+    },
+
+    {
+        "question": "What are the social media platforms you mostly use?",
+        "answerTags": ["Facebook", "Youtube", "TikTok", "SnapChat", "Instagram","Twitter", "LinkedIn", "Reddit"],
+        "questionType": "socialMedia"
+    },
+
+    {
+        "question": "What are your favorite movie genres?",
+        "answerTags": ["Action", "Comedy", "Drama", "Adventure", "Thriller"],
+        "questionType": "movies"
+    },
+
+    {
+        "question": "What type of music do you like to listen to?",
+        "answerTags": ["Pop", "Country", "HipHop", "Rock"],
+        "questionType": "music"
+    },
+
+    {
+        "question": "What is your idea about politics?",
+        "answerTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
+        "questionType": "politics"
+    },
+
+    {
+        "question": "What kind of hobbies do you have?",
+        "answerTags": ["Sports","Cinema","Traveling","Art","Cooking","Gaming","Crafts","Carpentry/DIY","Dancing","Photography","Music","Writing","Reading"],
+        "questionType": "profileDescription"
+    },
+
+    {
+        "question": "Being around people makes me feel...",
+        "answerTags": ["Like I'm alive!", "Inspired. I feed off of others' energy but there are times when I'd rather be alone.", "A bit exhausted. Being around others can be draining."],
+        "questionType": "Other"
+    },
+
+    {
+        "question": "What you most like between tea and coffee?",
+        "optionTags": ["Tea", "Coffee"]
+    }
+]

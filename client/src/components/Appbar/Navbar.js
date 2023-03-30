@@ -43,9 +43,10 @@ import { Divider } from "@mui/material";
 // const pages = ["Explore", "Safety Tips", "About Us"];
 
 const pages = [
-  { label: "Explore", to: "/me" },
+  { label: "Home", to: "/me" },
+  { label: "Explore", to: "/explore" },
   { label: "Safety Tips", to: "/me" },
-  { label: "About Us", to: "/me" },
+  { label: "About Us", to: "/about-us" },
 ];
 // const settings = ["Account", "Dashboard"];
 const settings = [
@@ -377,7 +378,7 @@ function Navbar({ user, socket }) {
               HOME
             </Button>
             <Button
-              //onClick={() => navigate("/about-us")}
+              onClick={() => navigate("/explore")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Explore
@@ -594,13 +595,14 @@ function Navbar({ user, socket }) {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
+              PaperProps={{ className: "mob-nav-bar" }}
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
                     <Link
                       style={{
-                        color: "var(--color-primary)",
+                        color: "#fff",
                         textDecoration: "none",
                       }}
                       to={setting.to}
@@ -612,7 +614,15 @@ function Navbar({ user, socket }) {
               ))}
 
               <MenuItem key={"Profile"} onClick={handleCloseUserMenu}>
-                <Button onClick={() => navigate("/me/profile")}>Profile</Button>
+                <Link
+                  to="/me/profile"
+                  style={{
+                    color: "#fff",
+                    textDecoration: "none",
+                  }}
+                >
+                  Profile
+                </Link>
               </MenuItem>
 
               <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
@@ -620,6 +630,19 @@ function Navbar({ user, socket }) {
                   onClick={() => {
                     socket?.disconnect();
                     dispatch(logout());
+                  }}
+                  type="contained"
+                  sx={{
+                    padding: 0,
+                    color: "#000",
+                    background: "var(--color-secondary)",
+                    borderRadius: "5px !important",
+                    textTransform: "capitalize",
+
+                    "&:hover": {
+                      color: "var(--color-primary)",
+                      background: "#fff",
+                    },
                   }}
                 >
                   Logout

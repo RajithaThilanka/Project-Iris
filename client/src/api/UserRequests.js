@@ -111,4 +111,12 @@ export const fetchWarnings = () => API.get("/report/fetch-warnings");
 
 export const reportUser = (data) => API.post("/report", data);
 
+export const setNotified = (id) => API.patch("/report/notified", { id });
+
+export const getMyVerStatus = () => API.get("/users/me/ver-status");
 //export const Camara = () => API.get("/")
+
+export const getSearchNames = (keyword) =>
+  API.get(`/users/names?search=${keyword}`);
+export const getAnyUser = (keyword) => API.get(`/users?search=${keyword}`);
+export const getSearchTokens = () => API.get(`/users/search-tokens`);

@@ -5,6 +5,9 @@
   min-height: 4.5rem;
   margin-right: 2rem;
 }
+.css-12d1nn4-MuiContainer-root {
+  max-width: 100%;
+}
 .mob-nav-bar {
   background-image: linear-gradient(
     var(--color-primary),

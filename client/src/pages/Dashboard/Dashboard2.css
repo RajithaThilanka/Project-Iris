@@ -13,18 +13,16 @@
   padding-top: 6.7rem;
 }
 
-@media only screen and (max-width: 68em) {
-  .dashboard-container {
-    flex-direction: column;
-  }
-}
-
 .suggestions-container {
   /* height: 100vh; */
   background-color: rgba(0, 0, 0, 0);
-  max-width: 100rem;
-  width: 100%;
+  max-width: 110rem;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 .swiper-container-main {
   width: 100%;
@@ -32,7 +30,8 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  justify-content: space-between;
+  gap: 4rem;
   background-color: rgba(0, 0, 0, 0);
 }
 .swiper {
@@ -136,7 +135,6 @@
 .current-profile {
   padding: 0 0 2rem 0.5rem;
   border-bottom: 2px solid #000;
-  height: 47rem;
 
   display: flex;
   /* align-items: center; */
@@ -146,7 +144,7 @@
   /* max-width: 32rem;
   min-width: 24rem; */
   width: 40%;
-  height: 45rem;
+  height: 50rem;
   position: relative;
   border-radius: 15px;
   background-size: cover;
@@ -172,7 +170,7 @@
 }
 .profileContent {
   width: 50%;
-  height: 45rem;
+  height: 50rem;
 
   padding: 1.5rem 2rem;
   border-radius: 10px;
@@ -586,19 +584,18 @@
   right: 0 !important;
   top: 0 !important;
 }
-@media only screen and (max-width: 78em) {
-  .current-profile {
-    height: 60%;
-  }
-  .swiper {
-    height: 20%;
-  }
-}
 
-@media only screen and (max-width: 41em) {
+@media only screen and (max-width: 56.25em) {
   .profile--header {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+  }
+  .mySwiper {
+    height: auto;
+    padding: 2rem 0 !important;
+  }
+  .swiper-container-main {
+    gap: 1rem;
   }
   html {
     font-size: 45%;
@@ -612,7 +609,7 @@
   .current-profile {
     padding: 0;
     position: relative;
-    height: 65%;
+    flex: 1 1 70%;
   }
   /* .profile--header {
     padding: 0;
@@ -643,7 +640,7 @@
     margin-top: 0;
   }
   .suggestions-container {
-    height: calc(100vh - 90px);
+    height: calc(100vh - 99px);
   }
   .swiper-button-next,
   .swiper-button-prev {
@@ -672,7 +669,12 @@
     position: relative;
     border-radius: 0;
     max-height: 100%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-color: #000;
+    background-position: 50% 50%;
   }
+
   .dashboard-other-images-container {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
@@ -698,35 +700,35 @@
   background-color: #fff !important;
 }
 
-@media only screen and (max-width: 78em) {
+/* @media only screen and (max-width: 78em) {
   .dashboard-container {
     padding-top: 16rem;
   }
-}
-@media only screen and (max-width: 67em) {
-  /* .dashboard-container {
-    padding-top: 7.4rem;
-  } */
-}
-@media only screen and (max-width: 41em) {
+} */
+
+@media only screen and (max-width: 56.25em) {
   .dashboard-container {
     padding-top: 6.5rem;
+  }
+  .suggestions-container {
+    width: 100%;
+    margin-top: 2rem;
   }
   .dashboard-err-msg {
     font-size: 3rem;
     height: 100%;
   }
-  .swiper {
+  /* .swiper {
     height: 35%;
-  }
+  } */
 
+  .swiper-slide {
+    height: 15rem !important;
+    border-radius: 15px !important;
+  }
   .swiper-button-next,
   .swiper-button-prev {
     top: 40% !important;
-    /* left: 1rem !important; */
-    /* right: 10px; */
-
-    /* border-radius: 50%; */
   }
 }
 

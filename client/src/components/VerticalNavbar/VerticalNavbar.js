@@ -87,6 +87,16 @@ function VerticalNavbar({ children }) {
           >
             <span className="side-nav__link">Messages</span>
           </li>
+          <li
+            className={
+              activeTab === 6
+                ? "side-nav__item side-nav__item--active"
+                : "side-nav__item"
+            }
+            onClick={() => handleClick(6, "/me/manual-search")}
+          >
+            <span className="side-nav__link">Manual Search</span>
+          </li>
         </ul>
       </nav>
 
