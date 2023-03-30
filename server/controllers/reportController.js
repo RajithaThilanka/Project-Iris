@@ -57,7 +57,7 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
       { reportedUser: userId },
       { reviewStatus: 'positive' },
       { userNotified: false },
-      { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
+      // { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
     ],
   })
     .populate('reportedByUser')
@@ -73,19 +73,19 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
     return false;
   });
 
-  await Report.updateMany(
-    {
-      $and: [
-        { reportedUser: userId },
-        { reviewStatus: 'positive' },
-        { userNotified: false },
-        { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
-      ],
-    },
-    {
-      userNotified: true,
-    }
-  );
+  // await Report.updateMany(
+  //   {
+  //     $and: [
+  //       { reportedUser: userId },
+  //       { reviewStatus: 'positive' },
+  //       // { userNotified: false },
+  //       // { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
+  //     ],
+  //   },
+  //   {
+  //     userNotified: true,
+  //   }
+  // );
   res.status(200).json({
     status: 'success',
     nReports: reportWarnings.length,
@@ -95,6 +95,23 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.setNotified = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+  const updated = await Report.findByIdAndUpdate(
+    id,
+    {
+      userNotified: true,
+    },
+    { new: true }
+  );
+  res.status(200).json({
+    status: 'success',
+
+    data: {
+      data: updated,
+    },
+  });
+});
 //to delete accounts another grid
 exports.getToBeBlockedAccounts = catchAsync(async (req, res, next) => {
   const accounts = await Report.aggregate([

@@ -1,0 +1,418 @@
+.explore-card-container {
+  margin: 8rem auto;
+  width: 100%;
+  background-color: #eee;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 80rem;
+  column-gap: 2rem;
+  row-gap: 2rem;
+  padding: 2rem;
+  justify-items: center;
+}
+
+.explore-card-get-verified {
+  border-radius: 10px;
+  background-position: top;
+  background-size: cover;
+  position: relative;
+
+  grid-column: 1/-1;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  width: 100%;
+  height: 35rem;
+}
+
+.explore-card-get-verified::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 20%,
+    transparent
+  );
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 10px;
+}
+.verified-frame {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  border: 5px solid #fff;
+  border-radius: 10px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -60%);
+  /* transform: translate(-47%, -83%); */
+}
+
+.explore-card-verified-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 2rem;
+}
+.explore-card-info-1 {
+  flex: 1;
+}
+.verified-card-heading {
+  font-size: 2.7rem;
+  color: #fff;
+}
+.verified-card-sub-heading {
+  font-size: 1rem;
+  color: #eee;
+}
+.verified-card-btn {
+  border-radius: 20px !important;
+  color: #000 !important;
+  background-color: #fff !important;
+  padding: 0rem 2rem !important;
+  height: 4rem !important;
+  width: 15rem !important;
+}
+.welcome-to-explore-container {
+  grid-column: 1/-1;
+  padding: 0.6rem;
+  width: 100%;
+}
+.welcome-to-explore-container h6 {
+  font-size: 1.5rem;
+}
+.welcome-to-explore-container h3 {
+  font-size: 2.5rem;
+}
+.verified-card-btn:hover {
+  color: #fff !important;
+  background-color: #000 !important;
+}
+.free-to-night-card {
+  border-radius: 10px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.free-to-night-card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.free-to-night-card::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 5%,
+    transparent,
+    rgba(0, 0, 0, 0.9)
+  );
+  position: absolute;
+
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  border-radius: 10px;
+}
+.free-to-night-info {
+  position: absolute;
+  left: 0;
+  bottom: 50%;
+  height: 80%;
+  transform: translateY(50%);
+  padding: 2rem;
+  z-index: 100;
+}
+.free-to-night-info h3 {
+  color: #fff;
+  font-size: 4.4rem;
+}
+
+.free-to-night-info h5 {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.free-to-night-info h6 {
+  color: #ddd;
+  font-size: 1.2rem;
+  /* margin-top: 3rem; */
+}
+
+.explore-card-coffee-date {
+  border-radius: 10px;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+
+  grid-column: 1/-1;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  width: 100%;
+  height: 40rem;
+}
+
+.explore-card-coffee-date::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 20%,
+    transparent,
+    rgba(0, 0, 0, 0.9)
+  );
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 10px;
+}
+.explore-card-coffee-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  padding: 1rem 2rem;
+  /* align-items: center; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  /* backdrop-filter: */
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
+  width: 50%;
+  padding: 2rem;
+}
+.explore-card-coffee-info-1 {
+  flex: 1;
+}
+.coffee-card-heading {
+  font-size: 4rem;
+  color: #fff;
+}
+.coffee-card-sub-heading {
+  font-size: 1.3rem;
+  text-transform: capitalize;
+  color: #eee;
+}
+
+.explore-passions-card {
+  border-radius: 10px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  height: 25rem;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+.explore-passions-card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.explore-passions-card-info {
+  position: absolute;
+  left: 0;
+  bottom: 4rem;
+  z-index: 100;
+  transform: translateY(50%);
+  padding: 2rem;
+}
+.lazy-load-image-background.blur.lazy-load-image-loaded {
+  height: 100% !important;
+  width: 100% !important;
+}
+.explore-passions-card::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 5%,
+    transparent,
+    rgba(0, 0, 0, 0.9)
+  );
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 10px;
+}
+
+.explore-passions-card-info h3 {
+  color: #fff;
+  font-size: 2rem;
+}
+
+.explore-passions-card-info h5 {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.explore-passions-card-info h6 {
+  color: #ddd;
+  font-size: 1.2rem;
+  margin-top: 3rem;
+}
+.passions-card-tag {
+  background-color: #e41269;
+  font-size: 1.2rem;
+  padding: 1rem 1.5rem;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: #fff;
+  border-radius: 20px;
+  font-weight: 600;
+  transform: translate(-50%, -50%);
+}
+.passion-card-btn {
+  border-radius: 20px !important;
+  color: #000 !important;
+  background-color: #fff !important;
+  padding: 0rem 1rem !important;
+  height: 3rem !important;
+  transform: translate(-10%, -50%);
+  position: absolute !important;
+  bottom: 0;
+  right: 0;
+  z-index: 200;
+  width: 10rem !important;
+}
+
+@media only screen and (max-width: 42.9em) {
+  .free-to-night-info h3 {
+    color: #fff;
+    font-size: 3rem;
+  }
+
+  .free-to-night-info h5 {
+    color: #fff;
+    font-size: 1.4rem;
+  }
+  .passion-card-btn,
+  .verified-card-btn {
+    border-radius: 5px !important;
+    color: #000 !important;
+    background-color: #fff !important;
+    padding: 0rem 1rem !important;
+    font-size: 1.2rem !important;
+    height: 2.5rem !important;
+    width: 8rem !important;
+  }
+
+  .explore-passions-card-info h3 {
+    color: #fff;
+    font-size: 1.7rem;
+  }
+
+  .explore-passions-card-info h5 {
+    color: #fff;
+    font-size: 1.3rem;
+  }
+  .verified-card-heading {
+    font-size: 2rem;
+    color: #fff;
+  }
+  .free-to-night-info h3 {
+    color: #fff;
+    font-size: 2.5rem;
+  }
+
+  .free-to-night-info h5 {
+    color: #fff;
+    font-size: 1rem;
+  }
+  .coffee-card-heading {
+    font-size: 2.5rem;
+    color: #fff;
+  }
+  .verified-frame {
+    transform: translate(-50%, -65%);
+    height: 23rem;
+    /* transform: translate(-47%, -83%); */
+  }
+}
+
+@media only screen and (max-width: 29.6em) {
+  .free-to-night-info h3 {
+    color: #fff;
+    font-size: 3rem;
+  }
+
+  .free-to-night-info h5 {
+    color: #fff;
+    font-size: 1.4rem;
+  }
+  .passion-card-btn,
+  .verified-card-btn {
+    border-radius: 5px !important;
+    color: #000 !important;
+    background-color: #fff !important;
+    padding: 0rem 1rem !important;
+    font-size: 1.2rem !important;
+    height: 2.5rem !important;
+    width: 8rem !important;
+  }
+
+  .explore-passions-card-info h3 {
+    color: #fff;
+    font-size: 1.7rem;
+  }
+
+  .explore-passions-card-info h5 {
+    color: #fff;
+    font-size: 1.3rem;
+  }
+  .verified-card-heading {
+    font-size: 2rem;
+    color: #fff;
+  }
+  .free-to-night-info h3 {
+    color: #fff;
+    font-size: 2.5rem;
+  }
+
+  .free-to-night-info h5 {
+    color: #fff;
+    font-size: 1rem;
+  }
+  .coffee-card-heading {
+    font-size: 2rem;
+    color: #fff;
+  }
+  .verified-frame {
+    transform: translate(-50%, -65%);
+    height: 23rem;
+    /* transform: translate(-47%, -83%); */
+  }
+
+  /* new */
+  .coffee-card-sub-heading {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .free-to-night-card {
+    grid-column: 1/-1;
+    height: 25rem;
+    width: 100%;
+  }
+  .explore-passions-card {
+    grid-column: 1/-1;
+  }
+}

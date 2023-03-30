@@ -10,6 +10,8 @@ import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import QuestionPage from "./pages/Questions/QuestionPage";
+
 import UserProfile from "./pages/UProfile/UserProfile";
 import SuggessionPage from "./pages/suggestionProfile/SuggessionPage";
 
@@ -36,6 +38,10 @@ import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
 import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
+import Explore from "./components/Explore/Explore";
+import ManualSearch from "./components/ManualSearch/ManualSearch";
+import Question from "./components/Question/Question";
+
 const theme = createTheme({
   palette: {
     type: "light",
@@ -123,6 +129,12 @@ function App() {
             }
           ></Route>
           <Route
+            path="/question"
+            element={
+              state ? <Question /> : <Navigate to="/auth/signup/account-info" />
+            }
+          ></Route>
+          <Route
             path="/auth/signup/lookingfor-info"
             element={
               state ? (
@@ -136,6 +148,14 @@ function App() {
           <Route
             path="/auth/login"
             element={user ? <Navigate to="/me" /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/explore"
+            element={user ? <Explore /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/manual-search"
+            element={user ? <ManualSearch /> : <Auth action="login" />}
           ></Route>
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/error/:msg" element={<Error />}></Route>
@@ -230,7 +250,6 @@ function App() {
           <Route path="/me/safetytips" element={<SafetyTips />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
-        {/* <Chat /> */}
 
         <ToastContainer
           style={{

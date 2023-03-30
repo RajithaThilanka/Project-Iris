@@ -6,7 +6,12 @@ import { useState } from "react";
 import { Typography, Stack, Box, Button } from "@mui/material";
 import dayjs from "dayjs";
 import { setHatespeech, hateSpeechChechNow } from "../../api/AdminRequests";
-
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
+import ScheduleIcon from "@mui/icons-material/Schedule";
 function CustomToolbar(props) {
   return null;
 }
@@ -17,10 +22,8 @@ export default function AdminSettings() {
     setIsLoading(true);
     try {
       const response = await hateSpeechChechNow();
-      // handle the response as needed
     } catch (error) {
       console.error(error);
-      // handle the error as needed
     } finally {
       setIsLoading(false);
     }
@@ -29,15 +32,12 @@ export default function AdminSettings() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [convertdate, setConvertDate] = useState(null);
   const handleButtonClick = () => {
-    // Call the setHatespeech function with the appropriate parameter value
-    setHatespeech("2022-04-01T10:00:00.000Z")
+    setHatespeech(convertdate)
       .then((response) => {
-        console.log(response.data); // Output the response data to the console
-        // Handle the API response as needed
+        console.log(response.data);
       })
       .catch((error) => {
-        console.log(error.response.data); // Output the error data to the console
-        // Handle the API error as needed
+        console.log(error.response.data);
       });
   };
 
@@ -54,7 +54,7 @@ export default function AdminSettings() {
 
   return (
     <div>
-      <Stack direction="row" spacing="3">
+      <Stack direction="row" spacing="5">
         <Stack diretion="column" spacing={2} sx={{ alignItems: "center" }}>
           <Typography variant="h5">
             Schedule Hatespeech Detect Date and Time
@@ -70,17 +70,22 @@ export default function AdminSettings() {
               boxShadow: 2,
             }}
           >
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider
+              dateAdapter={AdapterDayjs}
+              localeText={{ cancelButtonText: "Clear" }}
+            >
               <StaticDateTimePicker
+                localeText={{ cancelText: "Clear" }}
                 orientation="landscape"
                 value={selectedDate}
                 onChange={handleDateChange}
-                ToolbarComponent={CustomToolbar}
+                ToolbarComponent={false}
+                disableToolbar
               />
             </LocalizationProvider>
           </Box>
         </Stack>
-        <Stack direction="column" spacing={2} alignItems="center" padding={25}>
+        <Stack direction="column" spacing={2} alignItems="center" padding={5}>
           <Stack
             direction="column"
             spacing={2}
@@ -107,6 +112,31 @@ export default function AdminSettings() {
             >
               {isLoading ? "Loading..." : "Check Hate Speech Now"}
             </Button>
+            <Box
+              sx={{
+                width: "300px",
+                height: "300px",
+                border: 1,
+                borderRadius: 1,
+              }}
+            >
+              <List
+                sx={{
+                  bgcolor: "background.paper",
+                }}
+                subheader={<ListSubheader>Scheduled Times</ListSubheader>}
+              >
+                <ListItem>
+                  <ListItemIcon>
+                    <ScheduleIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    id="switch-list-label-wifi"
+                    primary="Schedule time"
+                  />
+                </ListItem>
+              </List>
+            </Box>
           </Stack>
         </Stack>
       </Stack>

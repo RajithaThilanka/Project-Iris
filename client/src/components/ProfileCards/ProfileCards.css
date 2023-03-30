@@ -25,15 +25,19 @@
 
 @media only screen and (max-width: 78em) {
   .profile-cards {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
-  .profile-card {
+  /* .profile-card {
     width: 23.6rem;
     height: 31.5rem;
+  } */
+  .profile-card {
+    width: 25.6rem;
+    height: 33.5rem;
   }
 }
 
-@media only screen and (max-width: 71em) {
+/* @media only screen and (max-width: 71em) {
   .profile-cards {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -41,7 +45,7 @@
     width: 27.6rem;
     height: 33.5rem;
   }
-}
+} */
 
 @media only screen and (max-width: 71em) {
   .profile-card {
@@ -71,21 +75,24 @@
 }
 
 @media only screen and (max-width: 56.75em) {
-  .profile-cards {
+  /* .profile-cards {
     grid-template-columns: repeat(4, 1fr);
   }
   .profile-card {
     width: 22.6rem;
     height: 30.5rem;
-  }
+  } */
 }
-@media only screen and (max-width: 55.25em) {
+@media only screen and (max-width: 56.25em) {
+  .profile-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
   .profile-card {
     width: 21.6rem;
     height: 30.5rem;
   }
 }
-@media only screen and (max-width: 52.5em) {
+@media only screen and (max-width: 52em) {
   .profile-cards {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -142,7 +149,7 @@
   }
 }
 
-@media only screen and (max-width: 15.5rem) {
+@media only screen and (max-width: 18.9rem) {
   .profile-cards {
     grid-template-columns: repeat(1, 1fr);
   }

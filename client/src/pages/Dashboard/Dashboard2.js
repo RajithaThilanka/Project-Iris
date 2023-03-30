@@ -447,11 +447,14 @@ function Dashboard2() {
                       </div>
                       <div className="profile--basic-info">
                         {<HeightIcon />}
-                        {filtered[currentProfile]?.height}
+                        {filtered[currentProfile]?.height + " ft"}
                       </div>
                       <div className="profile--basic-info">
                         {<SchoolIcon />}
-                        {filtered[currentProfile]?.educationLevel}
+                        {filtered[
+                          currentProfile
+                        ]?.educationLevel[0].toUpperCase() +
+                          filtered[currentProfile]?.educationLevel.slice(1)}
                       </div>
                       <div className="profile--basic-info">
                         {<ChurchIcon />}
@@ -459,7 +462,8 @@ function Dashboard2() {
                       </div>
                       <div className="profile--basic-info">
                         {<LanguageIcon />}
-                        {filtered[currentProfile]?.ethnicity}
+                        {filtered[currentProfile]?.ethnicity[0].toUpperCase() +
+                          filtered[currentProfile]?.ethnicity.slice(1)}
                       </div>
                     </div>
                     <Divider>
@@ -474,7 +478,14 @@ function Dashboard2() {
                     </Divider>
 
                     <div className="looking-for">
-                      <div>{filtered[currentProfile]?.lookingFor?.gender}</div>
+                      <div>
+                        {filtered[
+                          currentProfile
+                        ]?.lookingFor?.gender[0].toUpperCase() +
+                          filtered[currentProfile]?.lookingFor?.gender?.slice(
+                            1
+                          )}
+                      </div>
                       <div>
                         Age between{" "}
                         {filtered[currentProfile]?.lookingFor?.ageRange?.minAge}{" "}

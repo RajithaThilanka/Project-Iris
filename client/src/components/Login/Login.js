@@ -48,6 +48,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(logIn(data, navigate));
+    console.log(error);
   };
 
   //
