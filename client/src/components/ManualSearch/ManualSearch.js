@@ -211,9 +211,9 @@ function ManualSearch() {
           <VerticalNavbar />
           <div
             className="manual-search"
-            style={{ overflowY: tokenErr ? "hidden" : "scroll" }}
+            style={{ overflowY: tokenErr || err ? "hidden" : "scroll" }}
           >
-            {!tokenErr ? (
+            {!tokenErr && err?.response?.status !== 400 ? (
               <form className="search user-search-form" onSubmit={handleSubmit}>
                 <input
                   type="text"
