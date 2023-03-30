@@ -14,16 +14,18 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "40vw",
-  height: "80vh",
+  width: "50vw",
+  height: "90vh",
   bgcolor: "background.paper",
-  border: "1px solid #000",
+  border: "1px ",
   boxShadow: 24,
-  p: 4,
+  // p: 4,
   display: "flex",
   flexDirection: "column",
   gap: "2rem",
   alignItems: "center",
+  borderRadius: "8px",
+  // padding: "50px",
 };
 
 function VerificationCard({ title, children, reverse }) {
@@ -68,7 +70,7 @@ function VerificationCard({ title, children, reverse }) {
                 </IconButton>
               </Stack>
             </div>
-            <Typography variant="h5">{title}</Typography>
+            <Typography variant="h4">{title}</Typography>
             {children}
           </Box>
         </form>

@@ -56,14 +56,20 @@ function IdVerification({ data, setData }) {
             </Typography>
 
             <Stack spacing={2} direction="column">
-              <Button variant="outlined" className="link-css">
-                <Link to="/me/uploadimages">Identity Card</Link>
+              <Button startIcon={""} variant="contained">
+                <Link className="linkStyle" to="/me/uploadimages">
+                  Identity Card
+                </Link>
               </Button>
-              <Button variant="outlined" className="link-css">
-                <Link to="/me/uploadimages">Passport</Link>
+              <Button variant="contained">
+                <Link className="linkStyle" to="/me/uploadimages">
+                  Passport
+                </Link>
               </Button>
-              <Button variant="outlined" className="link-css">
-                <Link to="/me/uploadimages">Driving Liceense</Link>
+              <Button variant="contained">
+                <Link to="/me/uploadimages" className="linkStyle">
+                  Driving Liceense
+                </Link>
               </Button>
             </Stack>
           </FormControl>

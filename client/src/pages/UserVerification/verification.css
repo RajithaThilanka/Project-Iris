@@ -4,10 +4,12 @@
   margin-top: -2rem;
   font-weight: 500;
 }
-
+/* .white-icon {
+  color: white;
+} */
 .cancel-btn-container {
-  align-self: flex-end;
-  transform: translate(70%, -70%);
+  align-self: right;
+  transform: translate(-40%, 20%);
 }
 .error-container {
   text-align: center;
@@ -39,4 +41,9 @@
 .idtype-button {
   color: primary;
   padding: 2rem;
+}
+
+.linkStyle {
+  color: white;
+  text-decoration: none;
 }
