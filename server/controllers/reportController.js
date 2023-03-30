@@ -32,14 +32,35 @@ exports.reportUser = catchAsync(async (req, res, next) => {
   });
 });
 
+//get all reports
+// exports.getReports = catchAsync(async (req, res, next) => {
+//   const features = new APIFeatures(Report.find({}), req.query).filter().sort();
+//   const reports = await features.query
+//     .populate('reportedByUser')
+//     .populate('reportedUser');
+//   //   let reports = await Report.find({})
+//   //     .populate('reportedByUser')
+//   //     .populate('reportedUser');
+
+//   res.status(200).json({
+//     status: 'success',
+//     nReports: reports.length,
+//     data: {
+//       data: reports,
+//     },
+//   });
+// });
+
 exports.getReports = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Report.find({}), req.query).filter().sort();
+  const features = new APIFeatures(
+    Report.find({ reviewStatus: 'pending' }),
+    req.query
+  )
+    .filter()
+    .sort();
   const reports = await features.query
     .populate('reportedByUser')
     .populate('reportedUser');
-  //   let reports = await Report.find({})
-  //     .populate('reportedByUser')
-  //     .populate('reportedUser');
 
   res.status(200).json({
     status: 'success',
@@ -95,7 +116,7 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
   });
 });
 
-//to delete accounts another grid
+//Get all accounts for delete
 exports.getToBeBlockedAccounts = catchAsync(async (req, res, next) => {
   const accounts = await Report.aggregate([
     {

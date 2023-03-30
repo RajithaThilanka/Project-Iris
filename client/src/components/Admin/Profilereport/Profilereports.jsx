@@ -20,6 +20,23 @@ export default function Profilereports() {
   const [rows, setRows] = useState([]);
   const [des, setDes] = useState("");
   const [evidence, setEvidence] = useState(null);
+
+  const showReports = (params) => {
+    const description = params.row.description;
+    const evidence = params.row.evidence;
+
+    if (evidence == "") {
+      setEvidence("");
+    } else {
+      setEvidence(evidence);
+    }
+    if (description === "") {
+      setDes("No description");
+    } else {
+      setDes(description);
+    }
+  };
+
   const columns = [
     { field: "_id", headerName: "ID", width: 90 },
     {
@@ -49,32 +66,19 @@ export default function Profilereports() {
       disableClickEventBubbling: true,
 
       renderCell: (params) => {
-        const showReports = (e) => {
-          const description = params.row.description;
-          const evidence = params.row.evidence;
-
-          if (evidence == "") {
-            setEvidence("");
-          } else {
-            setEvidence(evidence);
-          }
-          if (description === "") {
-            setDes("No description");
-          } else {
-            setDes(description);
-          }
-        };
         const setReportPositive = (e) => {
           const reportId = params.row._id;
           const reviewStatus = "positive"; // convert to lowercase
           reviewReport(reportId, reviewStatus)
             .then((response) => {
-              setRows(rows);
+              //setRows(rows);
+              setRows(rows.filter((u) => u._id + "" !== reportId));
             })
             .catch((error) => {
               console.log(error);
             });
         };
+
         const setReportNegative = (e) => {
           const reportId = params.row._id;
           const reviewStatus = "negative"; // convert to lowercase
@@ -86,11 +90,11 @@ export default function Profilereports() {
               console.log(error);
             });
         };
+        const showReports = () => {
+          showReports(params);
+        };
         return (
           <Stack direction="row" spacing={1}>
-            <IconButton size="small" onClick={showReports}>
-              <VisibilityIcon />
-            </IconButton>
             <IconButton size="small" onClick={setReportPositive}>
               <DoneIcon />
             </IconButton>
@@ -142,6 +146,7 @@ export default function Profilereports() {
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
             getRowId={(row) => row._id}
+            onRowClick={showReports}
           />
         </Box>
         <Box>
