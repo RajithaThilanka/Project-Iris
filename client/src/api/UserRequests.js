@@ -115,3 +115,5 @@ export const setNotified = (id) => API.patch("/report/notified", { id });
 
 export const getMyVerStatus = () => API.get("/users/me/ver-status");
 //export const Camara = () => API.get("/")
+
+export const getAnyUser = (keyword) => API.get(`/users?search=${keyword}`);

@@ -141,7 +141,7 @@ function Explore() {
             <div
               className="explore-card-get-verified"
               style={{
-                backgroundImage: `url(${serverPublic + "verify-person.jpg"})`,
+                backgroundImage: `url(https://live.staticflickr.com/65535/52780925579_00d6d3bfcf_k.jpg)`,
               }}
             >
               <div className="verified-frame">
@@ -180,7 +180,7 @@ function Explore() {
           <div className="free-to-night-card">
             <LazyLoadImage
               effect="blur"
-              src={serverPublic + "night-life.jpg"}
+              src="https://live.staticflickr.com/65535/52780930449_6fc0b1ef4c_k.jpg"
               alt="night-life"
             />
             <div className="free-to-night-info">
@@ -193,7 +193,7 @@ function Explore() {
           <div className="free-to-night-card">
             <LazyLoadImage
               effect="blur"
-              src={serverPublic + "letsbefriends.jpg"}
+              src="https://live.staticflickr.com/65535/52780150702_b68a6ab1dc_k.jpg"
               alt="night-life"
             />
             <div className="free-to-night-info">
@@ -206,7 +206,7 @@ function Explore() {
           <div
             className="explore-card-coffee-date"
             style={{
-              backgroundImage: `url(${serverPublic + "coffee-explore.jpg"})`,
+              backgroundImage: `url(https://live.staticflickr.com/65535/52780146787_3d59fc259f_k.jpg)`,
             }}
           >
             <div className="explore-card-coffee-info">
@@ -227,7 +227,7 @@ function Explore() {
           <div className="explore-passions-card">
             <LazyLoadImage
               effect="blur"
-              src={serverPublic + "creative.jpg"}
+              src="https://live.staticflickr.com/65535/52780158942_5e2d97be64_k.jpg"
               alt="night-life"
             />
             <div className="passions-card-tag">Creatives</div>
@@ -242,7 +242,7 @@ function Explore() {
           <div className="explore-passions-card">
             <LazyLoadImage
               effect="blur"
-              src={serverPublic + "music.jpg"}
+              src="https://live.staticflickr.com/65535/52780679751_5e2dfec2a4_k.jpg"
               alt="night-life"
             />
             <div className="passions-card-tag">Music Lovers</div>
@@ -257,7 +257,7 @@ function Explore() {
           <div className="explore-passions-card">
             <LazyLoadImage
               effect="blur"
-              src={serverPublic + "food.jpg"}
+              src="https://live.staticflickr.com/65535/52780143632_aa45e490d0_k.jpg"
               alt="night-life"
             />
             <div className="passions-card-tag">Foodies</div>
@@ -272,7 +272,7 @@ function Explore() {
           <div className="explore-passions-card">
             <LazyLoadImage
               effect="blur"
-              src={serverPublic + "food.jpg"}
+              src="https://live.staticflickr.com/65535/52780143632_aa45e490d0_k.jpg"
               alt="night-life"
             />
             <div className="passions-card-tag">Foodies</div>
