@@ -2,7 +2,7 @@ import VerificationCard from "./VerificationCard";
 import { getCountries } from "../../../src/api/CountryRequest";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import "./verification.css";
 import {
   FormControl,
   FormLabel,
@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-
+import "./verification.css";
 function IdVerification({ data, setData }) {
   const [countries, setCountries] = useState([]);
   useEffect(() => {
@@ -48,42 +48,24 @@ function IdVerification({ data, setData }) {
   return (
     <div>
       <VerificationCard title={"Identity verification"}>
-        <Stack spacing={2}>
+        <Stack spacing={4}>
           <FormControl sx={{ m: 1 }} fullWidth size="small" required>
-            {/* <FormLabel>Select Country:</FormLabel>
-          
-            <Select name="country" onChange={handleData} defaultValue="default">
-              <MenuItem value="default">
-                <em>Choose Country</em>
-              </MenuItem>
-
-              {countries.map((country, index) => {
-                return (
-                  <MenuItem
-                    key={index}
-                    value={country.name.common.toLowerCase()}
-                  >
-                    {country.name.common}
-                  </MenuItem>
-                );
-              })}
-            </Select> */}
-            <h3 className="verification-text">
+            <Stack direction="column" spacing={10}></Stack>
+            <Typography variant="h6" className="verification-text">
               Use a government-issued document
-            </h3>
-            <div>
-              <Stack spacing={2} direction="column">
-                <Button variant="outlined" className="idtype-button">
-                  <Link to="/me/uploadimages">Identity Card</Link>
-                </Button>
-                <Button variant="outlined">
-                  <Link to="/me/uploadimages">Passport</Link>
-                </Button>
-                <Button variant="outlined">
-                  <Link to="/me/uploadimages">Driving Liceense</Link>
-                </Button>
-              </Stack>
-            </div>
+            </Typography>
+
+            <Stack spacing={2} direction="column">
+              <Button variant="outlined" className="link-css">
+                <Link to="/me/uploadimages">Identity Card</Link>
+              </Button>
+              <Button variant="outlined" className="link-css">
+                <Link to="/me/uploadimages">Passport</Link>
+              </Button>
+              <Button variant="outlined" className="link-css">
+                <Link to="/me/uploadimages">Driving Liceense</Link>
+              </Button>
+            </Stack>
           </FormControl>
         </Stack>
         <Typography

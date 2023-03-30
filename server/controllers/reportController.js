@@ -133,12 +133,7 @@ exports.setNotified = catchAsync(async (req, res, next) => {
     },
   });
 });
-<<<<<<< HEAD
-
-//Get all accounts for delete
-=======
 //to delete accounts another grid
->>>>>>> 9fdd90c9bb4ef18e4d32c8708692f4dd3ae960c2
 exports.getToBeBlockedAccounts = catchAsync(async (req, res, next) => {
   const accounts = await Report.aggregate([
     {

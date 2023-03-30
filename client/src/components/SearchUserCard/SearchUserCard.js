@@ -1,8 +1,10 @@
 import React from "react";
 import "./SearchUserCard.css";
+import { useNavigate } from "react-router-dom";
 
 function SearchUserCard({ cardHolder }) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  const navigate = useNavigate();
   return (
     <div className="search-user-card">
       <div className="card-holder-photo">
@@ -11,7 +13,11 @@ function SearchUserCard({ cardHolder }) {
           alt={cardHolder?.profilePhoto}
         />
       </div>
-      <div className="card-holder-info">
+
+      <div
+        className="card-holder-info"
+        onClick={() => navigate(`/users/profile/${cardHolder?._id}`)}
+      >
         <h5 className="card-holder-name">
           {cardHolder?.firstname + " " + cardHolder?.lastname}
         </h5>
