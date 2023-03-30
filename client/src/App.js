@@ -106,6 +106,10 @@ function App() {
       <>
         <Routes>
           <Route
+            path="/auth/signup/questions"
+            element={<Question />}
+          ></Route>
+          <Route
             path="/auth/signup/account-info"
             element={<AccountInfo />}
           ></Route>
@@ -126,7 +130,7 @@ function App() {
               )
             }
           ></Route>
-          <Route
+          {/* <Route
             path="/question"
             element={
               state ? (
@@ -135,7 +139,7 @@ function App() {
                 <Navigate to="/auth/signup/account-info" />
               )
             }
-          ></Route>
+          ></Route> */}
           <Route
             path="/auth/signup/lookingfor-info"
             element={

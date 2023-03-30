@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Box,
     Button,
   FormLabel,
   Stack,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 // import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
@@ -22,7 +24,10 @@ import { getQuestionArray } from "../../api/QuestionRequests";
 import { signupAccountInfo, addAnswer, signupLookingforInfo } from "../../api/AuthRequests";
 
 function Question() {
-    const { id } = useParams();
+    const {
+        state: { id },
+    } = useLocation();
+    const dispatch = useDispatch();
     const [allQuestions, setAllQuestions] = useState(null)
     
     useEffect(() => {
@@ -92,7 +97,9 @@ function Question() {
         
     };
 
-    
+    if (count === questionArrayLength) {
+        navigate(`/auth/signup/lookingfor-info/${id}`, { replace: true });
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -106,7 +113,7 @@ function Question() {
             } = await signupLookingforInfo(formData);
             setErr(null);
             setLoading(false);
-            navigate(`/auth/signup/lookingfor-info/${id}`, { replace: true });
+            //navigate(`/auth/signup/lookingfor-info/${id}`, { replace: true });
         } catch (error) {
             console.log(error);
             setErr(error);
@@ -205,6 +212,7 @@ function Question() {
                                     ))
                                         : console.log("atomAnswerArray is not an array")
                                 }
+                                <Button>Submit</Button>
                                 
                                 {/* {
                                     Array.isArray(AnswersArray) ?
