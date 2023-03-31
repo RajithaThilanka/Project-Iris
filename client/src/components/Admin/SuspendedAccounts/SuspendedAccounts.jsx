@@ -30,7 +30,7 @@ export default function SuspendedAccounts() {
   const open = Boolean(anchorEl);
   const id = open ? "popup-checkbox" : undefined;
   const columns = [
-    { field: " myObject.data._id", headerName: "ID", width: 150 },
+    { field: " _id", headerName: "ID", width: 150 },
     { field: "_id.firstname", headerName: "First name", width: 100 },
     {
       field: `_id.email`,

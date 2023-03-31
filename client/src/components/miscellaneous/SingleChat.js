@@ -140,12 +140,14 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   const sendMessage = async () => {
     // event.preventDefault();
     if (newMessage) {
+      let isContact = false;
       socket.emit("stop typing", selectedChat._id);
       if (isAPhoneNumber(newMessage)) {
         setContactSent(true);
+        isContact = true;
       }
 
-      if (userConfirmed) {
+      if (userConfirmed || !isContact) {
         try {
           setNewMessage("");
           const {
