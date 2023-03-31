@@ -38,7 +38,7 @@ import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
 import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
-import Question from "./components/Question/Question";
+import Question from "./components/SignUp/SignUpForms/Question";
 
 const theme = createTheme({
   palette: {

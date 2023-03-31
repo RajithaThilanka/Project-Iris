@@ -17,11 +17,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import QuestionHeader from "../../components/Question/QuestionHeader";
-import QuestionAnswers from "./QuestionAnswers";
+import QuestionHeader from "../../Question/QuestionHeader";
+import QuestionAnswers from "../../Question/QuestionAnswers";
 import "./Question.css";
-import { getQuestionArray } from "../../api/QuestionRequests";
-import { signupAccountInfo, addAnswer, signupLookingforInfo, signupProfileView } from "../../api/AuthRequests";
+import { getQuestionArray } from "../../../api/QuestionRequests";
+import { signupAccountInfo, addAnswer, signupLookingforInfo, signupProfileView } from "../../../api/AuthRequests";
 
 function Question() {
     // const {
@@ -161,12 +161,17 @@ function Question() {
     // }
     // {allAnswersArray ? (console.log('helloAnswers', allAnswersArray)) : (console.log(err))}
     // console.log('helloAnswers', answerArray);
+
+    
+
     const AnswersArray = allQuestions ? [allQuestions[0].answerTags] : '';
     // console.log('3rd question', AnswersArray);
     // console.log('Lengthof the array', arrayLength);
-
-
-    const answersArrayForOneQuestion = allAnswersArray ? allAnswersArray[count] : console.log("allAnswersArray is null");
+    let answersArrayForOneQuestion = [];
+    {
+        Array.isArray(AnswersArray) ? answersArrayForOneQuestion = allAnswersArray[count] : console.log("allAnswersArray is not an array");
+    }
+    //const answersArrayForOneQuestion = allAnswersArray ? allAnswersArray[count] : console.log("allAnswersArray is null");
     const atomAnswerArray = answersArrayForOneQuestion ? answersArrayForOneQuestion[count] : console.log("answersArrayForOneQuestion is null");
     const buttonCount = answersArrayForOneQuestion ? answersArrayForOneQuestion.length : console.log("buttonCount");
     atomAnswerArray ? console.log("atomAnswerArray can use") : console.log("atomAnswerArray is null");
