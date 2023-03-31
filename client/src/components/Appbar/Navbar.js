@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { logout } from "../../actions/AuthActions";
@@ -249,6 +250,7 @@ function Navbar({ user, socket }) {
     };
     fetchNots && fetchChatNots();
   }, []);
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   return (
@@ -270,12 +272,12 @@ function Navbar({ user, socket }) {
           alignItems: "center",
         }}
       >
-        <div
-          className="navbar-logo"
-          onClick={() => navigate("/home")}
-          style={{ cursor: "pointer" }}
-        >
-          <img src={serverPublic + "irislogo.png"} alt="iris-logo" />
+        <div className="navbar-logo" style={{ cursor: "pointer" }}>
+          <img
+            src={serverPublic + "irislogo.png"}
+            alt="iris-logo"
+            onClick={() => navigate("/home")}
+          />
         </div>
         <Toolbar disableGutters sx={{ width: "100%" }}>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
@@ -324,30 +326,61 @@ function Navbar({ user, socket }) {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
-                // background: "red",
               }}
               PaperProps={{ className: "mob-nav-bar" }}
             >
-              {
-                <MenuItem
-                  className="home-menu-item"
-                  onClick={() => navigate("/home")}
+              <MenuItem
+                sx={{
+                  padding: "0 2rem",
+                  display: "flex !important",
+                  alignItems: "center !important",
+                  justifyContent: "space-between !important",
+                  cursor: "default",
+                  "&:hover": {
+                    background: "inherit !important",
+                  },
+                }}
+                disableRipple={true}
+              >
+                <div
+                  style={{
+                    flex: 1,
+                  }}
                 >
-                  <div>
-                    <div style={{ width: "4rem", height: "4rem" }}>
-                      <img
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          borderRadius: "50%",
-                        }}
-                        src={serverPublic + "irislogo.png"}
-                        alt=""
-                      />
-                    </div>
+                  <div
+                    style={{
+                      width: "4rem",
+                      height: "4rem",
+                      cursor: "pointer",
+                      margin: "auto",
+                    }}
+                  >
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                      }}
+                      src={serverPublic + "irislogo.png"}
+                      alt=""
+                      onClick={() => navigate("/home")}
+                    />
                   </div>
-                </MenuItem>
-              }
+                </div>
+                <div style={{ display: "inline-block" }}>
+                  <IconButton
+                    sx={{
+                      top: 0,
+                      right: 0,
+                      color: "#fff",
+                    }}
+                    onClick={handleCloseNavMenu}
+                  >
+                    <CloseIcon fontSize="large" />
+                  </IconButton>
+                </div>
+              </MenuItem>
+
               {pages.map((page) => {
                 return (
                   <>
@@ -581,7 +614,6 @@ function Navbar({ user, socket }) {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -597,6 +629,33 @@ function Navbar({ user, socket }) {
               onClose={handleCloseUserMenu}
               PaperProps={{ className: "mob-nav-bar" }}
             >
+              <MenuItem
+                sx={{
+                  padding: "0 2rem",
+                  display: "flex !important",
+                  alignItems: "center !important",
+                  justifyContent: "flex-end !important",
+                  cursor: "default",
+                  "&:hover": {
+                    background: "inherit !important",
+                  },
+                }}
+                disableRipple={true}
+              >
+                <div style={{ display: "inline-block" }}>
+                  <IconButton
+                    sx={{
+                      top: 0,
+                      right: 0,
+                      color: "#fff",
+                    }}
+                    onClick={handleCloseUserMenu}
+                  >
+                    <CloseIcon fontSize="large" />
+                  </IconButton>
+                </div>
+              </MenuItem>
+
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
