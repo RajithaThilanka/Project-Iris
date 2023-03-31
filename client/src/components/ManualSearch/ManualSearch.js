@@ -136,7 +136,10 @@ function ManualSearch() {
         setSearchToken(data);
       } catch (error) {
         if (error.response.status === 400) setTokenErr(error);
-        else setErr(error);
+        else if (error.response.status === 401) {
+          socket?.disconnect();
+          dispatch(logout());
+        } else setErr(error);
       }
     };
     getTokenInfo();
@@ -168,6 +171,10 @@ function ManualSearch() {
         setKeyword("");
         setUsers([]);
         setNames([]);
+        if (error.response.status === 401) {
+          socket?.disconnect();
+          dispatch(logout());
+        }
       }
     };
     keyword && handleSearch();
@@ -201,6 +208,10 @@ function ManualSearch() {
         setKeyword("");
         setUsers([]);
         setNames([]);
+        if (error.response.status === 401) {
+          socket?.disconnect();
+          dispatch(logout());
+        }
       }
     };
     keyword && handleSearch();

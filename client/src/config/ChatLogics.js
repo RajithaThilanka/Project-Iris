@@ -47,3 +47,10 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
 export const isSameUser = (messages, m, i) => {
   return i > 0 && messages[i - 1].sender._id === m.sender._id;
 };
+
+export const isAPhoneNumber = (myStr) => {
+  let filtered = myStr.replace(/\D/g, "");
+  var myRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  var result = myRegex.test(filtered);
+  return result;
+};
