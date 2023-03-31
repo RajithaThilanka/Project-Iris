@@ -17,7 +17,7 @@ export default function SelectDoc() {
     <>
       <Box>
         <Stack direction="column" spacing={2}>
-          <Typography variant="h5">Take Selfie Photo</Typography>
+          <Typography variant="h5">Select verifation method</Typography>
           <ToggleButtonGroup
             orientation="vertical"
             value={view}
