@@ -4,8 +4,8 @@ import { Stack, Box, Button } from "@mui/material";
 import "./camButtonStyle.css";
 
 const videoConstraints = {
-  width: 250,
-  height: 250,
+  width: 200,
+  height: 200,
   facingMode: "environment",
 };
 
@@ -28,6 +28,7 @@ const Camera = () => {
     setUrl(null);
     setIsWebcamEnabled(true);
   };
+
   return (
     <>
       <Stack direction="row" alignItems="center">
@@ -44,7 +45,6 @@ const Camera = () => {
             )}
           </Box>
         </Stack>
-
         {url && (
           <Box sx={{ width: "200px" }}>
             <img src={url} alt="Screenshot" />

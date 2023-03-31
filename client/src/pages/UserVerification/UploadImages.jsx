@@ -98,8 +98,6 @@ function UploadImages() {
 
       try {
         await dispatch(uploadImage(data2));
-        // setData({ ...formData, profilePhoto: newImageName });
-        // await updateMe({ profilePhoto: newImageName });
         console.log("NIC back upload and name update success");
       } catch (err) {
         console.log(err);
@@ -109,6 +107,8 @@ function UploadImages() {
       console.log("Upload Error");
     }
   };
+
+  /////////
 
   return (
     <div>
@@ -138,13 +138,6 @@ function UploadImages() {
             >
               <Stack direction="column" spacing={2}>
                 Upload Font Page
-                {/* <input
-              hidden
-              accept="image/*"
-              multiple={true}
-              type="file"
-              //onChange={handleFileChange}
-            /> */}
                 <IconButton
                   color="primary"
                   aria-label="upload picture"

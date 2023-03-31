@@ -12,6 +12,10 @@ import { getUser } from "../../components/api/UserRequests";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import SelectDoc from "../../components/UserVerification/SelectDocument/SelectDoc";
+import SelectID from "../../components/UserVerification/IdentityVerifcation/SelectID";
+import LiveSelfy from "../../components/UserVerification/FacialVerification/LiveSelfy";
+
 const steps = [
   "Required Documents",
   "Identity Verification",
@@ -25,23 +29,6 @@ export default function UserVerfication() {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const { id } = useParams();
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const {
-          data: {
-            data: { data },
-          },
-        } = await getUser(id);
-        setProfile(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -123,11 +110,24 @@ export default function UserVerfication() {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
+                      spacing={2}
                     >
                       <Typography variant="h5">
-                        Step 1: Required Documents
+                        Use a government-issued document
                       </Typography>
-                      <Box>Required Documents Component</Box>
+                      <Box
+                        sx={{
+                          boxShadow: "4",
+                          width: "800px",
+                          height: "450px",
+                          borderRadius: "5px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <SelectDoc />
+                      </Box>
                     </Stack>
                   </Box>
                 )}
@@ -137,6 +137,7 @@ export default function UserVerfication() {
                       height: "500px",
                       alignItems: "center",
                       justifyContent: "center",
+                      padding: "10px",
                     }}
                   >
                     <Stack
@@ -145,11 +146,24 @@ export default function UserVerfication() {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
+                      spacing={2}
                     >
                       <Typography variant="h5">
-                        Step 2: Identity Verification
+                        Identity Verification
                       </Typography>
-                      <Box>Identity VArification component</Box>
+                      <Box
+                        sx={{
+                          boxShadow: "4",
+                          width: "800px",
+                          height: "450px",
+                          borderRadius: "5px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <SelectID />
+                      </Box>
                     </Stack>
                   </Box>
                 )}
@@ -159,6 +173,7 @@ export default function UserVerfication() {
                       height: "500px",
                       alignItems: "center",
                       justifyContent: "center",
+                      padding: "10px",
                     }}
                   >
                     <Stack
@@ -167,11 +182,24 @@ export default function UserVerfication() {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
+                      spacing={2}
                     >
                       <Typography variant="h5">
-                        Step 3: Facial Recognition
+                        Identity Verification
                       </Typography>
-                      <Box>Facial Recognition Component</Box>
+                      <Box
+                        sx={{
+                          boxShadow: "4",
+                          width: "800px",
+                          height: "450px",
+                          borderRadius: "5px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <LiveSelfy />
+                      </Box>
                     </Stack>
                   </Box>
                 )}
@@ -184,17 +212,22 @@ export default function UserVerfication() {
                     direction="row"
                     justifyContent="center"
                     alignItems="center"
-                    spacing={5}
+                    spacing={4}
                   >
                     <Button
                       disabled={activeStep === 0}
                       onClick={handleBack}
                       variant="contained"
+                      sx={{ width: "110px", height: "45px" }}
                     >
                       Back
                     </Button>
 
-                    <Button onClick={handleNext} variant="contained">
+                    <Button
+                      sx={{ width: "110px", height: "45px" }}
+                      onClick={handleNext}
+                      variant="contained"
+                    >
                       {activeStep === steps.length - 1 ? "Submit" : "Next"}
                     </Button>
                   </Stack>
