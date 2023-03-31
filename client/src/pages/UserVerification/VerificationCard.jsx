@@ -7,23 +7,25 @@ import { logIn } from "../../actions/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Modal, Typography } from "@mui/material";
-
+import { Modal, Typography, Stack } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "40vw",
-  height: "60vh",
+  width: "50vw",
+  height: "90vh",
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "1px ",
   boxShadow: 24,
-  p: 4,
+  // p: 4,
   display: "flex",
   flexDirection: "column",
   gap: "2rem",
   alignItems: "center",
+  borderRadius: "8px",
+  // padding: "50px",
 };
 
 function VerificationCard({ title, children, reverse }) {
@@ -59,14 +61,16 @@ function VerificationCard({ title, children, reverse }) {
         <form onSubmit={handleSubmit}>
           <Box sx={style}>
             <div className="cancel-btn-container">
-              <IconButton
-                onClick={() => navigate("/me/profile")}
-                className="cancel-btn"
-              >
-                <CloseIcon fontSize="medium" />
-              </IconButton>
+              <Stack direction="row" justifyContent="space-between">
+                <IconButton
+                  onClick={() => navigate("/me/profile")}
+                  className="cancel-btn"
+                >
+                  <CloseIcon fontSize="medium" />
+                </IconButton>
+              </Stack>
             </div>
-            <h1 className="login-title">{title}</h1>
+            <Typography variant="h4">{title}</Typography>
             {children}
           </Box>
         </form>

@@ -1,5 +1,5 @@
 import VerificationCard from "./VerificationCard";
-import { Stack, Typography, FormLabel } from "@mui/material";
+import { Stack, Typography, FormLabel, Box } from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -112,75 +112,95 @@ function UploadImages() {
 
   return (
     <div>
-      <VerificationCard title={"Upload Image of ID Card"}>
-        <Stack spacing={2}>
-          <FormLabel>
-            <AssignmentTurnedInTwoToneIcon />
-            Government-issued
-          </FormLabel>
-          <FormLabel>
-            <AssignmentTurnedInTwoToneIcon />
-            Original Full-size unedited documents
-          </FormLabel>
-          <FormLabel>
-            <AssignmentTurnedInTwoToneIcon />
-            Readable, Well-it, Coloured images
-          </FormLabel>
-        </Stack>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Button
-            variant="contained"
-            component="label"
-            className="upload-button"
-            onChange={""}
-          >
-            Upload Font Page
-            {/* <input
+      <Box>
+        <VerificationCard title={"Upload Image of ID Card"}>
+          <Stack spacing={2}>
+            <FormLabel>
+              <AssignmentTurnedInTwoToneIcon />
+              Government-issued
+            </FormLabel>
+            <FormLabel>
+              <AssignmentTurnedInTwoToneIcon />
+              Original Full-size unedited documents
+            </FormLabel>
+            <FormLabel>
+              <AssignmentTurnedInTwoToneIcon />
+              Readable, Well-it, Coloured images
+            </FormLabel>
+          </Stack>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack direction="row" spacing={2}></Stack>
+            <Button
+              variant="contained"
+              component="label"
+              className="upload-button"
+              onChange={""}
+            >
+              <Stack direction="column" spacing={2}>
+                Upload Font Page
+                {/* <input
               hidden
               accept="image/*"
               multiple={true}
               type="file"
               //onChange={handleFileChange}
             /> */}
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="label"
-            >
-              <input type="file" onChange={handleFileChange} />
-              <PhotoCamera />
-            </IconButton>
-          </Button>
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="label"
+                >
+                  <input type="file" onChange={handleFileChange} />
+                  <PhotoCamera />
+                </IconButton>
+              </Stack>
+            </Button>
 
-          <Button
-            variant="contained"
-            component="label"
-            className="upload-button"
-            onChange={""}
-          >
-            Upload Back Page
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
+            <Button
+              variant="contained"
               component="label"
+              className="upload-button"
+              onChange={""}
             >
-              <input type="file" onChange={handleFileChange2} />
-              <PhotoCamera />
-            </IconButton>
-          </Button>
-        </Stack>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Button onClick={handleUploadAndImageNameUpdate} variant="contained">
-            Upload
-          </Button>
-          <ContinueCard nextpage={"/me/selfiPhoto"} />
-        </Stack>
-        <Typography
-          sx={{ fontSize: 22, fontFamily: "Poppins, sans-serif", color: "red" }}
-        >
-          Iris
-        </Typography>
-      </VerificationCard>
+              <Stack direction="column" spacing={1}>
+                Upload Back Page
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="label"
+                >
+                  <input type="file" onChange={handleFileChange2} />
+                  <PhotoCamera />
+                </IconButton>
+              </Stack>
+            </Button>
+          </Stack>
+
+          <Stack
+            direction="row"
+            justifyContent="right"
+            alignItems="center"
+            spacing={2}
+          >
+            <Button
+              onClick={handleUploadAndImageNameUpdate}
+              variant="contained"
+            >
+              Upload
+            </Button>
+            <ContinueCard nextpage={"/me/selfiPhoto"} />
+          </Stack>
+          <Typography
+            sx={{
+              fontSize: 22,
+              fontFamily: "Poppins, sans-serif",
+              color: "red",
+            }}
+          >
+            Iris
+          </Typography>
+        </VerificationCard>
+      </Box>
     </div>
   );
 }
