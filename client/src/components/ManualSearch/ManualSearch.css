@@ -7,12 +7,14 @@
   padding: 0.1rem 2rem;
   width: 100%;
   min-height: 100vh;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   margin: 0 auto;
   border-radius: 10px;
   max-width: 90rem;
   margin: 2rem auto;
   position: relative;
+  border: 1px solid #ddd;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 100vh;
   /* justify-items: center; */
   /* display: grid;
@@ -36,6 +38,7 @@
 .token-err-msg {
   margin: auto;
   font-size: 3.5rem;
+  font-weight: 600;
   height: 100vh;
 }
 .manual-search-loader-container {
@@ -56,6 +59,44 @@
   padding: 2rem;
   width: 60%;
   margin: auto;
+}
+.man-search__input {
+  font-family: inherit;
+  font-size: 1.2rem;
+  background-color: #eee;
+  border: none;
+  color: inherit;
+  padding: 0.7rem 2rem;
+  width: 60%;
+  border-radius: 10rem;
+  transition: all 0.2s;
+  margin-right: -3.5rem;
+}
+.man-search__input:focus {
+  outline: none;
+  /* width: 80%; */
+  background-color: #fff;
+}
+.tokens-remaining {
+  font-size: 1.2rem;
+  background-image: linear-gradient(
+    var(--color-primary-dark),
+    var(--color-primary)
+  );
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #fff;
+  padding: 0.4rem 5rem;
+  text-align: center;
+  border-radius: 10px;
+
+  transform: rotate(-45deg) translate(-25%, -30%);
+}
+.man-search__input::-webkit-input-placeholder {
+  font-weight: 400;
+  color: var(--color-grey-light-4);
 }
 .search-grid h5 {
   font-size: 1.2rem;
@@ -81,9 +122,6 @@
   border-bottom: 2px solid var(--color-primary-light);
 }
 .search-grid-history-item h6 {
-  font-size: 1rem;
-  border-bottom: 2px solid #fff;
-  color: inherit;
 }
 .search-result-grid {
   width: 60%;
@@ -95,14 +133,25 @@
   background-color: #fff;
   padding: 1rem;
 }
+
+.search-grid-history-item-heading {
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-bottom: 2px solid #fff;
+  color: inherit;
+}
 @media only screen and (max-width: 67em) {
-  .manual-search-container {
+  /* .manual-search-container {
     margin-top: 7.3rem;
-  }
+  } */
 }
 @media only screen and (max-width: 56.25em) {
   .manual-search-container {
     margin-bottom: 4rem;
+  }
+  .manual-search {
+    margin: 0 auto;
+    /* height: 100%; */
   }
 }
 @media only screen and (max-width: 56.25em) {

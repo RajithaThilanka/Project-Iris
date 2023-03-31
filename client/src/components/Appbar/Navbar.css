@@ -13,6 +13,16 @@
     var(--color-primary),
     var(--color-primary-light)
   );
+  width: 100%;
+  max-width: 100% !important;
+  max-height: 100vh !important;
+  height: 100vh;
+  border-radius: 0 !important;
+  top: 0 !important;
+  margin: auto !important;
+  z-index: 1000;
+  left: 0 !important;
+  /* margin: 1rem !important; */
 }
 .navbar-logo img {
   width: 100%;

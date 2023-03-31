@@ -85,7 +85,7 @@ function Chat() {
               <div
                 className="chat-page-sub"
                 // ref={mychatscroll}
-                style={{ background: "#ddd" }}
+                style={{ background: "#eee" }}
               >
                 <MyChat
                   fetchAgain={fetchAgain}
@@ -96,6 +96,7 @@ function Chat() {
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
                 />
+                <h4>Start a conversation</h4>
               </div>
             )}
           </div>

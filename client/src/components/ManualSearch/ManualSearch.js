@@ -33,6 +33,7 @@ function ManualSearch() {
   const [resultVisible, setResultVisible] = useState(false);
   const [err, setErr] = useState(null);
   const [tokenErr, setTokenErr] = useState(null);
+  const [searchToken, setSearchToken] = useState(null);
   const dispatch = useDispatch();
 
   const {
@@ -132,9 +133,13 @@ function ManualSearch() {
             data: { data },
           },
         } = await getSearchTokens();
+        setSearchToken(data);
       } catch (error) {
         if (error.response.status === 400) setTokenErr(error);
-        else setErr(error);
+        else if (error.response.status === 401) {
+          socket?.disconnect();
+          dispatch(logout());
+        } else setErr(error);
       }
     };
     getTokenInfo();
@@ -166,6 +171,10 @@ function ManualSearch() {
         setKeyword("");
         setUsers([]);
         setNames([]);
+        if (error.response.status === 401) {
+          socket?.disconnect();
+          dispatch(logout());
+        }
       }
     };
     keyword && handleSearch();
@@ -184,6 +193,13 @@ function ManualSearch() {
         setUsers(data);
         setErr(null);
         setResultLoading(false);
+        setSearchToken({
+          ...searchToken,
+          searchTokens: {
+            ...searchToken.searchTokens,
+            count: searchToken.searchTokens.count - 1,
+          },
+        });
       } catch (error) {
         console.log(error);
 
@@ -192,6 +208,10 @@ function ManualSearch() {
         setKeyword("");
         setUsers([]);
         setNames([]);
+        if (error.response.status === 401) {
+          socket?.disconnect();
+          dispatch(logout());
+        }
       }
     };
     keyword && handleSearch();
@@ -213,6 +233,11 @@ function ManualSearch() {
             className="manual-search"
             style={{ overflowY: tokenErr || err ? "hidden" : "scroll" }}
           >
+            {!tokenErr && err?.response?.status !== 400 && (
+              <span className="tokens-remaining">
+                {searchToken?.searchTokens?.count} tokens left
+              </span>
+            )}
             {!tokenErr && err?.response?.status !== 400 ? (
               <form className="search user-search-form" onSubmit={handleSubmit}>
                 <input
@@ -220,7 +245,7 @@ function ManualSearch() {
                   placeholder="Search..."
                   value={keyword}
                   onChange={handleChange}
-                  className="search__input user-search__input"
+                  className="man-search__input user-search__input"
                   onFocus={() => setGrid(true)}
                   onBlur={() => setGrid(false)}
                 />
@@ -242,6 +267,7 @@ function ManualSearch() {
             ) : (
               <div className="manual-search-err-msg token-err-msg">
                 Tokens are expired.Try again later
+                <SentimentVeryDissatisfiedIcon fontSize="large" />
               </div>
             )}
             {keyword && grid && (
@@ -252,7 +278,7 @@ function ManualSearch() {
                     names.slice(0, 8).map((u) => {
                       return (
                         <div className="search-grid-history-item">
-                          <h6 className="heading-tertiary">
+                          <h6 className="search-grid-history-item-heading">
                             {u.firstname + " " + u.lastname}
                           </h6>
                         </div>
@@ -293,6 +319,16 @@ function ManualSearch() {
                   : "Something went wrong"}
               </div>
             )}
+          </div>
+          <BottomNavbar />
+        </div>
+      ) : !socketConnected ? (
+        <div
+          className="dashboard-loading-container"
+          style={{ height: "100vh" }}
+        >
+          <div className="dashboard-loading-photo">
+            <img src={serverPublic + "irislogo.png"} alt="loading-user" />
           </div>
         </div>
       ) : (

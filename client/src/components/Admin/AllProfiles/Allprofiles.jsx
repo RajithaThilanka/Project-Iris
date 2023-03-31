@@ -22,6 +22,22 @@ export default function Profilereports() {
   const [idFront, setidFront] = useState(null);
   const [idBack, setidBack] = useState(null);
 
+  const showProfileImage = (params) => {
+    let imageid;
+    try {
+      imageid = params.row.profilePhoto;
+      liveimg = params.row.liveImage;
+      idFront = params.row.nicFront;
+      idBack = params.row.nicBack;
+      setLiveimg(liveimg);
+      setidFront(idFront);
+      setidBack(idBack);
+      setimid(imageid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [selectedRows, setSelectedRows] = useState([]);
 
   const columns = [
@@ -59,16 +75,8 @@ export default function Profilereports() {
         let liveimg;
         let idFront;
         let idBack;
-
-        const showProfileImage = (e) => {
-          imageid = params.row.profilePhoto;
-          liveimg = params.row.liveImage;
-          idFront = params.row.nicFront;
-          idBack = params.row.nicBack;
-          setLiveimg(liveimg);
-          setidFront(idFront);
-          setidBack(idBack);
-          setimid(imageid);
+        const showProfileImage = () => {
+          showProfileImage(params);
         };
 
         const deleteProfile = async () => {
@@ -85,9 +93,6 @@ export default function Profilereports() {
 
         return (
           <Stack direction="row" spacing={1}>
-            <IconButton size="small" onClick={showProfileImage}>
-              <VisibilityIcon />
-            </IconButton>
             <IconButton size="small" onClick={deleteProfile}>
               <DeleteIcon />
             </IconButton>
@@ -112,15 +117,6 @@ export default function Profilereports() {
   ];
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  // const showProfileImage = () => {
-  //   if (selectedRows.length === 1) {
-  //     const selectedRow = rows.find((row) => row.id === selectedRows[0]);
-  //     const selectedImage = selectedRow.profilePhoto;
-  //     console.log("Row Selected");
-  //     // do something with the selected image
-  //   }
-  // };
 
   ///API call
   useEffect(() => {
@@ -156,9 +152,10 @@ export default function Profilereports() {
             columns={columns}
             pageSize={20}
             rowsPerPageOptions={[]}
-            checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
+            onRowClick={showProfileImage}
+            getRowId={(row) => row._id}
           />
         </Box>
         <Box>

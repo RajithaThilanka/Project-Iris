@@ -55,7 +55,12 @@ function Login() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="login-container-main">
-      <form onSubmit={handleSubmit} className="login-form-main" method="post">
+      <form
+        onSubmit={handleSubmit}
+        className="login-form-main"
+        method="post"
+        style={{ height: "49rem" }}
+      >
         <Grid container rowSpacing={3} px={3} margin={2}>
           <Grid item sm={12} xs={12}>
             <div style={{ textAlign: "center" }}>
