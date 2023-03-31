@@ -278,7 +278,7 @@ function ManualSearch() {
                     names.slice(0, 8).map((u) => {
                       return (
                         <div className="search-grid-history-item">
-                          <h6 className="heading-tertiary">
+                          <h6 className="search-grid-history-item-heading">
                             {u.firstname + " " + u.lastname}
                           </h6>
                         </div>
@@ -321,6 +321,15 @@ function ManualSearch() {
             )}
           </div>
           <BottomNavbar />
+        </div>
+      ) : !socketConnected ? (
+        <div
+          className="dashboard-loading-container"
+          style={{ height: "100vh" }}
+        >
+          <div className="dashboard-loading-photo">
+            <img src={serverPublic + "irislogo.png"} alt="loading-user" />
+          </div>
         </div>
       ) : (
         ""

@@ -122,9 +122,6 @@
   border-bottom: 2px solid var(--color-primary-light);
 }
 .search-grid-history-item h6 {
-  font-size: 1rem;
-  border-bottom: 2px solid #fff;
-  color: inherit;
 }
 .search-result-grid {
   width: 60%;
@@ -136,10 +133,17 @@
   background-color: #fff;
   padding: 1rem;
 }
+
+.search-grid-history-item-heading {
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-bottom: 2px solid #fff;
+  color: inherit;
+}
 @media only screen and (max-width: 67em) {
-  .manual-search-container {
+  /* .manual-search-container {
     margin-top: 7.3rem;
-  }
+  } */
 }
 @media only screen and (max-width: 56.25em) {
   .manual-search-container {
