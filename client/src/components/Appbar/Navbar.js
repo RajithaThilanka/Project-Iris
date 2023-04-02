@@ -627,7 +627,7 @@ function Navbar({ user, socket }) {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-              PaperProps={{ className: "mob-nav-bar" }}
+              PaperProps={{ className: "new-mob-nav-bar" }}
             >
               <MenuItem
                 sx={{
@@ -639,8 +639,10 @@ function Navbar({ user, socket }) {
                   "&:hover": {
                     background: "inherit !important",
                   },
+                  position: "fixed",
+                  top: "2rem",
+                  right: 0,
                 }}
-                disableRipple={true}
               >
                 <div style={{ display: "inline-block" }}>
                   <IconButton
@@ -657,8 +659,15 @@ function Navbar({ user, socket }) {
               </MenuItem>
 
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">
+                <MenuItem
+                  key={setting}
+                  onClick={handleCloseUserMenu}
+                  className="mob-nav-bar-items"
+                >
+                  <Typography
+                    textAlign="center"
+                    sx={{ fontSize: "inherit !important" }}
+                  >
                     <Link
                       style={{
                         color: "#fff",
@@ -672,7 +681,11 @@ function Navbar({ user, socket }) {
                 </MenuItem>
               ))}
 
-              <MenuItem key={"Profile"} onClick={handleCloseUserMenu}>
+              <MenuItem
+                key={"Profile"}
+                onClick={handleCloseUserMenu}
+                className="mob-nav-bar-items"
+              >
                 <Link
                   to="/me/profile"
                   style={{
@@ -684,25 +697,18 @@ function Navbar({ user, socket }) {
                 </Link>
               </MenuItem>
 
-              <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
+              <MenuItem
+                key={"logout"}
+                onClick={handleCloseUserMenu}
+                className="mob-nav-bar-items"
+              >
                 <Button
                   onClick={() => {
                     socket?.disconnect();
                     dispatch(logout());
                   }}
                   type="contained"
-                  sx={{
-                    padding: 0,
-                    color: "#000",
-                    background: "var(--color-secondary)",
-                    borderRadius: "5px !important",
-                    textTransform: "capitalize",
-
-                    "&:hover": {
-                      color: "var(--color-primary)",
-                      background: "#fff",
-                    },
-                  }}
+                  className="mob-nav-bar-log-btn"
                 >
                   Logout
                 </Button>

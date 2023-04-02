@@ -124,13 +124,12 @@
 
 .current-profile {
   padding: 0 0 2rem 0.5rem;
-  border-bottom: 2px solid #000;
 
   display: flex;
   /* align-items: center; */
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
+  /* gap: 2.5rem; */
 }
 .sugg-card {
   /* max-width: 32rem;
