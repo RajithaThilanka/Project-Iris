@@ -42,6 +42,7 @@ code {
 ::-webkit-scrollbar {
   width: 7px;
   height: 3px;
+  display: none;
 }
 
 ::-webkit-scrollbar-thumb {

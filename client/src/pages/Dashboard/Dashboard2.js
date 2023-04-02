@@ -291,6 +291,14 @@ function Dashboard2() {
           >
             {filtered.length > 0 && !loading && !err ? (
               <div className="current-profile">
+                {btnClicked && (
+                  <IconButton
+                    className="more-info-btn"
+                    onClick={handleCloseProfileContent}
+                  >
+                    <CloseIcon fontSize="large" sx={{ color: "#eee" }} />
+                  </IconButton>
+                )}
                 <div
                   className="sugg-card"
                   style={{
@@ -300,22 +308,16 @@ function Dashboard2() {
                         : serverPublic +
                           filtered[currentProfile]?.photos[currentPhoto - 1]
                     })`,
+                    filter: btnClicked && "blur(15px)",
                   }}
                   onClick={handleTap}
                 >
-                  {!btnClicked ? (
+                  {!btnClicked && (
                     <IconButton
                       className="more-info-btn"
                       onClick={handleProfileContent}
                     >
                       <MoreVertIcon fontSize="large" sx={{ color: "#eee" }} />
-                    </IconButton>
-                  ) : (
-                    <IconButton
-                      className="more-info-btn"
-                      onClick={handleCloseProfileContent}
-                    >
-                      <CloseIcon fontSize="large" sx={{ color: "#eee" }} />
                     </IconButton>
                   )}
                   <div className="dashboard-other-images-container">
@@ -419,12 +421,20 @@ function Dashboard2() {
 
                 <Box className="profileContent" ref={profileContentRef}>
                   <Zoom>
-                    <Divider>
+                    <Divider
+                      sx={{
+                        "&::before, &::after": {
+                          borderColor: "var(--color-primary-light)",
+                          borderWidth: "2px",
+                        },
+                      }}
+                    >
                       <Chip
                         style={{
-                          background: "var(--color-secondary)",
-                          fontSize: "1.1rem",
+                          background: "var(--color-primary-light)",
+                          fontSize: "1.3rem",
                           fontWeight: 600,
+                          color: "#fff",
                         }}
                         label="Basic Info"
                       ></Chip>
@@ -433,45 +443,90 @@ function Dashboard2() {
                     <div className="basic-info">
                       {filtered[currentProfile]?.gender === "male" ? (
                         <div className="profile--basic-info">
-                          {<ManIcon fontSize="medium" />}Man
+                          {
+                            <ManIcon
+                              fontSize="small"
+                              className="sug-profile-content-ico"
+                            />
+                          }
+                          Man
                         </div>
                       ) : (
                         <div className="profile--basic-info">
-                          {<WomanIcon fontSize="medium" />}Woman
+                          {
+                            <WomanIcon
+                              fontSize="small"
+                              className="sug-profile-content-ico"
+                            />
+                          }
+                          Woman
                         </div>
                       )}
 
                       <div className="profile--basic-info">
-                        {<WorkIcon />}
+                        {
+                          <WorkIcon
+                            fontSize="small"
+                            className="sug-profile-content-ico"
+                          />
+                        }
                         {filtered[currentProfile]?.occupation}
                       </div>
                       <div className="profile--basic-info">
-                        {<HeightIcon />}
+                        {
+                          <HeightIcon
+                            fontSize="small"
+                            className="sug-profile-content-ico"
+                          />
+                        }
                         {filtered[currentProfile]?.height + " ft"}
                       </div>
                       <div className="profile--basic-info">
-                        {<SchoolIcon />}
+                        {
+                          <SchoolIcon
+                            fontSize="small"
+                            className="sug-profile-content-ico"
+                          />
+                        }
                         {filtered[
                           currentProfile
                         ]?.educationLevel[0].toUpperCase() +
                           filtered[currentProfile]?.educationLevel.slice(1)}
                       </div>
                       <div className="profile--basic-info">
-                        {<ChurchIcon />}
+                        {
+                          <ChurchIcon
+                            fontSize="small"
+                            className="sug-profile-content-ico"
+                          />
+                        }
                         {filtered[currentProfile]?.religion}
                       </div>
                       <div className="profile--basic-info">
-                        {<LanguageIcon />}
+                        {
+                          <LanguageIcon
+                            fontSize="small"
+                            className="sug-profile-content-ico"
+                          />
+                        }
                         {filtered[currentProfile]?.ethnicity[0].toUpperCase() +
                           filtered[currentProfile]?.ethnicity.slice(1)}
                       </div>
                     </div>
-                    <Divider>
+                    <Divider
+                      sx={{
+                        "&::before, &::after": {
+                          borderColor: "var(--color-primary-light)",
+                          borderWidth: "2px",
+                        },
+                      }}
+                    >
                       <Chip
                         style={{
-                          background: "var(--color-secondary)",
-                          fontSize: "1.1rem",
+                          background: "var(--color-primary-light)",
+                          fontSize: "1.3rem",
                           fontWeight: 600,
+                          color: "#fff",
                         }}
                         label="Looking For"
                       ></Chip>
@@ -506,12 +561,20 @@ function Dashboard2() {
                         ft
                       </div>
                     </div>
-                    <Divider>
+                    <Divider
+                      sx={{
+                        "&::before, &::after": {
+                          borderColor: "var(--color-primary-light)",
+                          borderWidth: "2px",
+                        },
+                      }}
+                    >
                       <Chip
                         style={{
-                          background: "var(--color-secondary)",
-                          fontSize: "1.1rem",
+                          background: "var(--color-primary-light)",
+                          fontSize: "1.3rem",
                           fontWeight: 600,
+                          color: "#fff",
                         }}
                         label="Movies"
                       ></Chip>
@@ -523,12 +586,20 @@ function Dashboard2() {
                         )
                       )}
                     </div>
-                    <Divider>
+                    <Divider
+                      sx={{
+                        "&::before, &::after": {
+                          borderColor: "var(--color-primary-light)",
+                          borderWidth: "2px",
+                        },
+                      }}
+                    >
                       <Chip
                         style={{
-                          background: "var(--color-secondary)",
-                          fontSize: "1.1rem",
+                          background: "var(--color-primary-light)",
+                          fontSize: "1.3rem",
                           fontWeight: 600,
+                          color: "#fff",
                         }}
                         label="Music"
                       ></Chip>
@@ -540,12 +611,20 @@ function Dashboard2() {
                         )
                       )}
                     </div>
-                    <Divider>
+                    <Divider
+                      sx={{
+                        "&::before, &::after": {
+                          borderColor: "var(--color-primary-light)",
+                          borderWidth: "2px",
+                        },
+                      }}
+                    >
                       <Chip
                         style={{
-                          background: "var(--color-secondary)",
-                          fontSize: "1.1rem",
+                          background: "var(--color-primary-light)",
+                          fontSize: "1.3rem",
                           fontWeight: 600,
+                          color: "#fff",
                         }}
                         label="Social Media"
                       ></Chip>
@@ -557,13 +636,21 @@ function Dashboard2() {
                         )
                       )}
                     </div>
-                    <Divider>
+                    <Divider
+                      sx={{
+                        "&::before, &::after": {
+                          borderColor: "var(--color-primary-light)",
+                          borderWidth: "2px",
+                        },
+                      }}
+                    >
                       <Chip
                         label="Sports"
                         style={{
-                          background: "var(--color-secondary)",
-                          fontSize: "1.1rem",
+                          background: "var(--color-primary-light)",
+                          fontSize: "1.3rem",
                           fontWeight: 600,
+                          color: "#fff",
                         }}
                       ></Chip>
                     </Divider>
@@ -573,26 +660,42 @@ function Dashboard2() {
                       ))}
                     </div>
 
-                    <Divider>
+                    <Divider
+                      sx={{
+                        "&::before, &::after": {
+                          borderColor: "var(--color-primary-light)",
+                          borderWidth: "2px",
+                        },
+                      }}
+                    >
                       <Chip
                         label="About me"
                         style={{
-                          background: "var(--color-secondary)",
-                          fontSize: "1.1rem",
+                          background: "var(--color-primary-light)",
+                          fontSize: "1.3rem",
                           fontWeight: 600,
+                          color: "#fff",
                         }}
                       ></Chip>
                     </Divider>
                     <div className="profile--description">
                       {filtered[currentProfile]?.userDescription}
                     </div>
-                    <Divider>
+                    <Divider
+                      sx={{
+                        "&::before, &::after": {
+                          borderColor: "var(--color-primary-light)",
+                          borderWidth: "2px",
+                        },
+                      }}
+                    >
                       <Chip
                         label="Check these out!"
                         style={{
-                          background: "var(--color-secondary)",
-                          fontSize: "1.1rem",
+                          background: "var(--color-primary-light)",
+                          fontSize: "1.3rem",
                           fontWeight: 600,
+                          color: "#fff",
                         }}
                       ></Chip>
                     </Divider>
@@ -655,21 +758,29 @@ function Dashboard2() {
                   clickable: true,
                 }}
                 breakpoints={{
-                  600: {
+                  0: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  372: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                  },
+                  422: {
                     slidesPerView: 3,
                     spaceBetween: 20,
                   },
-                  640: {
+                  555: {
                     slidesPerView: 4,
                     spaceBetween: 20,
                   },
-                  768: {
-                    slidesPerView: 4,
-                    spaceBetween: 40,
-                  },
-                  1024: {
+                  705: {
                     slidesPerView: 5,
-                    spaceBetween: 50,
+                    spaceBetween: 20,
+                  },
+                  1190: {
+                    slidesPerView: 6,
+                    spaceBetween: 20,
                   },
                 }}
                 modules={[Pagination]}
