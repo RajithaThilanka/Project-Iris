@@ -1,54 +1,22 @@
-import VerificationCard from "./VerificationCard";
-import { Stack, Typography, FormLabel, Box } from "@mui/material";
-import * as React from "react";
-import Button from "@mui/material/Button";
+import React from "react";
+import { Box, Stack, Typography, Button } from "@mui/material";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormHelperText from "@mui/material/FormHelperText";
+import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import AssignmentTurnedInTwoToneIcon from "@mui/icons-material/AssignmentTurnedInTwoTone";
-import ContinueCard from "./ContinueCard";
 import { useState } from "react";
-import axios from "axios";
-import { Form } from "react-router-dom";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { getMe } from "../../api/UserRequests";
-import { uploadImage } from "../../actions/UploadAction";
-import { updateMe } from "../../components/api/UserRequests";
+import { uploadImage } from "../../../actions/UploadAction";
 
-function UploadImages() {
+export default function SelectID() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-  //get my details
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const {
-          data: {
-            data: { data },
-          },
-        } = await getMe();
-        setUser(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
-
   const [image, setImage] = useState(null);
   const [image2, setImage2] = useState(null);
-  const [uploaded, setUploaded] = useState(false);
-
-  const [formData, setData] = useState({
-    nicFront: "",
-  });
-
-  const [formData2, setData2] = useState({
-    nicBack: "",
-  });
-
   const dispatch = useDispatch();
 
   //set image
@@ -108,26 +76,33 @@ function UploadImages() {
     }
   };
 
-  /////////
-
+  const [state, setState] = React.useState({
+    ck: true,
+    ck2: true,
+    ck3: true,
+  });
+  const { ck } = state;
+  const { ck2 } = state;
+  const { ck3 } = state;
   return (
     <div>
       <Box>
-        <VerificationCard title={"Upload Image of ID Card"}>
-          <Stack spacing={2}>
-            <FormLabel>
-              <AssignmentTurnedInTwoToneIcon />
-              Government-issued
-            </FormLabel>
-            <FormLabel>
-              <AssignmentTurnedInTwoToneIcon />
-              Original Full-size unedited documents
-            </FormLabel>
-            <FormLabel>
-              <AssignmentTurnedInTwoToneIcon />
-              Readable, Well-it, Coloured images
-            </FormLabel>
-          </Stack>
+        <Stack direction="column" spacing={2}>
+          <Typography variant="h5">Upload Image of ID Card</Typography>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={ck} name="ck" />}
+              label="Government-issued"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={ck2} name="ck2" />}
+              label="Original Full-size unedited documents"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={ck3} name="ck3" />}
+              label="Readable, Well-it, Coloured images"
+            />
+          </FormGroup>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Stack direction="row" spacing={2}></Stack>
             <Button
@@ -143,7 +118,7 @@ function UploadImages() {
                   aria-label="upload picture"
                   component="label"
                 >
-                  <input type="file" onChange={handleFileChange} />
+                  <input type="file" onChange={""} />
                   <PhotoCamera />
                 </IconButton>
               </Stack>
@@ -162,40 +137,14 @@ function UploadImages() {
                   aria-label="upload picture"
                   component="label"
                 >
-                  <input type="file" onChange={handleFileChange2} />
+                  <input type="file" onChange={""} />
                   <PhotoCamera />
                 </IconButton>
               </Stack>
             </Button>
           </Stack>
-
-          <Stack
-            direction="row"
-            justifyContent="right"
-            alignItems="center"
-            spacing={2}
-          >
-            <Button
-              onClick={handleUploadAndImageNameUpdate}
-              variant="contained"
-            >
-              Upload
-            </Button>
-            <ContinueCard nextpage={"/me/selfiPhoto"} />
-          </Stack>
-          <Typography
-            sx={{
-              fontSize: 22,
-              fontFamily: "Poppins, sans-serif",
-              color: "red",
-            }}
-          >
-            Iris
-          </Typography>
-        </VerificationCard>
+        </Stack>
       </Box>
     </div>
   );
 }
-
-export default UploadImages;
