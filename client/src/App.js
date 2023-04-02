@@ -41,6 +41,7 @@ import ActivationRequest from "./components/ActivationRequest/ActivationRequest"
 import Explore from "./components/Explore/Explore";
 import ManualSearch from "./components/ManualSearch/ManualSearch";
 import Question from "./components/Question/Question";
+import UserVerification from "./pages/Uverifcation/UserVerfication";
 
 const theme = createTheme({
   palette: {
@@ -248,6 +249,9 @@ function App() {
           <Route path="/me/uploadimages" element={<UploadImages />} />
           <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
           <Route path="/me/safetytips" element={<SafetyTips />} />
+
+          <Route path="/me/uverification" element={<UserVerification />} />
+
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
 

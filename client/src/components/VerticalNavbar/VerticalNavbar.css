@@ -6,6 +6,7 @@
 .vertical-nav-container {
   background-color: var(--color-grey-dark-1);
   position: relative;
+  min-height: 100vh;
 }
 .toggle-btn-container {
   color: #fff;
@@ -59,7 +60,7 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .side-nav {

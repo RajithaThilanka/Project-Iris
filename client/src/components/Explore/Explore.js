@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import io from "socket.io-client";
 import "./Explore.css";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { logout } from "../../actions/AuthActions";
 import VerifiedIcon from "@mui/icons-material/Verified";
@@ -15,6 +16,7 @@ import { getMyVerStatus, getVerStatus } from "../../api/UserRequests";
 const ENDPOINT = "http://localhost:5000";
 let socket;
 function Explore() {
+  const navigate = useNavigate();
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
@@ -167,7 +169,11 @@ function Explore() {
                     Photo Verified
                   </h5>
                 </div>
-                <Button variant="contained" className="verified-card-btn">
+                <Button
+                  variant="contained"
+                  className="verified-card-btn"
+                  onClick={() => navigate("/me/uverification")}
+                >
                   TRY NOW
                 </Button>
               </div>

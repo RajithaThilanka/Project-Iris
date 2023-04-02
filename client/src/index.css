@@ -40,17 +40,18 @@ code {
 }
 
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 7px;
   height: 3px;
+  display: none;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(transparent, #eb2f64);
-  border-radius: 9px;
+  background: linear-gradient(#eb2f64, transparent);
+  /* border-radius: 9px; */
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(transparent, #c81172);
-  border-radius: 10px;
+  background: linear-gradient(#eb2f64, transparent);
+  /* border-radius: 10px; */
 }
 
 html {
