@@ -68,6 +68,7 @@ exports.setupLookingFor = catchAsync(async (req, res, next) => {
     maxAge,
     minHeight,
     maxHeight,
+    relationshipGoal,
     userId,
   } = req.body;
 
@@ -82,6 +83,7 @@ exports.setupLookingFor = catchAsync(async (req, res, next) => {
       minHeight,
       maxHeight,
     },
+    relationshipGoal,
   });
 
   const newUserVerification = await UserVerification.create({
