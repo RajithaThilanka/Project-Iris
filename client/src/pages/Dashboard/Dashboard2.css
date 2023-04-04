@@ -154,8 +154,6 @@
   color: #fff;
   display: flex;
   flex-direction: column;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
 }
 .profileContent {
   width: 40rem;
@@ -245,8 +243,6 @@
   color: #fff;
   display: flex;
   flex-direction: column;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
 }
 .profile--name {
   /* display: inline-block; */

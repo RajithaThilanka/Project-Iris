@@ -45,7 +45,9 @@ router.route('/me/suggestions/ai').get(
   // authController.checkManualVerification,
   aiController.generateSuggestions
 );
-
+router
+  .route('/me/tag-suggestions')
+  .patch(authController.protect, aiController.generateTagSuggestions);
 router
   .route('/me/manual-verify')
   .post(authController.protect, authController.requestManualVerify);
