@@ -80,3 +80,7 @@ imageMap.set(
   "Introvert",
   "https://live.staticflickr.com/65535/52792571455_f38fa27f1d_k.jpg"
 );
+imageMap.set(
+  "Animal",
+  "https://live.staticflickr.com/65535/52791646297_808b26c667_k.jpg"
+);

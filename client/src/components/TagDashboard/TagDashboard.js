@@ -739,7 +739,7 @@ function TagDashboard() {
                   },
                 }}
                 modules={[Pagination]}
-                className="mySwiper"
+                className="mySwiper tag-swiper"
                 onSlideChange={(el) => {
                   setCurrentProfile(el.realIndex);
                   setCurrentPhoto(0);

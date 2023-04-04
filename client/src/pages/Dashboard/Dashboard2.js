@@ -378,6 +378,7 @@ function Dashboard2() {
                         />
                       )}
                     </h6>
+
                     <p className="profile--age">
                       {Math.abs(
                         new Date(
@@ -385,6 +386,7 @@ function Dashboard2() {
                         ).getUTCFullYear() - 1970
                       )}
                     </p>
+
                     <div className="profile--country">
                       {<LocationOnIcon fontSize="small" sx={{ padding: 0 }} />}
                       {filtered[currentProfile]?.country}
@@ -533,6 +535,15 @@ function Dashboard2() {
                     </Divider>
 
                     <div className="looking-for">
+                      <div className="profile--lookingfor-goal">
+                        <div className="emoji-container">👋</div>
+                        <div>
+                          <span className="looking-for-span">Looking for</span>
+                          {" " +
+                            filtered[currentProfile]?.lookingFor
+                              ?.relationshipGoal}
+                        </div>
+                      </div>
                       <div>
                         {filtered[
                           currentProfile
