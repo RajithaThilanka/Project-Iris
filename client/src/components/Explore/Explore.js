@@ -331,6 +331,25 @@ function Explore() {
               TRY NOW
             </Button>
           </div>
+          <div className="explore-passions-card">
+            <LazyLoadImage
+              effect="blur"
+              src="https://live.staticflickr.com/65535/52791646297_808b26c667_k.jpg"
+              alt="night-life"
+            />
+            <div className="passions-card-tag">Animal Lover</div>
+            <div className="explore-passions-card-info">
+              <h3>Puppy love</h3>
+              <h5>Passions</h5>
+            </div>
+            <Button
+              variant="contained"
+              className="passion-card-btn"
+              onClick={() => navigate("/me/tag-suggestions/Animal")}
+            >
+              TRY NOW
+            </Button>
+          </div>
         </div>
       </div>
     </>

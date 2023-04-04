@@ -23,7 +23,7 @@
 }
 
 .tagProfileContent {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
 }
 .tag-profile-content-ico {
   color: #fff;
@@ -46,4 +46,7 @@
   color: #fff;
   background-color: rgba(0, 0, 0, 0);
   border: 2px solid #fff;
+}
+.tag-swiper {
+  background: rgba(0, 0, 0, 0.6);
 }
