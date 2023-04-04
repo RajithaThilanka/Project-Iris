@@ -54,3 +54,29 @@ export const isAPhoneNumber = (myStr) => {
   var result = myRegex.test(filtered);
   return result;
 };
+
+export const imageMap = new Map();
+imageMap.set(
+  "Creator",
+  "https://live.staticflickr.com/65535/52780158942_5e2d97be64_k.jpg"
+);
+imageMap.set(
+  "Music",
+  "https://live.staticflickr.com/65535/52780679751_5e2dfec2a4_k.jpg"
+);
+imageMap.set(
+  "Food",
+  "https://live.staticflickr.com/65535/52780143632_aa45e490d0_k.jpg"
+);
+imageMap.set(
+  "Travel",
+  "https://live.staticflickr.com/65535/52791594687_8fffec4907_k.jpg"
+);
+imageMap.set(
+  "Coffee",
+  "https://live.staticflickr.com/65535/52780146787_3d59fc259f_k.jpg"
+);
+imageMap.set(
+  "Introvert",
+  "https://live.staticflickr.com/65535/52792571455_f38fa27f1d_k.jpg"
+);

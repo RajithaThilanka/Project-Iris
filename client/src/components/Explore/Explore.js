@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import { logout } from "../../actions/AuthActions";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { getMyVerStatus, getVerStatus } from "../../api/UserRequests";
+
 const ENDPOINT = "http://localhost:5000";
 let socket;
 function Explore() {
@@ -21,6 +22,7 @@ function Explore() {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const [verStatus, setVerStatus] = useState(false);
+
   const {
     setSocketConnected,
     setActiveUsers,
@@ -224,7 +226,11 @@ function Explore() {
                   Take me to your favorite cafe
                 </h5>
               </div>
-              <Button variant="contained" className="verified-card-btn">
+              <Button
+                variant="contained"
+                className="verified-card-btn"
+                onClick={() => navigate("/me/tag-suggestions/Coffee")}
+              >
                 TRY NOW
               </Button>
             </div>
@@ -241,7 +247,11 @@ function Explore() {
               <h3>Match Your Aesthetic </h3>
               <h5>Passions</h5>
             </div>
-            <Button variant="contained" className="passion-card-btn">
+            <Button
+              variant="contained"
+              className="passion-card-btn"
+              onClick={() => navigate("/me/tag-suggestions/Creator")}
+            >
               TRY NOW
             </Button>
           </div>
@@ -256,7 +266,11 @@ function Explore() {
               <h3>Split Your Headphones</h3>
               <h5>Passions</h5>
             </div>
-            <Button variant="contained" className="passion-card-btn">
+            <Button
+              variant="contained"
+              className="passion-card-btn"
+              onClick={() => navigate("/me/tag-suggestions/Music")}
+            >
               TRY NOW
             </Button>
           </div>
@@ -271,22 +285,49 @@ function Explore() {
               <h3>Looking For A Snack?</h3>
               <h5>Passions</h5>
             </div>
-            <Button variant="contained" className="passion-card-btn">
+            <Button
+              variant="contained"
+              className="passion-card-btn"
+              onClick={() => navigate("/me/tag-suggestions/Food")}
+            >
               TRY NOW
             </Button>
           </div>
           <div className="explore-passions-card">
             <LazyLoadImage
               effect="blur"
-              src="https://live.staticflickr.com/65535/52780143632_aa45e490d0_k.jpg"
+              src="https://live.staticflickr.com/65535/52791594687_8fffec4907_k.jpg"
               alt="night-life"
             />
-            <div className="passions-card-tag">Foodies</div>
+            <div className="passions-card-tag">Travel</div>
             <div className="explore-passions-card-info">
-              <h3>Looking For A Snack?</h3>
+              <h3>Travel together?</h3>
               <h5>Passions</h5>
             </div>
-            <Button variant="contained" className="passion-card-btn">
+            <Button
+              variant="contained"
+              className="passion-card-btn"
+              onClick={() => navigate("/me/tag-suggestions/Travel")}
+            >
+              TRY NOW
+            </Button>
+          </div>
+          <div className="explore-passions-card">
+            <LazyLoadImage
+              effect="blur"
+              src="https://live.staticflickr.com/65535/52792571455_f38fa27f1d_k.jpg"
+              alt="night-life"
+            />
+            <div className="passions-card-tag">Introvert</div>
+            <div className="explore-passions-card-info">
+              <h3>Share your knowledge</h3>
+              <h5>Passions</h5>
+            </div>
+            <Button
+              variant="contained"
+              className="passion-card-btn"
+              onClick={() => navigate("/me/tag-suggestions/Introvert")}
+            >
               TRY NOW
             </Button>
           </div>

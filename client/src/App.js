@@ -42,6 +42,7 @@ import Explore from "./components/Explore/Explore";
 import ManualSearch from "./components/ManualSearch/ManualSearch";
 import Question from "./components/Question/Question";
 import UserVerification from "./pages/Uverifcation/UserVerfication";
+import TagDashboard from "./components/TagDashboard/TagDashboard";
 
 const theme = createTheme({
   palette: {
@@ -157,6 +158,10 @@ function App() {
           <Route
             path="/me/manual-search"
             element={user ? <ManualSearch /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/tag-suggestions/:tag"
+            element={user ? <TagDashboard /> : <Auth action="login" />}
           ></Route>
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/error/:msg" element={<Error />}></Route>

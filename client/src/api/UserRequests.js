@@ -120,3 +120,6 @@ export const getSearchNames = (keyword) =>
   API.get(`/users/names?search=${keyword}`);
 export const getAnyUser = (keyword) => API.get(`/users?search=${keyword}`);
 export const getSearchTokens = () => API.get(`/users/search-tokens`);
+
+export const getTagSuggestions = (tag) =>
+  API.patch("/users/me/tag-suggestions", { tag: tag });
