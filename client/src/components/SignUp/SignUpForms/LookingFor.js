@@ -20,14 +20,18 @@ import { signUp } from "../../../actions/AuthActions";
 import { signupLookingforInfo } from "../../../api/AuthRequests";
 
 import { StyledFormControlLabel } from "../../UIComponents/Radio";
+import Loader from "../../Loading/Loading";
 
 function LookingFor() {
   const {
     state: { id },
   } = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
   const dispatch = useDispatch();
   const [formData, setData] = useState({
     lookingForGender: "male",
+    relationshipGoal: "New friends",
     minAge: 18,
     maxAge: 0,
     minHeight: 0,
@@ -61,17 +65,24 @@ function LookingFor() {
   const handleChange = (event) => {
     if (event.target.name === "minAge") {
       setData({ ...formData, minAge: +event.target.value });
+    } else if (event.target.name === "relationshipGoal") {
+      setData({ ...formData, relationshipGoal: event.target.value });
     }
   };
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
+    setErr(null);
     try {
       await signupLookingforInfo(formData);
+      setLoading(false);
+      setErr(null);
       dispatch(signUp(navigate));
     } catch (error) {
       console.log(error);
+      setErr(error);
+      setLoading(false);
     }
   };
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -93,6 +104,36 @@ function LookingFor() {
             <h3 className="heading-tertiary signup-heading">
               Your ideal partner should be
             </h3>
+          </Grid>
+          <Grid sm={12} xs={12}>
+            <Stack spacing={1.7}>
+              <FormLabel sx={{ marginLeft: "0.7rem" }}>
+                Relationship goal
+              </FormLabel>
+
+              <FormControl sx={{ m: 1 }} fullWidth size="small">
+                <Select
+                  onChange={handleChange}
+                  name="relationshipGoal"
+                  value={formData.relationshipGoal}
+                >
+                  <MenuItem value="New friends">New friends</MenuItem>
+                  <MenuItem value="Long term, open to short">
+                    Long-term, open to short
+                  </MenuItem>
+                  <MenuItem value="Short-term, open to long">
+                    Short-term, open to long
+                  </MenuItem>
+                  <MenuItem value="Short-term fun">Short-term fun</MenuItem>
+                  <MenuItem value="Long-term partner">
+                    Long-term partner
+                  </MenuItem>
+                  <MenuItem value="Still figuring it out">
+                    Still figuring it out
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
           </Grid>
           <Grid sm={12} xs={12}>
             <Stack spacing={1.7}>
@@ -185,9 +226,21 @@ function LookingFor() {
           <Grid sm={12} xs={1}></Grid>
           <Grid sm={4} xs={1}></Grid>
           <Grid sm={4} xs={6}>
-            <Button variant="contained" fullWidth type="submit">
-              Finish
-            </Button>
+            {loading && !err ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Loader />
+              </div>
+            ) : (
+              <Button variant="contained" fullWidth type="submit">
+                Finish
+              </Button>
+            )}
           </Grid>
         </Grid>
       </form>

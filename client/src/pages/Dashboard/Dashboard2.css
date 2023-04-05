@@ -129,7 +129,7 @@
   /* align-items: center; */
   justify-content: center;
   align-items: center;
-  /* gap: 2.5rem; */
+  gap: 2.5rem;
 }
 .sugg-card {
   /* max-width: 32rem;
