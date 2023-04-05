@@ -199,11 +199,11 @@ exports.signupAccountInfo = catchAsync(async (req, res, next) => {
   let existingUser;
 
   existingUser = await User.findOne({ email: req.body.email });
-  if (existingUser && existingUser.lastCompletedStep === 3) {
+  if (existingUser && existingUser.lastCompletedStep === 4) {
     return next(
       new AppError('The email is already signed up. Login instead', 400)
     );
-  } else if (existingUser && existingUser.lastCompletedStep <= 2) {
+  } else if (existingUser && existingUser.lastCompletedStep <= 3) {
     return next(
       new AppError(
         `next step:${existingUser.lastCompletedStep + 1}-${existingUser._id}`,
