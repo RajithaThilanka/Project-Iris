@@ -25,7 +25,7 @@ exports.getMe = (req, res, next) => {
   next();
 };
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  await User.findByIdAndUpdate(req.user._id, { active: false });
+  await User.findByIdAnddate(req.user._id, { active: false });
   await LookingFor.deleteOne({ userId: req.user._id });
   res.status(204).json({
     status: 'success',

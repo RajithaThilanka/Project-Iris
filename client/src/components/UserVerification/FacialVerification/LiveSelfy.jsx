@@ -11,39 +11,29 @@ import { uploadImage } from "../../../actions/UploadAction";
 
 export default function LiveSelfy() {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-  // const [liveimage, setLIveImage] = useState(null);
   const dispatch = useDispatch();
 
-  //set live image
-  // const handleFileChange = (event) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     let img = event.target.files[0];
-  //     setLIveImage(img);
-  //     console.log(img);
-  //   }
-  // };
-  //Upload image and rename and new name upload
+  const webcamRef = useRef(null);
+  const [url, setUrl] = React.useState(null);
+
   const handleUploadAndImageNameUpdate = async (e) => {
     if (url !== null) {
       const data = new FormData();
       const newImageName = Date.now() + url.name;
       data.append("name", newImageName);
       data.append("file", url);
-
       try {
         await dispatch(uploadImage(data));
-        console.log("Live image upload and name update success");
+        console.log("Live image upload success");
       } catch (err) {
         console.log(err);
-        console.log("Live image upload and name update unsuccess");
+        console.log("Live image upload unsuccess");
       }
     } else {
       console.log("No image to upload");
     }
   };
 
-  const webcamRef = useRef(null);
-  const [url, setUrl] = React.useState(null);
   const videoConstraints = {
     width: 200,
     height: 200,
@@ -116,6 +106,8 @@ export default function LiveSelfy() {
                     screenshotFormat="image/jpeg"
                     videoConstraints={videoConstraints}
                     onUserMedia={onUserMedia}
+                    screenshotQuality={1}
+                    imageSmoothing={true}
                   />
                 )}
               </Box>

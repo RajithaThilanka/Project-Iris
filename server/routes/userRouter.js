@@ -79,13 +79,12 @@ router
 
 router.route('/names').get(authController.protect, userController.getUsers);
 
-router
-  .route('/')
-  .get(
-    authController.protect,
-    userSettingsController.checkSearchTokens,
-    userController.getUsers
-  );
+router.route('/').get(
+  authController.protect,
+  //userSettingsController.checkSearchTokens,
+  authController.adminProtect,
+  userController.getUsers
+);
 router
   .route('/con')
   .get(authController.protect, userController.fetchConnections);
