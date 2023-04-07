@@ -1,0 +1,33 @@
+[
+  {
+    "firstname": "Robin",
+    "lastname": "Smith",
+    "gender": "male",
+    "languages": ["Indonesian", "Russian"],
+    "email": "inquisitiveMiguel@yahoo.co.uk",
+    "dob": "1986-05-09",
+    "occupation": "Chef",
+    "height": 6.1,
+    "educationLevel": "bachelor",
+    "monthlyIncome": "between Rs.25,000 & Rs.50,000",
+    "hasChildren": false,
+    "religion": "Christian",
+    "ethnicity": "african",
+    "profilePhoto": "pic2.jpg",
+    "password": "$2a$12$A/nXQ9C1f2iEkULnC.byCeOUv9TrKorRu5YxQLv3XP.1H168q2no2",
+    "index": 2,
+    "userDescription": "Hello world, I'm Robin from USA. I'm looking for a partner with whom I can share my life and feelings with. Don't be creepy. Feel free to send me a message. Good bless you people.",
+    "country": "USA",
+    "verified": true,
+    "active": true,
+    "isClustered": true,
+    "callTag": "Smith R",
+    "suspended": false,
+    "photos": ["user45.JPEG", "user9.JPEG"],
+    "urls": [
+      "https://www.youtube.com/embed/91lyHjYHgHQ",
+      "https://www.youtube.com/embed/-lkEOEEKYD0",
+      "https://www.youtube.com/embed/dOxlEwX9lbA"
+    ]
+  }
+]

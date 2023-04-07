@@ -158,7 +158,7 @@
 .profileContent {
   width: 40rem;
   height: 50rem;
-  background: url("https://live.staticflickr.com/65535/52791753767_dc464aa472_k.jpg");
+  background: url("https://live.staticflickr.com/65535/52800386429_19cf461e23_k.jpg");
 
   padding: 1.5rem 2rem;
   background-position: center;
@@ -176,12 +176,7 @@
   height: auto;
   align-items: center;
   justify-content: center;
-  /* background-image: linear-gradient(
-    to right,
-    var(--color-primary-light),
-    var(--color-primary-dark)
-  ); */
-  /* background-color: #fff; */
+
   color: #000;
   margin: 1rem;
 }
@@ -190,7 +185,7 @@
   align-items: center;
   gap: 5px;
   padding: 1.2rem 1rem;
-  color: var(--color-primary);
+  color: #fff;
   font-size: 1.2rem;
   font-weight: 500;
 }
@@ -205,9 +200,9 @@
     var(--color-primary-dark)
   ); */
   margin: 1rem;
-  border: 2px solid var(--color-primary);
+  border: 2px solid #fff;
   border-radius: 10px;
-  color: var(--color-primary);
+  color: #fff;
   font-weight: 600;
 }
 .profile-fav-songs {
@@ -263,7 +258,7 @@
   color: #12777e !important;
 }
 .profile--lookingfor-goal {
-  font-size: 1.4rem !important;
+  font-size: 1.2rem !important;
   position: relative !important;
   font-weight: 600 !important;
   height: auto !important;
@@ -343,11 +338,11 @@
 
 .looking-for > div {
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid var(--color-primary);
+
+  border: 2px solid #fff;
   width: auto;
   padding: 0.2rem 0.8rem;
-  color: var(--color-primary);
+  color: #fff;
   font-weight: 600;
   font-size: 1.2rem;
   height: 3rem;
@@ -369,16 +364,16 @@
     var(--color-primary-dark)
   ); */
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid var(--color-primary);
+
+  border: 2px solid #fff;
   width: auto;
   padding: 0.2rem 0.8rem;
-  color: var(--color-primary);
+  color: #fff;
   font-weight: 600;
   font-size: 1.2rem;
 }
 .sug-profile-content-ico {
-  color: var(--color-primary);
+  color: #fff;
 }
 .infoText {
   width: 100%;
@@ -759,6 +754,10 @@
 } */
 
 @media only screen and (max-width: 56.25em) {
+  .sugg-card {
+    background-position: 50% 50%;
+    background-size: auto 125%;
+  }
   .dashboard-container {
     padding-top: 7.6rem;
   }
@@ -806,3 +805,15 @@
     padding-top: 6.7rem;
   }
 }
+
+@media only screen and (max-width: 31.5em) {
+  .sugg-card {
+    background-position: top;
+    background-size: cover;
+  }
+}
+/* @media only screen and (max-width: 30em) {
+  .sugg-card {
+    background-position: center;
+  }
+} */

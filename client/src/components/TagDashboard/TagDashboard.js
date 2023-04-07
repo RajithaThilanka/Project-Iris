@@ -247,7 +247,10 @@ function TagDashboard() {
       >
         {/* <VerticalNavbar /> */}
 
-        <div className="suggestions-container">
+        <div className="suggestions-container tag-suggestions-container">
+          {!loading && (
+            <div className="tag-suggestions-container-overlay"></div>
+          )}
           <div
             className="swiper-container-main"
             style={{ display: "flex", flexDirection: "column" }}
@@ -496,6 +499,15 @@ function TagDashboard() {
                     </Divider>
 
                     <div className="looking-for tag-looking-for">
+                      <div className="profile--lookingfor-goal">
+                        <div className="emoji-container">👋</div>
+                        <div>
+                          <span className="looking-for-span">Looking for</span>
+                          {" " +
+                            matches[currentProfile]?.lookingFor
+                              ?.relationshipGoal}
+                        </div>
+                      </div>
                       <div>
                         {matches[
                           currentProfile
