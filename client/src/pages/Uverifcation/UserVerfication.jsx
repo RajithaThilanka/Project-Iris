@@ -22,7 +22,7 @@ const steps = [
   "Facial Recognition",
 ];
 
-export default function UserVerfication() {
+export default function UserVerfication(props) {
   const [profile, setProfile] = useState(null);
 
   const {

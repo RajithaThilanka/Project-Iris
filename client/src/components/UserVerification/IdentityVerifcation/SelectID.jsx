@@ -36,7 +36,6 @@ export default function SelectID() {
     }
   };
 
-  const [fileName, SetImageNewName] = useState("");
   //Upload image and rename and new name upload
   const handleUploadAndImageNameUpdate = async (e) => {
     if (image) {
@@ -118,7 +117,7 @@ export default function SelectID() {
                   aria-label="upload picture"
                   component="label"
                 >
-                  <input type="file" onChange={""} />
+                  <input type="file" onChange={handleFileChange} />
                   <PhotoCamera />
                 </IconButton>
               </Stack>
@@ -137,12 +136,15 @@ export default function SelectID() {
                   aria-label="upload picture"
                   component="label"
                 >
-                  <input type="file" onChange={""} />
+                  <input type="file" onChange={handleFileChange2} />
                   <PhotoCamera />
                 </IconButton>
               </Stack>
             </Button>
           </Stack>
+          <Button variant="outlined" onClick={handleUploadAndImageNameUpdate}>
+            Upload
+          </Button>
         </Stack>
       </Box>
     </div>
