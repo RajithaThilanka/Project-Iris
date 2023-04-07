@@ -68,6 +68,7 @@ exports.setupLookingFor = catchAsync(async (req, res, next) => {
     maxAge,
     minHeight,
     maxHeight,
+    relationshipGoal,
     userId,
   } = req.body;
 
@@ -82,13 +83,20 @@ exports.setupLookingFor = catchAsync(async (req, res, next) => {
       minHeight,
       maxHeight,
     },
+    relationshipGoal,
   });
 
   const newUserVerification = await UserVerification.create({
     userId,
   });
 
-  const existingUser = await User.findById(userId);
+  const existingUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      lastCompletedStep: 4,
+    },
+    { new: true }
+  );
   const confirmationToken = newUserVerification.createConfirmationToken();
 
   newUserVerification.save({ validateBeforeSave: false });
@@ -191,9 +199,16 @@ exports.signupAccountInfo = catchAsync(async (req, res, next) => {
   let existingUser;
 
   existingUser = await User.findOne({ email: req.body.email });
-  if (existingUser) {
+  if (existingUser && existingUser.lastCompletedStep === 4) {
     return next(
       new AppError('The email is already signed up. Login instead', 400)
+    );
+  } else if (existingUser && existingUser.lastCompletedStep <= 3) {
+    return next(
+      new AppError(
+        `next step:${existingUser.lastCompletedStep + 1}-${existingUser._id}`,
+        400
+      )
     );
   }
   const { firstname, lastname, email, password, passwordConfirm } = req.body;
@@ -203,6 +218,7 @@ exports.signupAccountInfo = catchAsync(async (req, res, next) => {
     email,
     password,
     passwordConfirm,
+    lastCompletedStep: 1,
   });
   // setup answer model
   setupAnswerModel(newUser);
@@ -256,6 +272,7 @@ exports.signupUserInfo = catchAsync(async (req, res, next) => {
       ethnicity,
       monthlyIncome,
       hasChildren,
+      lastCompletedStep: 2,
     },
     { new: true }
   );
@@ -301,6 +318,7 @@ exports.signupProfileView = catchAsync(async (req, res, next) => {
       userDescription,
       photos,
       urls,
+      lastCompletedStep: 3,
     },
     { new: true }
   );

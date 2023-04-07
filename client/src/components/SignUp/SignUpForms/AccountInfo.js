@@ -61,7 +61,42 @@ function AccountInfo() {
       } catch (error) {
         console.log(error);
         setErr(error);
+
         setLoading(false);
+        if (error?.response?.data?.message?.startsWith("next")) {
+          const msg = error?.response?.data?.message;
+          const nextStep = +msg.slice(msg.indexOf(":") + 1, msg.indexOf("-"));
+          const id = msg.slice(msg.indexOf("-") + 1);
+
+          switch (nextStep) {
+            case 2:
+              navigate(`/auth/signup/user-info`, {
+                replace: true,
+                state: {
+                  id: id,
+                },
+              });
+              break;
+            case 3:
+              navigate(`/auth/signup/profileview-info`, {
+                replace: true,
+                state: {
+                  id: id,
+                },
+              });
+              break;
+            case 4:
+              navigate(`/auth/signup/lookingfor-info`, {
+                replace: true,
+                state: {
+                  id: id,
+                },
+              });
+              break;
+            default:
+              navigate("/home");
+          }
+        }
       }
     } else {
       console.log("Passwords do not match");

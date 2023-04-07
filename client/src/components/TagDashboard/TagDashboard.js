@@ -10,7 +10,11 @@ import WorkIcon from "@mui/icons-material/Work";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
 import { useDispatch, useSelector } from "react-redux";
-import { getMatches, sendConRequest } from "../../api/UserRequests";
+import {
+  getMatches,
+  getTagSuggestions,
+  sendConRequest,
+} from "../../api/UserRequests";
 import SchoolIcon from "@mui/icons-material/School";
 import HeightIcon from "@mui/icons-material/Height";
 import ChurchIcon from "@mui/icons-material/Church";
@@ -26,7 +30,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import "./Dashboard2.css";
+import "./TagDashboard.css";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
@@ -35,26 +39,25 @@ import "swiper/css/thumbs";
 import SwiperCore, { EffectCoverflow, Navigation } from "swiper/core";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import { logout } from "../../actions/AuthActions";
-import { FlagCircle, ForkRight } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import Dates from "../Dates/Dates";
+import { FlagCircle } from "@mui/icons-material";
+import { useNavigate, useParams } from "react-router-dom";
+import { imageMap } from "../../config/ChatLogics";
+
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
 let socket;
-function Dashboard2() {
-  const { activeTab, setActiveTab } = useContext(MatchesContext);
+function TagDashboard() {
+  const { tag } = useParams();
   const [err, setErr] = useState(null);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  setActiveTab(0);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const [swiper, setSwiper] = useState(null);
   const [currentProfile, setCurrentProfile] = useState(0);
-  const { filter } = useContext(MatchesContext);
   const {
     sentConRequests,
     setsentConRequests,
@@ -67,46 +70,11 @@ function Dashboard2() {
     sentFriendRequests,
   } = useContext(MatchesContext);
   const { matches, setMatches } = useContext(MatchesContext);
-  const [filtered, setFiltered] = useState([]);
+
   const profileContentRef = useRef();
   const [btnClicked, setBtnClicked] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  const applyFilter = () => {
-    const lookingForGenders = [];
-    filter.gender.male && lookingForGenders.push("male");
-    filter.gender.female && lookingForGenders.push("female");
-    let filteredSugs = matches.filter((m) => {
-      const age = Math.abs(
-        new Date(Date.now() - Date.parse(m.dob)).getUTCFullYear() - 1970
-      );
 
-      const genderMatch = lookingForGenders.includes(m.gender);
-      const countryMatch =
-        filter.countries.length > 0
-          ? filter.countries.includes(m.country)
-          : true;
-      const langMatch =
-        filter.languages.length > 0
-          ? m.languages.filter((value) => filter.languages.includes(value))
-              .length > 0
-          : true;
-      let isOnline = true;
-      if (filter.online) {
-        isOnline = activeUsers.some((user) => user.userId === m._id)
-          ? true
-          : false;
-      }
-      return (
-        age >= filter.age[0] &&
-        age <= filter.age[1] &&
-        genderMatch &&
-        countryMatch &&
-        langMatch &&
-        isOnline
-      );
-    });
-    return filteredSugs;
-  };
   const navigate = useNavigate();
   const {
     setSocketConnected,
@@ -190,12 +158,13 @@ function Dashboard2() {
     const generateSuggestions = async () => {
       setLoading(true);
       setErr(null);
+      console.log(tag);
       try {
         const {
           data: {
             data: { data },
           },
-        } = await getMatches();
+        } = await getTagSuggestions(tag);
         setMatches(data);
         setLoading(false);
         setErr(null);
@@ -212,10 +181,6 @@ function Dashboard2() {
     generateSuggestions();
   }, []);
 
-  useEffect(() => {
-    setFiltered([]);
-    setFiltered(applyFilter());
-  }, [filter, matches]);
   const handleConRequest = async (id) => {
     try {
       const {
@@ -228,10 +193,7 @@ function Dashboard2() {
         setCurrentProfile((currentProfile + 1) % matches.length);
       }
       setMatches(matches.filter((m) => m._id !== id));
-      // setCurrentProfile((currentProfile + 1) % matches.length);
-
       swiper?.slideTo(currentProfile);
-
       setsentConRequests([data, ...sentConRequests]);
       socket.emit("new-con-request-sent", data);
     } catch (error) {
@@ -264,7 +226,7 @@ function Dashboard2() {
     // e.stopPropogation();
     if (e.currentTarget != e.target) return;
     setCurrentPhoto(
-      (currentPhoto + 1) % (filtered[currentProfile]?.photos?.length + 1)
+      (currentPhoto + 1) % (matches[currentProfile]?.photos?.length + 1)
     );
   };
   useEffect(() => {
@@ -277,19 +239,20 @@ function Dashboard2() {
     <>
       {socketConnected && <Navbar user={user} socket={socket} />}
       <div
-        className="dashboard-container"
+        className="dashboard-container tag-dashboard-container"
         style={{
           display: "flex",
+          backgroundImage: `url(${imageMap.get(tag)})`,
         }}
       >
-        <VerticalNavbar />
+        {/* <VerticalNavbar /> */}
 
         <div className="suggestions-container">
           <div
             className="swiper-container-main"
             style={{ display: "flex", flexDirection: "column" }}
           >
-            {filtered.length > 0 && !loading && !err ? (
+            {matches.length > 0 && !loading && !err ? (
               <div className="current-profile">
                 {btnClicked && (
                   <IconButton
@@ -304,9 +267,9 @@ function Dashboard2() {
                   style={{
                     backgroundImage: `url(${
                       currentPhoto === 0
-                        ? serverPublic + filtered[currentProfile]?.profilePhoto
+                        ? serverPublic + matches[currentProfile]?.profilePhoto
                         : serverPublic +
-                          filtered[currentProfile]?.photos[currentPhoto - 1]
+                          matches[currentProfile]?.photos[currentPhoto - 1]
                     })`,
                     filter: btnClicked && "blur(15px)",
                   }}
@@ -329,8 +292,8 @@ function Dashboard2() {
                       }
                       onClick={() => setCurrentPhoto(0)}
                     ></div>
-                    {filtered[currentProfile]?.photos?.length > 0 &&
-                      filtered[currentProfile].photos.map((photo, index) => {
+                    {matches[currentProfile]?.photos?.length > 0 &&
+                      matches[currentProfile].photos.map((photo, index) => {
                         return (
                           // <div className="dashboard-other-image">
                           //   <img src={serverPublic + photo} alt="others" />
@@ -360,40 +323,36 @@ function Dashboard2() {
                         top: 0,
                       }}
                       onClick={() =>
-                        navigate(
-                          `/users/report/${filtered[currentProfile]._id}`
-                        )
+                        navigate(`/users/report/${matches[currentProfile]._id}`)
                       }
                     >
                       <FlagCircle fontSize="large" />
                     </IconButton>
 
                     <h6 className="profile--name">
-                      {filtered[currentProfile]?.callTag}
+                      {matches[currentProfile]?.callTag}
 
-                      {filtered[currentProfile]?.verStatus && (
+                      {matches[currentProfile]?.verStatus && (
                         <VerifiedIcon
                           style={{ fill: "cyan" }}
                           fontSize="small"
                         />
                       )}
                     </h6>
-
                     <p className="profile--age">
                       {Math.abs(
                         new Date(
-                          Date.now() - Date.parse(filtered[currentProfile]?.dob)
+                          Date.now() - Date.parse(matches[currentProfile]?.dob)
                         ).getUTCFullYear() - 1970
                       )}
                     </p>
-
                     <div className="profile--country">
                       {<LocationOnIcon fontSize="small" sx={{ padding: 0 }} />}
-                      {filtered[currentProfile]?.country}
+                      {matches[currentProfile]?.country}
                     </div>
                     <div className="suggestion-status-container">
                       {activeUsers.some(
-                        (user) => user.userId === filtered[currentProfile]?._id
+                        (user) => user.userId === matches[currentProfile]?._id
                       ) ? (
                         <div className="suggestion-online--dot"></div>
                       ) : (
@@ -402,8 +361,7 @@ function Dashboard2() {
 
                       <div className="suggestion-status">
                         {activeUsers.some(
-                          (user) =>
-                            user.userId === filtered[currentProfile]?._id
+                          (user) => user.userId === matches[currentProfile]?._id
                         )
                           ? "Online"
                           : "Offline"}
@@ -412,7 +370,7 @@ function Dashboard2() {
                     <Button
                       type="contained"
                       onClick={() =>
-                        handleConRequest(filtered[currentProfile]?._id)
+                        handleConRequest(matches[currentProfile]?._id)
                       }
                       className="connect-btn-sug"
                     >
@@ -421,7 +379,10 @@ function Dashboard2() {
                   </div>
                 </div>
 
-                <Box className="profileContent" ref={profileContentRef}>
+                <Box
+                  className="profileContent tagProfileContent"
+                  ref={profileContentRef}
+                >
                   <Zoom>
                     <Divider
                       sx={{
@@ -443,76 +404,76 @@ function Dashboard2() {
                     </Divider>
 
                     <div className="basic-info">
-                      {filtered[currentProfile]?.gender === "male" ? (
-                        <div className="profile--basic-info">
+                      {matches[currentProfile]?.gender === "male" ? (
+                        <div className="profile--basic-info tag-profile-basic-info">
                           {
                             <ManIcon
                               fontSize="small"
-                              className="sug-profile-content-ico"
+                              className="sug-profile-content-ico tag-profile-content-ico"
                             />
                           }
                           Man
                         </div>
                       ) : (
-                        <div className="profile--basic-info">
+                        <div className="profile--basic-info tag-profile-basic-info">
                           {
                             <WomanIcon
                               fontSize="small"
-                              className="sug-profile-content-ico"
+                              className="sug-profile-content-ico tag-profile-content-ico"
                             />
                           }
                           Woman
                         </div>
                       )}
 
-                      <div className="profile--basic-info">
+                      <div className="profile--basic-info tag-profile-basic-info">
                         {
                           <WorkIcon
                             fontSize="small"
-                            className="sug-profile-content-ico"
+                            className="sug-profile-content-ico tag-profile-content-ico"
                           />
                         }
-                        {filtered[currentProfile]?.occupation}
+                        {matches[currentProfile]?.occupation}
                       </div>
-                      <div className="profile--basic-info">
+                      <div className="profile--basic-info tag-profile-basic-info">
                         {
                           <HeightIcon
                             fontSize="small"
-                            className="sug-profile-content-ico"
+                            className="sug-profile-content-ico tag-profile-content-ico"
                           />
                         }
-                        {filtered[currentProfile]?.height + " ft"}
+                        {matches[currentProfile]?.height + " ft"}
                       </div>
-                      <div className="profile--basic-info">
+                      <div className="profile--basic-info tag-profile-basic-info">
                         {
                           <SchoolIcon
                             fontSize="small"
-                            className="sug-profile-content-ico"
+                            className="sug-profile-content-ico tag-profile-content-ico"
                           />
                         }
-                        {filtered[
+                        {matches[
                           currentProfile
                         ]?.educationLevel[0].toUpperCase() +
-                          filtered[currentProfile]?.educationLevel.slice(1)}
+                          matches[currentProfile]?.educationLevel.slice(1)}
                       </div>
-                      <div className="profile--basic-info">
+                      <div className="profile--basic-info tag-profile-basic-info">
                         {
                           <ChurchIcon
                             fontSize="small"
-                            className="sug-profile-content-ico"
+                            className="sug-profile-content-ico tag-profile-content-ico"
                           />
                         }
-                        {filtered[currentProfile]?.religion}
+                        {matches[currentProfile]?.religion}
                       </div>
-                      <div className="profile--basic-info">
+                      <div className="profile--basic-info tag-profile-basic-info">
                         {
                           <LanguageIcon
                             fontSize="small"
-                            className="sug-profile-content-ico"
+                            className="sug-profile-content-ico tag-profile-content-ico"
                           />
                         }
-                        {filtered[currentProfile]?.ethnicity[0].toUpperCase() +
-                          filtered[currentProfile]?.ethnicity.slice(1)}
+                        {matches[currentProfile]?.ethnicity[0].toUpperCase() +
+                          matches[currentProfile]?.ethnicity.slice(1)}
                       </div>
                     </div>
                     <Divider
@@ -534,41 +495,24 @@ function Dashboard2() {
                       ></Chip>
                     </Divider>
 
-                    <div className="looking-for">
-                      <div className="profile--lookingfor-goal">
-                        <div className="emoji-container">👋</div>
-                        <div>
-                          <span className="looking-for-span">Looking for</span>
-                          {" " +
-                            filtered[currentProfile]?.lookingFor
-                              ?.relationshipGoal}
-                        </div>
-                      </div>
+                    <div className="looking-for tag-looking-for">
                       <div>
-                        {filtered[
+                        {matches[
                           currentProfile
                         ]?.lookingFor?.gender[0].toUpperCase() +
-                          filtered[currentProfile]?.lookingFor?.gender?.slice(
-                            1
-                          )}
+                          matches[currentProfile]?.lookingFor?.gender?.slice(1)}
                       </div>
                       <div>
                         Age between{" "}
-                        {filtered[currentProfile]?.lookingFor?.ageRange?.minAge}{" "}
+                        {matches[currentProfile]?.lookingFor?.ageRange?.minAge}{" "}
                         and{" "}
-                        {filtered[currentProfile]?.lookingFor?.ageRange?.maxAge}
+                        {matches[currentProfile]?.lookingFor?.ageRange?.maxAge}
                       </div>
                       <div>
                         Height between{" "}
-                        {
-                          filtered[currentProfile]?.lookingFor?.height
-                            ?.minHeight
-                        }{" "}
+                        {matches[currentProfile]?.lookingFor?.height?.minHeight}{" "}
                         ft and{" "}
-                        {
-                          filtered[currentProfile]?.lookingFor?.height
-                            ?.maxHeight
-                        }{" "}
+                        {matches[currentProfile]?.lookingFor?.height?.maxHeight}{" "}
                         ft
                       </div>
                     </div>
@@ -590,8 +534,8 @@ function Dashboard2() {
                         label="Movies"
                       ></Chip>
                     </Divider>
-                    <div className="usertags">
-                      {filtered[currentProfile]?.interests?.movies?.map(
+                    <div className="usertags tag-usertags">
+                      {matches[currentProfile]?.interests?.movies?.map(
                         (movie) => (
                           <div>{movie}</div>
                         )
@@ -615,8 +559,8 @@ function Dashboard2() {
                         label="Music"
                       ></Chip>
                     </Divider>
-                    <div className="usertags">
-                      {filtered[currentProfile]?.interests?.music?.map(
+                    <div className="usertags tag-usertags">
+                      {matches[currentProfile]?.interests?.music?.map(
                         (music) => (
                           <div>{music}</div>
                         )
@@ -640,8 +584,8 @@ function Dashboard2() {
                         label="Social Media"
                       ></Chip>
                     </Divider>
-                    <div className="usertags">
-                      {filtered[currentProfile]?.interests?.socialMedia?.map(
+                    <div className="usertags tag-usertags">
+                      {matches[currentProfile]?.interests?.socialMedia?.map(
                         (social) => (
                           <div>{social}</div>
                         )
@@ -665,8 +609,8 @@ function Dashboard2() {
                         }}
                       ></Chip>
                     </Divider>
-                    <div className="usertags">
-                      {filtered[currentProfile]?.interests?.sports?.map((s) => (
+                    <div className="usertags tag-usertags">
+                      {matches[currentProfile]?.interests?.sports?.map((s) => (
                         <div>{s}</div>
                       ))}
                     </div>
@@ -689,8 +633,8 @@ function Dashboard2() {
                         }}
                       ></Chip>
                     </Divider>
-                    <div className="profile--description">
-                      {filtered[currentProfile]?.userDescription}
+                    <div className="profile--description tag-profile--description">
+                      {matches[currentProfile]?.userDescription}
                     </div>
                     <Divider
                       sx={{
@@ -711,8 +655,8 @@ function Dashboard2() {
                       ></Chip>
                     </Divider>
                     <div className="dashboard-profile-vid-container">
-                      {filtered[currentProfile]?.urls.length > 0 &&
-                        filtered[currentProfile]?.urls.map((vidUrl) => {
+                      {matches[currentProfile]?.urls.length > 0 &&
+                        matches[currentProfile]?.urls.map((vidUrl) => {
                           return (
                             <div className="profile-fav-songs">
                               <iframe
@@ -756,7 +700,7 @@ function Dashboard2() {
             ) : (
               ""
             )}
-            {filtered.length > 0 && !loading && !err && (
+            {matches.length > 0 && !loading && !err && (
               <Swiper
                 spaceBetween={2}
                 navigation={{
@@ -795,7 +739,7 @@ function Dashboard2() {
                   },
                 }}
                 modules={[Pagination]}
-                className="mySwiper"
+                className="mySwiper tag-swiper"
                 onSlideChange={(el) => {
                   setCurrentProfile(el.realIndex);
                   setCurrentPhoto(0);
@@ -805,8 +749,8 @@ function Dashboard2() {
                 grabCursor={true}
                 centeredSlides={true}
               >
-                {filtered.length > 0 && !err && !loading
-                  ? filtered.map((character, index) => {
+                {matches.length > 0 && !err && !loading
+                  ? matches.map((character, index) => {
                       return (
                         <SwiperSlide
                           key={character._id}
@@ -878,4 +822,4 @@ function Dashboard2() {
   );
 }
 
-export default Dashboard2;
+export default TagDashboard;
