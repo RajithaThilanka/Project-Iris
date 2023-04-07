@@ -499,6 +499,15 @@ function TagDashboard() {
                     </Divider>
 
                     <div className="looking-for tag-looking-for">
+                      <div className="profile--lookingfor-goal">
+                        <div className="emoji-container">👋</div>
+                        <div>
+                          <span className="looking-for-span">Looking for</span>
+                          {" " +
+                            matches[currentProfile]?.lookingFor
+                              ?.relationshipGoal}
+                        </div>
+                      </div>
                       <div>
                         {matches[
                           currentProfile
