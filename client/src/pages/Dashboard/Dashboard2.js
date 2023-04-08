@@ -197,6 +197,7 @@ function Dashboard2() {
             data: { data },
           },
         } = await getMatches();
+        console.log(data);
         setMatches(data);
         setLoading(false);
         setErr(null);
