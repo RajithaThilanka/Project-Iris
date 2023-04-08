@@ -3,7 +3,13 @@ const chatController = require('../controllers/chatController');
 const authController = require('../controllers/authController');
 const router = express.Router();
 
-router.route('/').post(authController.protect, chatController.accessChat);
+router
+  .route('/')
+  .post(
+    authController.protect,
+    authController.checkBlocked,
+    chatController.accessChat
+  );
 router.route('/').get(authController.protect, chatController.fetchChats);
 router
   .route('/group')

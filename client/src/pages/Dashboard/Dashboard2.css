@@ -121,7 +121,20 @@
   fill: var(--color-primary-dark) !important;
   stroke: var(--color-primary-dark) !important;
 }
-
+.sugg-card-profile-photo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.sugg-card-profile-photo img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
 .current-profile {
   padding: 0 0 2rem 0.5rem;
 
@@ -603,7 +616,7 @@
 }
 @media only screen and (max-width: 67em) {
   .dashboard-container {
-    padding-top: 7.5rem;
+    padding-top: 7.3rem;
   }
 }
 
@@ -673,6 +686,11 @@
   }
   .close {
     display: none;
+  }
+  .sugg-card-profile-photo img {
+    object-fit: contain;
+    object-position: 50% 50%;
+    aspect-ratio: 4 / 3;
   }
   .swiper-container-main {
     height: 100%;
@@ -807,9 +825,8 @@
 }
 
 @media only screen and (max-width: 31.5em) {
-  .sugg-card {
-    background-position: top;
-    background-size: cover;
+  .sugg-card-profile-photo img {
+    object-fit: cover;
   }
 }
 /* @media only screen and (max-width: 30em) {

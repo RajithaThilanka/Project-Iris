@@ -4,11 +4,13 @@ const authController = require('../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
-router.route('/invite/:id').patch(
-  authController.protect,
-  // authController.checkManualVerification,
-  friendsController.inviteFriend
-);
+router
+  .route('/invite/:id')
+  .patch(
+    authController.protect,
+    authController.checkBlocked,
+    friendsController.inviteFriend
+  );
 router.route('/accept/:id').patch(
   authController.protect,
   // authController.checkManualVerification,
