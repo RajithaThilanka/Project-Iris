@@ -5,6 +5,7 @@
 }
 .chat-page {
   width: 100%;
+  height: calc(100vh - 99px);
 }
 
 .chat-page-sub {
@@ -12,9 +13,8 @@
   grid-template-columns: 1fr 2fr;
   column-gap: 0rem;
   max-width: 105rem;
-  height: 100vh;
+  height: 100%;
   margin: auto;
-  max-height: 100vh;
 }
 /* style={{
                     marginLeft: "auto",
