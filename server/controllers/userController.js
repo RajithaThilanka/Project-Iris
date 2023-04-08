@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 const Connection = require('../models/connectionsModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-
+const Block = require('../models/blockModel');
 const APIFeatures = require('../utils/apiFeatures');
 const LookingFor = require('../models/lookingForModel');
 const Answer = require('../models/answerModel');
@@ -317,4 +317,95 @@ exports.getVerificationStatus = catchAsync(async (req, res, next) => {
       data: verificationStatus,
     },
   });
+});
+
+exports.blockUser = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+
+  const user = await Block.findOne({ userId: req.user._id });
+  if (!user) {
+    await Block.create({
+      userId: req.user._id,
+    });
+  }
+  const result = await Block.findOneAndUpdate(
+    { userId: req.user._id },
+    {
+      $push: {
+        blockedUsers: id,
+      },
+    },
+    { new: true }
+  ).populate('userId blockedUsers');
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: result,
+    },
+  });
+});
+
+exports.unblockUser = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+
+  const user = await Block.findOne({ userId: req.user._id });
+  if (!user) {
+    await Block.create({
+      userId: req.user._id,
+    });
+  }
+  const result = await Block.findOneAndUpdate(
+    { userId: req.user._id },
+    {
+      $pull: {
+        blockedUsers: id,
+      },
+    },
+    { new: true }
+  ).populate('userId blockedUsers');
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: result,
+    },
+  });
+});
+
+exports.getBlockedUsers = catchAsync(async (req, res, next) => {
+  const result = await Block.findOne({ userId: req.user._id }).populate(
+    'userId blockedUsers'
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: result,
+    },
+  });
+});
+
+exports.checkBlocked = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+
+  const user = await Block.findOne({
+    $and: [
+      {
+        userId: req.user._id,
+      },
+      {
+        blockedUsers: {
+          $in: [id],
+        },
+      },
+    ],
+  });
+  if (user) {
+    return next(
+      new AppError(
+        'User privacy settings does not allow you to perform this action',
+        401
+      )
+    );
+  }
+  return next();
 });

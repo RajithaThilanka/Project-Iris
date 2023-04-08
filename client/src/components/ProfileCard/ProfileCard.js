@@ -11,6 +11,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CoffeeIcon from "@mui/icons-material/Coffee";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import {
   acceptFriend,
   cancelFriendRequest,
@@ -239,7 +240,8 @@ function ProfileCard({ conUser, cardType, socket }) {
       onMouseLeave={() => setVisible(false)}
     >
       <div className="image-section">
-        <img
+        <LazyLoadImage
+          effect="blur"
           src={serverPublic + otherUser.profilePhoto}
           alt={otherUser.callTag}
           className="profile-img"
