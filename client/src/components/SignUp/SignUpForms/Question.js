@@ -24,9 +24,9 @@ import { getQuestionArray } from "../../../api/QuestionRequests";
 import { signupAccountInfo, addAnswer, signupLookingforInfo, signupProfileView } from "../../../api/AuthRequests";
 
 function Question() {
-    const {
-        state: { id },
-    } = useLocation();
+    // const {
+    //     state: { id },
+    // } = useLocation();
     const dispatch = useDispatch();
     const [allQuestions, setAllQuestions] = useState(null)
     
@@ -78,12 +78,10 @@ function Question() {
     const incrementCount = () => {
         setCount(count + 1);
         console.log('incrementCount after update:', count); // Debug statement
-        setAnswersArrayForOneQuestion = allAnswersArray[count];
-        setAtomAnswerArray = answersArrayForOneQuestion[count];
     };
     console.log('incrementCount after update function:', count); // Debug statement
     
-    
+    //const atomAnswerArray = allAnswersArray ? allAnswersArray[count][count] : console.log('allAnswersArray is null'); 
 
     //const answersArrayForOneQuestion = allAnswersArray[count];
 
@@ -98,6 +96,8 @@ function Question() {
         // addAnswer(allQuestions[0]._id);
         console.log('handle Data called'); // Debug statement
         // setQuestion(allQuestions[1].question);
+        setAnswersArrayForOneQuestion(allAnswersArray[count]);
+        setAtomAnswerArray(answersArrayForOneQuestion[count]);
         console.log("handle Data");
         //console.log(newQuestion);
         
@@ -136,7 +136,7 @@ function Question() {
             } = await signupLookingforInfo(formData);
             setErr(null);
             setLoading(false);
-            navigate(`/auth/signup/lookingfor-info/${id}`, { replace: true });
+            //navigate(`/auth/signup/lookingfor-info/${id}`, { replace: true });
         } catch (error) {
             console.log(error);
             setErr(error);
@@ -182,8 +182,8 @@ function Question() {
     // const buttonCount = answersArrayForOneQuestion ? answersArrayForOneQuestion.length : console.log("buttonCount");
     // atomAnswerArray ? console.log("atomAnswerArray can use") : console.log("atomAnswerArray is null");
 
-    console.log('Question array', allQuestionArray);
-    console.log('Answers array', allAnswersArray);
+    console.log('All Question array', allQuestionArray);
+    console.log('All Answers array', allAnswersArray);
     console.log('Answers array', allAnswersArray[0]);
     console.log('Question array len', questionArrayLength);
     console.log('Answers array len', answerArrayLength);
