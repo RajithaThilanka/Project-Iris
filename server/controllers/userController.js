@@ -337,6 +337,19 @@ exports.blockUser = catchAsync(async (req, res, next) => {
     },
     { new: true }
   ).populate('userId blockedUsers');
+  await Connection.findOneAndDelete({
+    $or: [
+      {
+        senderId: req.user._id,
+        receiverId: id,
+      },
+      {
+        senderId: id,
+        receiverId: req.user._id,
+      },
+    ],
+  });
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -382,30 +395,4 @@ exports.getBlockedUsers = catchAsync(async (req, res, next) => {
       data: result,
     },
   });
-});
-
-exports.checkBlocked = catchAsync(async (req, res, next) => {
-  const { id } = req.body;
-
-  const user = await Block.findOne({
-    $and: [
-      {
-        userId: req.user._id,
-      },
-      {
-        blockedUsers: {
-          $in: [id],
-        },
-      },
-    ],
-  });
-  if (user) {
-    return next(
-      new AppError(
-        'User privacy settings does not allow you to perform this action',
-        401
-      )
-    );
-  }
-  return next();
 });
