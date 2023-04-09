@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import SelectDoc from "../../components/UserVerification/SelectDocument/SelectDoc";
 import SelectID from "../../components/UserVerification/IdentityVerifcation/SelectID";
 import LiveSelfy from "../../components/UserVerification/FacialVerification/LiveSelfy";
+import { requestManualVerify } from "../../api/UserRequests";
 
 const steps = [
   "Required Documents",
@@ -24,6 +25,13 @@ const steps = [
 
 export default function UserVerfication(props) {
   const [profile, setProfile] = useState(null);
+  const [selectedDocData, setSelectedDocData] = useState(null);
+  const [selectedLiveImageData, setselectedLiveImageData] = useState(null);
+
+  const [selectedImageData, setSelectedImageData] = useState({
+    newImageName: null,
+    newImageName2: null,
+  });
 
   const {
     data: { user },
@@ -32,7 +40,28 @@ export default function UserVerfication(props) {
 
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    // Perform any necessary form validation here
+
+    // Call the API to submit the form data
+    if (activeStep === steps.length - 1) {
+      try {
+        await requestManualVerify(
+          "abc",
+          "abc",
+          "abc",
+          "abc"
+          // selectedDocData,
+          // selectedLiveImageData,
+          // selectedImageData.newImageName,
+          // selectedImageData.newImageName2
+        );
+        console.log("Verfication Sended");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -42,6 +71,26 @@ export default function UserVerfication(props) {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleDocSelected = (selectedDocData, method) => {
+    setSelectedDocData(selectedDocData);
+    console.log(`Verifaction method: ${selectedDocData}`);
+  };
+
+  const handleImageSelected = (newImageName, newImageName2) => {
+    setSelectedImageData({
+      newImageName: newImageName,
+      newImageName2: newImageName2,
+    });
+    console.log(
+      `Id Card Image names: ${selectedImageData.newImageName}, ${selectedImageData.newImageName2}`
+    );
+  };
+
+  const handleLiveImageSelected = (selectedDocData, liveImageName) => {
+    setselectedLiveImageData(liveImageName);
+    console.log(`Live Image Name : ${selectedLiveImageData}`);
   };
 
   return (
@@ -127,7 +176,11 @@ export default function UserVerfication(props) {
                           justifyContent: "center",
                         }}
                       >
-                        <SelectDoc />
+                        <SelectDoc
+                          onSelectDoc={(selectedDocData, method) =>
+                            handleDocSelected(selectedDocData, method)
+                          }
+                        />
                       </Box>
                     </Stack>
                   </Box>
@@ -163,7 +216,11 @@ export default function UserVerfication(props) {
                           justifyContent: "center",
                         }}
                       >
-                        <SelectID />
+                        <SelectID
+                          onSelectImage={(newImageName, newImageName2) =>
+                            handleImageSelected(newImageName, newImageName2)
+                          }
+                        />
                       </Box>
                     </Stack>
                   </Box>
@@ -199,7 +256,11 @@ export default function UserVerfication(props) {
                           justifyContent: "center",
                         }}
                       >
-                        <LiveSelfy />
+                        <LiveSelfy
+                          onSelectLiveImage={(liveImageName) =>
+                            console.log(liveImageName)
+                          }
+                        />
                       </Box>
                     </Stack>
                   </Box>

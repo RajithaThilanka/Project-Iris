@@ -6,6 +6,10 @@ const manualVerificationSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    verificationMethod: {
+      type: String,
+      required: true,
+    },
     liveImage: {
       type: String,
       required: true,

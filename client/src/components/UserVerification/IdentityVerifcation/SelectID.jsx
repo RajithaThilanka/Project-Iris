@@ -13,10 +13,12 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { uploadImage } from "../../../actions/UploadAction";
 
-export default function SelectID() {
+export default function SelectID(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const [image, setImage] = useState(null);
   const [image2, setImage2] = useState(null);
+  const [frontImageName, setFrontImageName] = useState("");
+  const [backImageName, setBackImageName] = useState("");
   const dispatch = useDispatch();
 
   //set image
@@ -41,13 +43,12 @@ export default function SelectID() {
     if (image) {
       const data = new FormData();
       const newImageName = Date.now() + image.name;
+      setFrontImageName(newImageName);
       data.append("name", newImageName);
       data.append("file", image);
 
       try {
         await dispatch(uploadImage(data));
-        // setData({ ...formData, profilePhoto: newImageName });
-        // await updateMe({ profilePhoto: newImageName });
         console.log("NIC font upload and name update success");
       } catch (err) {
         console.log(err);
@@ -60,6 +61,7 @@ export default function SelectID() {
     if (image2) {
       const data2 = new FormData();
       const newImageName2 = Date.now() + image2.name;
+      setBackImageName(newImageName2);
       data2.append("name", newImageName2);
       data2.append("file", image2);
 
@@ -73,6 +75,8 @@ export default function SelectID() {
     } else {
       console.log("Upload Error");
     }
+
+    props.onSelectImage(frontImageName, backImageName);
   };
 
   const [state, setState] = React.useState({

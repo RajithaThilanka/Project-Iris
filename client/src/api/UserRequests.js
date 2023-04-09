@@ -123,3 +123,16 @@ export const getSearchTokens = () => API.get(`/users/search-tokens`);
 
 export const getTagSuggestions = (tag) =>
   API.patch("/users/me/tag-suggestions", { tag: tag });
+
+export const requestManualVerify = (
+  verificationMethod,
+  liveImage,
+  nicFront,
+  nicBack
+) =>
+  API.post("/users/me/manual-verify", {
+    verificationMethod,
+    liveImage,
+    nicFront,
+    nicBack,
+  });

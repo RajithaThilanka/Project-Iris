@@ -9,20 +9,34 @@ import "./camButtonStyle.css";
 import { useDispatch } from "react-redux";
 import { uploadImage } from "../../../actions/UploadAction";
 
-export default function LiveSelfy() {
+export default function LiveSelfy(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const dispatch = useDispatch();
 
   const webcamRef = useRef(null);
   const [url, setUrl] = React.useState(null);
+  const [liveImageName, setLiveImageName] = useState("");
 
   const handleUploadAndImageNameUpdate = async (e) => {
     if (url !== null) {
       const data = new FormData();
-      const newImageName = Date.now() + url.name;
-      data.append("name", newImageName);
-      data.append("file", url);
+      const newLiveImageName = Date.now() + ".jpeg";
+
+      // Convert data URL to blob
+      const blob = await fetch(url).then((r) => r.blob());
+
+      // Create new File object with desired name and type
+      const file = new File([blob], newLiveImageName, { type: "image/jpeg" });
+
+      data.append("name", newLiveImageName);
+      setLiveImageName(newLiveImageName);
+
+      //props.onSelectLiveImage(liveImageName);
+
+      data.append("file", file);
+
       try {
+        props.onSelectLiveImage(liveImageName);
         await dispatch(uploadImage(data));
         console.log("Live image upload success");
       } catch (err) {

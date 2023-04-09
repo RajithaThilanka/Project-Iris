@@ -117,3 +117,6 @@ export const UpdateMyPassword = (passwordCurrent, password, passwordConfirm) =>
   });
 
 export const updateMe = (data) => API.patch(`/users/me/update`, data);
+
+export const requestManualVerification = (liveImage, nicFront, nicBack) =>
+  API.post(`/users/me/manual-verify`, { liveImage, nicFront, nicBack });

@@ -610,9 +610,10 @@ exports.requestManualVerify = catchAsync(async (req, res, next) => {
       }
     }
   }
-  const { liveImage, nicFront, nicBack } = req.body;
+  const { verificationMethod, liveImage, nicFront, nicBack } = req.body;
   const manualVerificationRequest = await ManualVerification.create({
     userId,
+    verificationMethod,
     liveImage,
     nicFront,
     nicBack,
