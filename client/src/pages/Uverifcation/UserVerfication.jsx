@@ -46,17 +46,19 @@ export default function UserVerfication(props) {
     // Call the API to submit the form data
     if (activeStep === steps.length - 1) {
       try {
-        await requestManualVerify(
-          "abc",
-          "abc",
-          "abc",
-          "abc"
-          // selectedDocData,
-          // selectedLiveImageData,
-          // selectedImageData.newImageName,
-          // selectedImageData.newImageName2
-        );
-        console.log("Verfication Sended");
+        // await requestManualVerify(
+
+        //    selectedDocData,
+        //    selectedLiveImageData,
+        //    selectedImageData.newImageName,
+        //    selectedImageData.newImageName2
+        // );
+        console.log(selectedDocData);
+        console.log(selectedLiveImageData);
+        console.log(selectedImageData.newImageName);
+        console.log(selectedImageData.newImageName2);
+
+        //console.log("Verfication Sended");
       } catch (error) {
         console.log(error);
       }

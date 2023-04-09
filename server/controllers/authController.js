@@ -13,6 +13,7 @@ const ManualVerification = require('../models/manualVerificationModel');
 const { formatMils } = require('../utils/utilFuncs');
 const Answer = require('../models/answerModel');
 const Question = require('../models/questionModel');
+const Block = require('../models/blockModel');
 const fs = require('fs');
 const { dirname } = require('path');
 const signToken = id =>
@@ -667,4 +668,30 @@ exports.verifyAccount = catchAsync(async (req, res, next) => {
       data: verifiedUser,
     },
   });
+});
+
+exports.checkBlocked = catchAsync(async (req, res, next) => {
+  const id = req.params?.id || req.body?.userId;
+
+  const user = await Block.findOne({
+    $and: [
+      {
+        userId: id,
+      },
+      {
+        blockedUsers: {
+          $in: [req.user._id],
+        },
+      },
+    ],
+  });
+  if (user) {
+    return next(
+      new AppError(
+        'User privacy settings does not allow you to perform this action',
+        401
+      )
+    );
+  }
+  return next();
 });

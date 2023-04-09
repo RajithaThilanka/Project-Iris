@@ -157,7 +157,8 @@ function MyChat({ fetchAgain, setFetchAgain, socket }) {
     <div
       className="chat"
       style={{
-        backgroundImage: `url(${serverPublic + "chat-background.png"}`,
+        backgroundImage:
+          'url("https://live.staticflickr.com/65535/52800386429_19cf461e23_k.jpg")',
         display: window.innerWidth <= 896 && selectedChat ? "none" : "flex",
       }}
     >
@@ -171,7 +172,7 @@ function MyChat({ fetchAgain, setFetchAgain, socket }) {
           onClick={handleBackClick}
           style={{ display: backBtnVisible ? "flex" : "none" }}
         >
-          <ArrowBackIcon style={{ color: "#000", marginLeft: "0.8rem" }} />
+          <ArrowBackIcon style={{ color: "#fff", marginLeft: "0.8rem" }} />
         </IconButton>
         <form className="search">
           <input
@@ -214,8 +215,8 @@ function MyChat({ fetchAgain, setFetchAgain, socket }) {
                   style={{
                     backgroundColor:
                       selectedChat?._id === chat._id
-                        ? "rgba(255,255,255,0.6)"
-                        : "rgba(255,255,255,0.4)",
+                        ? "rgba(255,255,255,0.5)"
+                        : "rgba(255,255,255,0.2)",
                   }}
                   className="chat-contact-container"
                 >
@@ -289,7 +290,7 @@ function MyChat({ fetchAgain, setFetchAgain, socket }) {
                                 }}
                               />
                             ) : chat.latestMessage &&
-                              chat.latestMessage.sender._id == loggedUser._id &&
+                              chat.latestMessage.sender._id != loggedUser._id &&
                               chat.latestMessage.isSeen === true ? (
                               <DoneAllIcon
                                 style={{ color: "cyan" }}

@@ -31,6 +31,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import SwiperCore, { EffectCoverflow, Navigation } from "swiper/core";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
@@ -302,16 +303,23 @@ function Dashboard2() {
                 <div
                   className="sugg-card"
                   style={{
-                    backgroundImage: `url(${
-                      currentPhoto === 0
-                        ? serverPublic + filtered[currentProfile]?.profilePhoto
-                        : serverPublic +
-                          filtered[currentProfile]?.photos[currentPhoto - 1]
-                    })`,
                     filter: btnClicked && "blur(15px)",
                   }}
-                  onClick={handleTap}
                 >
+                  <div className="sugg-card-profile-photo">
+                    <LazyLoadImage
+                      effect="blur"
+                      src={
+                        currentPhoto === 0
+                          ? serverPublic +
+                            filtered[currentProfile]?.profilePhoto
+                          : serverPublic +
+                            filtered[currentProfile]?.photos[currentPhoto - 1]
+                      }
+                      alt="profile"
+                      onClick={handleTap}
+                    />
+                  </div>
                   {!btnClicked && (
                     <IconButton
                       className="more-info-btn"
@@ -737,7 +745,8 @@ function Dashboard2() {
                 style={{ height: "100vh" }}
               >
                 <div className="dashboard-loading-photo">
-                  <img
+                  <LazyLoadImage
+                    effect="blur"
                     src={serverPublic + user.profilePhoto}
                     alt="loading-user"
                   />
@@ -812,11 +821,11 @@ function Dashboard2() {
                           key={character._id}
                           style={{ positon: "relative" }}
                         >
-                          <img
+                          <LazyLoadImage
+                            effect="blur"
                             src={serverPublic + character.profilePhoto}
                             alt={character._id}
                           />
-
                           <div className="sug-profile-header">
                             <div className="sug-profile-calltag">
                               {character.callTag}

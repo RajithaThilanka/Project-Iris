@@ -64,6 +64,14 @@ router
   .route('/me/ver-status')
   .get(authController.protect, userController.getVerificationStatus);
 router
+  .route('/me/block')
+  .get(authController.protect, userController.getBlockedUsers)
+  .patch(authController.protect, userController.blockUser);
+router
+  .route('/me/unblock')
+
+  .patch(authController.protect, userController.unblockUser);
+router
   .route('/me')
   .get(authController.protect, userController.getMe, userController.getUser);
 

@@ -1,5 +1,5 @@
 .filter-bar {
-  background-color: #eee;
+  background-color: #ddd;
   -webkit-box-flex: 0;
 
   flex: 0 0 18%;
@@ -15,7 +15,7 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
   min-height: 100vh;
-  border-right: 2px solid #000;
+
   z-index: 100;
   position: absolute;
   top: 4.6%;
@@ -32,31 +32,40 @@
 @keyframes move-to-right {
   0% {
     left: -100%;
-    opacity: 0;
+  }
+
+  10% {
+    left: -90%;
+  }
+
+  20% {
+    left: -80%;
   }
 
   30% {
     left: -70%;
-    opacity: 0.2;
   }
 
+  40% {
+    left: -60%;
+  }
   50% {
     left: -50%;
-    opacity: 0.4;
   }
-
+  60% {
+    left: -40%;
+  }
   70% {
     left: -30%;
-    opacity: 0.6;
   }
-
+  80% {
+    left: -20%;
+  }
   90% {
     left: -10%;
-    opacity: 0.8;
   }
   100% {
     left: 0%;
-    opacity: 1;
   }
 }
 

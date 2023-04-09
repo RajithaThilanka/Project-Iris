@@ -1,31 +1,25 @@
 .chat-page-container {
-  background: #eee;
-  margin-top: 6.7rem;
   flex: 0 0 82%;
+  background-color: #eee;
+  margin-top: 6.8rem;
+  min-height: calc(100vh - 68.06px);
 }
 .chat-page {
   width: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+  max-width: 140rem;
 }
 
 .chat-page-sub {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1.5fr 2fr;
   column-gap: 0rem;
   max-width: 105rem;
-  height: 100vh;
+  min-height: 100%;
   margin: auto;
-  max-height: 100vh;
 }
-/* style={{
-                    marginLeft: "auto",
-                    fontSize: "4rem",
-                    color: "var(--color-primary)",
-                    position: "absolute",
-                    right: 0,
-                    top: "50%",
-                    padding: "1rem 2rem",
-                    textAlign: "center",
-                  }} */
+
 .chat-page-sub h4 {
   margin-left: auto;
   font-size: 3rem;
@@ -41,54 +35,38 @@
   .chat-page-sub {
     grid-template-columns: 1fr 1.5fr;
   }
+  .chat-page-container {
+    min-height: calc(100vh - 64.78px);
+    margin-top: 7.5rem;
+  }
 }
 /* tbd */
 
-@media only screen and (max-width: 56em) {
+@media only screen and (max-width: 56.25em) {
   .chat-page-sub {
     display: flex;
   }
   .chat-page-sub h4 {
     display: none;
   }
-}
-
-@media only screen and (max-width: 67em) {
   .chat-page-container {
-    margin-top: 7.3rem;
-  }
-}
-@media only screen and (max-width: 41em) {
-  .chat-page-container {
-    max-height: 100vh;
-    height: 100vh;
-    margin-top: 0;
-    position: relative;
-  }
-  .chat-page {
-    position: absolute;
-    height: 86.4%;
-    top: 7.6rem;
-    padding: 0;
-  }
-  .chat-page-sub {
-    height: 100%;
+    min-height: calc(100vh - 98.38px);
+    margin-top: 7.4rem;
+    margin-bottom: 34.38px;
   }
 }
 
 @media only screen and (max-width: 37.5em) {
-  .chat-page {
-    position: absolute;
-    height: 86.4%;
-    top: 5.7rem;
+  .chat-page-container {
+    min-height: calc(100vh - 82.38px);
+    margin-top: 5.6rem;
   }
 }
 
-@media only screen and (max-width: 37em) {
-  .chat-page {
-    position: absolute;
-    height: 86.4%;
-    top: 6.7rem;
+@media only screen and (max-width: 30.75em) {
+  .chat-page-container {
+    min-height: calc(100vh - 90.8px);
+    margin-top: 6.5rem;
   }
 }
 

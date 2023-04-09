@@ -50,6 +50,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [err, setErr] = useState(null);
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -93,6 +94,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     if (!selectedChat) return;
     try {
       setLoading(true);
+      setErr(null);
       const {
         data: {
           data: { data },
@@ -103,6 +105,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      setErr(error);
       if (error.response.status === 401) {
         socket?.disconnect();
         dispatch(logout());
@@ -389,17 +393,27 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
               )}
 
               <div className="input-emoji-chat-container" ref={inputRef}>
-                <InputEmoji
-                  placeholder="Type a message"
-                  onChange={typingHandler}
-                  value={newMessage}
-                  onEnter={sendMessage}
-                  theme="dark"
-                  fontSize={12}
-                />
-                <IconButton sx={{ color: "#fff" }} onClick={sendMessage}>
-                  <SendIcon />
-                </IconButton>
+                {!err ? (
+                  <>
+                    <InputEmoji
+                      placeholder="Type a message"
+                      onChange={typingHandler}
+                      value={newMessage}
+                      onEnter={sendMessage}
+                      theme="dark"
+                      fontSize={12}
+                    />
+                    <IconButton sx={{ color: "#fff" }} onClick={sendMessage}>
+                      <SendIcon />
+                    </IconButton>
+                  </>
+                ) : err.response.status === 400 ? (
+                  <p className="chat-block-err-msg">
+                    {err.response.data.message}
+                  </p>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const User = require('../models/userModel');
 const Chat = require('../models/chatModel');
 const AppError = require('../utils/appError');
-
+const Block = require('../models/blockModel');
 exports.sendMessage = catchAsync(async (req, res, next) => {
   const { content, chatId } = req.body;
   if (!content | !chatId) {
@@ -100,4 +100,55 @@ exports.setSeenAll = catchAsync(async (req, res, next) => {
   } catch (error) {
     return next(new AppError(error, 400));
   }
+});
+
+exports.checkChatBlocked = catchAsync(async (req, res, next) => {
+  const loggedUser = req.user._id;
+  const chatId = req.params?.chatId || req.body?.chatId;
+
+  const chat = await Chat.findById(chatId);
+  let otherUser = chat.users.find(u => u + '' != loggedUser);
+  otherUser = otherUser + '';
+  const user = await Block.findOne({
+    $and: [
+      {
+        userId: otherUser,
+      },
+      {
+        blockedUsers: {
+          $in: [loggedUser],
+        },
+      },
+    ],
+  });
+  console.log(user);
+  if (user) {
+    return next(
+      new AppError(
+        'User privacy settings does not allow you to perform this action',
+        401
+      )
+    );
+  }
+  const result = await Block.findOne({
+    $and: [
+      {
+        userId: loggedUser,
+      },
+      {
+        blockedUsers: {
+          $in: [otherUser],
+        },
+      },
+    ],
+  });
+  if (result) {
+    return next(
+      new AppError(
+        'Your privacy settings does not allow you to perform this action',
+        400
+      )
+    );
+  }
+  return next();
 });

@@ -37,6 +37,7 @@ import { Stack } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import DateTimePicker from "react-datetime-picker";
 import DialogBox from "../DialogBox/DialogBox";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const style = {
   position: "absolute",
@@ -290,7 +291,8 @@ function FriendProfileCard({ conUser, cardType, socket }) {
         </Box>
       </Modal>
 
-      <img
+      <LazyLoadImage
+        effect="blur"
         src={serverPublic + otherUser.profilePhoto}
         alt={otherUser.callTag}
         className="profile-img"
