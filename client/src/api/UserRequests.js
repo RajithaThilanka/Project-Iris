@@ -124,6 +124,7 @@ export const getSearchTokens = () => API.get(`/users/search-tokens`);
 export const getTagSuggestions = (tag) =>
   API.patch("/users/me/tag-suggestions", { tag: tag });
 
+export const blockUser = (id) => API.patch("/users/me/block", { id });
 export const requestManualVerify = (
   verificationMethod,
   liveImage,
