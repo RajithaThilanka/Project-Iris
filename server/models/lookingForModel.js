@@ -5,7 +5,9 @@ const LookingForSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-
+  relationshipGoal: {
+    type: String,
+  },
   gender: {
     type: String,
     enum: {

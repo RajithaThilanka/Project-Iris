@@ -9,17 +9,51 @@ import { styled } from "@mui/material/styles";
 import { IconButton } from "@mui/material";
 import UserVerificationView from "../UserVerificationData/UserVerificationView";
 import { useState, useEffect } from "react";
-
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import { Checkbox, FormControlLabel, Popover } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import jsonData from "./AllData.json"; // Import the JSON file
 
 import { getAllVeriReq } from "../../../api/AdminRequests";
 import { manualVarifyAccount } from "../../api/AdminRequests";
 
 export default function VerificationRequests() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [checked, setChecked] = useState(false);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "popup-checkbox" : undefined;
+
   const [rows, setRows] = useState([]);
   const [liveimg, setLiveimg] = useState(null);
   const [idFront, setidFront] = useState(null);
   const [idBack, setidBack] = useState(null);
+
+  const showRequest = (params) => {
+    let liveimg;
+    let idFront;
+    let idBack;
+    try {
+      liveimg = params.row.liveImage;
+      idFront = params.row.nicFront;
+      idBack = params.row.nicBack;
+      setLiveimg(liveimg);
+      setidFront(idFront);
+      setidBack(idBack);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const columns = [
     { field: "_id", headerName: "ID", width: 90 },
     {
@@ -59,35 +93,85 @@ export default function VerificationRequests() {
             });
         };
 
-        const showRequest = (e) => {
-          liveimg = params.row.liveImage;
-          idFront = params.row.nicFront;
-          idBack = params.row.nicBack;
-          setLiveimg(liveimg);
-          setidFront(idFront);
-          setidBack(idBack);
+        const showRequest = () => {
+          showRequest(params);
         };
         const deleteRequest = (e) => {};
 
         return (
-          <Stack direction="row" spacing={1}>
-            <IconButton size="small" onClick={approveRequest} helperText="Done">
-              <DoneIcon />
-            </IconButton>
-            <IconButton size="small" onClick={showRequest}>
-              <VisibilityIcon />
-            </IconButton>
-            <IconButton size="small" onClick={showRequest}>
-              <DeleteIcon />
-            </IconButton>
-          </Stack>
+          <>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <Box sx={{ width: "100%", height: "100%", padding: "2px" }}>
+                <Stack
+                  direction="row"
+                  justifyContent="flex-end"
+                  alignItems="flex-start"
+                >
+                  <IconButton onClick={handleClose}>
+                    <CloseIcon />
+                  </IconButton>
+                </Stack>
+                <FormControl
+                  sx={{ m: 3 }}
+                  component="fieldset"
+                  variant="standard"
+                >
+                  <FormLabel component="legend">
+                    Varification Fail Reason
+                  </FormLabel>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox onChange={""} name="checkbox1" />}
+                      label="Not Clear NIC Photo"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={""} name="checkbox2" />}
+                      label="Not Clear Live Photo"
+                    />
+                  </FormGroup>
+                  <Stack direction="row" spacing={2}>
+                    <Button variant="contained" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="contained">Submit</Button>
+                  </Stack>
+                </FormControl>
+              </Box>
+            </Popover>
+
+            <Stack direction="row" spacing={1}>
+              <IconButton
+                size="small"
+                onClick={approveRequest}
+                helperText="Done"
+              >
+                <DoneIcon />
+              </IconButton>
+
+              <IconButton size="small" onClick={handleClick}>
+                <DeleteIcon />
+              </IconButton>
+            </Stack>
+          </>
         );
       },
     },
   ];
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
   ///API call
   useEffect(() => {
     const getVerReqData = async () => {
@@ -122,10 +206,10 @@ export default function VerificationRequests() {
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[]}
-            checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
             getRowId={(row) => row._id}
+            onRowClick={showRequest}
           />
         </Box>
         <Box>

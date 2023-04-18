@@ -2,10 +2,11 @@ const User = require('../models/userModel');
 const Connection = require('../models/connectionsModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-
+const Block = require('../models/blockModel');
 const APIFeatures = require('../utils/apiFeatures');
 const LookingFor = require('../models/lookingForModel');
 const Answer = require('../models/answerModel');
+const ManualVerification = require('../models/manualVerificationModel');
 
 const filterObj = (obj, ...notAllowedFields) => {
   const newObj = {};
@@ -194,6 +195,35 @@ exports.getUsers = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getUserNames = catchAsync(async (req, res, next) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          {
+            firstname: {
+              $regex: req.query.search,
+              $options: 'i',
+            },
+          },
+          {
+            email: { $regex: req.query.search, $options: 'i' },
+          },
+        ],
+      }
+    : {};
+  const users = await User.find(keyword)
+    .find({ _id: { $ne: req.user._id } })
+    .select('firstname lastname');
+
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      data: users,
+    },
+  });
+});
+
 exports.fetchConnections = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   console.log(userId);
@@ -271,6 +301,98 @@ exports.fetchConnections = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       data: finalConnections,
+    },
+  });
+});
+
+exports.getVerificationStatus = catchAsync(async (req, res, next) => {
+  const verificationStatus = await ManualVerification.findOne({
+    userId: req.user._id,
+  });
+  // verificationStatus = verificationStatus || null;
+  console.log('hey');
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: verificationStatus,
+    },
+  });
+});
+
+exports.blockUser = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+
+  const user = await Block.findOne({ userId: req.user._id });
+  if (!user) {
+    await Block.create({
+      userId: req.user._id,
+    });
+  }
+  const result = await Block.findOneAndUpdate(
+    { userId: req.user._id },
+    {
+      $push: {
+        blockedUsers: id,
+      },
+    },
+    { new: true }
+  ).populate('userId blockedUsers');
+  await Connection.findOneAndDelete({
+    $or: [
+      {
+        senderId: req.user._id,
+        receiverId: id,
+      },
+      {
+        senderId: id,
+        receiverId: req.user._id,
+      },
+    ],
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: result,
+    },
+  });
+});
+
+exports.unblockUser = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+
+  const user = await Block.findOne({ userId: req.user._id });
+  if (!user) {
+    await Block.create({
+      userId: req.user._id,
+    });
+  }
+  const result = await Block.findOneAndUpdate(
+    { userId: req.user._id },
+    {
+      $pull: {
+        blockedUsers: id,
+      },
+    },
+    { new: true }
+  ).populate('userId blockedUsers');
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: result,
+    },
+  });
+});
+
+exports.getBlockedUsers = catchAsync(async (req, res, next) => {
+  const result = await Block.findOne({ userId: req.user._id }).populate(
+    'userId blockedUsers'
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: result,
     },
   });
 });

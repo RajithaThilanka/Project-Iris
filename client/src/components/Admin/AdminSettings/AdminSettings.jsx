@@ -11,6 +11,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
+import "./settingsStyle.css";
+
 import ScheduleIcon from "@mui/icons-material/Schedule";
 function CustomToolbar(props) {
   return null;
@@ -28,7 +30,10 @@ export default function AdminSettings() {
       setIsLoading(false);
     }
   };
-
+  const handleClearDate = () => {
+    setSelectedDate(null);
+    setConvertDate(null);
+  };
   const [selectedDate, setSelectedDate] = useState(null);
   const [convertdate, setConvertDate] = useState(null);
   const handleButtonClick = () => {
@@ -70,17 +75,12 @@ export default function AdminSettings() {
               boxShadow: 2,
             }}
           >
-            <LocalizationProvider
-              dateAdapter={AdapterDayjs}
-              localeText={{ cancelButtonText: "Clear" }}
-            >
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <StaticDateTimePicker
-                localeText={{ cancelText: "Clear" }}
                 orientation="landscape"
                 value={selectedDate}
                 onChange={handleDateChange}
                 ToolbarComponent={false}
-                disableToolbar
               />
             </LocalizationProvider>
           </Box>
@@ -93,9 +93,14 @@ export default function AdminSettings() {
             //padding={25}
           >
             <Typography variant="h5">Hate Speech Schedule</Typography>
-            <Button variant="contained" onClick={handleButtonClick}>
-              Schedule Now
-            </Button>
+            <Stack direction="row" spacing={2}>
+              <Button variant="contained" onClick={handleClearDate}>
+                Clear
+              </Button>
+              <Button variant="contained" onClick={handleButtonClick}>
+                Schedule Now
+              </Button>
+            </Stack>
           </Stack>
 
           <Stack
@@ -118,6 +123,7 @@ export default function AdminSettings() {
                 height: "300px",
                 border: 1,
                 borderRadius: 1,
+                boxShadow: 3,
               }}
             >
               <List

@@ -218,4 +218,12 @@ const import_data = async () => {
 // import_data();
 
 // "_id": { "$oid":"dbfe53c3c4d568240378b0c6"}
-deleteDevData();
+// deleteDevData();
+
+var myStr = '075-63546725';
+var myRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+//Using Match()
+// var result = myStr.match(myRegex);
+var result = myRegex.test(myStr);
+console.log(result);

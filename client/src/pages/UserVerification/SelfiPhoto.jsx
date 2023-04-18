@@ -36,37 +36,35 @@ function SelfiPhoto() {
             open
           </FormLabel>
         </Stack>
-        <Button
-          variant="contained"
-          component="label"
-          className="upload-button"
-          onClick={() => {
-            setClicked(true);
-          }}
+        <Stack
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          spacing={1}
         >
-          Take a Selfie
-          {/* <input hidden accept="image/*" multiple type="file" /> */}
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
+          <Button
+            variant="contained"
             component="label"
+            // className="upload-button"
+            onClick={() => {
+              setClicked(true);
+            }}
           >
-            {/* <input hidden accept="image/*" type="file" /> */}
-            <PhotoCamera />
-          </IconButton>
-        </Button>
-        {/* if(camaramode === true){<Camera />} */}
-        {Clicked && <Camera />}
-        <Button
-          type="submit"
-          variant="contained"
-          // disabled={loading}
-          className="continue"
-        >
-          <Link to="/database" className="link-css">
-            Submit
-          </Link>
-        </Button>
+            Take a Selfie
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            // disabled={loading}
+            //className="continue"
+          >
+            <Link to="/database" className="link-css">
+              Submit
+            </Link>
+          </Button>
+          {Clicked && <Camera />}
+        </Stack>
+
         <Typography
           sx={{ fontSize: 22, fontFamily: "Poppins, sans-serif", color: "red" }}
         >

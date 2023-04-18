@@ -13,14 +13,18 @@ import Navbar from "../../components/Appbar/Navbar";
 const StyledContainer = styled(Container)({
   marginTop: "3rem",
   marginBottom: "3rem",
+  color: "#fff",
+  height: "100%",
 });
 
 const StyledHeader = styled(Typography)({
   marginBottom: "1rem",
+  color: "#fff",
 });
 
 const StyledListItem = styled(ListItem)({
   marginBottom: "0.5rem",
+  color: "#fff",
 });
 
 function SafetyTips() {
@@ -47,7 +51,7 @@ function SafetyTips() {
   ];
 
   return (
-    <>
+    <div style={{ background: "var(--color-primary)", minHeight: "100vh" }}>
       <Grid
         container
         spacing={{ xs: 7, sm: 8, md: 8, lg: 8 }}
@@ -78,7 +82,7 @@ function SafetyTips() {
           and take appropriate precautions when meeting someone new.
         </Typography>
       </StyledContainer>
-    </>
+    </div>
   );
 }
 

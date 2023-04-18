@@ -6,6 +6,7 @@
 .vertical-nav-container {
   background-color: var(--color-grey-dark-1);
   position: relative;
+  min-height: 100vh;
 }
 .toggle-btn-container {
   color: #fff;
@@ -59,7 +60,7 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .side-nav {
@@ -127,7 +128,7 @@
   margin-right: 2rem;
   fill: currentColor;
 }
-
+/* 
 @media only screen and (max-width: 78rem) {
   .toggle-btn-container {
     width: 10%;
@@ -150,18 +151,18 @@
     width: 100%;
     z-index: 200;
   }
-}
+} */
 
-@media only screen and (max-width: 53rem) {
+/* @media only screen and (max-width: 53rem) {
   .toggle-btn-container {
     width: 10%;
     background-color: var(--color-grey-dark-1);
     color: #fff;
     margin: 0.4rem 0 0 auto;
   }
-}
+} */
 
-@media only screen and (max-width: 41rem) {
+@media only screen and (max-width: 56.25em) {
   .vertical-nav-container {
     display: none;
   }

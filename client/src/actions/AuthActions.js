@@ -3,11 +3,12 @@ export const logIn = (formData, navigate) => async (dispatch) => {
   dispatch({ type: "AUTH_START" });
   try {
     const { data } = await AuthApi.logIn(formData);
+
     dispatch({ type: "AUTH_SUCCESS", data: data });
     navigate("/me", { replace: true });
   } catch (error) {
     dispatch({ type: "AUTH_FAIL", data: error });
-    navigate("/auth/login", { replace: true });
+    // navigate("/auth/login", { replace: true });
   }
 };
 

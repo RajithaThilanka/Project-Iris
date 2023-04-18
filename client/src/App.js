@@ -19,6 +19,7 @@ import DateDummy from "./pages/DateDummy";
 import AccountInfo from "./components/SignUp/SignUpForms/AccountInfo";
 import UserInfo from "./components/SignUp/SignUpForms/UserInfo";
 import ProfileView from "./components/SignUp/SignUpForms/ProfileView";
+import Question from "./components/SignUp/SignUpForms/Question";
 import LookingFor from "./components/SignUp/SignUpForms/LookingFor";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -38,7 +39,10 @@ import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
 import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
-import Question from "./components/SignUp/SignUpForms/Question";
+import Explore from "./components/Explore/Explore";
+import ManualSearch from "./components/ManualSearch/ManualSearch";
+import UserVerification from "./pages/Uverifcation/UserVerfication";
+import TagDashboard from "./components/TagDashboard/TagDashboard";
 
 const theme = createTheme({
   palette: {
@@ -133,11 +137,7 @@ function App() {
           {/* <Route
             path="/question"
             element={
-              state ? (
-                <Question />
-              ) : (
-                <Navigate to="/auth/signup/account-info" />
-              )
+              state ? <Question /> : <Navigate to="/auth/signup/account-info" />
             }
           ></Route> */}
           <Route
@@ -154,6 +154,18 @@ function App() {
           <Route
             path="/auth/login"
             element={user ? <Navigate to="/me" /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/explore"
+            element={user ? <Explore /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/manual-search"
+            element={user ? <ManualSearch /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/tag-suggestions/:tag"
+            element={user ? <TagDashboard /> : <Auth action="login" />}
           ></Route>
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/error/:msg" element={<Error />}></Route>
@@ -246,9 +258,11 @@ function App() {
           <Route path="/me/uploadimages" element={<UploadImages />} />
           <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
           <Route path="/me/safetytips" element={<SafetyTips />} />
+
+          <Route path="/me/uverification" element={<UserVerification />} />
+
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
-        
 
         <ToastContainer
           style={{

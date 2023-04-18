@@ -11,7 +11,11 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MatchesContext from "../../context/matches";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { getSender, getSenderFull } from "../../config/ChatLogics";
+import {
+  getSender,
+  getSenderFull,
+  isAPhoneNumber,
+} from "../../config/ChatLogics";
 import ProfileModal from "../miscellaneous/UserAvatar/ProfileModal";
 import PreviewIcon from "@mui/icons-material/Preview";
 import UpdatedGroupChatModel from "./UpdateGroupChatModal";
@@ -27,6 +31,7 @@ import DuoIcon from "@mui/icons-material/Duo";
 import InputEmoji from "react-input-emoji";
 import { updateSeen } from "../../api/ChatRequests";
 import { logout } from "../../actions/AuthActions";
+import SlideInDialog from "../SlideInDialog/SlideInDialog";
 const ENDPOINT = "http://localhost:5000";
 let socket, selectedChatCompare;
 
@@ -36,14 +41,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   } = useSelector((state) => state.authReducer.authData);
   const { activeUsers, setActiveUsers } = useContext(MatchesContext);
   const inputRef = useRef();
-  const {
-    selectedChat,
-    setSelectedChat,
-    notification,
-    setNotification,
-    chats,
-    setChats,
-  } = useContext(MatchesContext);
+  const { selectedChat, setSelectedChat, notification, setNotification } =
+    useContext(MatchesContext);
   const [modalOpen, setOpen] = React.useState(false);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -60,6 +59,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     },
   };
   const dispatch = useDispatch();
+  const [contactSent, setContactSent] = useState(false);
+  const [userConfirmed, setUserConfirmed] = useState(false);
   const {
     receivedConRequests,
     setreceivedConRequests,
@@ -139,19 +140,27 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   const sendMessage = async () => {
     // event.preventDefault();
     if (newMessage) {
+      let isContact = false;
       socket.emit("stop typing", selectedChat._id);
-      try {
-        setNewMessage("");
-        const {
-          data: {
-            data: { data },
-          },
-        } = await sendAMessage(newMessage, selectedChat._id);
+      if (isAPhoneNumber(newMessage)) {
+        setContactSent(true);
+        isContact = true;
+      }
 
-        socket.emit("new message", data);
-        setMessages([...messages, data]);
-      } catch (error) {
-        console.log(error);
+      if (userConfirmed || !isContact) {
+        try {
+          setNewMessage("");
+          const {
+            data: {
+              data: { data },
+            },
+          } = await sendAMessage(newMessage, selectedChat._id);
+
+          socket.emit("new message", data);
+          setMessages([...messages, data]);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
@@ -254,6 +263,12 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
     <>
       {selectedChat ? (
         <>
+          {contactSent && !userConfirmed && (
+            <SlideInDialog
+              setContactSent={setContactSent}
+              setUserConfirmed={setUserConfirmed}
+            />
+          )}
           <div className="chat-user-header">
             <IconButton
               style={{}}
@@ -340,8 +355,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                       getSenderFull(user, selectedChat.users).profilePhoto
                     })`
                   : serverPublic + "chat-background.png",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: "auto 100%",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: "#000",
+              backgroundPosition: "50% 50%",
             }}
           >
             {loading ? (

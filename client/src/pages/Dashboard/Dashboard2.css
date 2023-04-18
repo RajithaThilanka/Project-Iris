@@ -10,29 +10,28 @@
   width: 100vw;
   /* overflow: hidden; */
   max-width: 100vw;
-  padding-top: 6.7rem;
-}
-
-@media only screen and (max-width: 68em) {
-  .dashboard-container {
-    flex-direction: column;
-  }
+  padding-top: 6.8rem;
 }
 
 .suggestions-container {
   /* height: 100vh; */
   background-color: rgba(0, 0, 0, 0);
   max-width: 100rem;
-  width: 100%;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 .swiper-container-main {
   width: 100%;
   margin: 0.5rem auto;
-  padding: 2rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  justify-content: space-between;
+  gap: 1rem;
   background-color: rgba(0, 0, 0, 0);
 }
 .swiper {
@@ -67,34 +66,24 @@
   /* height: 300px; */
   margin-left: auto;
   margin-right: auto;
+  height: 15rem !important;
 }
 
 .swiper-slide {
   background-size: cover;
   background-position: center;
-  height: 17rem !important;
-  border-radius: 15px !important;
+  overflow: hidden;
 }
 
 .mySwiper {
-  height: 30%;
   box-sizing: border-box;
-  padding: 10px 0;
+  /* padding: 7px 0 !important; */
   width: 100%;
-}
-
-.mySwiper .swiper-slide {
-  width: 25%;
-  height: 100%;
-
-  border-radius: 15px;
-  overflow: hidden;
-  /* backdrop-filter: blur(100px); */
 }
 
 .mySwiper .swiper-slide-active {
   opacity: 1;
-  border: 10px solid var(--color-primary);
+  border: 6px solid var(--color-primary);
   /* border-radius: 15px !important; */
 }
 .mySwiper .swiper-slide-active .sug-profile-header {
@@ -132,26 +121,37 @@
   fill: var(--color-primary-dark) !important;
   stroke: var(--color-primary-dark) !important;
 }
-
+.sugg-card-profile-photo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.sugg-card-profile-photo img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
 .current-profile {
   padding: 0 0 2rem 0.5rem;
-  border-bottom: 2px solid #000;
-  height: 47rem;
 
   display: flex;
   /* align-items: center; */
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
 }
 .sugg-card {
   /* max-width: 32rem;
   min-width: 24rem; */
-  width: 40%;
-  height: 45rem;
+  width: 35%;
+  height: 50rem;
   position: relative;
-  border-radius: 15px;
   background-size: cover;
   background-position: center;
-  max-height: 49rem;
 }
 .profile--header {
   font-size: 1.3rem;
@@ -167,17 +167,19 @@
   color: #fff;
   display: flex;
   flex-direction: column;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
 }
 .profileContent {
-  width: 50%;
-  height: 45rem;
+  width: 40rem;
+  height: 50rem;
+  background: url("https://live.staticflickr.com/65535/52800386429_19cf461e23_k.jpg");
 
   padding: 1.5rem 2rem;
-  border-radius: 10px;
+  background-position: center;
+  background-size: cover;
   overflow: scroll;
   position: relative;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .basic-info {
@@ -187,12 +189,7 @@
   height: auto;
   align-items: center;
   justify-content: center;
-  /* background-image: linear-gradient(
-    to right,
-    var(--color-primary-light),
-    var(--color-primary-dark)
-  ); */
-  background-color: #fff;
+
   color: #000;
   margin: 1rem;
 }
@@ -201,40 +198,46 @@
   align-items: center;
   gap: 5px;
   padding: 1.2rem 1rem;
-
-  font-size: 1.4rem;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 .profile--description {
   padding: 1rem 1rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 2.5rem;
-  font-weight: 400;
+
   /* background-image: linear-gradient(
     to right,
     var(--color-primary-light),
     var(--color-primary-dark)
   ); */
   margin: 1rem;
-  background-color: #fff;
-  color: #000;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
 }
 .profile-fav-songs {
-  padding: 1rem 1rem;
-  margin: 0.5rem;
-  /* background-color: #fff; */
-  /* background-color: var(--color-secondary); */
   border-radius: 20px;
+  width: 16rem;
+  height: 16rem;
 }
 .profile-fav-songs iframe {
   /* background-color: #fff; */
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
+
+  width: 100%;
+  height: 100%;
 }
 .dashboard-profile-vid-container {
-  display: flex;
-  padding: 0.5rem;
-  /* gap: 0.5rem; */
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  margin-top: 1rem;
+  justify-items: center;
 }
 .profile--header {
   font-size: 3.5rem;
@@ -250,18 +253,46 @@
   color: #fff;
   display: flex;
   flex-direction: column;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
 }
 .profile--name {
   /* display: inline-block; */
   display: flex;
   align-items: center;
   gap: 4px;
+  font-size: 2rem;
 }
 .profile--age {
   font-size: 1.5rem;
   display: inline-block;
+}
+.looking-for-span {
+  font-size: 1.1rem !important;
+  display: block !important;
+  color: #12777e !important;
+}
+.profile--lookingfor-goal {
+  font-size: 1.2rem !important;
+  position: relative !important;
+  font-weight: 600 !important;
+  height: auto !important;
+  align-self: flex-start !important;
+  padding: 0.1rem 1rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 5px !important;
+  background: #b6ece4 !important;
+  color: #12777e !important;
+  line-height: 1.4;
+  border: none !important;
+  /* border: 3px solid #12777e !important; */
+}
+.emoji-container {
+  font-size: 3rem;
+  text-align: center;
+  padding: 0 !important;
+  flex: 0 0 20%;
 }
 .profile--country {
   font-size: 1.2rem;
@@ -318,15 +349,16 @@
   font-size: 1.2rem;
 }
 
-.looking-for div {
-  border-radius: 25px;
-  background-color: #fff;
+.looking-for > div {
+  border-radius: 100px;
+
+  border: 2px solid #fff;
   width: auto;
-  padding: 0.5rem 1rem;
-  color: #000;
-  font-weight: 500;
-  font-size: 1.3rem;
-  border: 2px solid #000;
+  padding: 0.2rem 0.8rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.2rem;
+  height: 3rem;
 }
 
 .usertags {
@@ -336,25 +368,26 @@
   align-content: space-between;
   gap: 1.2rem;
   padding: 1rem 1.6rem;
-  font-size: 1.3rem;
 }
 
-.usertags div {
+.usertags > div {
   /* background-image: linear-gradient(
     to right,
     var(--color-primary-light),
     var(--color-primary-dark)
   ); */
-  border-radius: 25px;
-  background-color: #fff;
-  width: auto;
-  padding: 0.5rem 1rem;
-  color: #000;
-  font-weight: 500;
-  font-size: 1.3rem;
-  border: 2px solid #000;
-}
+  border-radius: 100px;
 
+  border: 2px solid #fff;
+  width: auto;
+  padding: 0.2rem 0.8rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.sug-profile-content-ico {
+  color: #fff;
+}
 .infoText {
   width: 100%;
   justify-content: center;
@@ -397,8 +430,6 @@
   width: 100%;
   transition: all 0.6s;
   transform: translateY(64%);
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
   padding: 0 0 1rem 0.5rem;
 }
 .swiper-slide:hover .sug-profile-header {
@@ -515,8 +546,6 @@
 
   top: 0;
   column-gap: 1rem;
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
   left: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
@@ -536,12 +565,11 @@
 .dashboard-other-image {
   width: 6rem;
   height: 6rem;
-  border-radius: 15px;
 }
 .dashboard-other-image img {
   object-fit: cover;
   width: 100%;
-  border-radius: 15px;
+
   height: 100%;
 }
 .dashboard-loading-photo::before {
@@ -586,19 +614,36 @@
   right: 0 !important;
   top: 0 !important;
 }
-@media only screen and (max-width: 78em) {
-  .current-profile {
-    height: 60%;
-  }
-  .swiper {
-    height: 20%;
+@media only screen and (max-width: 67em) {
+  .dashboard-container {
+    padding-top: 7.3rem;
   }
 }
 
-@media only screen and (max-width: 41em) {
+@media only screen and (max-width: 56.25em) {
+  .dashboard-profile-vid-container {
+    width: 100%;
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .sug-profile-header {
+    transform: translateY(0);
+  }
   .profile--header {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+  }
+  .mySwiper {
+    height: auto;
+    /* flex: 0 0 40%; */
+    /* padding: 2rem 0 !important; */
+  }
+  .swiper-container-main {
+    gap: 1rem;
+    padding-bottom: 2rem;
   }
   html {
     font-size: 45%;
@@ -612,7 +657,7 @@
   .current-profile {
     padding: 0;
     position: relative;
-    height: 65%;
+    flex: 1 1 70%;
   }
   /* .profile--header {
     padding: 0;
@@ -625,9 +670,13 @@
     border-radius: 0;
     max-height: 100%;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+    /* opacity: 0.5; */
     z-index: 40 !important;
     display: none;
+  }
+  .profile--basic-info {
+    color: #fff;
   }
   ::-webkit-scrollbar {
     display: none;
@@ -638,12 +687,20 @@
   .close {
     display: none;
   }
+  .sugg-card-profile-photo img {
+    object-fit: contain;
+    object-position: 50% 50%;
+    aspect-ratio: 4 / 3;
+  }
   .swiper-container-main {
     height: 100%;
     margin-top: 0;
   }
+  .sug-profile-content-ico {
+    color: #fff;
+  }
   .suggestions-container {
-    height: calc(100vh - 90px);
+    height: calc(100vh - 99px);
   }
   .swiper-button-next,
   .swiper-button-prev {
@@ -672,7 +729,13 @@
     position: relative;
     border-radius: 0;
     max-height: 100%;
+    background-size: auto 162%;
+    background-repeat: no-repeat;
+    background-color: #000;
+    background-position: 50% 50%;
+    filter: brightness(110%);
   }
+
   .dashboard-other-images-container {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
@@ -681,52 +744,73 @@
     font-size: 1rem !important;
     /* width: % !important; */
     padding: 0.9rem 0.5rem !important;
-    border-radius: 20px;
+
     width: 15%;
   }
   .more-info-btn {
     display: flex !important;
-    z-index: 1000 !important;
+    z-index: 3000 !important;
   }
   .mySwiper .swiper-slide-active {
     opacity: 1;
     border: 5px solid var(--color-primary);
   }
 }
+.connect-btn-sug {
+  border-radius: 10px !important;
+  font-size: 1.1rem !important;
+}
 .connect-btn-sug:hover {
   color: var(--color-primary) !important;
   background-color: #fff !important;
 }
 
-@media only screen and (max-width: 78em) {
+/* @media only screen and (max-width: 78em) {
   .dashboard-container {
     padding-top: 16rem;
   }
-}
-@media only screen and (max-width: 67em) {
-  /* .dashboard-container {
-    padding-top: 7.4rem;
-  } */
-}
-@media only screen and (max-width: 41em) {
+} */
+
+@media only screen and (max-width: 56.25em) {
+  .sugg-card {
+    background-position: 50% 50%;
+    background-size: auto 125%;
+  }
   .dashboard-container {
-    padding-top: 6.5rem;
+    padding-top: 7.6rem;
+  }
+  .usertags > div {
+    border: 2px solid #fff;
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
+  }
+  .looking-for > div {
+    border: 2px solid #fff;
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
+  }
+  .profile--description {
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
+    border: 1px solid #fff;
+  }
+  .suggestions-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 0;
+    padding-bottom: 1.5rem;
   }
   .dashboard-err-msg {
     font-size: 3rem;
     height: 100%;
   }
-  .swiper {
+  /* .swiper {
     height: 35%;
-  }
+  } */
 
   .swiper-button-next,
   .swiper-button-prev {
     top: 40% !important;
-    /* left: 1rem !important; */
-    /* right: 10px; */
-
-    /* border-radius: 50%; */
   }
 }
 
@@ -734,3 +818,19 @@
   height: 100% !important;
   width: 100% !important;
 }
+@media only screen and (max-width: 37.5em) {
+  .dashboard-container {
+    padding-top: 6.7rem;
+  }
+}
+
+@media only screen and (max-width: 31.5em) {
+  .sugg-card-profile-photo img {
+    object-fit: cover;
+  }
+}
+/* @media only screen and (max-width: 30em) {
+  .sugg-card {
+    background-position: center;
+  }
+} */

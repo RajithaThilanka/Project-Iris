@@ -77,7 +77,7 @@ function UserListItem({ user, handleFunction }) {
           style={{
             fontSize: "1.3rem",
             padding: "0.1rem 1rem",
-            color: "#000",
+            color: "#fff",
             fontWeight: 600,
             flex: 1,
           }}

@@ -13,6 +13,7 @@ const ManualVerification = require('../models/manualVerificationModel');
 const { formatMils } = require('../utils/utilFuncs');
 const Answer = require('../models/answerModel');
 const Question = require('../models/questionModel');
+const Block = require('../models/blockModel');
 const fs = require('fs');
 const { dirname } = require('path');
 const signToken = id =>
@@ -68,6 +69,7 @@ exports.setupLookingFor = catchAsync(async (req, res, next) => {
     maxAge,
     minHeight,
     maxHeight,
+    relationshipGoal,
     userId,
   } = req.body;
 
@@ -82,13 +84,20 @@ exports.setupLookingFor = catchAsync(async (req, res, next) => {
       minHeight,
       maxHeight,
     },
+    relationshipGoal,
   });
 
   const newUserVerification = await UserVerification.create({
     userId,
   });
 
-  const existingUser = await User.findById(userId);
+  const existingUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      lastCompletedStep: 4,
+    },
+    { new: true }
+  );
   const confirmationToken = newUserVerification.createConfirmationToken();
 
   newUserVerification.save({ validateBeforeSave: false });
@@ -191,9 +200,16 @@ exports.signupAccountInfo = catchAsync(async (req, res, next) => {
   let existingUser;
 
   existingUser = await User.findOne({ email: req.body.email });
-  if (existingUser) {
+  if (existingUser && existingUser.lastCompletedStep === 4) {
     return next(
       new AppError('The email is already signed up. Login instead', 400)
+    );
+  } else if (existingUser && existingUser.lastCompletedStep <= 3) {
+    return next(
+      new AppError(
+        `next step:${existingUser.lastCompletedStep + 1}-${existingUser._id}`,
+        400
+      )
     );
   }
   const { firstname, lastname, email, password, passwordConfirm } = req.body;
@@ -203,6 +219,7 @@ exports.signupAccountInfo = catchAsync(async (req, res, next) => {
     email,
     password,
     passwordConfirm,
+    lastCompletedStep: 1,
   });
   // setup answer model
   setupAnswerModel(newUser);
@@ -256,6 +273,7 @@ exports.signupUserInfo = catchAsync(async (req, res, next) => {
       ethnicity,
       monthlyIncome,
       hasChildren,
+      lastCompletedStep: 2,
     },
     { new: true }
   );
@@ -301,6 +319,7 @@ exports.signupProfileView = catchAsync(async (req, res, next) => {
       userDescription,
       photos,
       urls,
+      lastCompletedStep: 3,
     },
     { new: true }
   );
@@ -648,4 +667,30 @@ exports.verifyAccount = catchAsync(async (req, res, next) => {
       data: verifiedUser,
     },
   });
+});
+
+exports.checkBlocked = catchAsync(async (req, res, next) => {
+  const id = req.params?.id || req.body?.userId;
+
+  const user = await Block.findOne({
+    $and: [
+      {
+        userId: id,
+      },
+      {
+        blockedUsers: {
+          $in: [req.user._id],
+        },
+      },
+    ],
+  });
+  if (user) {
+    return next(
+      new AppError(
+        'User privacy settings does not allow you to perform this action',
+        401
+      )
+    );
+  }
+  return next();
 });
