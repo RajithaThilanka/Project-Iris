@@ -1,26 +1,42 @@
 .dates-container {
   flex: 0 0 82%;
-  margin-top: 6.7rem;
+  background-color: #eee;
+  margin-top: 6.8rem;
+  min-height: calc(100vh - 68.06px);
 }
 
 .dates {
-  padding: 2rem;
+  padding: 0.1rem 2rem;
   width: 100%;
+  min-height: 100%;
   margin: 0 auto;
-  /* background-color: #eee; */
-  position: relative;
+  max-width: 140rem;
 }
 
 @media only screen and (max-width: 67em) {
   .dates-container {
-    margin-top: 7.3rem;
+    min-height: calc(100vh - 64.78px);
+    margin-top: 7.5rem;
   }
 }
-@media only screen and (max-width: 41em) {
+@media only screen and (max-width: 56.25em) {
   .dates-container {
-    margin-bottom: 4rem;
+    min-height: calc(100vh - 98.38px);
+    margin-top: 7.4rem;
+    margin-bottom: 34.38px;
   }
-  .dates {
-    padding: 0.1rem 2rem;
+}
+
+@media only screen and (max-width: 37.5em) {
+  .dates-container {
+    min-height: calc(100vh - 82.38px);
+    margin-top: 5.6rem;
+  }
+}
+
+@media only screen and (max-width: 30.75em) {
+  .dates-container {
+    min-height: calc(100vh - 90.8px);
+    margin-top: 6.5rem;
   }
 }

@@ -27,7 +27,14 @@
   left: 0;
   z-index: 100;
 }
-
+.chat-block-err-msg {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-size: 1.6rem;
+  margin: auto;
+}
 .single-chat-user-container {
   flex: 1;
   display: flex;

@@ -10,7 +10,8 @@
   width: 100vw;
   /* overflow: hidden; */
   max-width: 100vw;
-  padding-top: 6.8rem;
+  margin-top: 6.8rem;
+  min-height: calc(100vh - 68.06px);
 }
 
 .suggestions-container {
@@ -616,7 +617,8 @@
 }
 @media only screen and (max-width: 67em) {
   .dashboard-container {
-    padding-top: 7.3rem;
+    min-height: calc(100vh - 64.78px);
+    margin-top: 7.5rem;
   }
 }
 
@@ -777,7 +779,9 @@
     background-size: auto 125%;
   }
   .dashboard-container {
-    padding-top: 7.6rem;
+    /* padding-top: 7.6rem; */
+    min-height: calc(100vh - 64px);
+    margin-top: 7.4rem;
   }
   .usertags > div {
     border: 2px solid #fff;
@@ -820,7 +824,9 @@
 }
 @media only screen and (max-width: 37.5em) {
   .dashboard-container {
-    padding-top: 6.7rem;
+    /* padding-top: 6.7rem; */
+    min-height: calc(100vh - 56px);
+    margin-top: 6.5rem;
   }
 }
 
