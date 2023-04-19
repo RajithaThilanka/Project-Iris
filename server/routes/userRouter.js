@@ -94,6 +94,10 @@ router.route('/').get(
   userController.getUsers
 );
 router
+  .route('/adminUsers')
+  .get(authController.adminProtect, userController.getAdminUsers);
+
+router
   .route('/con')
   .get(authController.protect, userController.fetchConnections);
 router

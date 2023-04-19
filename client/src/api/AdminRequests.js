@@ -11,7 +11,7 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const getAllUsers = () => API.get("/users");
+export const getAllUsers = () => API.get("/users/adminUsers");
 
 export const getAllVeriReq = () => API.get("/users/verify-requests");
 
