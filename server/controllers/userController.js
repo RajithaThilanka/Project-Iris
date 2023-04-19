@@ -137,8 +137,8 @@ exports.getUser = catchAsync(async (req, res, next) => {
   }
   const l = await LookingFor.findOne({ userId: req.params.id });
   const p = await Answer.findOne({ userId: req.params.id });
-      
-        user = { ...user, lookingFor: l, interests: p };
+
+  user = { ...user, lookingFor: l, interests: p };
   const { _doc, lookingFor, interests } = user;
   user = { ..._doc, lookingFor: lookingFor, interests: interests };
 
