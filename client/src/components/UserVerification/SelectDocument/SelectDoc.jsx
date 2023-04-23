@@ -39,8 +39,20 @@ export default function SelectDoc(props) {
           >
             <ToggleButton
               sx={{
-                width: "300px",
-                height: "80px",
+                width: {
+                  xl: "300px",
+                  lg: "300px",
+                  md: "250px",
+                  sm: "230px",
+                  xs: "220px",
+                },
+                height: {
+                  xl: "80px",
+                  lg: "77px",
+                  md: "74px",
+                  sm: "70px",
+                  xs: "65px",
+                },
                 "&.Mui-selected": { color: "#C81172" },
               }}
               value="idcard"
@@ -51,8 +63,20 @@ export default function SelectDoc(props) {
 
             <ToggleButton
               sx={{
-                width: "300px",
-                height: "80px",
+                width: {
+                  xl: "300px",
+                  lg: "300px",
+                  md: "250px",
+                  sm: "230px",
+                  xs: "220px",
+                },
+                height: {
+                  xl: "80px",
+                  lg: "77px",
+                  md: "74px",
+                  sm: "70px",
+                  xs: "65px",
+                },
                 "&.Mui-selected": { color: "#C81172" },
               }}
               value="passport"
@@ -63,8 +87,20 @@ export default function SelectDoc(props) {
 
             <ToggleButton
               sx={{
-                width: "300px",
-                height: "80px",
+                width: {
+                  xl: "300px",
+                  lg: "300px",
+                  md: "250px",
+                  sm: "230px",
+                  xs: "220px",
+                },
+                height: {
+                  xl: "80px",
+                  lg: "77px",
+                  md: "74px",
+                  sm: "70px",
+                  xs: "65px",
+                },
                 "&.Mui-selected": { color: "#C81172" },
               }}
               value="drivinglicence"

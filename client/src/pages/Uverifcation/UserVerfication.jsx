@@ -109,10 +109,29 @@ export default function UserVerfication(props) {
         </Grid>
         <Grid container item xs={12} sx={{ justifyContent: "center" }}>
           <Box
+            //main header
             sx={{
-              width: "1000px",
-              padding: "10px",
-              marginTop: "20px",
+              width: {
+                xl: "900px",
+                lg: "900px",
+                md: "650px",
+                sm: "550px",
+                xs: "480px",
+              },
+              padding: {
+                xl: "10px",
+                lg: "10px",
+                md: "8px",
+                sm: "5px",
+                xs: "5px",
+              },
+              marginTop: {
+                xl: "10px",
+                lg: "10px",
+                md: "5px",
+                sm: "1px",
+                xs: "1px",
+              },
             }}
           >
             <Stepper activeStep={activeStep}>
@@ -149,8 +168,15 @@ export default function UserVerfication(props) {
               <React.Fragment>
                 {activeStep === 0 && (
                   <Box
+                    //button container component
                     sx={{
-                      height: "500px",
+                      height: {
+                        xl: "500px",
+                        lg: "500px",
+                        md: "480px",
+                        sm: "440px",
+                        xs: "420px",
+                      },
                       alignItems: "center",
                       justifyContent: "center",
                       padding: "10px",
@@ -169,9 +195,22 @@ export default function UserVerfication(props) {
                       </Typography>
                       <Box
                         sx={{
+                          //BOx container
                           boxShadow: "4",
-                          width: "800px",
-                          height: "450px",
+                          width: {
+                            xl: "680px",
+                            lg: "680px",
+                            md: "600px",
+                            sm: "450px",
+                            xs: "400px",
+                          },
+                          height: {
+                            xl: "450px",
+                            lg: "430px",
+                            md: "420px",
+                            sm: "390px",
+                            xs: "370px",
+                          },
                           borderRadius: "5px",
                           display: "flex",
                           alignItems: "center",
@@ -210,8 +249,20 @@ export default function UserVerfication(props) {
                       <Box
                         sx={{
                           boxShadow: "4",
-                          width: "800px",
-                          height: "450px",
+                          width: {
+                            xl: "800px",
+                            lg: "800px",
+                            md: "600px",
+                            sm: "500px",
+                            xs: "500px",
+                          },
+                          height: {
+                            xl: "450px",
+                            lg: "450px",
+                            md: "430px",
+                            sm: "400px",
+                            xs: "400px",
+                          },
                           borderRadius: "5px",
                           display: "flex",
                           alignItems: "center",
@@ -250,8 +301,20 @@ export default function UserVerfication(props) {
                       <Box
                         sx={{
                           boxShadow: "4",
-                          width: "800px",
-                          height: "450px",
+                          width: {
+                            xl: "800px",
+                            lg: "800px",
+                            md: "600px",
+                            sm: "500px",
+                            xs: "500px",
+                          },
+                          height: {
+                            xl: "450px",
+                            lg: "450px",
+                            md: "430px",
+                            sm: "400px",
+                            xs: "400px",
+                          },
                           borderRadius: "5px",
                           display: "flex",
                           alignItems: "center",
