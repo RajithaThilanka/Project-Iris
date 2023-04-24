@@ -11,14 +11,21 @@ const Camera = () => {
   const webcamRef = useRef(null);
   const [url, setUrl] = React.useState(null);
 
-  const capturePhoto = React.useCallback(async () => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setUrl(imageSrc);
-  }, [webcamRef]);
+  // const capturePhoto = React.useCallback(async () => {
+  //   const imageSrc = webcamRef.current.getScreenshot();
+  //   setUrl(imageSrc);
+  // }, [webcamRef]);
 
   const onUserMedia = (e) => {
     console.log(e);
   };
+
+  const capturePhoto = React.useCallback(async () => {
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setUrl(imageSrc);
+    }
+  }, [webcamRef]);
 
   return (
     <>

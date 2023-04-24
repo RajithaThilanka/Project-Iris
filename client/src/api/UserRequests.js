@@ -111,4 +111,7 @@ export const fetchWarnings = () => API.get("/report/fetch-warnings");
 
 export const reportUser = (data) => API.post("/report", data);
 
+export const RequestManualVerification = (data) =>
+  API.post("/users/me/manual-verify", data);
+
 //export const Camara = () => API.get("/")

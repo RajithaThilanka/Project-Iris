@@ -17,10 +17,6 @@ import Camera from "./Camera.jsx";
 import { useState } from "react";
 
 function SelfiPhoto() {
-  const camaramode = false;
-  const switchcamara = {
-    camaramode: true,
-  };
   const [Clicked, setClicked] = useState(false);
   return (
     <div>
@@ -45,17 +41,14 @@ function SelfiPhoto() {
           }}
         >
           Take a Selfie
-          {/* <input hidden accept="image/*" multiple type="file" /> */}
           <IconButton
             color="primary"
             aria-label="upload picture"
             component="label"
           >
-            {/* <input hidden accept="image/*" type="file" /> */}
             <PhotoCamera />
           </IconButton>
         </Button>
-        {/* if(camaramode === true){<Camera />} */}
         {Clicked && <Camera />}
         <Button
           type="submit"
