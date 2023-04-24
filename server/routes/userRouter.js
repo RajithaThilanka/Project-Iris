@@ -90,7 +90,7 @@ router.route('/names').get(authController.protect, userController.getUsers);
 router.route('/').get(
   authController.protect,
   //userSettingsController.checkSearchTokens,
-  authController.adminProtect,
+  authController.protect,
   userController.getUsers
 );
 router

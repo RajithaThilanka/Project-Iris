@@ -229,7 +229,13 @@ export default function UserVerfication(props) {
                 {activeStep === 1 && (
                   <Box
                     sx={{
-                      height: "500px",
+                      height: {
+                        xl: "500px",
+                        lg: "500px",
+                        md: "480px",
+                        sm: "440px",
+                        xs: "420px",
+                      },
                       alignItems: "center",
                       justifyContent: "center",
                       padding: "10px",
@@ -250,18 +256,18 @@ export default function UserVerfication(props) {
                         sx={{
                           boxShadow: "4",
                           width: {
-                            xl: "800px",
-                            lg: "800px",
+                            xl: "680px",
+                            lg: "680px",
                             md: "600px",
-                            sm: "500px",
-                            xs: "500px",
+                            sm: "450px",
+                            xs: "400px",
                           },
                           height: {
                             xl: "450px",
-                            lg: "450px",
-                            md: "430px",
-                            sm: "400px",
-                            xs: "400px",
+                            lg: "430px",
+                            md: "420px",
+                            sm: "390px",
+                            xs: "370px",
                           },
                           borderRadius: "5px",
                           display: "flex",
@@ -281,7 +287,13 @@ export default function UserVerfication(props) {
                 {activeStep === 2 && (
                   <Box
                     sx={{
-                      height: "500px",
+                      height: {
+                        xl: "500px",
+                        lg: "500px",
+                        md: "480px",
+                        sm: "440px",
+                        xs: "420px",
+                      },
                       alignItems: "center",
                       justifyContent: "center",
                       padding: "10px",
@@ -302,18 +314,18 @@ export default function UserVerfication(props) {
                         sx={{
                           boxShadow: "4",
                           width: {
-                            xl: "800px",
-                            lg: "800px",
+                            xl: "680px",
+                            lg: "680px",
                             md: "600px",
-                            sm: "500px",
-                            xs: "500px",
+                            sm: "450px",
+                            xs: "400px",
                           },
                           height: {
                             xl: "450px",
-                            lg: "450px",
-                            md: "430px",
-                            sm: "400px",
-                            xs: "400px",
+                            lg: "430px",
+                            md: "420px",
+                            sm: "390px",
+                            xs: "370px",
                           },
                           borderRadius: "5px",
                           display: "flex",

@@ -113,6 +113,22 @@ export default function SelectID(props) {
               component="label"
               className="upload-button"
               onChange={""}
+              sx={{
+                width: {
+                  xl: "200px",
+                  lg: "200px",
+                  md: "200px",
+                  sm: "200px",
+                  xs: "100px",
+                },
+                height: {
+                  xl: "80px",
+                  lg: "100px",
+                  md: "100px",
+                  sm: "100px",
+                  xs: "50px",
+                },
+              }}
             >
               <Stack direction="column" spacing={2}>
                 Upload Font Page
@@ -132,6 +148,22 @@ export default function SelectID(props) {
               component="label"
               className="upload-button"
               onChange={""}
+              sx={{
+                width: {
+                  xl: "200px",
+                  lg: "200px",
+                  md: "200px",
+                  sm: "200px",
+                  xs: "100px",
+                },
+                height: {
+                  xl: "80px",
+                  lg: "100px",
+                  md: "100px",
+                  sm: "100px",
+                  xs: "50px",
+                },
+              }}
             >
               <Stack direction="column" spacing={1}>
                 Upload Back Page
