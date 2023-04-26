@@ -1,0 +1,39 @@
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .HeaderName {
+    font-size: 11px;
+  }
+
+  .baseText {
+    font-size: 1px;
+  }
+  .containtext {
+    font-size: 2px;
+  }
+
+  .VerificationMethod {
+    width: 170px;
+    height: 50px;
+  }
+
+  .button {
+    width: 100px;
+    height: 30px;
+  }
+  .uploadbutton {
+    width: 210px;
+    height: 25px;
+    font-size: 9px !important;
+  }
+  .title {
+    font-size: 13px;
+  }
+  .button-text {
+    font-size: 6px !important;
+  }
+  .upload-button-text {
+    font-size: 10px;
+  }
+  .form-group label {
+    font-size: 2px !important;
+  }
+}

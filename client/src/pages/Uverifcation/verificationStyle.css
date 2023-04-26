@@ -1,0 +1,53 @@
+@media screen and (max-width: 320px) {
+  .stepperHeader {
+    width: 280px;
+    padding: 3px;
+  }
+
+  .steppeButton {
+    height: 300px;
+  }
+
+  .BoxContainer {
+    width: 250px;
+    height: 250px;
+  }
+  .navButton {
+    width: 85px;
+    height: 30px;
+  }
+  .stepperStyle {
+    font-size: 2px;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .stepperHeader {
+    width: 280px;
+    padding: 3px;
+    margin-top: 0px;
+    font-size: 20px;
+  }
+
+  .steppeButton {
+    height: 300px;
+  }
+
+  .BoxContainer {
+    width: 250px;
+    height: 250px;
+  }
+  .navButton {
+    width: 85px;
+    height: 30px;
+  }
+  .stepperStyle {
+    font-size: 2px;
+  }
+  .step-label {
+    font-size: 10px !important;
+  }
+  .MuiStepLabel-label {
+    font-size: 9px !important;
+  }
+}

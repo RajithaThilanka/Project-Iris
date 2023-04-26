@@ -1,0 +1,25 @@
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .DocSelectHeaderName {
+    font-size: 11px;
+  }
+  .VerificationMethod {
+    width: 170px;
+    height: 50px;
+  }
+  .selectText {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .DocSelectHeaderName {
+    font-size: 11px;
+  }
+  .VerificationMethod {
+    width: 170px;
+    height: 50px;
+  }
+  .selectText {
+    font-size: 14px;
+  }
+}

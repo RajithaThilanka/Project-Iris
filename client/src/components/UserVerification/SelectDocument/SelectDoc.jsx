@@ -7,6 +7,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import { Typography, Stack } from "@mui/material";
+import "./selectdoc.css";
 
 export default function SelectDoc(props) {
   const [view, setView] = React.useState("list");
@@ -29,7 +30,9 @@ export default function SelectDoc(props) {
     <>
       <Box>
         <Stack direction="column" spacing={2}>
-          <Typography variant="h5">Select verifation method</Typography>
+          <Typography className="selectText">
+            Select verifation method
+          </Typography>
           <ToggleButtonGroup
             orientation="vertical"
             value={view}
@@ -38,20 +41,21 @@ export default function SelectDoc(props) {
             color="primary"
           >
             <ToggleButton
+              className="VerificationMethod"
               sx={{
                 width: {
                   xl: "300px",
                   lg: "300px",
                   md: "250px",
                   sm: "230px",
-                  xs: "220px",
+                  // xs: "220px",
                 },
                 height: {
                   xl: "80px",
                   lg: "77px",
                   md: "74px",
                   sm: "70px",
-                  xs: "65px",
+                  // xs: "65px",
                 },
                 "&.Mui-selected": { color: "#C81172" },
               }}
@@ -62,20 +66,21 @@ export default function SelectDoc(props) {
             </ToggleButton>
 
             <ToggleButton
+              className="VerificationMethod"
               sx={{
                 width: {
                   xl: "300px",
                   lg: "300px",
                   md: "250px",
                   sm: "230px",
-                  xs: "220px",
+                  // xs: "220px",
                 },
                 height: {
                   xl: "80px",
                   lg: "77px",
                   md: "74px",
                   sm: "70px",
-                  xs: "65px",
+                  // xs: "65px",
                 },
                 "&.Mui-selected": { color: "#C81172" },
               }}
@@ -86,20 +91,21 @@ export default function SelectDoc(props) {
             </ToggleButton>
 
             <ToggleButton
+              className="VerificationMethod"
               sx={{
                 width: {
                   xl: "300px",
                   lg: "300px",
                   md: "250px",
                   sm: "230px",
-                  xs: "220px",
+                  // xs: "220px",
                 },
                 height: {
                   xl: "80px",
                   lg: "77px",
                   md: "74px",
                   sm: "70px",
-                  xs: "65px",
+                  // xs: "65px",
                 },
                 "&.Mui-selected": { color: "#C81172" },
               }}

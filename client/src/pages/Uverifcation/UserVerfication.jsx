@@ -16,6 +16,7 @@ import SelectDoc from "../../components/UserVerification/SelectDocument/SelectDo
 import SelectID from "../../components/UserVerification/IdentityVerifcation/SelectID";
 import LiveSelfy from "../../components/UserVerification/FacialVerification/LiveSelfy";
 import { requestManualVerify } from "../../api/UserRequests";
+import "./verificationStyle.css";
 
 const steps = [
   "Required Documents",
@@ -109,28 +110,28 @@ export default function UserVerfication(props) {
         </Grid>
         <Grid container item xs={12} sx={{ justifyContent: "center" }}>
           <Box
-            //main header
+            className="stepperHeader"
             sx={{
               width: {
                 xl: "900px",
                 lg: "900px",
                 md: "650px",
                 sm: "550px",
-                xs: "480px",
+                // xs: "480px",
               },
               padding: {
                 xl: "10px",
                 lg: "10px",
                 md: "8px",
                 sm: "5px",
-                xs: "5px",
+                // xs: "5px",
               },
               marginTop: {
                 xl: "10px",
                 lg: "10px",
                 md: "5px",
                 sm: "1px",
-                xs: "1px",
+                // xs: "1px",
               },
             }}
           >
@@ -168,6 +169,7 @@ export default function UserVerfication(props) {
               <React.Fragment>
                 {activeStep === 0 && (
                   <Box
+                    className="steppeButton"
                     //button container component
                     sx={{
                       height: {
@@ -175,7 +177,7 @@ export default function UserVerfication(props) {
                         lg: "500px",
                         md: "480px",
                         sm: "440px",
-                        xs: "420px",
+                        // xs: "420px",
                       },
                       alignItems: "center",
                       justifyContent: "center",
@@ -190,10 +192,11 @@ export default function UserVerfication(props) {
                       }}
                       spacing={2}
                     >
-                      <Typography variant="h5">
+                      <Typography className="DocSelectHeaderName ">
                         Use a government-issued document
                       </Typography>
                       <Box
+                        className="BoxContainer"
                         sx={{
                           //BOx container
                           boxShadow: "4",
@@ -202,14 +205,14 @@ export default function UserVerfication(props) {
                             lg: "680px",
                             md: "600px",
                             sm: "450px",
-                            xs: "400px",
+                            // xs: "400px",
                           },
                           height: {
                             xl: "450px",
                             lg: "430px",
                             md: "420px",
                             sm: "390px",
-                            xs: "370px",
+                            // xs: "370px",
                           },
                           borderRadius: "5px",
                           display: "flex",
@@ -228,13 +231,14 @@ export default function UserVerfication(props) {
                 )}
                 {activeStep === 1 && (
                   <Box
+                    className="steppeButton"
                     sx={{
                       height: {
                         xl: "500px",
                         lg: "500px",
                         md: "480px",
                         sm: "440px",
-                        xs: "420px",
+                        // xs: "420px",
                       },
                       alignItems: "center",
                       justifyContent: "center",
@@ -249,10 +253,11 @@ export default function UserVerfication(props) {
                       }}
                       spacing={2}
                     >
-                      <Typography variant="h5">
+                      <Typography className="DocSelectHeaderName ">
                         Identity Verification
                       </Typography>
                       <Box
+                        className="BoxContainer"
                         sx={{
                           boxShadow: "4",
                           width: {
@@ -260,14 +265,14 @@ export default function UserVerfication(props) {
                             lg: "680px",
                             md: "600px",
                             sm: "450px",
-                            xs: "400px",
+                            // xs: "400px",
                           },
                           height: {
                             xl: "450px",
                             lg: "430px",
                             md: "420px",
                             sm: "390px",
-                            xs: "370px",
+                            // xs: "370px",
                           },
                           borderRadius: "5px",
                           display: "flex",
@@ -307,10 +312,11 @@ export default function UserVerfication(props) {
                       }}
                       spacing={2}
                     >
-                      <Typography variant="h5">
-                        Identity Verification
+                      <Typography className="DocSelectHeaderName ">
+                        Live Image
                       </Typography>
                       <Box
+                        className="BoxContainer"
                         sx={{
                           boxShadow: "4",
                           width: {
@@ -318,14 +324,14 @@ export default function UserVerfication(props) {
                             lg: "680px",
                             md: "600px",
                             sm: "450px",
-                            xs: "400px",
+                            // xs: "400px",
                           },
                           height: {
                             xl: "450px",
                             lg: "430px",
                             md: "420px",
                             sm: "390px",
-                            xs: "370px",
+                            // xs: "370px",
                           },
                           borderRadius: "5px",
                           display: "flex",
@@ -357,13 +363,47 @@ export default function UserVerfication(props) {
                       disabled={activeStep === 0}
                       onClick={handleBack}
                       variant="contained"
-                      sx={{ width: "110px", height: "45px" }}
+                      className="navButton"
+                      sx={{
+                        width: {
+                          xl: "100px",
+                          lg: "100px",
+                          md: "100px",
+                          sm: "100px",
+                          // xs: "100px",
+                        },
+
+                        height: {
+                          xl: "40px",
+                          lg: "40px",
+                          md: "40px",
+                          sm: "40px",
+                          // xs: "40px",
+                        },
+                      }}
                     >
                       Back
                     </Button>
 
                     <Button
-                      sx={{ width: "110px", height: "45px" }}
+                      className="navButton"
+                      sx={{
+                        width: {
+                          xl: "100px",
+                          lg: "100px",
+                          md: "100px",
+                          sm: "100px",
+                          // xs: "100px",
+                        },
+
+                        height: {
+                          xl: "40px",
+                          lg: "40px",
+                          md: "40px",
+                          sm: "40px",
+                          // xs: "40px",
+                        },
+                      }}
                       onClick={handleNext}
                       variant="contained"
                     >
