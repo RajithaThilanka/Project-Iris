@@ -1,23 +1,31 @@
 @media screen and (max-width: 320px) {
   .stepperHeader {
     width: 280px;
-    padding: 3px;
+    padding: 2px;
+    margin-top: 0px;
+    font-size: 10px;
   }
 
   .steppeButton {
-    height: 300px;
+    height: 305px;
   }
 
   .BoxContainer {
-    width: 250px;
-    height: 250px;
+    width: 230px;
+    height: 275px;
   }
   .navButton {
     width: 85px;
     height: 30px;
   }
   .stepperStyle {
-    font-size: 2px;
+    font-size: 1px;
+  }
+  .MuiStepLabel-label {
+    font-size: 7px !important;
+  }
+  .DocSelectHeaderName {
+    font-size: 13px !important;
   }
 }
 
@@ -44,10 +52,102 @@
   .stepperStyle {
     font-size: 2px;
   }
-  .step-label {
-    font-size: 10px !important;
-  }
   .MuiStepLabel-label {
     font-size: 9px !important;
+  }
+  .DocSelectHeaderName {
+    font-size: 14px !important;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .stepperHeader {
+    width: 400px;
+    padding: 3px;
+    margin-top: 0px;
+    font-size: 30px;
+  }
+
+  .steppeButton {
+    height: 450px;
+  }
+
+  .BoxContainer {
+    width: 370px;
+    height: 415px;
+  }
+  .navButton {
+    width: 95px;
+    height: 40px;
+  }
+  .stepperStyle {
+    font-size: 2px;
+  }
+  .MuiStepLabel-label {
+    font-size: 10px !important;
+  }
+  .DocSelectHeaderName {
+    font-size: 16px !important;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .stepperHeader {
+    width: 500px;
+    padding: 3px;
+    margin-top: 0px;
+    font-size: 40px;
+  }
+
+  .steppeButton {
+    height: 490px;
+  }
+
+  .BoxContainer {
+    width: 430px;
+    height: 450px;
+  }
+  .navButton {
+    width: 95px;
+    height: 40px;
+  }
+  .stepperStyle {
+    font-size: 5px;
+  }
+  .MuiStepLabel-label {
+    font-size: 12px !important;
+  }
+  .DocSelectHeaderName {
+    font-size: 18px !important;
+  }
+}
+@media screen and (min-width: 993px) {
+  .stepperHeader {
+    width: 650px;
+    padding: 3px;
+    margin-top: 0px;
+    font-size: 40px;
+  }
+
+  .steppeButton {
+    height: 490px;
+  }
+
+  .BoxContainer {
+    width: 530px;
+    height: 450px;
+  }
+  .navButton {
+    width: 95px;
+    height: 40px;
+  }
+  .stepperStyle {
+    font-size: 5px;
+  }
+  .MuiStepLabel-label {
+    font-size: 13px !important;
+  }
+  .DocSelectHeaderName {
+    font-size: 18px !important;
   }
 }

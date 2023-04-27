@@ -93,7 +93,7 @@ export default function LiveSelfy(props) {
   return (
     <div>
       <Box>
-        <Stack direction="column" spacing={2}>
+        <Stack direction="column" spacing={2} alignItems={"center"} padding={1}>
           <Typography className="baseHeader">Take Selfie Photo</Typography>
 
           <FormGroup className="liveForm">

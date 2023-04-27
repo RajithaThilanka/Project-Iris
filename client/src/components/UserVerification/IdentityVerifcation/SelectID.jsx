@@ -136,17 +136,17 @@ export default function SelectID(props) {
               onChange={""}
               sx={{
                 width: {
-                  xl: "200px",
-                  lg: "200px",
-                  md: "200px",
-                  sm: "150px",
+                  //xl: "200px",
+                  //lg: "200px",
+                  //md: "200px",
+                  ///sm: "150px",
                   // xs: "100px",
                 },
                 height: {
-                  xl: "80px",
-                  lg: "100px",
-                  md: "100px",
-                  sm: "80px",
+                  //xl: "80px",
+                  // lg: "100px",
+                  // md: "100px",
+                  // sm: "80px",
                   // xs: "50px",
                 },
               }}
@@ -165,17 +165,17 @@ export default function SelectID(props) {
               onChange={""}
               sx={{
                 width: {
-                  xl: "200px",
-                  lg: "200px",
-                  md: "200px",
-                  sm: "150px",
+                  //  xl: "200px",
+                  // lg: "200px",
+                  // md: "200px",
+                  // sm: "150px",
                   // xs: "100px",
                 },
                 height: {
-                  xl: "80px",
-                  lg: "100px",
-                  md: "100px",
-                  sm: "80px",
+                  // xl: "80px",
+                  // lg: "100px",
+                  // md: "100px",
+                  // sm: "80px",
                   // xs: "50px",
                 },
               }}

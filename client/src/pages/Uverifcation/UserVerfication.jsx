@@ -113,24 +113,24 @@ export default function UserVerfication(props) {
             className="stepperHeader"
             sx={{
               width: {
-                xl: "900px",
-                lg: "900px",
-                md: "650px",
-                sm: "550px",
+                // xl: "900px",
+                // lg: "900px",
+                //md: "650px",
+                //sm: "550px",
                 // xs: "480px",
               },
               padding: {
-                xl: "10px",
-                lg: "10px",
-                md: "8px",
-                sm: "5px",
+                // xl: "10px",
+                // lg: "10px",
+                //md: "8px",
+                //sm: "5px",
                 // xs: "5px",
               },
               marginTop: {
-                xl: "10px",
-                lg: "10px",
-                md: "5px",
-                sm: "1px",
+                //xl: "10px",
+                // lg: "10px",
+                //md: "5px",
+                //sm: "1px",
                 // xs: "1px",
               },
             }}
@@ -173,10 +173,10 @@ export default function UserVerfication(props) {
                     //button container component
                     sx={{
                       height: {
-                        xl: "500px",
-                        lg: "500px",
-                        md: "480px",
-                        sm: "440px",
+                        // xl: "500px",
+                        // lg: "500px",
+                        //md: "480px",
+                        // sm: "440px",
                         // xs: "420px",
                       },
                       alignItems: "center",
@@ -192,7 +192,7 @@ export default function UserVerfication(props) {
                       }}
                       spacing={1}
                     >
-                      <Typography className="DocSelectHeaderName ">
+                      <Typography className="DocSelectHeaderName">
                         Use a government-issued document
                       </Typography>
                       <Box
@@ -201,17 +201,17 @@ export default function UserVerfication(props) {
                           //BOx container
                           boxShadow: "4",
                           width: {
-                            xl: "680px",
-                            lg: "680px",
-                            md: "600px",
-                            sm: "450px",
+                            // xl: "680px",
+                            //lg: "680px",
+                            // md: "600px",
+                            // sm: "450px",
                             // xs: "400px",
                           },
                           height: {
-                            xl: "450px",
-                            lg: "430px",
-                            md: "420px",
-                            sm: "390px",
+                            // xl: "450px",
+                            // lg: "430px",
+                            //md: "420px",
+                            // sm: "390px",
                             // xs: "370px",
                           },
                           borderRadius: "5px",
@@ -234,10 +234,10 @@ export default function UserVerfication(props) {
                     className="steppeButton"
                     sx={{
                       height: {
-                        xl: "500px",
-                        lg: "500px",
-                        md: "480px",
-                        sm: "440px",
+                        // xl: "500px",
+                        //lg: "500px",
+                        // md: "480px",
+                        //sm: "440px",
                         // xs: "420px",
                       },
                       alignItems: "center",
@@ -261,17 +261,17 @@ export default function UserVerfication(props) {
                         sx={{
                           boxShadow: "4",
                           width: {
-                            xl: "680px",
-                            lg: "680px",
-                            md: "600px",
-                            sm: "450px",
+                            //xl: "680px",
+                            // lg: "680px",
+                            // md: "600px",
+                            // sm: "450px",
                             // xs: "400px",
                           },
                           height: {
-                            xl: "450px",
-                            lg: "430px",
-                            md: "420px",
-                            sm: "390px",
+                            // xl: "450px",
+                            // lg: "430px",
+                            // md: "420px",
+                            //sm: "390px",
                             // xs: "370px",
                           },
                           borderRadius: "5px",
@@ -294,10 +294,10 @@ export default function UserVerfication(props) {
                     className="steppeButton"
                     sx={{
                       height: {
-                        xl: "500px",
-                        lg: "500px",
-                        md: "480px",
-                        sm: "440px",
+                        //xl: "500px",
+                        //lg: "500px",
+                        // md: "480px",
+                        // sm: "440px",
                         // xs: "420px",
                       },
                       alignItems: "center",
@@ -321,17 +321,17 @@ export default function UserVerfication(props) {
                         sx={{
                           boxShadow: "4",
                           width: {
-                            xl: "680px",
-                            lg: "680px",
-                            md: "600px",
-                            sm: "450px",
+                            // xl: "680px",
+                            // lg: "680px",
+                            // md: "600px",
+                            // sm: "450px",
                             // xs: "400px",
                           },
                           height: {
-                            xl: "450px",
-                            lg: "430px",
-                            md: "420px",
-                            sm: "390px",
+                            // xl: "450px",
+                            // lg: "430px",
+                            // md: "420px",
+                            // sm: "390px",
                             // xs: "370px",
                           },
                           borderRadius: "5px",
@@ -367,18 +367,18 @@ export default function UserVerfication(props) {
                       className="navButton"
                       sx={{
                         width: {
-                          xl: "100px",
-                          lg: "100px",
-                          md: "100px",
-                          sm: "100px",
+                          // xl: "100px",
+                          // lg: "100px",
+                          // md: "100px",
+                          //sm: "100px",
                           // xs: "100px",
                         },
 
                         height: {
-                          xl: "40px",
-                          lg: "40px",
-                          md: "40px",
-                          sm: "40px",
+                          //xl: "40px",
+                          //lg: "40px",
+                          //md: "40px",
+                          //sm: "40px",
                           // xs: "40px",
                         },
                       }}
@@ -390,18 +390,18 @@ export default function UserVerfication(props) {
                       className="navButton"
                       sx={{
                         width: {
-                          xl: "100px",
-                          lg: "100px",
-                          md: "100px",
-                          sm: "100px",
+                          //  xl: "100px",
+                          // lg: "100px",
+                          //md: "100px",
+                          //sm: "100px",
                           // xs: "100px",
                         },
 
                         height: {
-                          xl: "40px",
-                          lg: "40px",
-                          md: "40px",
-                          sm: "40px",
+                          // xl: "40px",
+                          //lg: "40px",
+                          // md: "40px",
+                          // sm: "40px",
                           // xs: "40px",
                         },
                       }}
