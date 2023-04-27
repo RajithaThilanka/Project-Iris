@@ -181,7 +181,7 @@ export default function UserVerfication(props) {
                       },
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "10px",
+                      padding: "5px",
                     }}
                   >
                     <Stack
@@ -190,7 +190,7 @@ export default function UserVerfication(props) {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
-                      spacing={2}
+                      spacing={1}
                     >
                       <Typography className="DocSelectHeaderName ">
                         Use a government-issued document
@@ -242,7 +242,7 @@ export default function UserVerfication(props) {
                       },
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "10px",
+                      padding: "5px",
                     }}
                   >
                     <Stack
@@ -251,7 +251,7 @@ export default function UserVerfication(props) {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
-                      spacing={2}
+                      spacing={1}
                     >
                       <Typography className="DocSelectHeaderName ">
                         Identity Verification
@@ -291,17 +291,18 @@ export default function UserVerfication(props) {
                 )}
                 {activeStep === 2 && (
                   <Box
+                    className="steppeButton"
                     sx={{
                       height: {
                         xl: "500px",
                         lg: "500px",
                         md: "480px",
                         sm: "440px",
-                        xs: "420px",
+                        // xs: "420px",
                       },
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "10px",
+                      padding: "5px",
                     }}
                   >
                     <Stack
@@ -310,7 +311,7 @@ export default function UserVerfication(props) {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
-                      spacing={2}
+                      spacing={1}
                     >
                       <Typography className="DocSelectHeaderName ">
                         Live Image

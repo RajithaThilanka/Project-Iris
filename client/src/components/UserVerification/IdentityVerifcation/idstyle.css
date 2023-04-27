@@ -3,13 +3,6 @@
     font-size: 11px;
   }
 
-  .baseText {
-    font-size: 1px;
-  }
-  .containtext {
-    font-size: 2px;
-  }
-
   .VerificationMethod {
     width: 170px;
     height: 50px;
@@ -24,6 +17,7 @@
     height: 25px;
     font-size: 9px !important;
   }
+
   .title {
     font-size: 13px;
   }
@@ -33,7 +27,10 @@
   .upload-button-text {
     font-size: 10px;
   }
-  .form-group label {
-    font-size: 2px !important;
+  /* .MuiFormGroup-root.liveForm {
+    font-size: px;
+  } */
+  .checkbox {
+    transform: scale(0.75);
   }
 }

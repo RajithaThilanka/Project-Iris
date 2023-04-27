@@ -1,0 +1,18 @@
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .baseHeader {
+    font-size: 15px;
+    display: none;
+  }
+  .content {
+  }
+
+  .MuiFormGroup-root.liveForm {
+    /* visibility: hidden; */
+    display: none;
+  }
+  .capturebutton {
+    width: 90px;
+    height: 25px;
+    font-size: 9px !important;
+  }
+}

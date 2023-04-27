@@ -8,6 +8,7 @@ import Webcam from "react-webcam";
 import "./camButtonStyle.css";
 import { useDispatch } from "react-redux";
 import { uploadImage } from "../../../actions/UploadAction";
+import "./liveImageStyle.css";
 
 export default function LiveSelfy(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -93,9 +94,9 @@ export default function LiveSelfy(props) {
     <div>
       <Box>
         <Stack direction="column" spacing={2}>
-          <Typography variant="h5">Take Selfie Photo</Typography>
+          <Typography className="baseHeader">Take Selfie Photo</Typography>
 
-          <FormGroup>
+          <FormGroup className="liveForm">
             <FormControlLabel
               control={<Checkbox checked={ck} name="ck" />}
               label="Take a selfie of yourself with neutral expression"
@@ -105,7 +106,12 @@ export default function LiveSelfy(props) {
               label="Make sure your whole face is visible ,Centered and your eyes are open"
             />
           </FormGroup>
-          <Stack direction="row" alignItems="center" justifyContent="center">
+          <Stack
+            direction="row"
+            spacing={0}
+            alignItems="center"
+            justifyContent="center"
+          >
             <Stack
               direction="column"
               spacing={1}
@@ -120,7 +126,7 @@ export default function LiveSelfy(props) {
                     screenshotFormat="image/jpeg"
                     videoConstraints={videoConstraints}
                     onUserMedia={onUserMedia}
-                    screenshotQuality={1}
+                    screenshotQuality={100}
                     imageSmoothing={true}
                   />
                 )}
@@ -133,15 +139,20 @@ export default function LiveSelfy(props) {
             )}
           </Stack>
           <Stack
-            spacing={2}
+            spacing={1}
             direction="row"
             sx={{ alignItems: "center", justifyContent: "center" }}
           >
-            <Button onClick={handleCaptureAndReset} variant="outlined">
+            <Button
+              className="capturebutton"
+              onClick={handleCaptureAndReset}
+              variant="outlined"
+            >
               {capturedImage === null ? "Capture" : "Reset"}
             </Button>
             {capturedImage !== null && (
               <Button
+                className="capturebutton"
                 onClick={handleUploadAndImageNameUpdate}
                 variant="outlined"
               >

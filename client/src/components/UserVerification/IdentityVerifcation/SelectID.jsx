@@ -91,24 +91,35 @@ export default function SelectID(props) {
   return (
     <div>
       <Box>
-        <Stack direction="column" alignItems={"center"} spacing={1}>
+        <Stack
+          direction="column"
+          alignItems={"center"}
+          padding={"10px"}
+          spacing={1}
+        >
           <Typography className="title">Upload Image of ID Card</Typography>
 
           <FormGroup className="form-group">
             <FormControlLabel
-              control={<Checkbox checked={ck} name="ck" />}
+              control={<Checkbox checked={ck} name="ck" className="checkbox" />}
               label="Government-issued"
-              className="label"
+              className="checkbox-label"
             />
+
             <FormControlLabel
-              control={<Checkbox checked={ck2} name="ck2" />}
+              control={
+                <Checkbox checked={ck2} name="ck2" className="checkbox" />
+              }
               label="Original Full-size unedited documents"
-              className="label"
+              className="checkbox-label"
             />
+
             <FormControlLabel
-              control={<Checkbox checked={ck3} name="ck3" />}
+              control={
+                <Checkbox checked={ck3} name="ck3" className="checkbox" />
+              }
               label="Readable, Well-it, Coloured images"
-              className="label"
+              className="checkbox-label"
             />
           </FormGroup>
 
