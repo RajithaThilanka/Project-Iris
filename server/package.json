@@ -32,6 +32,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "socket.io": "^4.6.1",
+    "stripe": "^12.3.0",
     "superagent": "^8.0.6",
     "uuid": "^9.0.0",
     "validator": "^13.7.0",
