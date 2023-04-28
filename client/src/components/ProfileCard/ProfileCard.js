@@ -11,8 +11,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CoffeeIcon from "@mui/icons-material/Coffee";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import {
   acceptFriend,
+  blockUser,
   cancelFriendRequest,
   createChat,
   removeConnection,
@@ -232,6 +234,54 @@ function ProfileCard({ conUser, cardType, socket }) {
   // add friend btn => friend-req not pending
   // cancel request => friend-req pending and senderId = userId
   // accept request => friend-req pending and senderID = otherUserId
+  const handleBlockConnection = async (id) => {
+    try {
+      const {
+        data: {
+          data: { data },
+        },
+      } = await blockUser(id);
+      setConnections(
+        connections.filter((con) => {
+          return con._id !== conUser._id;
+        })
+      );
+      setsentFriendRequests(
+        sentFriendRequests.filter(
+          (req) =>
+            req.senderId._id + "" != otherUser._id + "" &&
+            req.receiverId._id + "" != otherUser._id + ""
+        )
+      );
+
+      setreceivedFriendRequests(
+        receivedFriendRequests.filter(
+          (req) =>
+            req.senderId._id + "" != otherUser._id + "" &&
+            req.receiverId._id + "" != otherUser._id + ""
+        )
+      );
+    } catch (err) {
+      const {
+        response: {
+          data: {
+            error: { name },
+          },
+        },
+      } = err;
+
+      toast.error(name, {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
   return (
     <div
       className="profile-card"
@@ -239,7 +289,8 @@ function ProfileCard({ conUser, cardType, socket }) {
       onMouseLeave={() => setVisible(false)}
     >
       <div className="image-section">
-        <img
+        <LazyLoadImage
+          effect="blur"
           src={serverPublic + otherUser.profilePhoto}
           alt={otherUser.callTag}
           className="profile-img"
@@ -249,9 +300,9 @@ function ProfileCard({ conUser, cardType, socket }) {
 
       <div
         className="profile-buttons"
-        style={{
-          display: visible ? "flex" : "none",
-        }}
+        // style={{
+        //   display: visible ? "flex" : "none",
+        // }}
       >
         <Tooltip title="View Profile" placement="bottom">
           <IconButton
@@ -330,11 +381,21 @@ function ProfileCard({ conUser, cardType, socket }) {
           </Tooltip>
         </DialogBox>
 
-        <Tooltip title="Block and Report" placement="bottom">
-          <IconButton style={{ color: "#fff" }}>
-            <BlockIcon className="profile-card-btn" />
-          </IconButton>
-        </Tooltip>
+        <DialogBox
+          title="Confirm Block"
+          content="Are you sure to block this user?"
+          YesBtn="Confirm"
+          NoBtn="Cancel"
+          handleYes={() => {
+            handleBlockConnection(otherUser._id);
+          }}
+        >
+          <Tooltip title="Block and Report" placement="bottom">
+            <IconButton style={{ color: "#fff" }}>
+              <BlockIcon className="profile-card-btn" />
+            </IconButton>
+          </Tooltip>
+        </DialogBox>
       </div>
       <div className="profile-header">
         <div className="profile-status-container">

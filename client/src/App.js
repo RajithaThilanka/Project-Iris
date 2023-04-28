@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Auth from "./pages/Auth/Auth";
 import ConfirmMail from "./pages/ConfirmMail/ConfirmMail";
@@ -10,6 +10,8 @@ import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import QuestionPage from "./pages/Questions/QuestionPage";
+
 import UserProfile from "./pages/UProfile/UserProfile";
 import SuggessionPage from "./pages/suggestionProfile/SuggessionPage";
 
@@ -31,11 +33,17 @@ import AdminLogin from "./pages/AdminAuth/AdminLogin";
 import IdVerification from "./pages/UserVerification/IdVerification";
 import UploadImages from "./pages/UserVerification/UploadImages";
 import SelfiPhoto from "./pages/UserVerification/SelfiPhoto";
-
+import SafetyTips from "./pages/SafetyTips/SafetyTips";
 import Dashboard2 from "./pages/Dashboard/Dashboard2";
 import MailConfirmed from "./pages/MailConfirmed/MailConfirmed";
 import Report from "./components/Report/Report";
 import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
+import Explore from "./components/Explore/Explore";
+import ManualSearch from "./components/ManualSearch/ManualSearch";
+import Question from "./components/Question/Question";
+import UserVerification from "./pages/Uverifcation/UserVerfication";
+import TagDashboard from "./components/TagDashboard/TagDashboard";
+
 const theme = createTheme({
   palette: {
     type: "light",
@@ -96,6 +104,7 @@ const theme = createTheme({
 
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
+  const { state } = useLocation();
   return (
     <ThemeProvider theme={theme}>
       <>
@@ -105,21 +114,54 @@ function App() {
             element={<AccountInfo />}
           ></Route>
           <Route
-            path="/auth/signup/user-info/:id"
-            element={<UserInfo />}
+            path="/auth/signup/user-info"
+            element={
+              state ? <UserInfo /> : <Navigate to="/auth/signup/account-info" />
+            }
+          ></Route>
+
+          <Route
+            path="/auth/signup/profileview-info"
+            element={
+              state ? (
+                <ProfileView />
+              ) : (
+                <Navigate to="/auth/signup/account-info" />
+              )
+            }
           ></Route>
           <Route
-            path="/auth/signup/profileview-info/:id"
-            element={<ProfileView />}
+            path="/question"
+            element={
+              state ? <Question /> : <Navigate to="/auth/signup/account-info" />
+            }
           ></Route>
           <Route
-            path="/auth/signup/lookingfor-info/:id"
-            element={<LookingFor />}
+            path="/auth/signup/lookingfor-info"
+            element={
+              state ? (
+                <LookingFor />
+              ) : (
+                <Navigate to="/auth/signup/account-info" />
+              )
+            }
           ></Route>
 
           <Route
             path="/auth/login"
             element={user ? <Navigate to="/me" /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/explore"
+            element={user ? <Explore /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/manual-search"
+            element={user ? <ManualSearch /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/tag-suggestions/:tag"
+            element={user ? <TagDashboard /> : <Auth action="login" />}
           ></Route>
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/error/:msg" element={<Error />}></Route>
@@ -205,15 +247,21 @@ function App() {
             element={user ? <Chat /> : <Navigate to="/auth/login" />}
           ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
-          <Route path="/users/profile/:id" element={<SuggessionPage />}></Route>
+          <Route
+            path="/users/uprofile/:id"
+            element={<SuggessionPage />}
+          ></Route>
 
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
-          <Route path="verification" element={<IdVerification />} />
-          <Route path="uploadimages" element={<UploadImages />} />
-          <Route path="selfiPhoto" element={<SelfiPhoto />} />
+          <Route path="/me/verification" element={<IdVerification />} />
+          <Route path="/me/uploadimages" element={<UploadImages />} />
+          <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
+          <Route path="/me/safetytips" element={<SafetyTips />} />
+
+          <Route path="/me/uverification" element={<UserVerification />} />
+
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
-        {/* <Chat /> */}
 
         <ToastContainer
           style={{

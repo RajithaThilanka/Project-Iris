@@ -17,10 +17,30 @@ import { getAllUsers, deleteaUser } from "../../../api/AdminRequests";
 
 export default function Profilereports() {
   const [rows, setRows] = useState([]);
+
   const [imid, setimid] = useState(null);
   const [liveimg, setLiveimg] = useState(null);
   const [idFront, setidFront] = useState(null);
   const [idBack, setidBack] = useState(null);
+
+  const showProfileImage = (params) => {
+    let imageid;
+    try {
+      imageid = params.row.profilePhoto;
+      liveimg = params.row.liveImage;
+      idFront = params.row.nicFront;
+      idBack = params.row.nicBack;
+
+      setLiveimg(liveimg);
+      setidFront(idFront);
+      setidBack(idBack);
+      setimid(imageid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -57,15 +77,8 @@ export default function Profilereports() {
         let liveimg;
         let idFront;
         let idBack;
-        const showProfileImage = (e) => {
-          imageid = params.row.profilePhoto;
-          liveimg = params.row.liveImage;
-          idFront = params.row.nicFront;
-          idBack = params.row.nicBack;
-          setLiveimg(liveimg);
-          setidFront(idFront);
-          setidBack(idBack);
-          setimid(imageid);
+        const showProfileImage = () => {
+          showProfileImage(params);
         };
 
         const deleteProfile = async () => {
@@ -82,12 +95,6 @@ export default function Profilereports() {
 
         return (
           <Stack direction="row" spacing={1}>
-            <IconButton size="small" onClick={showProfileImage}>
-              <BlockIcon />
-            </IconButton>
-            <IconButton size="small" onClick={showProfileImage}>
-              <VisibilityIcon />
-            </IconButton>
             <IconButton size="small" onClick={deleteProfile}>
               <DeleteIcon />
             </IconButton>
@@ -142,14 +149,16 @@ export default function Profilereports() {
           }}
         >
           <Typography variant="h6">All profiles </Typography>
+
           <DataGrid
             rows={rows}
             columns={columns}
             pageSize={20}
             rowsPerPageOptions={[]}
-            checkboxSelection
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
+            onRowClick={showProfileImage}
+            getRowId={(row) => row._id}
           />
         </Box>
         <Box>

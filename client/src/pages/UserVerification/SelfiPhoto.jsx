@@ -32,20 +32,28 @@ function SelfiPhoto() {
             open
           </FormLabel>
         </Stack>
-        <Button
-          variant="contained"
-          component="label"
-          className="upload-button"
-          onClick={() => {
-            setClicked(true);
-          }}
+        <Stack
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          spacing={1}
         >
+<<<<<<< HEAD
           Take a Selfie
           <IconButton
             color="primary"
             aria-label="upload picture"
+=======
+          <Button
+            variant="contained"
+>>>>>>> 3596e5f4ade07003d8d79a5a6d99cdeba43c7ec8
             component="label"
+            // className="upload-button"
+            onClick={() => {
+              setClicked(true);
+            }}
           >
+<<<<<<< HEAD
             <PhotoCamera />
           </IconButton>
         </Button>
@@ -60,6 +68,23 @@ function SelfiPhoto() {
             Submit
           </Link>
         </Button>
+=======
+            Take a Selfie
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            // disabled={loading}
+            //className="continue"
+          >
+            <Link to="/database" className="link-css">
+              Submit
+            </Link>
+          </Button>
+          {Clicked && <Camera />}
+        </Stack>
+
+>>>>>>> 3596e5f4ade07003d8d79a5a6d99cdeba43c7ec8
         <Typography
           sx={{ fontSize: 22, fontFamily: "Poppins, sans-serif", color: "red" }}
         >

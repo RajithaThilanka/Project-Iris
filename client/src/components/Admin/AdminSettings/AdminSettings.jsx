@@ -5,24 +5,44 @@ import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
 import { useState } from "react";
 import { Typography, Stack, Box, Button } from "@mui/material";
 import dayjs from "dayjs";
-import { setHatespeech } from "../../api/AdminRequests";
+import { setHatespeech, hateSpeechChechNow } from "../../api/AdminRequests";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
+import "./settingsStyle.css";
 
+import ScheduleIcon from "@mui/icons-material/Schedule";
 function CustomToolbar(props) {
   return null;
 }
 export default function AdminSettings() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlehateSpeechClick = async () => {
+    setIsLoading(true);
+    try {
+      const response = await hateSpeechChechNow();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handleClearDate = () => {
+    setSelectedDate(null);
+    setConvertDate(null);
+  };
   const [selectedDate, setSelectedDate] = useState(null);
   const [convertdate, setConvertDate] = useState(null);
   const handleButtonClick = () => {
-    // Call the setHatespeech function with the appropriate parameter value
-    setHatespeech("2022-04-01T10:00:00.000Z")
+    setHatespeech(convertdate)
       .then((response) => {
-        console.log(response.data); // Output the response data to the console
-        // Handle the API response as needed
+        console.log(response.data);
       })
       .catch((error) => {
-        console.log(error.response.data); // Output the error data to the console
-        // Handle the API error as needed
+        console.log(error.response.data);
       });
   };
 
@@ -39,7 +59,7 @@ export default function AdminSettings() {
 
   return (
     <div>
-      <Stack direction="row" spacing="3">
+      <Stack direction="row" spacing="5">
         <Stack diretion="column" spacing={2} sx={{ alignItems: "center" }}>
           <Typography variant="h5">
             Schedule Hatespeech Detect Date and Time
@@ -60,12 +80,12 @@ export default function AdminSettings() {
                 orientation="landscape"
                 value={selectedDate}
                 onChange={handleDateChange}
-                ToolbarComponent={CustomToolbar}
+                ToolbarComponent={false}
               />
             </LocalizationProvider>
           </Box>
         </Stack>
-        <Stack direction="column" spacing={2} alignItems="center" padding={25}>
+        <Stack direction="column" spacing={2} alignItems="center" padding={5}>
           <Stack
             direction="column"
             spacing={2}
@@ -73,9 +93,14 @@ export default function AdminSettings() {
             //padding={25}
           >
             <Typography variant="h5">Hate Speech Schedule</Typography>
-            <Button variant="outlined" onClick={handleButtonClick}>
-              Schedule Now
-            </Button>
+            <Stack direction="row" spacing={2}>
+              <Button variant="contained" onClick={handleClearDate}>
+                Clear
+              </Button>
+              <Button variant="contained" onClick={handleButtonClick}>
+                Schedule Now
+              </Button>
+            </Stack>
           </Stack>
 
           <Stack
@@ -85,9 +110,39 @@ export default function AdminSettings() {
             //padding={25}
           >
             <Typography variant="h5">Hate Speech Check Now</Typography>
-            <Button variant="outlined" onClick={""}>
-              Check Now
+            <Button
+              variant="contained"
+              onClick={handlehateSpeechClick}
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Check Hate Speech Now"}
             </Button>
+            <Box
+              sx={{
+                width: "300px",
+                height: "300px",
+                border: 1,
+                borderRadius: 1,
+                boxShadow: 3,
+              }}
+            >
+              <List
+                sx={{
+                  bgcolor: "background.paper",
+                }}
+                subheader={<ListSubheader>Scheduled Times</ListSubheader>}
+              >
+                <ListItem>
+                  <ListItemIcon>
+                    <ScheduleIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    id="switch-list-label-wifi"
+                    primary="Schedule time"
+                  />
+                </ListItem>
+              </List>
+            </Box>
           </Stack>
         </Stack>
       </Stack>

@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { logout } from "../../actions/AuthActions";
@@ -38,8 +39,16 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Notifications from "../Notifications/Notifications";
 import { fetchChatNotifications } from "../../api/ChatRequests";
+import { Divider } from "@mui/material";
 
-const pages = ["Explore", "Safety Tips", "About Us"];
+// const pages = ["Explore", "Safety Tips", "About Us"];
+
+const pages = [
+  { label: "Home", to: "/me" },
+  { label: "Explore", to: "/explore" },
+  { label: "Safety Tips", to: "/me" },
+  { label: "About Us", to: "/about-us" },
+];
 // const settings = ["Account", "Dashboard"];
 const settings = [
   { label: "Account", to: "/me" },
@@ -241,6 +250,7 @@ function Navbar({ user, socket }) {
     };
     fetchNots && fetchChatNots();
   }, []);
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   return (
@@ -262,12 +272,12 @@ function Navbar({ user, socket }) {
           alignItems: "center",
         }}
       >
-        <div
-          className="navbar-logo"
-          onClick={() => navigate("/home")}
-          style={{ cursor: "pointer" }}
-        >
-          <img src={serverPublic + "irislogo.png"} alt="iris-logo" />
+        <div className="navbar-logo" style={{ cursor: "pointer" }}>
+          <img
+            src={serverPublic + "irislogo.png"}
+            alt="iris-logo"
+            onClick={() => navigate("/home")}
+          />
         </div>
         <Toolbar disableGutters sx={{ width: "100%" }}>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
@@ -289,7 +299,7 @@ function Navbar({ user, socket }) {
             IRIS
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "nonefles" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -317,27 +327,79 @@ function Navbar({ user, socket }) {
               sx={{
                 display: { xs: "block", md: "none" },
               }}
+              PaperProps={{ className: "mob-nav-bar" }}
             >
-              {
-                <MenuItem
-                  className="home-menu-item"
-                  onClick={() => navigate("/home")}
+              <MenuItem
+                sx={{
+                  padding: "0 2rem",
+                  display: "flex !important",
+                  alignItems: "center !important",
+                  justifyContent: "space-between !important",
+                  cursor: "default",
+                  "&:hover": {
+                    background: "inherit !important",
+                  },
+                }}
+                disableRipple={true}
+              >
+                <div
+                  style={{
+                    flex: 1,
+                  }}
                 >
-                  <div>
-                    <div style={{ width: "4rem", height: "4rem" }}>
-                      <img
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          borderRadius: "50%",
-                        }}
-                        src={serverPublic + "irislogo.png"}
-                        alt=""
-                      />
-                    </div>
+                  <div
+                    style={{
+                      width: "4rem",
+                      height: "4rem",
+                      cursor: "pointer",
+                      margin: "auto",
+                    }}
+                  >
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                      }}
+                      src={serverPublic + "irislogo.png"}
+                      alt=""
+                      onClick={() => navigate("/home")}
+                    />
                   </div>
-                </MenuItem>
-              }
+                </div>
+                <div style={{ display: "inline-block" }}>
+                  <IconButton
+                    sx={{
+                      top: 0,
+                      right: 0,
+                      color: "#fff",
+                    }}
+                    onClick={handleCloseNavMenu}
+                  >
+                    <CloseIcon fontSize="large" />
+                  </IconButton>
+                </div>
+              </MenuItem>
+
+              {pages.map((page) => {
+                return (
+                  <>
+                    <MenuItem
+                      key={page.label}
+                      onClick={() => navigate(page.to)}
+                    >
+                      <Typography
+                        sx={{
+                          color: "#fff",
+                        }}
+                      >
+                        {page.label}
+                      </Typography>
+                    </MenuItem>
+                    <Divider />
+                  </>
+                );
+              })}
             </Menu>
           </Box>
 
@@ -349,13 +411,13 @@ function Navbar({ user, socket }) {
               HOME
             </Button>
             <Button
-              //onClick={() => navigate("/about-us")}
+              onClick={() => navigate("/explore")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Explore
             </Button>
             <Button
-              //onClick={() => navigate("/about-us")}
+              onClick={() => navigate("/me/safetytips")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Safety Tips
@@ -511,7 +573,7 @@ function Navbar({ user, socket }) {
                   height: "50%",
                   mt: "35px",
                   overflow: "scroll",
-                  background: "#eee",
+                  background: "#fff",
                 },
               }}
               id="menu-appbar"
@@ -552,7 +614,6 @@ function Navbar({ user, socket }) {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -566,13 +627,50 @@ function Navbar({ user, socket }) {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
+              PaperProps={{ className: "new-mob-nav-bar" }}
             >
+              <MenuItem
+                sx={{
+                  padding: "0 2rem",
+                  display: "flex !important",
+                  alignItems: "center !important",
+                  justifyContent: "flex-end !important",
+                  cursor: "default",
+                  "&:hover": {
+                    background: "inherit !important",
+                  },
+                  position: "fixed",
+                  top: "2rem",
+                  right: 0,
+                }}
+              >
+                <div style={{ display: "inline-block" }}>
+                  <IconButton
+                    sx={{
+                      top: 0,
+                      right: 0,
+                      color: "#fff",
+                    }}
+                    onClick={handleCloseUserMenu}
+                  >
+                    <CloseIcon fontSize="large" />
+                  </IconButton>
+                </div>
+              </MenuItem>
+
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">
+                <MenuItem
+                  key={setting}
+                  onClick={handleCloseUserMenu}
+                  className="mob-nav-bar-items"
+                >
+                  <Typography
+                    textAlign="center"
+                    sx={{ fontSize: "inherit !important" }}
+                  >
                     <Link
                       style={{
-                        color: "var(--color-primary)",
+                        color: "#fff",
                         textDecoration: "none",
                       }}
                       to={setting.to}
@@ -583,16 +681,34 @@ function Navbar({ user, socket }) {
                 </MenuItem>
               ))}
 
-              <MenuItem key={"Profile"} onClick={handleCloseUserMenu}>
-                <Button onClick={() => navigate("/me/profile")}>Profile</Button>
+              <MenuItem
+                key={"Profile"}
+                onClick={handleCloseUserMenu}
+                className="mob-nav-bar-items"
+              >
+                <Link
+                  to="/me/profile"
+                  style={{
+                    color: "#fff",
+                    textDecoration: "none",
+                  }}
+                >
+                  Profile
+                </Link>
               </MenuItem>
 
-              <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
+              <MenuItem
+                key={"logout"}
+                onClick={handleCloseUserMenu}
+                className="mob-nav-bar-items"
+              >
                 <Button
                   onClick={() => {
                     socket?.disconnect();
                     dispatch(logout());
                   }}
+                  type="contained"
+                  className="mob-nav-bar-log-btn"
                 >
                   Logout
                 </Button>

@@ -63,18 +63,14 @@ export default function ContentTab() {
           aria-label="basic tabs example"
           centered
         >
-          <Tab label="About" {...a11yProps(0)} />
-          <Tab label="Connections" {...a11yProps(1)} />
-          <Tab label="Setings" {...a11yProps(2)} />
+          <Tab label="About Me" {...a11yProps(0)} />
+          <Tab label="Setings" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
         <ProAbout />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Profileconnection />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
         <ProfileSettings />
       </TabPanel>
     </Box>

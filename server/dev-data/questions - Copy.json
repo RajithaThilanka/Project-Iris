@@ -1,0 +1,127 @@
+[
+    
+    {
+        "question": "What are your favorite sports?",
+        "optionTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "answerTags": ["Baseball", "Football", "Hockey", "Basketball", "Cricket"],
+        "questionType": "sports"
+    },
+    
+    {
+        "question": "What are the social media platforms you mostly use?",
+        "optionTags": ["Facebook", "Youtube", "TikTok", "SnapChat", "Instagram","Twitter", "LinkedIn", "Reddit"],
+        "answerTags": ["Facebook", "Youtube", "TikTok", "SnapChat", "Instagram","Twitter", "LinkedIn", "Reddit"],
+        "questionType": "socialMedia"
+    },
+    
+    {
+        "question": "What are your favorite movie genres?",
+        "optionTags": ["Action", "Comedy", "Drama", "Adventure", "Thriller"],
+        "answerTags": ["Action", "Comedy", "Drama", "Adventure", "Thriller"],
+        "questionType": "movies"
+    },
+    
+    {
+        "question": "What type of music do you like to listen to?",
+        "optionTags": ["Pop", "Country", "HipHop", "Rock"],
+        "answerTags": ["Pop", "Country", "HipHop", "Rock"],
+        "questionType": "music"
+    },
+    
+    {
+        "question": "What is your idea about politics?",
+        "optionTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
+        "answerTags": ["Liberal", "Centrist", "Progressive", "Conservative", "Centrist", "Moderate"],
+        "questionType": "politics"
+    },
+    {
+        "question": "What kind of hobbies do you have?",
+        "optionTags": ["Sports","Cinema","travel enthusiast","Art","Food aficionado","Passionate gamer","Crafts","Carpentry/DIY","Dancing","Photography","music fan","Writer","Extreme reader"],
+        "answerTags": ["Sports","Cinema","Traveling","Art","Cooking","Gaming","Crafts","Carpentry/DIY","Dancing","Photography","Music","Writing","Reading"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "How would you describe your enthusiasm to watch TV?",
+        "optionTags": ["TV fan", "Hipster-friendly TV trailblazer", "Extreme TV aficionado", "Freelance TV fanatic"],
+        "answerTags": ["TV fan", "Hipster-friendly TV trailblazer", "Extreme TV aficionado", "Freelance TV fanatic"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "Which of the following best describes your problem-solving skills?",
+        "optionTags": ["Passionate problem solver", "Amateur problem solver", "Proud problem solver", "Subtly charming problem solver", "Friendly problem solver"],
+        "answerTags": ["Passionate problem solver", "Amateur problem solver", "Proud problem solver", "Subtly charming problem solver", "Friendly problem solver"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "How would you describe your interest in alcohol?",
+        "optionTags": ["Award-winning alcohol aficionado", "Incurable beer expert", "Total beer geek", "Extreme alcohol aficionado"],
+        "answerTags": ["Award-winning alcohol aficionado", "Incurable beer expert", "Total beer geek", "Extreme alcohol aficionado"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "Which of the following best describes your interests in music?",
+        "optionTags": ["Hipster-friendly music enthusiast", "Freelance music trailblazer", "Professional music scholar", "General music junkie", "Typical music buff"],
+        "answerTags": ["Hipster-friendly music enthusiast", "Freelance music trailblazer", "Professional music scholar", "General music junkie", "Typical music buff"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "Which of the following best describes your interests in bacon?",
+        "optionTags": ["Bacon guru", "Evil bacon nerd", "Subtly charming bacon maven", " Prone to fits of apathy", "Incurable bacon evangelist"],
+        "answerTags": ["Bacon guru", "Evil bacon nerd", "Subtly charming bacon maven", " Prone to fits of apathy", "Incurable bacon evangelist"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "Which option describes your interest in travel the most accurately?",
+        "optionTags": ["Hardcore travel fanatic", "Devoted travel specialist", "Typical travel advocate", "Freelance explorer", "Certified travel junkie"],
+        "answerTags": ["Hardcore travel fanatic", "Devoted travel specialist", "Typical travel advocate", "Freelance explorer", "Certified travel junkie"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "Which of the following best describes your interests in web technology?",
+        "optionTags": ["Incurable web fanatic", "Typical web guru", "Hardcore web guru", "Lifelong internet geek", "Total web expert"],
+        "answerTags": ["Incurable web fanatic", "Typical web guru", "Hardcore web guru", "Lifelong internet geek", "Total web expert"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "Which of the following options best characterizes your interest in zombies?",
+        "optionTags": ["Zombie nerd", "Lifelong zombie advocate", "Friend of animals everywhere", "Passionate thinker", "Total zombie enthusiast"],
+        "answerTags":  ["Zombie nerd", "Lifelong zombie advocate", "Friend of animals everywhere", "Passionate thinker", "Total zombie enthusiast"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "What describes you the most?",
+        "optionTags": ["Friendly web specialist", "Passionate student", "Incurable introvert", "Lifelong internet geek", "Twitter guru"],
+        "answerTags": ["Friendly web specialist", "Passionate student", "Incurable introvert", "Lifelong internet geek", "Twitter guru"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "What is your favorite leisure activity?",
+        "optionTags": ["ardcore web guru", "Travel junkie", "Amateur music trailblazer", "Coffee junkie","Pop culture lover"],
+        "answerTags": ["ardcore web guru", "Travel junkie", "Amateur music trailblazer", "Coffee junkie","Pop culture lover"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "What is your level of expertise in web technology?",
+        "optionTags": ["Wannabe web scholar", "Certified gamer", "Avid entrepreneur", "Extreme creator", "Proud tv specialist"],
+        "answerTags": ["Wannabe web scholar", "Certified gamer", "Avid entrepreneur", "Extreme creator", "Proud tv specialist"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "What are some of your passions on social media?",
+        "optionTags": ["Extreme web maven", "Twitter trailblazer", "Passionate social media fanatic"],
+        "answerTags": ["Extreme web maven", "Twitter trailblazer", "Passionate social media fanatic"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "What do you consider yourself an expert in?",
+        "optionTags": ["Pop culture expert", "Communicator", "Zombie scholar", "Food evangelist", "Beer aficionado", "Writer", "Total explorer", "Avid tv enthusiast"],
+        "answerTags": ["Pop culture expert", "Communicator", "Zombie scholar", "Food evangelist", "Beer aficionado", "Writer", "Total explorer", "Avid tv enthusiast"],
+        "questionType": "profileDescription"
+    },
+    {
+        "question": "What is your approach to entrepreneurship and creativity?",
+        "optionTags": ["Entrepreneur", "Amateur troublemaker", "Pop culture guru","Creator", "Extreme beeraholic"],
+        "answerTags":["Entrepreneur", "Amateur troublemaker", "Pop culture guru","Creator", "Extreme beeraholic"],
+        "questionType": "profileDescription"
+    }
+]

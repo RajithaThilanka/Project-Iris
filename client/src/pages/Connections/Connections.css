@@ -1,13 +1,15 @@
 .connections-container {
   flex: 0 0 82%;
   background-color: #eee;
-  margin-top: 6.7rem;
+  margin-top: 6.8rem;
+  min-height: calc(100vh - 68.06px);
 }
 .connections {
   padding: 0.1rem 2rem;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   margin: 0 auto;
+  max-width: 140rem;
 }
 .dashboard-loading-container {
   width: 100% !important;
@@ -21,40 +23,44 @@
   z-index: 0;
   font-size: 4rem;
   color: var(--color-grey-dark-2);
-  height: 100vh;
-  width: 100vw;
+
+  width: 100%;
   text-align: center;
 }
 
-@media only screen and (max-width: 78em) {
+@media only screen and (max-width: 67em) {
   .connections-container {
-    flex-direction: column;
-  }
-  .connections {
-    padding: 10rem 2rem;
-  }
-}
-
-@media only screen and (max-width: 78em) {
-  .connections-container {
+    min-height: calc(100vh - 64.78px);
     margin-top: 7.5rem;
   }
 }
-@media only screen and (max-width: 67em) {
+
+@media only screen and (max-width: 56.25em) {
   .connections-container {
-    margin-top: 7.3rem;
+    min-height: calc(100vh - 98.38px);
+    margin-top: 7.4rem;
+    margin-bottom: 34.38px;
   }
 }
+
 @media only screen and (max-width: 41em) {
-  .connections-container {
-    margin-bottom: 4rem;
-  }
 }
 @media only screen and (max-width: 41em) {
   .connections-err-msg {
     font-size: 3rem;
   }
-  .connections {
-    padding: 0.1rem 2rem;
+}
+
+@media only screen and (max-width: 37.5em) {
+  .connections-container {
+    min-height: calc(100vh - 82.38px);
+    margin-top: 5.6rem;
+  }
+}
+
+@media only screen and (max-width: 30.75em) {
+  .connections-container {
+    min-height: calc(100vh - 90.8px);
+    margin-top: 6.5rem;
   }
 }

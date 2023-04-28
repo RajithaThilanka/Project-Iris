@@ -6,6 +6,7 @@
   right: 0;
   width: 100%;
   background-color: #eee;
+  z-index: 1000;
 }
 .bottom-sidebar {
   width: 100%;
@@ -25,7 +26,7 @@
 .bottom-side-nav__item--active .MuiSvgIcon-root {
   color: var(--color-primary) !important;
 }
-@media only screen and (max-width: 41em) {
+@media only screen and (max-width: 56.25em) {
   .bottom-nav-container {
     display: flex;
   }

@@ -1,6 +1,7 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const userSettingsController = require('../controllers/userSettingsController');
 const aiController = require('../controllers/aiController');
 const answerController = require('../controllers/answerController');
 const connectionsRouter = require('./connectionsRouter');
@@ -44,7 +45,9 @@ router.route('/me/suggestions/ai').get(
   // authController.checkManualVerification,
   aiController.generateSuggestions
 );
-
+router
+  .route('/me/tag-suggestions')
+  .patch(authController.protect, aiController.generateTagSuggestions);
 router
   .route('/me/manual-verify')
   .post(authController.protect, authController.requestManualVerify);
@@ -57,6 +60,17 @@ router
 router
   .route('/me/answers')
   .get(authController.protect, answerController.getAnswers);
+router
+  .route('/me/ver-status')
+  .get(authController.protect, userController.getVerificationStatus);
+router
+  .route('/me/block')
+  .get(authController.protect, userController.getBlockedUsers)
+  .patch(authController.protect, userController.blockUser);
+router
+  .route('/me/unblock')
+
+  .patch(authController.protect, userController.unblockUser);
 router
   .route('/me')
   .get(authController.protect, userController.getMe, userController.getUser);
@@ -71,11 +85,19 @@ router
   .route('/verify-account/:id')
   .patch(authController.adminProtect, authController.verifyAccount);
 
-router.route('/').get(authController.adminProtect, userController.getUsers);
+router.route('/names').get(authController.protect, userController.getUsers);
+
+router.route('/').get(authController.protect, userController.getUsers);
+router
+  .route('/adminUsers')
+  .get(authController.adminProtect, userController.getAdminUsers);
+
 router
   .route('/con')
   .get(authController.protect, userController.fetchConnections);
-
+router
+  .route('/search-tokens')
+  .get(authController.protect, userSettingsController.getSearchTokens);
 router
   .route('/:id')
   .get(userController.getUser)

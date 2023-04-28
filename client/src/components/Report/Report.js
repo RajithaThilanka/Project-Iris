@@ -168,6 +168,7 @@ function Report() {
                     name="reason"
                     onChange={handleChange}
                     value={formData.reason}
+                    required
                   >
                     <MenuItem value="nudity or pornography">
                       Nudity or pornography

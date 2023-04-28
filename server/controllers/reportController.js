@@ -32,14 +32,35 @@ exports.reportUser = catchAsync(async (req, res, next) => {
   });
 });
 
+//get all reports
+// exports.getReports = catchAsync(async (req, res, next) => {
+//   const features = new APIFeatures(Report.find({}), req.query).filter().sort();
+//   const reports = await features.query
+//     .populate('reportedByUser')
+//     .populate('reportedUser');
+//   //   let reports = await Report.find({})
+//   //     .populate('reportedByUser')
+//   //     .populate('reportedUser');
+
+//   res.status(200).json({
+//     status: 'success',
+//     nReports: reports.length,
+//     data: {
+//       data: reports,
+//     },
+//   });
+// });
+
 exports.getReports = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Report.find({}), req.query).filter().sort();
+  const features = new APIFeatures(
+    Report.find({ reviewStatus: 'pending' }),
+    req.query
+  )
+    .filter()
+    .sort();
   const reports = await features.query
     .populate('reportedByUser')
     .populate('reportedUser');
-  //   let reports = await Report.find({})
-  //     .populate('reportedByUser')
-  //     .populate('reportedUser');
 
   res.status(200).json({
     status: 'success',
@@ -57,7 +78,7 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
       { reportedUser: userId },
       { reviewStatus: 'positive' },
       { userNotified: false },
-      { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
+      // { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
     ],
   })
     .populate('reportedByUser')
@@ -73,19 +94,19 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
     return false;
   });
 
-  await Report.updateMany(
-    {
-      $and: [
-        { reportedUser: userId },
-        { reviewStatus: 'positive' },
-        { userNotified: false },
-        { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
-      ],
-    },
-    {
-      userNotified: true,
-    }
-  );
+  // await Report.updateMany(
+  //   {
+  //     $and: [
+  //       { reportedUser: userId },
+  //       { reviewStatus: 'positive' },
+  //       // { userNotified: false },
+  //       // { updatedAt: { $gt: Date.now() - 1 * 24 * 60 * 60 * 1000 } },
+  //     ],
+  //   },
+  //   {
+  //     userNotified: true,
+  //   }
+  // );
   res.status(200).json({
     status: 'success',
     nReports: reportWarnings.length,
@@ -95,6 +116,23 @@ exports.fetchWarnings = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.setNotified = catchAsync(async (req, res, next) => {
+  const { id } = req.body;
+  const updated = await Report.findByIdAndUpdate(
+    id,
+    {
+      userNotified: true,
+    },
+    { new: true }
+  );
+  res.status(200).json({
+    status: 'success',
+
+    data: {
+      data: updated,
+    },
+  });
+});
 //to delete accounts another grid
 exports.getToBeBlockedAccounts = catchAsync(async (req, res, next) => {
   const accounts = await Report.aggregate([

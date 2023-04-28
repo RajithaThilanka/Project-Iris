@@ -19,4 +19,8 @@ router
 router
   .route('/get-to-delete-accounts')
   .get(authController.adminProtect, reportController.getToBeBlockedAccounts);
+
+router
+  .route('/notified')
+  .patch(authController.protect, reportController.setNotified);
 module.exports = router;

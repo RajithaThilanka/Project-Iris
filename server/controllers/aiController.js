@@ -73,8 +73,8 @@ const generateUserSuggestions = async userId => {
   suggestions = suggestions.slice(0, 10);
 
   let updatedSuggestionsPromises = suggestions.map(async user => {
-    const l = await LookingFor.findOne({ userId });
-    const p = await Answer.findOne({ userId });
+    const l = await LookingFor.findOne({ userId: user._id });
+    const p = await Answer.findOne({ userId: user._id });
     return { ...user, lookingFor: l, interests: p };
   });
 
@@ -170,7 +170,7 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
         return { ...u, verStatus: status };
       })
     );
-
+    updatedSuggestions = updatedSuggestions.sort(() => 0.5 - Math.random());
     res.status(200).json({
       status: 'success',
       nSuggestions: updatedSuggestions.length,
@@ -185,6 +185,43 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
 
 // Hate speech detection
 exports.validateChat = async () => {
+  try {
+    const newMessages = await Message.find({
+      validated: false,
+    }).populate('sender');
+
+    const updatedMessages = newMessages.map(msg => {
+      return {
+        id: msg.sender._id,
+        text: msg.content,
+      };
+    });
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:9000/api/v1/users/detect-hate-speech',
+      body: updatedMessages,
+      json: true,
+    };
+    const response = await request(options);
+
+    await Message.updateMany({ validated: false }, { validated: true });
+
+    response.forEach(async result => {
+      if (result.flagged === 'Hate Speech Detected') {
+        await Report.create({
+          reportedUser: result.id,
+          reason: 'Hate Speech',
+          reviewStatus: 'positive',
+        });
+      }
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getValidatedResponse = catchAsync(async (req, res, next) => {
   const newMessages = await Message.find({
     validated: false,
   }).populate('sender');
@@ -205,7 +242,6 @@ exports.validateChat = async () => {
   const response = await request(options);
 
   await Message.updateMany({ validated: false }, { validated: true });
-  console.log(response);
   response.forEach(async result => {
     if (result.flagged === 'Hate Speech Detected') {
       await Report.create({
@@ -215,21 +251,88 @@ exports.validateChat = async () => {
       });
     }
   });
-};
+  const updatedResponse = await Promise.all(
+    response.map(async resp => {
+      const user = await User.findById(resp.id);
+      return { ...resp, id: user };
+    })
+  );
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: updatedResponse,
+    },
+  });
+});
 
-// exports.getLatestIndex = catchAsync(async (req, res, next) => {
-//   const options = {
-//     method: 'GET',
-//     url: 'http://127.0.0.1:9000/api/v1/users/get-lastest-index',
-//     json: true,
-//   };
+exports.generateTagSuggestions = catchAsync(async (req, res, next) => {
+  const { tag } = req.body;
+  const tagUsers = await Answer.find({
+    $and: [
+      {
+        userId: { $ne: req.user._id },
+      },
+      {
+        $or: [
+          {
+            movies: {
+              $in: [tag],
+            },
+          },
+          {
+            music: {
+              $in: [tag],
+            },
+          },
+          {
+            politics: {
+              $in: [tag],
+            },
+          },
+          {
+            socialMedia: {
+              $in: [tag],
+            },
+          },
+          {
+            sports: {
+              $in: [tag],
+            },
+          },
+          {
+            profileDescription: { $regex: tag, $options: 'i' },
+          },
+        ],
+      },
+    ],
+  }).populate('userId');
 
-//   const sendRequest = await request(options);
-//   console.log(sendRequest);
-//   res.status(200).json({
-//     status: 'success',
-//     data: {
-//       data: sendRequest,
-//     },
-//   });
-// });
+  if (tagUsers.length === 0) {
+    return next(new AppError('No suggestions at the moment', 400));
+  }
+  let filteredTagUsers = tagUsers.map(u => {
+    return u.userId;
+  });
+
+  filteredTagUsers = filteredTagUsers.slice(0, 50);
+
+  let updatedSuggestionsPromises = filteredTagUsers.map(async user => {
+    const l = await LookingFor.findOne({ userId: user._id });
+    const p = await Answer.findOne({ userId: user._id });
+    return { ...user, lookingFor: l, interests: p };
+  });
+
+  let updatedSuggestions = await Promise.all(updatedSuggestionsPromises);
+  updatedSuggestions = updatedSuggestions.map(sug => {
+    const { _doc, lookingFor, interests } = sug;
+    return { ..._doc, lookingFor: lookingFor, interests: interests };
+  });
+
+  res.status(200).json({
+    status: 'success',
+    results: updatedSuggestions.length,
+    data: {
+      data: updatedSuggestions,
+    },
+  });
+});

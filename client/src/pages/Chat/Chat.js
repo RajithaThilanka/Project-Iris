@@ -18,8 +18,13 @@ const ENDPOINT = "http://localhost:5000";
 let socket;
 
 function Chat() {
-  const { setActiveTab, setSocketConnected, setActiveUsers, socketConnected } =
-    useContext(MatchesContext);
+  const {
+    setActiveTab,
+    setSocketConnected,
+    setActiveUsers,
+    socketConnected,
+    selectedChat,
+  } = useContext(MatchesContext);
   setActiveTab(4);
   const dispatch = useDispatch();
   const {
@@ -85,7 +90,7 @@ function Chat() {
               <div
                 className="chat-page-sub"
                 // ref={mychatscroll}
-                style={{ background: "#ddd" }}
+                style={{ background: "#eee" }}
               >
                 <MyChat
                   fetchAgain={fetchAgain}
@@ -96,6 +101,9 @@ function Chat() {
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
                 />
+                <h4 style={{ display: selectedChat && "none" }}>
+                  Start a conversation
+                </h4>
               </div>
             )}
           </div>

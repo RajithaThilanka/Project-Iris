@@ -11,7 +11,7 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const getAllUsers = () => API.get("/users");
+export const getAllUsers = () => API.get("/users/adminUsers");
 
 export const getAllVeriReq = () => API.get("/users/verify-requests");
 
@@ -27,3 +27,8 @@ export const reviewReport = (reportId, reviewStatus) =>
 
 export const setHatespeech = (hateSpeechScheduledAt) =>
   API.patch("/settings/hate-speech", { hateSpeechScheduledAt });
+
+export const hateSpeechChechNow = () => API.get("/message/validate");
+
+export const getAllSuspendedAccounts = () =>
+  API.get("/report/get-to-delete-accounts");

@@ -5,7 +5,48 @@
   min-height: 4.5rem;
   margin-right: 2rem;
 }
+.css-12d1nn4-MuiContainer-root {
+  max-width: 100%;
+}
+.mob-nav-bar {
+  background-image: linear-gradient(
+    var(--color-primary),
+    var(--color-primary-light)
+  );
+  width: 100%;
+  max-width: 100% !important;
+  max-height: 100vh !important;
+  height: 100vh;
+  border-radius: 0 !important;
+  top: 0 !important;
+  margin: auto !important;
+  z-index: 1000;
+  left: 0 !important;
+  /* margin: 1rem !important; */
+}
 
+.new-mob-nav-bar {
+  background-image: linear-gradient(
+    var(--color-primary),
+    var(--color-primary-light)
+  );
+  width: 100%;
+  max-width: 100% !important;
+  max-height: 100vh !important;
+  height: 100vh;
+  border-radius: 0 !important;
+  top: 0 !important;
+  margin: auto !important;
+  z-index: 1000;
+  left: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mob-nav-bar-items {
+  font-size: 2.2rem !important;
+  border-bottom: 1px solid #bbb !important;
+}
 .navbar-logo img {
   width: 100%;
   height: 100%;
@@ -30,12 +71,49 @@
   background-color: red;
   transform: translate(15px, -10px);
 }
+.css-xxy0hh {
+  display: none !important;
+}
 .home-menu-item {
   display: none;
   width: 100%;
   align-items: center;
   justify-content: center;
 }
+.mob-nav-bar-log-btn {
+  padding: 0.1rem 1.2rem !important;
+  color: var(--color-primary);
+  width: 100%;
+  background-color: #fff !important;
+  border-radius: 1rem !important;
+  text-transform: uppercase !important;
+  font-size: 2.2rem !important;
+}
+.mob-nav-bar-log-btn:hover {
+  color: var(--color-primary);
+  background-color: #fff;
+}
+
+@media only screen and (max-width: 56.25em) {
+  .mob-nav-bar-items {
+    font-size: 2rem !important;
+
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 2.5rem 0;
+  }
+  .css-xxy0hh {
+    display: flex !important;
+  }
+  .mob-nav-bar-items:not(:last-child) {
+    border-bottom: 1px solid #bbb;
+  }
+  .mob-nav-bar-log-btn {
+    font-size: 2rem !important;
+  }
+}
+
 @media only screen and (max-width: 25em) {
   .navbar-logo {
     display: none;

@@ -18,6 +18,7 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import Filter from "../Filter/Filter";
 import PublicIcon from "@mui/icons-material/Public";
 import FilterMobileContainer from "../FilterMobileContainer/FilterMobileContainer";
+import LocationSearchingIcon from "@mui/icons-material/LocationSearching";
 
 function BottomNavbar({ children }) {
   const navigate = useNavigate();
@@ -131,6 +132,37 @@ function BottomNavbar({ children }) {
                 sx={{ color: "var(--color-grey-dark-2)" }}
               />
             </FilterMobileContainer>
+          </li>
+          <li
+            className={
+              activeTab === 6
+                ? "bottom-side-nav__item bottom-side-nav__item--active"
+                : "bottom-side-nav__item"
+            }
+            style={{ position: "relative" }}
+            onClick={() => handleClick(6, "/me/manual-search")}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: "-25%",
+                right: "-40%",
+                background: "red",
+                borderRadius: "50%",
+                width: "2rem",
+                height: "2rem",
+                fontSize: "1.2rem",
+                textAlign: "center",
+                color: "#fff",
+                display: notification.length > 0 ? "block" : "none",
+              }}
+            >
+              {notification?.length}
+            </div>
+            <LocationSearchingIcon
+              fontSize="medium"
+              sx={{ color: "var(--color-grey-dark-2)" }}
+            />
           </li>
         </ul>
       </nav>
