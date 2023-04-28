@@ -43,6 +43,7 @@ import Explore from "./components/Explore/Explore";
 import ManualSearch from "./components/ManualSearch/ManualSearch";
 import UserVerification from "./pages/Uverifcation/UserVerfication";
 import TagDashboard from "./components/TagDashboard/TagDashboard";
+import { Elements } from '@stripe/react-stripe-js';
 
 const theme = createTheme({
   palette: {
@@ -109,10 +110,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <>
         <Routes>
-          <Route
+          {/* <Route
             path="/auth/signup/questions"
             element={<Question />}
           ></Route>
+          <Route
+            path="/auth/signup/lookingfor-info"
+            element={<LookingFor />}
+          ></Route> */}
           <Route
             path="/auth/signup/account-info"
             element={<AccountInfo />}
@@ -134,12 +139,12 @@ function App() {
               )
             }
           ></Route>
-          {/* <Route
-            path="/question"
+          <Route
+            path="/auth/signup/questions"
             element={
               state ? <Question /> : <Navigate to="/auth/signup/account-info" />
             }
-          ></Route> */}
+          ></Route>
           <Route
             path="/auth/signup/lookingfor-info"
             element={
@@ -252,7 +257,6 @@ function App() {
           ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
           <Route path="/users/profile/:id" element={<SuggessionPage />}></Route>
-
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="/me/verification" element={<IdVerification />} />
           <Route path="/me/uploadimages" element={<UploadImages />} />
