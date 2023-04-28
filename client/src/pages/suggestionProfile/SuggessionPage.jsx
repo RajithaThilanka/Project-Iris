@@ -50,7 +50,6 @@ export default function SuggessionPage() {
           />
         </Grid>
       </Grid>
-      <Stack direction="column"></Stack>
 
       <Stack
         direction="column"

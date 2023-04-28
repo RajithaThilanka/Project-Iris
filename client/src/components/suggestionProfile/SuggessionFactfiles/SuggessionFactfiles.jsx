@@ -24,6 +24,8 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { getUser } from "../../../api/UserRequests.js";
+import "./fstyel.css";
+
 export default function SuggessionFactfiles(props) {
   // const useStyles = makeStyles((theme) => ({
   //   root: {
@@ -60,10 +62,14 @@ export default function SuggessionFactfiles(props) {
           justifyContent="flex-start"
           alignItems="flex-start"
         >
-          <Typography spacing={2}>
+          <Typography className="FactfileCaption" spacing={2}>
             <PersonIcon /> Call Name:
           </Typography>
-          <Typography variant="subtitle1" align="left">
+          <Typography
+            align="left"
+            // sx={{ overflowX: "auto" }}
+            variant="subtitle1"
+          >
             <b>{props?.callName}</b>
           </Typography>
         </Stack>
