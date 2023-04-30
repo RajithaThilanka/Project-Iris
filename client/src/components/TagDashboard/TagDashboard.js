@@ -10,6 +10,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
 import { useDispatch, useSelector } from "react-redux";
+import "./TagDashboard.css";
 import {
   getMatches,
   getTagSuggestions,
@@ -30,34 +31,35 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import "./TagDashboard.css";
+// import "./Dashboard2.css";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { imageMap } from "../../config/ChatLogics";
 import SwiperCore, { EffectCoverflow, Navigation } from "swiper/core";
 import BottomNavbar from "../../components/BottomNavbar/BottomNavbar";
 import { logout } from "../../actions/AuthActions";
-import { FlagCircle } from "@mui/icons-material";
+import { FlagCircle, ForkRight } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
-import { imageMap } from "../../config/ChatLogics";
-
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 const ENDPOINT = "http://localhost:5000";
 let socket;
 function TagDashboard() {
-  const { tag } = useParams();
   const [err, setErr] = useState(null);
   const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);
   const [swiper, setSwiper] = useState(null);
   const [currentProfile, setCurrentProfile] = useState(0);
+  const { filter } = useContext(MatchesContext);
   const {
     sentConRequests,
     setsentConRequests,
@@ -70,10 +72,10 @@ function TagDashboard() {
     sentFriendRequests,
   } = useContext(MatchesContext);
   const { matches, setMatches } = useContext(MatchesContext);
-
   const profileContentRef = useRef();
   const [btnClicked, setBtnClicked] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  const { tag } = useParams();
 
   const navigate = useNavigate();
   const {
@@ -158,7 +160,7 @@ function TagDashboard() {
     const generateSuggestions = async () => {
       setLoading(true);
       setErr(null);
-      console.log(tag);
+
       try {
         const {
           data: {
@@ -193,7 +195,10 @@ function TagDashboard() {
         setCurrentProfile((currentProfile + 1) % matches.length);
       }
       setMatches(matches.filter((m) => m._id !== id));
+      // setCurrentProfile((currentProfile + 1) % matches.length);
+
       swiper?.slideTo(currentProfile);
+
       setsentConRequests([data, ...sentConRequests]);
       socket.emit("new-con-request-sent", data);
     } catch (error) {
@@ -238,19 +243,23 @@ function TagDashboard() {
   return (
     <>
       {socketConnected && <Navbar user={user} socket={socket} />}
+
       <div
         className="dashboard-container tag-dashboard-container"
         style={{
           display: "flex",
-          backgroundImage: `url(${imageMap.get(tag)})`,
         }}
       >
-        {/* <VerticalNavbar /> */}
-
-        <div className="suggestions-container tag-suggestions-container">
-          {!loading && (
-            <div className="tag-suggestions-container-overlay"></div>
-          )}
+        <div className="tag-dashboard-background">
+          <LazyLoadImage
+            effect="blur"
+            src={imageMap.get(tag)}
+            alt="tag-bkg"
+            className="tag-dashboard-background-img"
+          />
+        </div>
+        {!loading && <div className="tag-suggestions-container-overlay"></div>}
+        <div className="suggestions-container">
           <div
             className="swiper-container-main"
             style={{ display: "flex", flexDirection: "column" }}
@@ -268,16 +277,22 @@ function TagDashboard() {
                 <div
                   className="sugg-card"
                   style={{
-                    backgroundImage: `url(${
-                      currentPhoto === 0
-                        ? serverPublic + matches[currentProfile]?.profilePhoto
-                        : serverPublic +
-                          matches[currentProfile]?.photos[currentPhoto - 1]
-                    })`,
                     filter: btnClicked && "blur(15px)",
                   }}
-                  onClick={handleTap}
                 >
+                  <div className="sugg-card-profile-photo">
+                    <LazyLoadImage
+                      effect="blur"
+                      src={
+                        currentPhoto === 0
+                          ? serverPublic + matches[currentProfile]?.profilePhoto
+                          : serverPublic +
+                            matches[currentProfile]?.photos[currentPhoto - 1]
+                      }
+                      alt="profile"
+                      onClick={handleTap}
+                    />
+                  </div>
                   {!btnClicked && (
                     <IconButton
                       className="more-info-btn"
@@ -342,6 +357,7 @@ function TagDashboard() {
                         />
                       )}
                     </h6>
+
                     <p className="profile--age">
                       {Math.abs(
                         new Date(
@@ -349,6 +365,7 @@ function TagDashboard() {
                         ).getUTCFullYear() - 1970
                       )}
                     </p>
+
                     <div className="profile--country">
                       {<LocationOnIcon fontSize="small" sx={{ padding: 0 }} />}
                       {matches[currentProfile]?.country}
@@ -382,10 +399,7 @@ function TagDashboard() {
                   </div>
                 </div>
 
-                <Box
-                  className="profileContent tagProfileContent"
-                  ref={profileContentRef}
-                >
+                <Box className="profileContent" ref={profileContentRef}>
                   <Zoom>
                     <Divider
                       sx={{
@@ -408,50 +422,50 @@ function TagDashboard() {
 
                     <div className="basic-info">
                       {matches[currentProfile]?.gender === "male" ? (
-                        <div className="profile--basic-info tag-profile-basic-info">
+                        <div className="profile--basic-info">
                           {
                             <ManIcon
                               fontSize="small"
-                              className="sug-profile-content-ico tag-profile-content-ico"
+                              className="sug-profile-content-ico"
                             />
                           }
                           Man
                         </div>
                       ) : (
-                        <div className="profile--basic-info tag-profile-basic-info">
+                        <div className="profile--basic-info">
                           {
                             <WomanIcon
                               fontSize="small"
-                              className="sug-profile-content-ico tag-profile-content-ico"
+                              className="sug-profile-content-ico"
                             />
                           }
                           Woman
                         </div>
                       )}
 
-                      <div className="profile--basic-info tag-profile-basic-info">
+                      <div className="profile--basic-info">
                         {
                           <WorkIcon
                             fontSize="small"
-                            className="sug-profile-content-ico tag-profile-content-ico"
+                            className="sug-profile-content-ico"
                           />
                         }
                         {matches[currentProfile]?.occupation}
                       </div>
-                      <div className="profile--basic-info tag-profile-basic-info">
+                      <div className="profile--basic-info">
                         {
                           <HeightIcon
                             fontSize="small"
-                            className="sug-profile-content-ico tag-profile-content-ico"
+                            className="sug-profile-content-ico"
                           />
                         }
                         {matches[currentProfile]?.height + " ft"}
                       </div>
-                      <div className="profile--basic-info tag-profile-basic-info">
+                      <div className="profile--basic-info">
                         {
                           <SchoolIcon
                             fontSize="small"
-                            className="sug-profile-content-ico tag-profile-content-ico"
+                            className="sug-profile-content-ico"
                           />
                         }
                         {matches[
@@ -459,20 +473,20 @@ function TagDashboard() {
                         ]?.educationLevel[0].toUpperCase() +
                           matches[currentProfile]?.educationLevel.slice(1)}
                       </div>
-                      <div className="profile--basic-info tag-profile-basic-info">
+                      <div className="profile--basic-info">
                         {
                           <ChurchIcon
                             fontSize="small"
-                            className="sug-profile-content-ico tag-profile-content-ico"
+                            className="sug-profile-content-ico"
                           />
                         }
                         {matches[currentProfile]?.religion}
                       </div>
-                      <div className="profile--basic-info tag-profile-basic-info">
+                      <div className="profile--basic-info">
                         {
                           <LanguageIcon
                             fontSize="small"
-                            className="sug-profile-content-ico tag-profile-content-ico"
+                            className="sug-profile-content-ico"
                           />
                         }
                         {matches[currentProfile]?.ethnicity[0].toUpperCase() +
@@ -498,7 +512,7 @@ function TagDashboard() {
                       ></Chip>
                     </Divider>
 
-                    <div className="looking-for tag-looking-for">
+                    <div className="looking-for">
                       <div className="profile--lookingfor-goal">
                         <div className="emoji-container">👋</div>
                         <div>
@@ -546,7 +560,7 @@ function TagDashboard() {
                         label="Movies"
                       ></Chip>
                     </Divider>
-                    <div className="usertags tag-usertags">
+                    <div className="usertags">
                       {matches[currentProfile]?.interests?.movies?.map(
                         (movie) => (
                           <div>{movie}</div>
@@ -571,7 +585,7 @@ function TagDashboard() {
                         label="Music"
                       ></Chip>
                     </Divider>
-                    <div className="usertags tag-usertags">
+                    <div className="usertags">
                       {matches[currentProfile]?.interests?.music?.map(
                         (music) => (
                           <div>{music}</div>
@@ -596,7 +610,7 @@ function TagDashboard() {
                         label="Social Media"
                       ></Chip>
                     </Divider>
-                    <div className="usertags tag-usertags">
+                    <div className="usertags">
                       {matches[currentProfile]?.interests?.socialMedia?.map(
                         (social) => (
                           <div>{social}</div>
@@ -621,7 +635,7 @@ function TagDashboard() {
                         }}
                       ></Chip>
                     </Divider>
-                    <div className="usertags tag-usertags">
+                    <div className="usertags">
                       {matches[currentProfile]?.interests?.sports?.map((s) => (
                         <div>{s}</div>
                       ))}
@@ -645,7 +659,7 @@ function TagDashboard() {
                         }}
                       ></Chip>
                     </Divider>
-                    <div className="profile--description tag-profile--description">
+                    <div className="profile--description">
                       {matches[currentProfile]?.userDescription}
                     </div>
                     <Divider
@@ -693,7 +707,8 @@ function TagDashboard() {
                 style={{ height: "100vh" }}
               >
                 <div className="dashboard-loading-photo">
-                  <img
+                  <LazyLoadImage
+                    effect="blur"
                     src={serverPublic + user.profilePhoto}
                     alt="loading-user"
                   />
@@ -751,7 +766,7 @@ function TagDashboard() {
                   },
                 }}
                 modules={[Pagination]}
-                className="mySwiper tag-swiper"
+                className="mySwiper"
                 onSlideChange={(el) => {
                   setCurrentProfile(el.realIndex);
                   setCurrentPhoto(0);
@@ -768,11 +783,11 @@ function TagDashboard() {
                           key={character._id}
                           style={{ positon: "relative" }}
                         >
-                          <img
+                          <LazyLoadImage
+                            effect="blur"
                             src={serverPublic + character.profilePhoto}
                             alt={character._id}
                           />
-
                           <div className="sug-profile-header">
                             <div className="sug-profile-calltag">
                               {character.callTag}
@@ -828,7 +843,6 @@ function TagDashboard() {
             )}
           </div>
         </div>
-        <BottomNavbar />
       </div>
     </>
   );
