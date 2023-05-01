@@ -336,3 +336,25 @@ exports.generateTagSuggestions = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.runClusters = catchAsync(async (req, res, next) => {
+  try {
+    const options = {
+      method: 'GET',
+      url: 'http://127.0.0.1:9000/api/v1/users/cluster',
+      json: true,
+    };
+    const response = await request(options);
+
+    if (response.code === 200) {
+      res.status(200).json({
+        status: 'success',
+        message: 'User profiles clustering success',
+      });
+    } else {
+      return next(new AppError('Something went wrong', 500));
+    }
+  } catch (error) {
+    return next(new AppError('Something went wrong', 500));
+  }
+});
