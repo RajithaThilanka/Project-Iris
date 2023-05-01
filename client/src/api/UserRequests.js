@@ -125,3 +125,15 @@ export const getTagSuggestions = (tag) =>
   API.patch("/users/me/tag-suggestions", { tag: tag });
 
 export const blockUser = (id) => API.patch("/users/me/block", { id });
+export const requestManualVerify = (
+  verificationMethod,
+  liveImage,
+  nicFront,
+  nicBack
+) =>
+  API.post("/users/me/manual-verify", {
+    verificationMethod,
+    liveImage,
+    nicFront,
+    nicBack,
+  });

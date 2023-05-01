@@ -247,7 +247,10 @@ function App() {
             element={user ? <Chat /> : <Navigate to="/auth/login" />}
           ></Route>
           <Route path="/me/profile" element={<UserProfile />}></Route>
-          <Route path="/users/profile/:id" element={<SuggessionPage />}></Route>
+          <Route
+            path="/users/uprofile/:id"
+            element={<SuggessionPage />}
+          ></Route>
 
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="/me/verification" element={<IdVerification />} />
