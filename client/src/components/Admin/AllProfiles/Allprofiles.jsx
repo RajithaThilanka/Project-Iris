@@ -17,6 +17,7 @@ import { getAllUsers, deleteaUser } from "../../../api/AdminRequests";
 
 export default function Profilereports() {
   const [rows, setRows] = useState([]);
+
   const [imid, setimid] = useState(null);
   const [liveimg, setLiveimg] = useState(null);
   const [idFront, setidFront] = useState(null);
@@ -29,6 +30,7 @@ export default function Profilereports() {
       liveimg = params.row.liveImage;
       idFront = params.row.nicFront;
       idBack = params.row.nicBack;
+
       setLiveimg(liveimg);
       setidFront(idFront);
       setidBack(idBack);
@@ -147,6 +149,7 @@ export default function Profilereports() {
           }}
         >
           <Typography variant="h6">All profiles </Typography>
+
           <DataGrid
             rows={rows}
             columns={columns}

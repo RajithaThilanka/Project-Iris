@@ -1,0 +1,8 @@
+@media screen and (max-width: 900px) and (min-width: 600px) {
+  .FactfileCaption {
+    font-size: "15px" !important;
+  }
+  .FactfileContent {
+    font-size: "10px" !important;
+  }
+}

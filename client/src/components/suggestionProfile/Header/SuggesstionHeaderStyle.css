@@ -1,3 +1,159 @@
-.SuggesstionHeader {
-  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+@media screen and (max-width: 320px) {
+  .SuggesstionHeader {
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+    height: "2px";
+    width: "100%" !important;
+  }
+  .Mainheader {
+    height: "2px";
+    width: "100%" !important;
+  }
+  .ProfileAvatar {
+    width: 55px;
+    height: 55px;
+  }
+  .Name {
+    font-size: "2px" !important;
+  }
+  .Occupation {
+    font-size: "2px" !important;
+  }
+  .NameContent {
+    font-size: "5px" !important;
+  }
+  .OccupationContent {
+    font-size: "5px" !important;
+  }
+  .OccupationContent svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .SuggesstionHeader {
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+    height: "5px";
+    width: "100%" !important;
+  }
+  .Mainheader {
+    height: "5px";
+    width: "100%" !important;
+  }
+  .ProfileAvatar {
+    width: 70px;
+    height: 70px;
+  }
+  .Name {
+    font-size: "10px" !important;
+  }
+  .Occupation {
+    font-size: "10px" !important;
+  }
+  .NameContent {
+    font-size: "6px" !important;
+  }
+  .OccupationContent {
+    font-size: "6px" !important;
+  }
+  .OccupationContent svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .SuggesstionHeader {
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+    height: "5px";
+    width: "100%" !important;
+  }
+  .Mainheader {
+    height: "5px";
+    width: "100%" !important;
+  }
+  .ProfileAvatar {
+    width: 90px;
+    height: 90px;
+  }
+  .Name {
+    font-size: "50px" !important;
+  }
+  .Occupation {
+    font-size: "50px" !important;
+  }
+  .NameContent {
+    font-size: "60px" !important;
+  }
+  .OccupationContent {
+    font-size: "6px" !important;
+  }
+  .OccupationContent svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .SuggesstionHeader {
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+    height: "5px";
+    width: "100%" !important;
+  }
+  .Mainheader {
+    height: "5px";
+    width: "100%" !important;
+  }
+  .ProfileAvatar {
+    width: 120px;
+    height: 120px;
+  }
+  .Name {
+    font-size: "50px" !important;
+  }
+  .Occupation {
+    font-size: "50px" !important;
+  }
+  .NameContent {
+    font-size: "60px" !important;
+  }
+  .OccupationContent {
+    font-size: "6px" !important;
+  }
+  .OccupationContent svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media screen and (min-width: 993px) {
+  .SuggesstionHeader {
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+    height: "5px";
+    width: "100%" !important;
+  }
+  .Mainheader {
+    height: "5px";
+    width: "100%" !important;
+  }
+  .ProfileAvatar {
+    width: 140px;
+    height: 140px;
+  }
+  .Name {
+    font-size: "50px" !important;
+  }
+  .Occupation {
+    font-size: "50px" !important;
+  }
+  .NameContent {
+    font-size: "60px" !important;
+  }
+  .OccupationContent {
+    font-size: "6px" !important;
+  }
+  .OccupationContent svg {
+    width: 20px;
+    height: 20px;
+  }
 }

@@ -6,6 +6,8 @@ import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import { useState, useEffect } from "react";
 import { getMe } from "../../../api/UserRequests";
+import "./contentStyle.css";
+
 export default function SuggestionContent(props) {
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -29,14 +31,15 @@ export default function SuggestionContent(props) {
   return (
     <div>
       <Grid
-        container
+        containesr
         justifyContent="center"
         alignItems="flex-start"
         marginBottom="50px"
+        className="AboutContent"
         sx={{
           boxShadow: 4,
           height: "100%",
-          width: { xl: 1000, lg: 1000, md: 650, sm: 550, xs: 500 },
+          // width: { xl: 1000, lg: 1000, md: 650, sm: 550 },
           borderRadius: 2,
           textAlign: "center",
           bgcolor: "white",
@@ -59,7 +62,7 @@ export default function SuggestionContent(props) {
                 padding: 2,
               }}
             >
-              <Typography variant="h6">About</Typography>
+              <Typography className="Caption">About</Typography>
               <Typography sx={{ overflowX: "auto" }} variant="subtitle">
                 {props.about}
               </Typography>
@@ -77,7 +80,7 @@ export default function SuggestionContent(props) {
                 padding: 2,
               }}
             >
-              <Typography variant="h6">Profile Description</Typography>
+              <Typography className="Caption">Profile Description</Typography>
               <Typography sx={{ overflowX: "auto" }} variant="subtitle">
                 {props?.pdes}
               </Typography>
@@ -102,7 +105,9 @@ export default function SuggestionContent(props) {
                 alignItems="center"
                 spacing={2}
               >
-                <Typography variant="h6"> Your Compatibility Level</Typography>
+                <Typography className="Caption">
+                  Your Compatibility Level
+                </Typography>
                 <AvatarGroup total={3}>
                   <Avatar
                     sx={{
@@ -194,6 +199,7 @@ export default function SuggestionContent(props) {
         <Grid item xs={4} lg={4} md={4} sm={4} xs={12} sx={{ padding: "10px" }}>
           <Stack direction="column">
             <Box
+              className="FactfileContent"
               sx={{
                 width: {
                   xl: "300px",
