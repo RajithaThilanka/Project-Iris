@@ -47,15 +47,7 @@ export default function SuggestionContent(props) {
           marginRight: { xl: 20, lg: 20, md: 10, sm: 5, xs: 5 },
         }}
       >
-        <Grid
-          item
-          xl={8}
-          lg={8}
-          md={8}
-          sm={8}
-          xs={12}
-          className="custom-grid-item"
-        >
+        <Grid item xl={8} lg={8} md={8} sm={8} xs={12}>
           <Stack
             className="InnerAbout"
             direction="column"
