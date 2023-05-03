@@ -58,6 +58,9 @@ router
   .route('/me/submit-answer/:id')
   .patch(authController.protect, answerController.addAnswer);
 router
+  .route('/me/questions')
+  .get(authController.protect, answerController.getQuestions);
+router
   .route('/me/answers')
   .get(authController.protect, answerController.getAnswers);
 router
