@@ -12,11 +12,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { uploadImage } from "../../../actions/UploadAction";
+import "./idstyle.css";
 
-export default function SelectID() {
+export default function SelectID(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const [image, setImage] = useState(null);
   const [image2, setImage2] = useState(null);
+  const [frontImageName, setFrontImageName] = useState("");
+  const [backImageName, setBackImageName] = useState("");
   const dispatch = useDispatch();
 
   //set image
@@ -36,19 +39,17 @@ export default function SelectID() {
     }
   };
 
-  const [fileName, SetImageNewName] = useState("");
   //Upload image and rename and new name upload
   const handleUploadAndImageNameUpdate = async (e) => {
     if (image) {
       const data = new FormData();
       const newImageName = Date.now() + image.name;
+      setFrontImageName(newImageName);
       data.append("name", newImageName);
       data.append("file", image);
 
       try {
         await dispatch(uploadImage(data));
-        // setData({ ...formData, profilePhoto: newImageName });
-        // await updateMe({ profilePhoto: newImageName });
         console.log("NIC font upload and name update success");
       } catch (err) {
         console.log(err);
@@ -61,6 +62,7 @@ export default function SelectID() {
     if (image2) {
       const data2 = new FormData();
       const newImageName2 = Date.now() + image2.name;
+      setBackImageName(newImageName2);
       data2.append("name", newImageName2);
       data2.append("file", image2);
 
@@ -74,6 +76,8 @@ export default function SelectID() {
     } else {
       console.log("Upload Error");
     }
+
+    props.onSelectImage(frontImageName, backImageName);
   };
 
   const [state, setState] = React.useState({
@@ -87,62 +91,110 @@ export default function SelectID() {
   return (
     <div>
       <Box>
-        <Stack direction="column" spacing={2}>
-          <Typography variant="h5">Upload Image of ID Card</Typography>
-          <FormGroup>
+        <Stack
+          direction="column"
+          alignItems={"center"}
+          padding={"10px"}
+          spacing={1}
+        >
+          <Typography className="title">Upload Image of ID Card</Typography>
+
+          <FormGroup className="form-group">
             <FormControlLabel
-              control={<Checkbox checked={ck} name="ck" />}
+              control={<Checkbox checked={ck} name="ck" className="checkbox" />}
               label="Government-issued"
+              className="checkbox-label"
             />
+
             <FormControlLabel
-              control={<Checkbox checked={ck2} name="ck2" />}
+              control={
+                <Checkbox checked={ck2} name="ck2" className="checkbox" />
+              }
               label="Original Full-size unedited documents"
+              className="checkbox-label"
             />
+
             <FormControlLabel
-              control={<Checkbox checked={ck3} name="ck3" />}
+              control={
+                <Checkbox checked={ck3} name="ck3" className="checkbox" />
+              }
               label="Readable, Well-it, Coloured images"
+              className="checkbox-label"
             />
           </FormGroup>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Stack direction="row" spacing={2}></Stack>
+
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent={"center"}
+            spacing={2}
+          >
             <Button
               variant="contained"
               component="label"
-              className="upload-button"
+              className="button"
               onChange={""}
+              sx={{
+                width: {
+                  //xl: "200px",
+                  //lg: "200px",
+                  //md: "200px",
+                  ///sm: "150px",
+                  // xs: "100px",
+                },
+                height: {
+                  //xl: "80px",
+                  // lg: "100px",
+                  // md: "100px",
+                  // sm: "80px",
+                  // xs: "50px",
+                },
+              }}
             >
+              <input type="file" onChange={handleFileChange} />
               <Stack direction="column" spacing={2}>
-                Upload Font Page
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="label"
-                >
-                  <input type="file" onChange={""} />
-                  <PhotoCamera />
-                </IconButton>
+                <Typography className="button-text">
+                  Upload Front Page
+                </Typography>
               </Stack>
             </Button>
-
             <Button
               variant="contained"
               component="label"
-              className="upload-button"
+              className="button"
               onChange={""}
+              sx={{
+                width: {
+                  //  xl: "200px",
+                  // lg: "200px",
+                  // md: "200px",
+                  // sm: "150px",
+                  // xs: "100px",
+                },
+                height: {
+                  // xl: "80px",
+                  // lg: "100px",
+                  // md: "100px",
+                  // sm: "80px",
+                  // xs: "50px",
+                },
+              }}
             >
-              <Stack direction="column" spacing={1}>
-                Upload Back Page
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="label"
-                >
-                  <input type="file" onChange={""} />
-                  <PhotoCamera />
-                </IconButton>
+              <input type="file" onChange={handleFileChange2} />
+              <Stack direction="column" spacing={0}>
+                <Typography className="button-text">
+                  Upload Back Page
+                </Typography>
               </Stack>
             </Button>
           </Stack>
+          <Button
+            className="uploadbutton"
+            variant="outlined"
+            onClick={handleUploadAndImageNameUpdate}
+          >
+            Upload
+          </Button>
         </Stack>
       </Box>
     </div>

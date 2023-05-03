@@ -1,0 +1,177 @@
+@media screen and (max-width: 320px) {
+  .HeaderName {
+    font-size: 11px;
+  }
+
+  .VerificationMethod {
+    width: 170px;
+    height: 50px;
+  }
+
+  .button {
+    width: 95px;
+    height: 25px;
+  }
+  .uploadbutton {
+    width: 200px;
+    height: 25px;
+    font-size: 9px !important;
+  }
+
+  .title {
+    font-size: 12px;
+  }
+  .button-text {
+    font-size: 6px !important;
+  }
+  .upload-button-text {
+    font-size: 10px;
+  }
+  .checkbox {
+    transform: scale(0.7);
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .HeaderName {
+    font-size: 11px;
+  }
+
+  .VerificationMethod {
+    width: 170px;
+    height: 50px;
+  }
+
+  .button {
+    width: 100px;
+    height: 30px;
+  }
+  .uploadbutton {
+    width: 210px;
+    height: 25px;
+    font-size: 9px !important;
+  }
+
+  .title {
+    font-size: 13px !important;
+  }
+  .button-text {
+    font-size: 6px !important;
+  }
+  .upload-button-text {
+    font-size: 10px !important;
+  }
+  /* .MuiFormGroup-root.liveForm {
+    font-size: px;
+  } */
+  .checkbox {
+    transform: scale(0.75);
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .HeaderName {
+    font-size: 13px;
+  }
+
+  .VerificationMethod {
+    width: 170px;
+    height: 50px;
+  }
+
+  .button {
+    width: 130px;
+    height: 50px;
+  }
+  .uploadbutton {
+    width: 275px;
+    height: 30px;
+    font-size: 12px !important;
+  }
+
+  .title {
+    font-size: 17px !important;
+  }
+  .button-text {
+    font-size: 9px !important;
+  }
+  .upload-button-text {
+    font-size: 12px;
+  }
+  /* .MuiFormGroup-root.liveForm {
+    font-size: px;
+  } */
+  .checkbox {
+    transform: scale(0.75);
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .HeaderName {
+    font-size: 15px;
+  }
+
+  .VerificationMethod {
+    width: 170px;
+    height: 50px;
+  }
+
+  .button {
+    width: 150px;
+    height: 60px;
+  }
+  .uploadbutton {
+    width: 310px;
+    height: 35px;
+    font-size: 14px !important;
+  }
+
+  .title {
+    font-size: 20px !important;
+  }
+  .button-text {
+    font-size: 11px !important;
+  }
+  .upload-button-text {
+    font-size: 14px;
+  }
+  /* .MuiFormGroup-root.liveForm {
+    font-size: px;
+  } */
+  .checkbox {
+    transform: scale(0.85);
+  }
+}
+@media screen and (min-width: 993px) {
+  .HeaderName {
+    font-size: 20px;
+  }
+
+  .VerificationMethod {
+    width: 170px;
+    height: 50px;
+  }
+
+  .button {
+    width: 150px;
+    height: 60px;
+  }
+  .uploadbutton {
+    width: 310px;
+    height: 35px;
+    font-size: 14px !important;
+  }
+
+  .title {
+    font-size: 21px !important;
+  }
+  .button-text {
+    font-size: 11px !important;
+  }
+  .upload-button-text {
+    font-size: 14px;
+  }
+  .checkbox {
+    transform: scale(0.85);
+  }
+}

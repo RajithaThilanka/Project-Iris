@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 import SelectDoc from "../../components/UserVerification/SelectDocument/SelectDoc";
 import SelectID from "../../components/UserVerification/IdentityVerifcation/SelectID";
 import LiveSelfy from "../../components/UserVerification/FacialVerification/LiveSelfy";
+import { requestManualVerify } from "../../api/UserRequests";
+import "./verificationStyle.css";
 
 const steps = [
   "Required Documents",
@@ -22,8 +24,15 @@ const steps = [
   "Facial Recognition",
 ];
 
-export default function UserVerfication() {
+export default function UserVerfication(props) {
   const [profile, setProfile] = useState(null);
+  const [selectedDocData, setSelectedDocData] = useState(null);
+  const [selectedLiveImageData, setselectedLiveImageData] = useState(null);
+
+  const [selectedImageData, setSelectedImageData] = useState({
+    newImageName: null,
+    newImageName2: null,
+  });
 
   const {
     data: { user },
@@ -32,7 +41,30 @@ export default function UserVerfication() {
 
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    // Perform any necessary form validation here
+
+    // Call the API to submit the form data
+    if (activeStep === steps.length - 1) {
+      try {
+        // await requestManualVerify(
+
+        //    selectedDocData,
+        //    selectedLiveImageData,
+        //    selectedImageData.newImageName,
+        //    selectedImageData.newImageName2
+        // );
+        console.log(selectedDocData);
+        console.log(selectedLiveImageData);
+        console.log(selectedImageData.newImageName);
+        console.log(selectedImageData.newImageName2);
+
+        //console.log("Verfication Sended");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -42,6 +74,26 @@ export default function UserVerfication() {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleDocSelected = (selectedDocData, method) => {
+    setSelectedDocData(selectedDocData);
+    console.log(`Verifaction method: ${selectedDocData}`);
+  };
+
+  const handleImageSelected = (newImageName, newImageName2) => {
+    setSelectedImageData({
+      newImageName: newImageName,
+      newImageName2: newImageName2,
+    });
+    console.log(
+      `Id Card Image names: ${selectedImageData.newImageName}, ${selectedImageData.newImageName2}`
+    );
+  };
+
+  const handleLiveImageSelected = (selectedDocData, liveImageName) => {
+    setselectedLiveImageData(liveImageName);
+    console.log(`Live Image Name : ${selectedLiveImageData}`);
   };
 
   return (
@@ -58,10 +110,29 @@ export default function UserVerfication() {
         </Grid>
         <Grid container item xs={12} sx={{ justifyContent: "center" }}>
           <Box
+            className="stepperHeader"
             sx={{
-              width: "1000px",
-              padding: "10px",
-              marginTop: "20px",
+              width: {
+                // xl: "900px",
+                // lg: "900px",
+                //md: "650px",
+                //sm: "550px",
+                // xs: "480px",
+              },
+              padding: {
+                // xl: "10px",
+                // lg: "10px",
+                //md: "8px",
+                //sm: "5px",
+                // xs: "5px",
+              },
+              marginTop: {
+                //xl: "10px",
+                // lg: "10px",
+                //md: "5px",
+                //sm: "1px",
+                // xs: "1px",
+              },
             }}
           >
             <Stepper activeStep={activeStep}>
@@ -98,11 +169,19 @@ export default function UserVerfication() {
               <React.Fragment>
                 {activeStep === 0 && (
                   <Box
+                    className="steppeButton"
+                    //button container component
                     sx={{
-                      height: "500px",
+                      height: {
+                        // xl: "500px",
+                        // lg: "500px",
+                        //md: "480px",
+                        // sm: "440px",
+                        // xs: "420px",
+                      },
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "10px",
+                      padding: "5px",
                     }}
                   >
                     <Stack
@@ -111,34 +190,59 @@ export default function UserVerfication() {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
-                      spacing={2}
+                      spacing={1}
                     >
-                      <Typography variant="h5">
+                      <Typography className="DocSelectHeaderName">
                         Use a government-issued document
                       </Typography>
                       <Box
+                        className="BoxContainer"
                         sx={{
+                          //BOx container
                           boxShadow: "4",
-                          width: "800px",
-                          height: "450px",
+                          width: {
+                            // xl: "680px",
+                            //lg: "680px",
+                            // md: "600px",
+                            // sm: "450px",
+                            // xs: "400px",
+                          },
+                          height: {
+                            // xl: "450px",
+                            // lg: "430px",
+                            //md: "420px",
+                            // sm: "390px",
+                            // xs: "370px",
+                          },
                           borderRadius: "5px",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                         }}
                       >
-                        <SelectDoc />
+                        <SelectDoc
+                          onSelectDoc={(selectedDocData, method) =>
+                            handleDocSelected(selectedDocData, method)
+                          }
+                        />
                       </Box>
                     </Stack>
                   </Box>
                 )}
                 {activeStep === 1 && (
                   <Box
+                    className="steppeButton"
                     sx={{
-                      height: "500px",
+                      height: {
+                        // xl: "500px",
+                        //lg: "500px",
+                        // md: "480px",
+                        //sm: "440px",
+                        // xs: "420px",
+                      },
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "10px",
+                      padding: "5px",
                     }}
                   >
                     <Stack
@@ -147,34 +251,58 @@ export default function UserVerfication() {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
-                      spacing={2}
+                      spacing={1}
                     >
-                      <Typography variant="h5">
+                      <Typography className="DocSelectHeaderName ">
                         Identity Verification
                       </Typography>
                       <Box
+                        className="BoxContainer"
                         sx={{
                           boxShadow: "4",
-                          width: "800px",
-                          height: "450px",
+                          width: {
+                            //xl: "680px",
+                            // lg: "680px",
+                            // md: "600px",
+                            // sm: "450px",
+                            // xs: "400px",
+                          },
+                          height: {
+                            // xl: "450px",
+                            // lg: "430px",
+                            // md: "420px",
+                            //sm: "390px",
+                            // xs: "370px",
+                          },
                           borderRadius: "5px",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                         }}
                       >
-                        <SelectID />
+                        <SelectID
+                          onSelectImage={(newImageName, newImageName2) =>
+                            handleImageSelected(newImageName, newImageName2)
+                          }
+                        />
                       </Box>
                     </Stack>
                   </Box>
                 )}
                 {activeStep === 2 && (
                   <Box
+                    className="steppeButton"
                     sx={{
-                      height: "500px",
+                      height: {
+                        //xl: "500px",
+                        //lg: "500px",
+                        // md: "480px",
+                        // sm: "440px",
+                        // xs: "420px",
+                      },
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "10px",
+                      padding: "5px",
                     }}
                   >
                     <Stack
@@ -183,23 +311,40 @@ export default function UserVerfication() {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
-                      spacing={2}
+                      spacing={1}
                     >
-                      <Typography variant="h5">
-                        Identity Verification
+                      <Typography className="DocSelectHeaderName ">
+                        Live Image
                       </Typography>
                       <Box
+                        className="BoxContainer"
                         sx={{
                           boxShadow: "4",
-                          width: "800px",
-                          height: "450px",
+                          width: {
+                            // xl: "680px",
+                            // lg: "680px",
+                            // md: "600px",
+                            // sm: "450px",
+                            // xs: "400px",
+                          },
+                          height: {
+                            // xl: "450px",
+                            // lg: "430px",
+                            // md: "420px",
+                            // sm: "390px",
+                            // xs: "370px",
+                          },
                           borderRadius: "5px",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                         }}
                       >
-                        <LiveSelfy />
+                        <LiveSelfy
+                          onSelectLiveImage={(liveImageName) =>
+                            console.log(liveImageName)
+                          }
+                        />
                       </Box>
                     </Stack>
                   </Box>
@@ -219,13 +364,47 @@ export default function UserVerfication() {
                       disabled={activeStep === 0}
                       onClick={handleBack}
                       variant="contained"
-                      sx={{ width: "110px", height: "45px" }}
+                      className="navButton"
+                      sx={{
+                        width: {
+                          // xl: "100px",
+                          // lg: "100px",
+                          // md: "100px",
+                          //sm: "100px",
+                          // xs: "100px",
+                        },
+
+                        height: {
+                          //xl: "40px",
+                          //lg: "40px",
+                          //md: "40px",
+                          //sm: "40px",
+                          // xs: "40px",
+                        },
+                      }}
                     >
                       Back
                     </Button>
 
                     <Button
-                      sx={{ width: "110px", height: "45px" }}
+                      className="navButton"
+                      sx={{
+                        width: {
+                          //  xl: "100px",
+                          // lg: "100px",
+                          //md: "100px",
+                          //sm: "100px",
+                          // xs: "100px",
+                        },
+
+                        height: {
+                          // xl: "40px",
+                          //lg: "40px",
+                          // md: "40px",
+                          // sm: "40px",
+                          // xs: "40px",
+                        },
+                      }}
                       onClick={handleNext}
                       variant="contained"
                     >

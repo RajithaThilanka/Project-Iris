@@ -1,0 +1,91 @@
+@media screen and (max-width: 320px) {
+  .baseHeader {
+    font-size: 15px;
+    display: none;
+  }
+  .content {
+  }
+
+  .MuiFormGroup-root.liveForm {
+    /* visibility: hidden; */
+    display: none;
+  }
+  .capturebutton {
+    width: 90px;
+    height: 25px;
+    font-size: 9px !important;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .baseHeader {
+    font-size: 15px;
+    display: none;
+  }
+  .content {
+  }
+
+  .MuiFormGroup-root.liveForm {
+    /* visibility: hidden; */
+    display: none;
+  }
+  .capturebutton {
+    width: 90px;
+    height: 25px;
+    font-size: 9px !important;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .baseHeader {
+    font-size: 18px !important;
+  }
+  .content {
+  }
+
+  .MuiFormGroup-root.liveForm {
+    /* visibility: hidden; */
+    /* display: none; */
+  }
+  .capturebutton {
+    width: 90px;
+    height: 25px;
+    font-size: 9px !important;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .baseHeader {
+    font-size: 21px !important;
+  }
+  .content {
+  }
+
+  .MuiFormGroup-root.liveForm {
+    /* visibility: hidden; */
+    /* display: none; */
+  }
+  .capturebutton {
+    width: 100px;
+    height: 30px;
+    font-size: 11px !important;
+  }
+}
+
+@media screen and (min-width: 993px) {
+  .baseHeader {
+    font-size: 21px !important;
+  }
+  .content {
+  }
+
+  .MuiFormGroup-root.liveForm {
+    /* visibility: hidden; */
+    /* display: none; */
+  }
+  .capturebutton {
+    width: 100px;
+    height: 30px;
+    font-size: 11px !important;
+  }
+}

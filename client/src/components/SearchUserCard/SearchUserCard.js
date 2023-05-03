@@ -16,7 +16,7 @@ function SearchUserCard({ cardHolder }) {
 
       <div
         className="card-holder-info"
-        onClick={() => navigate(`/users/profile/${cardHolder?._id}`)}
+        onClick={() => navigate(`/users/uprofile/${cardHolder?._id}`)}
       >
         <h5 className="card-holder-name">
           {cardHolder?.firstname + " " + cardHolder?.lastname}

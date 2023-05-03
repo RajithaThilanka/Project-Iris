@@ -25,7 +25,7 @@ exports.getMe = (req, res, next) => {
   next();
 };
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  await User.findByIdAndUpdate(req.user._id, { active: false });
+  await User.findByIdAnddate(req.user._id, { active: false });
   await LookingFor.deleteOne({ userId: req.user._id });
   res.status(204).json({
     status: 'success',
@@ -393,6 +393,24 @@ exports.getBlockedUsers = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       data: result,
+    },
+  });
+});
+
+exports.getAdminUsers = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(User.find({}), req.query);
+  // .filter()
+  // .sort()
+  // .limitFields()
+  // .paginate();
+
+  const users = await features.query;
+
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      data: users,
     },
   });
 });

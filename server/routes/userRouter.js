@@ -87,19 +87,21 @@ router
 
 router.route('/names').get(authController.protect, userController.getUsers);
 
+router.route('/').get(authController.protect, userController.getUsers);
 router
-  .route('/')
-  .get(
-    authController.protect,
-    userSettingsController.checkSearchTokens,
-    userController.getUsers
-  );
+  .route('/adminUsers')
+  .get(authController.adminProtect, userController.getAdminUsers);
+
 router
   .route('/con')
   .get(authController.protect, userController.fetchConnections);
 router
   .route('/search-tokens')
   .get(authController.protect, userSettingsController.getSearchTokens);
+
+router
+  .route('/cluster')
+  .get(authController.adminProtect, aiController.runClusters);
 router
   .route('/:id')
   .get(userController.getUser)

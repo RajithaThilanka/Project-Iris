@@ -5,8 +5,8 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import MinMaxScaler
 import _pickle as pickle
-
-
+from hate_speech import detect_hate_speech
+from cluster import run_clusters
 
 from flask import Flask, request
 import json 
@@ -258,7 +258,20 @@ def index_handler():
     latest_index=len(df.index)
     return json.dumps(latest_index)
     
-    
+@app.route('/api/v1/users/detect-hate-speech',methods=['POST'])
+def hate_speech_handler():
+    data = request.get_json()
+    validated_data = detect_hate_speech(data)
+    return json.dumps(validated_data)
+
+@app.route('/api/v1/users/cluster',methods=['GET'])
+def cluster_handler():
+    try:
+        run_clusters() 
+        return json.dumps({"code":200,"status":"success","message":"user profiles clustered successfully"})
+    except:
+        return json.dumps({"code":500,"status":"error","message":"something went wrong"})
+        
 if __name__ == "__main__": 
     app.run(port=9000)
     

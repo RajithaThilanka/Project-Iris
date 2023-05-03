@@ -2,6 +2,8 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
 import "./Welcome.css";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 function Welcome() {
   const [navOpen, setNavOpen] = useState(false);
@@ -32,7 +34,8 @@ function Welcome() {
       <header className="header">
         <div className="header__logo-box">
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <img
+            <LazyLoadImage
+              effect="blur"
               src={serverPublic + "irislogo.png"}
               alt="Logo"
               className="header__logo"

@@ -6,10 +6,49 @@ import FormGroup from "@mui/material/FormGroup";
 import { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import "./camButtonStyle.css";
+import { useDispatch } from "react-redux";
+import { uploadImage } from "../../../actions/UploadAction";
+import "./liveImageStyle.css";
 
-export default function LiveSelfy() {
+export default function LiveSelfy(props) {
+  const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  const dispatch = useDispatch();
+
   const webcamRef = useRef(null);
   const [url, setUrl] = React.useState(null);
+  const [liveImageName, setLiveImageName] = useState("");
+
+  const handleUploadAndImageNameUpdate = async (e) => {
+    if (url !== null) {
+      const data = new FormData();
+      const newLiveImageName = Date.now() + ".jpeg";
+
+      // Convert data URL to blob
+      const blob = await fetch(url).then((r) => r.blob());
+
+      // Create new File object with desired name and type
+      const file = new File([blob], newLiveImageName, { type: "image/jpeg" });
+
+      data.append("name", newLiveImageName);
+      setLiveImageName(newLiveImageName);
+
+      //props.onSelectLiveImage(liveImageName);
+
+      data.append("file", file);
+
+      try {
+        props.onSelectLiveImage(liveImageName);
+        await dispatch(uploadImage(data));
+        console.log("Live image upload success");
+      } catch (err) {
+        console.log(err);
+        console.log("Live image upload unsuccess");
+      }
+    } else {
+      console.log("No image to upload");
+    }
+  };
+
   const videoConstraints = {
     width: 200,
     height: 200,
@@ -20,6 +59,7 @@ export default function LiveSelfy() {
     const imageSrc = webcamRef.current.getScreenshot();
     setUrl(imageSrc);
     setIsWebcamEnabled(false);
+    setCapturedImage(1);
   }, []);
 
   const onUserMedia = (e) => {
@@ -30,6 +70,7 @@ export default function LiveSelfy() {
   const refreshCam = () => {
     setUrl(null);
     setIsWebcamEnabled(true);
+    setCapturedImage(null);
   };
 
   const [state, setState] = React.useState({
@@ -39,13 +80,23 @@ export default function LiveSelfy() {
   const { ck } = state;
   const { ck2 } = state;
 
+  const [capturedImage, setCapturedImage] = useState(null);
+
+  const handleCaptureAndReset = () => {
+    if (capturedImage === null) {
+      capturePhoto();
+    } else {
+      refreshCam();
+    }
+  };
+
   return (
     <div>
       <Box>
-        <Stack direction="column" spacing={2}>
-          <Typography variant="h5">Take Selfie Photo</Typography>
+        <Stack direction="column" spacing={2} alignItems={"center"} padding={1}>
+          <Typography className="baseHeader">Take Selfie Photo</Typography>
 
-          <FormGroup>
+          <FormGroup className="liveForm">
             <FormControlLabel
               control={<Checkbox checked={ck} name="ck" />}
               label="Take a selfie of yourself with neutral expression"
@@ -55,7 +106,12 @@ export default function LiveSelfy() {
               label="Make sure your whole face is visible ,Centered and your eyes are open"
             />
           </FormGroup>
-          <Stack direction="row" alignItems="center" justifyContent="center">
+          <Stack
+            direction="row"
+            spacing={0}
+            alignItems="center"
+            justifyContent="center"
+          >
             <Stack
               direction="column"
               spacing={1}
@@ -70,6 +126,8 @@ export default function LiveSelfy() {
                     screenshotFormat="image/jpeg"
                     videoConstraints={videoConstraints}
                     onUserMedia={onUserMedia}
+                    screenshotQuality={100}
+                    imageSmoothing={true}
                   />
                 )}
               </Box>
@@ -81,16 +139,26 @@ export default function LiveSelfy() {
             )}
           </Stack>
           <Stack
-            spacing={2}
+            spacing={1}
             direction="row"
             sx={{ alignItems: "center", justifyContent: "center" }}
           >
-            <button onClick={capturePhoto} className="buttonStyle">
-              Capture
-            </button>
-            <button onClick={refreshCam} className="buttonStyle">
-              Refresh
-            </button>
+            <Button
+              className="capturebutton"
+              onClick={handleCaptureAndReset}
+              variant="outlined"
+            >
+              {capturedImage === null ? "Capture" : "Reset"}
+            </Button>
+            {capturedImage !== null && (
+              <Button
+                className="capturebutton"
+                onClick={handleUploadAndImageNameUpdate}
+                variant="outlined"
+              >
+                Upload
+              </Button>
+            )}
           </Stack>
         </Stack>
       </Box>
