@@ -10,7 +10,11 @@ import WorkIcon from "@mui/icons-material/Work";
 import ManIcon from "@mui/icons-material/Man";
 import WomanIcon from "@mui/icons-material/Woman";
 import { useDispatch, useSelector } from "react-redux";
-import { getMatches, sendConRequest } from "../../api/UserRequests";
+import {
+  getMatches,
+  getSignUpQuestions,
+  sendConRequest,
+} from "../../api/UserRequests";
 import SchoolIcon from "@mui/icons-material/School";
 import HeightIcon from "@mui/icons-material/Height";
 import ChurchIcon from "@mui/icons-material/Church";
@@ -186,7 +190,22 @@ function Dashboard2() {
       }
     });
   });
-
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getSignUpQuestions();
+        data?.questions.length > 0 &&
+          navigate("/auth/signup/questions", { replace: true });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchQuestions();
+  }, []);
   useEffect(() => {
     const generateSuggestions = async () => {
       setLoading(true);
@@ -275,6 +294,7 @@ function Dashboard2() {
       socket.off();
     };
   }, []);
+
   return (
     <>
       {socketConnected && <Navbar user={user} socket={socket} />}
