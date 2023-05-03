@@ -113,7 +113,7 @@ function App() {
         <Routes>
           <Route
             path="/auth/signup/questions"
-            element={<SignQuestion />}
+            element={user ? <SignQuestion /> : <Auth action="login" />}
           ></Route>
           <Route
             path="/auth/signup/lookingfor-info"

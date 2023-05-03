@@ -66,11 +66,17 @@ function SignQuestion() {
     };
     fetchQuestions();
   }, []);
+
+  useEffect(() => {
+    if (questions?.length === 0) {
+      navigate("/me", { replace: true });
+    }
+  }, [questions]);
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <div className="signup-container">
-      {questions && (
+      {questions && questions.length > 0 && (
         <form
           onSubmit={handleSubmit}
           className="account-info-form question-form"
@@ -133,12 +139,12 @@ function SignQuestion() {
                   type="submit"
                   disabled={!selectedOption}
                 >
-                  Next
+                  {questions.length === 1 ? "Finish" : "Next"}
                 </Button>
               )}
             </Grid>
           </Grid>
-          <div className="skip-container">
+          {/* <div className="skip-container">
             {questions.length > 10 && (
               <div>
                 You should answer at least 10 questions to view suggestions
@@ -154,7 +160,7 @@ function SignQuestion() {
                 Dashboard
               </Button>
             </div>
-          </div>
+          </div> */}
         </form>
       )}
     </div>
