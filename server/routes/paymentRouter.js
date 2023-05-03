@@ -1,11 +1,11 @@
 const express = require('express');
-const pay = require('../controllers/paymentController.js');
+const paymentController = require('../controllers/paymentController.js');
 const authController = require('../controllers/authController');
 const router = express.Router();
 
 router
   .route('/payment')
-  .post(pay);
+  .post(paymentController.pay);
 
 // const PaymentRoute = express.Router();
 
