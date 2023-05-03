@@ -21,6 +21,7 @@ const fs = require('fs');
 const { validateChat } = require('./controllers/aiController');
 const schedule = require('node-schedule');
 const { dateToCron } = require('./utils/utilFuncs');
+const paymentRouter = require('./routes/paymentRouter');
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(mongoSanitize());
@@ -54,6 +55,7 @@ app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/message', messageRouter);
 app.use('/api/v1/report', reportRouter);
 app.use('/api/v1/settings', settingsRouter);
+app.use('/api/v1/payment', paymentRouter)
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));

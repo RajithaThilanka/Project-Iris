@@ -317,7 +317,7 @@ function ProfileView() {
           data: { data },
         },
       } = await signupProfileView(formData);
-      navigate(`/auth/signup/lookingfor-info`, {
+      navigate(`/auth/signup/questions`, {
         replace: true,
         state: {
           id: data._id,

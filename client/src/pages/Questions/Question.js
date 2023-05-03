@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Box,
     Button,
   FormLabel,
   Stack,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 // import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
@@ -15,14 +17,17 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import QuestionHeader from "../../components/Question/QuestionHeader";
-import QuestionAnswers from "./QuestionAnswers";
+import QuestionHeader from "../../Question/QuestionHeader";
+import QuestionAnswers from "../../Question/QuestionAnswers";
 import "./Question.css";
-import { getQuestionArray } from "../../api/QuestionRequests";
-import { signupAccountInfo, addAnswer, signupLookingforInfo } from "../../api/AuthRequests";
+import { getQuestionArray } from "../../../api/QuestionRequests";
+import { signupAccountInfo, addAnswer, signupLookingforInfo, signupProfileView } from "../../../api/AuthRequests";
 
 function Question() {
-    const { id } = useParams();
+    const {
+        state: { id },
+    } = useLocation();
+    const dispatch = useDispatch();
     const [allQuestions, setAllQuestions] = useState(null)
     
     useEffect(() => {
@@ -66,14 +71,20 @@ function Question() {
 
     // State to store count value
     const [count, setCount] = useState(0);
-
+    const [answersArrayForOneQuestion, setAnswersArrayForOneQuestion] = useState(null);
+    const [atomAnswerArray, setAtomAnswerArray] = useState(null);
+    
     // Function to increment count by 1
     const incrementCount = () => {
         setCount(count + 1);
         console.log('incrementCount after update:', count); // Debug statement
+        setAnswersArrayForOneQuestion = allAnswersArray[count];
+        setAtomAnswerArray = answersArrayForOneQuestion[count];
     };
     console.log('incrementCount after update function:', count); // Debug statement
     
+    
+
     //const answersArrayForOneQuestion = allAnswersArray[count];
 
     //const atomAnswerArray = answersArrayForOneQuestion[count];
@@ -84,7 +95,7 @@ function Question() {
         setData(e);
         console.log('formData after update:', formData); // Debug statement
         
-        addAnswer(allQuestions[0]._id);
+        // addAnswer(allQuestions[0]._id);
         console.log('handle Data called'); // Debug statement
         // setQuestion(allQuestions[1].question);
         console.log("handle Data");
@@ -93,11 +104,30 @@ function Question() {
     };
 
     
+    if (count === questionArrayLength) {
+        console.log('count increased to questionArrayLength which is:', questionArrayLength); // Debug statement
+        try {
+        console.log('Inside the try block'); // Debug statement
+        const {
+            data: {data: { data },},
+            } = addAnswer(formData);
+        console.log('formData submitted:', formData); // Debug statement
+        navigate(`/auth/signup/lookingfor-info`, {
+            replace: true,
+            state: {
+            id: data._id,
+            },
+        });
+        } catch (error) {
+        console.log(error);
+        }
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setErr(null);
         if (!formData.answer == null) {
+            console.log('formData.answer is not null'); // Debug statement
         try {
             const {
             data: {
@@ -137,15 +167,20 @@ function Question() {
     // }
     // {allAnswersArray ? (console.log('helloAnswers', allAnswersArray)) : (console.log(err))}
     // console.log('helloAnswers', answerArray);
-    const AnswersArray = allQuestions ? [allQuestions[0].answerTags] : '';
+    
+    
+
+    //const AnswersArray = allQuestions ? [allQuestions[0].answerTags] : '';
     // console.log('3rd question', AnswersArray);
     // console.log('Lengthof the array', arrayLength);
-
-
-    const answersArrayForOneQuestion = allAnswersArray ? allAnswersArray[count] : console.log("allAnswersArray is null");
-    const buttonCount = answersArrayForOneQuestion ? answersArrayForOneQuestion.length : console.log("buttonCount");
-    const atomAnswerArray = answersArrayForOneQuestion ? answersArrayForOneQuestion[count] : console.log("answersArrayForOneQuestion is null");
-
+    // let answersArrayForOneQuestion = [];
+    // {
+    //     Array.isArray(AnswersArray) ? answersArrayForOneQuestion = allAnswersArray[count] : console.log("allAnswersArray is not an array");
+    // }
+    //const answersArrayForOneQuestion = allAnswersArray ? allAnswersArray[count] : console.log("allAnswersArray is null");
+    // const atomAnswerArray = answersArrayForOneQuestion ? answersArrayForOneQuestion[count] : console.log("answersArrayForOneQuestion is null");
+    // const buttonCount = answersArrayForOneQuestion ? answersArrayForOneQuestion.length : console.log("buttonCount");
+    // atomAnswerArray ? console.log("atomAnswerArray can use") : console.log("atomAnswerArray is null");
 
     console.log('Question array', allQuestionArray);
     console.log('Answers array', allAnswersArray);
@@ -153,7 +188,7 @@ function Question() {
     console.log('Question array len', questionArrayLength);
     console.log('Answers array len', answerArrayLength);
     console.log('count', count);
-    console.log('Answers', answersArrayForOneQuestion);
+    console.log('AnswersArrayForOneQuestion', answersArrayForOneQuestion);
     console.log('atomAnswerArray', atomAnswerArray);
     
     
@@ -178,9 +213,9 @@ function Question() {
                                     </Box>
                                 
                                 
-                                ) : (
+                                ) : 
                                 <p>Loading questions...</p>
-                                )}
+                                }
 
                             </FormLabel>
                             
@@ -203,8 +238,9 @@ function Question() {
                                     atomAnswerArray.map((answer, index) => (
                                         <Button variant="contained" sx={{ my: 1 }} key={index} onClick={() => { handleData(index) }}>{answer}</Button>
                                     ))
-                                        : console.log("atomAnswerArray is not an array")
+                                        : <p>Loading answers...</p>
                                 }
+                                <Button>Submit</Button>
                                 
                                 {/* {
                                     Array.isArray(AnswersArray) ?

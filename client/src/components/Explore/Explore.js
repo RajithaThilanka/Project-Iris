@@ -181,6 +181,27 @@ function Explore() {
               </div>
             </div>
           )}
+          <div className="explore-passions-card">
+            <LazyLoadImage
+              effect="blur"
+              src={ serverPublic+'premium-bg.jpg'}
+              alt="night-life"
+            />
+            <div className="passions-card-tag">Subscription</div>
+            <div className="explore-passions-card-info">
+              <h3>have a premium experience </h3>
+              <h5>on Iris</h5>
+            </div>
+            <Button
+              variant="contained"
+              className="passion-card-btn"
+              onClick={() => navigate("/me/tag-suggestions/Creator")}
+            >
+              PAY NOW
+            </Button>
+          </div>
+          
+          
           <div className="welcome-to-explore-container">
             <h3 className="heading-tertiary">Welcome to Explore</h3>
             <h6>Check out these features as well</h6>
