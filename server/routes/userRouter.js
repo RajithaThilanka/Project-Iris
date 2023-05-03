@@ -98,6 +98,10 @@ router
 router
   .route('/search-tokens')
   .get(authController.protect, userSettingsController.getSearchTokens);
+
+router
+  .route('/cluster')
+  .get(authController.adminProtect, aiController.runClusters);
 router
   .route('/:id')
   .get(userController.getUser)

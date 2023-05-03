@@ -43,6 +43,7 @@
     "react-scrollable-feed": "^1.3.2",
     "react-slick": "^0.29.0",
     "react-slideshow-image": "^4.2.0",
+    "react-stripe-js": "^1.1.5",
     "react-swipeable-views": "^0.14.0",
     "react-timeago": "^7.1.0",
     "react-tinder-card": "^1.6.2",

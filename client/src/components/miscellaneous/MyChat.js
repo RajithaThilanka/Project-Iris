@@ -290,7 +290,7 @@ function MyChat({ fetchAgain, setFetchAgain, socket }) {
                                 }}
                               />
                             ) : chat.latestMessage &&
-                              chat.latestMessage.sender._id != loggedUser._id &&
+                              chat.latestMessage.sender._id == loggedUser._id &&
                               chat.latestMessage.isSeen === true ? (
                               <DoneAllIcon
                                 style={{ color: "cyan" }}
