@@ -1,21 +1,23 @@
 const Stripe = require('stripe');
-const TotalPrice = 450.00
-const stripe = Stripe('sk_test_51MzDJEK0p6t6EmIIFxgL5FDXP2TSqAgViTMErv6acGHgClDdbxYRufCcCDNNvEdBUA9GkqzAqiggi4lrhIAZGYsE00jNEp75xF');
+const TotalPrice = 450.0;
+const stripe = Stripe(
+  'sk_test_51MzDJEK0p6t6EmIIFxgL5FDXP2TSqAgViTMErv6acGHgClDdbxYRufCcCDNNvEdBUA9GkqzAqiggi4lrhIAZGYsE00jNEp75xF'
+);
 const catchAsync = require('../utils/catchAsync');
 
 exports.pay = catchAsync(async (req, res, next) => {
-  const TotalPrice = req.body.amount * 100;
-  const Email = req.body.receipt_email;
-  console.log(TotalPrice);
-  console.log("Payment Request recieved for this ruppess", TotalPrice);
-  
-  const payment = await stripe.paymentIntents.create({
-    amount: TotalPrice,
-    currency: "lkr",
-    receipt_email: Email,
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        price: '{{PRICE_ID}}',
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: `${YOUR_DOMAIN}?success=true`,
+    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
-  
-  res.status(201).send({
-    clientSecret: payment.client_secret,
-  });
+
+  res.redirect(303, session.url);
 });
