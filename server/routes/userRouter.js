@@ -110,6 +110,4 @@ router
   .patch(authController.adminProtect, userController.updateUser)
   .delete(authController.adminProtect, userController.deleteUser);
 
-router.route('/me/donate').post(authController.protect, paymentController.pay);
-
 module.exports = router;
