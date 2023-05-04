@@ -13,7 +13,7 @@ const ProductDisplay = () => (
         <h5>$20.00</h5>
       </div>
     </div>
-    <form action="/donate" method="POST">
+    <form action="/payment/donate" method="POST">
       <button type="submit">Checkout</button>
     </form>
   </section>

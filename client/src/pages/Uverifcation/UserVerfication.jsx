@@ -47,21 +47,15 @@ export default function UserVerfication(props) {
     // Call the API to submit the form data
     if (activeStep === steps.length - 1) {
       try {
-        // await requestManualVerify(
-
-        //    selectedDocData,
-        //    selectedLiveImageData,
-        //    selectedImageData.newImageName,
-        //    selectedImageData.newImageName2
-        // );
-        console.log(selectedDocData);
-        console.log(selectedLiveImageData);
-        console.log(selectedImageData.newImageName);
-        console.log(selectedImageData.newImageName2);
-
-        //console.log("Verfication Sended");
+        await requestManualVerify(
+          selectedDocData,
+          selectedLiveImageData,
+          selectedImageData.newImageName,
+          selectedImageData.newImageName2
+        );
+        console.log("Verification sent");
       } catch (error) {
-        console.log(error);
+        console.log(error.response.data);
       }
     }
 
@@ -76,9 +70,9 @@ export default function UserVerfication(props) {
     setActiveStep(0);
   };
 
-  const handleDocSelected = (selectedDocData, method) => {
-    setSelectedDocData(selectedDocData);
-    console.log(`Verifaction method: ${selectedDocData}`);
+  const handleDocSelected = (method) => {
+    setSelectedDocData(method);
+    console.log(`Verification method: ${method}`);
   };
 
   const handleImageSelected = (newImageName, newImageName2) => {
@@ -86,14 +80,14 @@ export default function UserVerfication(props) {
       newImageName: newImageName,
       newImageName2: newImageName2,
     });
-    console.log(
-      `Id Card Image names: ${selectedImageData.newImageName}, ${selectedImageData.newImageName2}`
-    );
+
+    console.log(newImageName);
+    console.log(newImageName2);
   };
 
-  const handleLiveImageSelected = (selectedDocData, liveImageName) => {
+  const handleLiveImageSelected = (liveImageName) => {
     setselectedLiveImageData(liveImageName);
-    console.log(`Live Image Name : ${selectedLiveImageData}`);
+    console.log(`Live Image Name : ${liveImageName}`);
   };
 
   return (
@@ -221,9 +215,7 @@ export default function UserVerfication(props) {
                         }}
                       >
                         <SelectDoc
-                          onSelectDoc={(selectedDocData, method) =>
-                            handleDocSelected(selectedDocData, method)
-                          }
+                          onSelectDoc={(method) => handleDocSelected(method)}
                         />
                       </Box>
                     </Stack>
@@ -342,7 +334,7 @@ export default function UserVerfication(props) {
                       >
                         <LiveSelfy
                           onSelectLiveImage={(liveImageName) =>
-                            console.log(liveImageName)
+                            handleLiveImageSelected(liveImageName)
                           }
                         />
                       </Box>

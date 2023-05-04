@@ -1,9 +1,10 @@
 const Stripe = require('stripe');
 const TotalPrice = 450.0;
-const stripe = Stripe(
-  'sk_test_51MzDJEK0p6t6EmIIFxgL5FDXP2TSqAgViTMErv6acGHgClDdbxYRufCcCDNNvEdBUA9GkqzAqiggi4lrhIAZGYsE00jNEp75xF'
+const stripe = require('stripe')(
+  'sk_test_51N3gxUSFB1LW96dhmYtkWan6Y8V5MrHiNo73kwLrqNocrKRxvVmQ6K1BcYpxQAHWiDgWXckqM08b1nQoSH88iKBb00cNmyna9s'
 );
 const catchAsync = require('../utils/catchAsync');
+const YOUR_DOMAIN = 'http://localhost:4242';
 
 exports.pay = catchAsync(async (req, res, next) => {
   const session = await stripe.checkout.sessions.create({
