@@ -117,8 +117,7 @@ function Chat() {
           <div className="dashboard-loading-photo">
             <img src={serverPublic + "irislogo.png"} alt="loading-user" />
           </div>
-        </div>
-      ) : (
+        </div>      ) : (
         ""
       )}
     </>

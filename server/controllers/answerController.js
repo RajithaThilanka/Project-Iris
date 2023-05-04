@@ -106,3 +106,19 @@ exports.getAnswers = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getQuestions = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const questions = await Answer.findOne({
+    userId: userId,
+  })
+    .populate('questions')
+    .select('questions');
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: questions,
+    },
+  });
+});

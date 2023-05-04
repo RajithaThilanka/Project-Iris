@@ -137,3 +137,7 @@ export const requestManualVerify = (
     nicFront,
     nicBack,
   });
+
+export const getSignUpQuestions = () => API.get("/users/me/questions");
+export const addAnswer = (questionId, answerIndex) =>
+  API.patch(`users/me/submit-answer/${questionId}`, { answerIndex });
