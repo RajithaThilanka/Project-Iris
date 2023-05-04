@@ -103,35 +103,32 @@ function ProfilHeader() {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          marginTop={6}
+          marginTop={7}
         >
           <Grid item xs={4} justifyContent="right">
             <Stack
               direction="column"
-              className="profilepic"
+              className="my-stack profilepic"
               justifyContent="center"
               alignItems="center"
             >
               <div style={{ position: "relative", backgroundColor: "none" }}>
                 <Avatar
-                  className="profileavatar custom-avatar"
+                  className="custom-avatar"
                   style={{
                     border: "4px solid white",
                     margin: "1px",
                   }}
                   alt="The image"
                   src={serverPublic + user?.profilePhoto}
-                  sx={{
-                    width: { xs: 64, sm: 96, md: 128, lg: 150 },
-                    height: { xs: 64, sm: 96, md: 128, lg: 150 },
-                  }}
                 />
+
                 <IconButton
+                  className="my-icon-button"
                   style={{
                     position: "absolute",
                     top: 0,
                     right: 0,
-                    // backgroundColor: "#5f0937",
                     color: "white",
                   }}
                 >
@@ -158,15 +155,17 @@ function ProfilHeader() {
                   />
                 </IconButton>
               </div>
-              <Stack direction="row">
+              <Stack direction="row" spacing={2}>
                 <InputAdornment position="end">
                   <Button
                     component="label"
                     variant="contained"
-                    className="prouploadbutton custom-button"
+                    className="custom-button"
                     onClick={handleUploadAndImageNameUpdate}
                   >
-                    Update
+                    <Typography className="custom-button-text">
+                      Update
+                    </Typography>
                   </Button>
                 </InputAdornment>
               </Stack>

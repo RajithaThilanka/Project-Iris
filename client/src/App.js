@@ -43,8 +43,13 @@ import Explore from "./components/Explore/Explore";
 import ManualSearch from "./components/ManualSearch/ManualSearch";
 import UserVerification from "./pages/Uverifcation/UserVerfication";
 import TagDashboard from "./components/TagDashboard/TagDashboard";
+<<<<<<< HEAD
 import { Elements } from "@stripe/react-stripe-js";
 import SignQuestion from "./components/SignQuestion/SignQuestion";
+=======
+import DonationPage from "./pages/Donation/DonationPage.jsx";
+import { Elements } from "@stripe/react-stripe-js";
+>>>>>>> 393053211c91216929634c7a4360070c85491b4e
 
 const theme = createTheme({
   palette: {
@@ -269,6 +274,7 @@ function App() {
           <Route path="/me/safetytips" element={<SafetyTips />} />
 
           <Route path="/me/uverification" element={<UserVerification />} />
+          <Route path="/me/donateus" element={<DonationPage />} />
 
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>

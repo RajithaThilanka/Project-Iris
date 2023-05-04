@@ -99,7 +99,7 @@ function ProfileCard({ conUser, cardType, socket }) {
   //view suggestion profile
   const viewPro = async () => {
     try {
-      navigate("/me/suggession/profile/");
+      navigate(`/users/uprofile/${conUser?._id}`);
     } catch (error) {
       console.log(error);
     }
@@ -307,7 +307,7 @@ function ProfileCard({ conUser, cardType, socket }) {
         <Tooltip title="View Profile" placement="bottom">
           <IconButton
             style={{ color: "#fff" }}
-            onClick={() => navigate(`/users/profile/${otherUser._id}`)}
+            onClick={() => navigate(`/users/uprofile/${otherUser._id}`)}
           >
             <AccountCircleIcon className="profile-card-btn" />
           </IconButton>

@@ -1,116 +1,119 @@
-.upload-container {
-  display: inline-block;
-  position: relative;
-}
-
-.profile-picture-container {
-  display: inline-block;
-  position: relative;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.upload-button-label {
-  display: block;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: #428bca;
-  color: white;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.upload-button-label i {
-  font-size: 20px;
-}
-
-.upload-button {
-  display: none;
-}
-
-.Header {
-  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
-}
-
-.custom-avatar {
-  width: 150px;
-  height: 150px;
-}
-
 @media screen and (max-width: 320px) {
   .Header {
-    height: 150px;
+    height: 160px;
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
   }
+  .custom-avatar {
+    width: 65px !important;
+    height: 65px !important;
+  }
+  button.my-icon-button {
+    font-size: 50px;
+  }
+  .my-stack {
+    gap: 10px;
+  }
+
   .custom-button {
-    width: 70px; /* Change the width to your desired value */
-    height: 23px; /* Change the height to your desired value */
-    font-size: 1.2rem;
+    height: 15px !important;
+  }
+  .custom-button-text {
+    font-size: 1rem !important;
   }
 }
 @media screen and (min-width: 321px) and (max-width: 480px) {
   .Header {
-    height: 180px;
+    height: 160px;
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+  }
+  .custom-avatar {
+    width: 65px !important;
+    height: 65px !important;
+  }
+  button.my-icon-button {
+    font-size: 50px;
+  }
+  .my-stack {
+    gap: 10px;
   }
 
   .custom-button {
-    width: 70px; /* Change the width to your desired value */
-    height: 25px; /* Change the height to your desired value */
-    font-size: 1.2rem;
+    height: 15px !important;
+  }
+  .custom-button-text {
+    font-size: 1rem !important;
   }
 }
 @media screen and (min-width: 481px) and (max-width: 768px) {
   .Header {
-    height: 220px;
+    height: 200px;
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+  }
+  .my-stack {
+    gap: 12px;
+  }
+
+  .custom-avatar {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  button.my-icon-button {
+    font-size: 50px !important;
   }
 
   .custom-button {
-    width: 70px; /* Change the width to your desired value */
-    height: 25px; /* Change the height to your desired value */
-    font-size: 1.2rem;
+    height: 18px !important;
+  }
+  .custom-button-text {
+    font-size: 1rem !important;
   }
 }
+
 @media screen and (min-width: 769px) and (max-width: 992px) {
   .Header {
+    height: 230px;
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+  }
+  .my-stack {
+    gap: 15px;
+  }
+
+  .custom-avatar {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  button.my-icon-button {
+    font-size: 50px !important;
+  }
+
+  .custom-button {
+    height: 25px !important;
+  }
+  .custom-button-text {
+    font-size: 1.2rem !important;
+  }
+}
+@media screen and (min-width: 993px) {
+  .Header {
     height: 250px;
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
   }
+  .my-stack {
+    gap: 8px;
+  }
+
   .custom-avatar {
-    width: 100px; /* Change the width to your desired value */
-    height: 100px; /* Change the height to your desired value */
+    width: 110px !important;
+    height: 110px !important;
   }
-  .custom-button {
-    width: 70px; /* Change the width to your desired value */
-    height: 25px; /* Change the height to your desired value */
-    font-size: 1.2rem;
-  }
-}
-@media screen and (min-width: 993px) and (max-width: 1200px) {
-  .Header {
-    height: 280px;
+  button.my-icon-button {
+    font-size: 50px !important;
   }
 
   .custom-button {
-    width: 70px; /* Change the width to your desired value */
-    height: 25px; /* Change the height to your desired value */
-    font-size: 1.2rem;
+    height: 28px !important;
   }
-}
-
-@media screen and (min-width: 1201px) {
-  .Header {
-    height: 300px;
-  }
-  .custom-avatar {
-    width: 150px; /* Change the width to your desired value */
-    height: 150px; /* Change the height to your desired value */
-  }
-  .custom-button {
-    width: 70px; /* Change the width to your desired value */
-    height: 25px; /* Change the height to your desired value */
-    font-size: 1.2rem;
+  .custom-button-text {
+    font-size: 1.4rem !important;
   }
 }

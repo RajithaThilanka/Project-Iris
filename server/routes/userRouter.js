@@ -7,6 +7,7 @@ const answerController = require('../controllers/answerController');
 const connectionsRouter = require('./connectionsRouter');
 const friendsRouter = require('./friendsRouter');
 const dateRouter = require('./dateRouter');
+const paymentController = require('../controllers/paymentController');
 const router = express.Router();
 
 // user routes
@@ -105,10 +106,13 @@ router
 router
   .route('/cluster')
   .get(authController.adminProtect, aiController.runClusters);
+
 router
   .route('/:id')
   .get(userController.getUser)
   .patch(authController.adminProtect, userController.updateUser)
   .delete(authController.adminProtect, userController.deleteUser);
+
+router.route('/me/donate').post(authController.protect, paymentController.pay);
 
 module.exports = router;

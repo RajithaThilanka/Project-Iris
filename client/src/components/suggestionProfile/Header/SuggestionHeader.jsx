@@ -12,6 +12,8 @@ import { createStyles } from "@mui/styles";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import IconButton from "@mui/material/IconButton";
 
 export default function SuggestionHeader(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -41,7 +43,7 @@ export default function SuggestionHeader(props) {
           }}
           spacing={3}
         >
-          <Box
+          {/* <Box
             className="ProfileAvatar"
             sx={{
               boxShadow: 4,
@@ -54,13 +56,36 @@ export default function SuggestionHeader(props) {
             height="140"
             src={serverPublic + props.imageid}
             alt="green iguana"
-          ></Box>
-          {/* <Avatar
-            className="ProfileAvatar"
-            alt="Remy Sharp"
-            src={serverPublic + props.imageid}
-            //sx={{ width: 100, height: 100 }}
-          /> */}
+          ></Box> */}
+          <div style={{ position: "relative", backgroundColor: "none" }}>
+            <Avatar
+              className="profileavatar custom-avatar"
+              style={{
+                border: "4px solid white",
+                margin: "1px",
+              }}
+              alt="The image"
+              src={serverPublic + props.imageid}
+              sx={{
+                width: { xs: 64, sm: 96, md: 128, lg: 150 },
+                height: { xs: 64, sm: 96, md: 128, lg: 150 },
+              }}
+            />
+
+            {/* <label htmlFor="file-upload">
+              <Avatar
+                sx={{
+                  bgcolor: "primary.main",
+                  width: 27,
+                  height: 27,
+                  border: "4px solid #fff",
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+              ></Avatar>
+            </label> */}
+          </div>
           <Stack
             direction="column"
             justifyContent="flex-start"

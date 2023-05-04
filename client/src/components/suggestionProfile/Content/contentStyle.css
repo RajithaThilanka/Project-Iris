@@ -1,3 +1,15 @@
+@media screen and (max-width: 320px) {
+  .AboutContent {
+    width: 250px;
+  }
+  .Caption {
+    font-size: "20px" !important;
+  }
+  .FactfileContent {
+    width: 230px;
+  }
+}
+
 @media screen and (min-width: 321px) and (max-width: 480px) {
   .AboutContent {
     width: 300px;
@@ -10,14 +22,49 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (min-width: 481px) and (max-width: 768px) {
   .AboutContent {
-    width: 250px;
+    width: 450px;
+  }
+  .InnerAbout {
+    width: 240px;
   }
   .Caption {
     font-size: "20px" !important;
   }
   .FactfileContent {
-    width: 280px;
+    width: 200px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .AboutContent {
+    width: 700px;
+  }
+  .InnerAbout {
+    width: 440px;
+  }
+  .Caption {
+    font-size: "20px" !important;
+  }
+  .FactfileContent {
+    width: 200px;
+  }
+}
+
+@media screen and (min-width: 993px) {
+  .AboutContent {
+    width: 900px;
+  }
+  .InnerAbout {
+    width: 580px;
+  }
+  .Caption {
+    font-size: "20px" !important;
+  }
+  .FactfileContent {
+    width: 200px;
+  }
+  .custom-grid-item {
   }
 }
