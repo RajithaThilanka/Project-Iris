@@ -43,13 +43,8 @@ import Explore from "./components/Explore/Explore";
 import ManualSearch from "./components/ManualSearch/ManualSearch";
 import UserVerification from "./pages/Uverifcation/UserVerfication";
 import TagDashboard from "./components/TagDashboard/TagDashboard";
-<<<<<<< HEAD
-import { Elements } from "@stripe/react-stripe-js";
-import SignQuestion from "./components/SignQuestion/SignQuestion";
-=======
 import DonationPage from "./pages/Donation/DonationPage.jsx";
 import { Elements } from "@stripe/react-stripe-js";
->>>>>>> 393053211c91216929634c7a4360070c85491b4e
 
 const theme = createTheme({
   palette: {
@@ -116,10 +111,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <>
         <Routes>
-          <Route
+          {/* <Route
             path="/auth/signup/questions"
             element={user ? <SignQuestion /> : <Auth action="login" />}
-          ></Route>
+          ></Route> */}
           <Route
             path="/auth/signup/lookingfor-info"
             element={<LookingFor />}
