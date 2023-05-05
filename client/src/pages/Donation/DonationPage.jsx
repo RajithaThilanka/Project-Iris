@@ -15,7 +15,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 export default function DonationPage() {
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
-
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
   };
@@ -34,6 +33,15 @@ export default function DonationPage() {
   } = useSelector((state) => state.authReducer.authData);
   const { id } = useParams();
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const handleDonateClick = async () => {
+    try {
+      const response = await Donate();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div style={{ backgroundImage: `url(/images/donationimge.jpg)` }}>
@@ -90,15 +98,11 @@ export default function DonationPage() {
                 <Button
                   sx={{ width: "140px" }}
                   variant="contained"
-                  onClick={handleDonate}
+                  onClick={handleDonateClick}
                 >
                   Donate
                 </Button>
-                <Button
-                  sx={{ width: "140px" }}
-                  variant="contained"
-                  onClick={handleDonate}
-                >
+                <Button sx={{ width: "140px" }} variant="contained">
                   Back
                 </Button>
               </Stack>
