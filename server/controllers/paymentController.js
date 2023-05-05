@@ -6,16 +6,12 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.pay = catchAsync(async (req, res, next) => {
   const session = await stripe.checkout.sessions.create({
-    line_items: [
+    payment: [
       {
-        price_data: {
+        data: {
           currency: 'usd',
-          product_data: {
-            name: 'T-shirt',
-          },
-          unit_amount: 2000,
+          amount: 2000,
         },
-        quantity: 1,
       },
     ],
     mode: 'payment',

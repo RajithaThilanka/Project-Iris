@@ -11,8 +11,10 @@ import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
-
+import "./DonationStyle.css";
+import { useNavigate } from "react-router-dom";
 export default function DonationPage() {
+  const navigate = useNavigate();
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
   const handleAmountChange = (event) => {
@@ -44,31 +46,44 @@ export default function DonationPage() {
   };
 
   return (
-    <div style={{ backgroundImage: `url(/images/donationimge.jpg)` }}>
-      <Stack spacing={12} direction="column">
+    <div
+      style={{
+        backgroundImage: `url(${serverPublic}donationimge.jpg)`,
+        height: "100vh",
+        backgroundSize: "100% auto",
+        backgroundPosition: "center",
+      }}
+    >
+      <Stack className="MainStack" spacing={12} direction="column">
         <Navbar user={user} />
         <Stack
+          className="conponenentStack"
           spacing={5}
           direction="row"
           sx={{ justifyContent: "center", alignItems: "center" }}
         >
           <Box
+            className="containBox"
             sx={{
+              backgroundColor: "white",
               borderRadius: 1,
               boxShadow: 5,
-              width: "600px",
+              width: "500px",
               height: "550px",
             }}
           >
             <Stack
+              className="containStack"
               spacing={3}
               direction="column"
               sx={{
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: "100px",
+                marginTop: "50px",
               }}
             >
+              <img className="logo" src={serverPublic + "irislogo.png"} />
+
               <Typography variant="h5">
                 Donate to Support Our Service
               </Typography>
@@ -102,7 +117,13 @@ export default function DonationPage() {
                 >
                   Donate
                 </Button>
-                <Button sx={{ width: "140px" }} variant="contained">
+                <Button
+                  sx={{ width: "140px" }}
+                  variant="contained"
+                  onClick={() => {
+                    navigate("/me/dashboard");
+                  }}
+                >
                   Back
                 </Button>
               </Stack>
