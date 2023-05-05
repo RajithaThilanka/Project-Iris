@@ -110,9 +110,9 @@ function Explore() {
             data: { data },
           },
         } = await getMyVerStatus();
-        console.log(data);
+
         if (data) {
-          data.status === "verified" ? setVerStatus(true) : setVerStatus(false);
+          setVerStatus(data.status);
         } else {
           setVerStatus(false);
         }
@@ -141,7 +141,7 @@ function Explore() {
         }}
       >
         <div className="explore-card-container">
-          {!verStatus && (
+          {!verStatus ? (
             <div
               className="explore-card-get-verified"
               style={{
@@ -180,7 +180,107 @@ function Explore() {
                 </Button>
               </div>
             </div>
+          ) : verStatus === "pending" ? (
+            <div
+              className="explore-card-get-verified"
+              style={{
+                backgroundImage: `url(https://live.staticflickr.com/65535/52780925579_00d6d3bfcf_k.jpg)`,
+              }}
+            >
+              <div className="verified-frame">
+                <VerifiedIcon
+                  sx={{
+                    color: "#0973d6;",
+                    transform: "translate(18.5rem,-1.6rem)",
+
+                    borderRadius: "50%",
+                    background: "#fff",
+                  }}
+                  fontSize="large"
+                />
+              </div>
+
+              <div className="explore-card-verified-info">
+                <div className="explore-card-info-1">
+                  <h3 className="heading-secondary verified-card-heading">
+                    Get Verified on{" "}
+                    <span style={{ color: "var(--color-primary)" }}>IRIS</span>
+                  </h3>
+                  <h5 className="heading-tertiary verified-card-sub-heading">
+                    Photo Verified
+                  </h5>
+                </div>
+                <Button
+                  variant="contained"
+                  className="verified-card-btn"
+                  style={{ cursor: "no-drop" }}
+                >
+                  Pending
+                </Button>
+              </div>
+            </div>
+          ) : verStatus === "failed" ? (
+            <div
+              className="explore-card-get-verified"
+              style={{
+                backgroundImage: `url(https://live.staticflickr.com/65535/52780925579_00d6d3bfcf_k.jpg)`,
+              }}
+            >
+              <div className="verified-frame">
+                <VerifiedIcon
+                  sx={{
+                    color: "#0973d6;",
+                    transform: "translate(18.5rem,-1.6rem)",
+
+                    borderRadius: "50%",
+                    background: "#fff",
+                  }}
+                  fontSize="large"
+                />
+              </div>
+
+              <div className="explore-card-verified-info">
+                <div className="explore-card-info-1">
+                  <h3 className="heading-secondary verified-card-heading">
+                    Get Verified on{" "}
+                    <span style={{ color: "var(--color-primary)" }}>IRIS</span>
+                  </h3>
+                  <h5 className="heading-tertiary verified-card-sub-heading">
+                    Photo Verified
+                  </h5>
+                </div>
+                <Button
+                  variant="contained"
+                  className="verified-card-btn"
+                  onClick={() => navigate("/me/uverification")}
+                >
+                  TRY NOW
+                </Button>
+              </div>
+            </div>
+          ) : (
+            ""
           )}
+          {/* <div className="explore-passions-card">
+            <LazyLoadImage
+              effect="blur"
+              src={serverPublic + "premium-bg.jpg"}
+              alt="night-life"
+            />
+            <div className="passions-card-tag">Subscription</div>
+            <div className="explore-passions-card-info">
+              <h3>have a premium experience </h3>
+              <h5>on Iris</h5>
+            </div>
+            <Button
+              variant="contained"
+              className="passion-card-btn"
+              onClick={() => navigate("/me/tag-suggestions/Creator")}
+            >
+              PAY NOW
+            </Button>
+          </div> */}
+
           <div className="welcome-to-explore-container">
             <h3 className="heading-tertiary">Welcome to Explore</h3>
             <h6>Check out these features as well</h6>

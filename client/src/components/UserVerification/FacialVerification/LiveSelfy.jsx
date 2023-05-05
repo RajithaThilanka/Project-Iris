@@ -37,9 +37,10 @@ export default function LiveSelfy(props) {
       data.append("file", file);
 
       try {
-        props.onSelectLiveImage(liveImageName);
+        props.onSelectLiveImage(newLiveImageName);
         await dispatch(uploadImage(data));
-        console.log("Live image upload success");
+        //console.log("Live image upload success");
+        //console.log(newLiveImageName);
       } catch (err) {
         console.log(err);
         console.log("Live image upload unsuccess");

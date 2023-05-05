@@ -19,6 +19,7 @@ import DateDummy from "./pages/DateDummy";
 import AccountInfo from "./components/SignUp/SignUpForms/AccountInfo";
 import UserInfo from "./components/SignUp/SignUpForms/UserInfo";
 import ProfileView from "./components/SignUp/SignUpForms/ProfileView";
+import Question from "./components/SignUp/SignUpForms/Question";
 import LookingFor from "./components/SignUp/SignUpForms/LookingFor";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -40,9 +41,10 @@ import Report from "./components/Report/Report";
 import ActivationRequest from "./components/ActivationRequest/ActivationRequest";
 import Explore from "./components/Explore/Explore";
 import ManualSearch from "./components/ManualSearch/ManualSearch";
-import Question from "./components/Question/Question";
 import UserVerification from "./pages/Uverifcation/UserVerfication";
 import TagDashboard from "./components/TagDashboard/TagDashboard";
+import SignQuestion from "./components/SignQuestion/SignQuestion";
+import DonationPage from "./pages/Donation/DonationPage.jsx";
 
 const theme = createTheme({
   palette: {
@@ -109,6 +111,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <>
         <Routes>
+          {/* <Route
+            path="/auth/signup/questions"
+            element={user ? <SignQuestion /> : <Auth action="login" />}
+          ></Route> */}
+          <Route
+            path="/auth/signup/lookingfor-info"
+            element={<LookingFor />}
+          ></Route>
           <Route
             path="/auth/signup/account-info"
             element={<AccountInfo />}
@@ -131,7 +141,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/question"
+            path="/auth/signup/questions"
             element={
               state ? <Question /> : <Navigate to="/auth/signup/account-info" />
             }
@@ -259,6 +269,7 @@ function App() {
           <Route path="/me/safetytips" element={<SafetyTips />} />
 
           <Route path="/me/uverification" element={<UserVerification />} />
+          <Route path="/me/donateus" element={<DonationPage />} />
 
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>

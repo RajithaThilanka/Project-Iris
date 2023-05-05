@@ -18,6 +18,7 @@ const Chat = require('../models/chatModel');
 const Message = require('../models/messageModel');
 const LookingFor = require('../models/lookingForModel');
 const Connection = require('../models/connectionsModel');
+const Question = require('../models/questionModel');
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -26,21 +27,21 @@ mongoose
   })
   .then(() => console.log('DB Connection successful'));
 
-const deleteDevData = async () => {
-  try {
-    // await Chat.deleteMany();
-    // await Message.deleteMany();
-    // await User.deleteMany();
-    // await LookingFor.deleteMany();
-    await Chat.deleteMany();
-    await Message.deleteMany();
-    // await Connection.deleteMany();
-    await Date.deleteMany();
-    // await Answer.deleteMany();
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const deleteDevData = async () => {
+//   try {
+//     // await Chat.deleteMany();
+//     // await Message.deleteMany();
+//     // await User.deleteMany();
+//     // await LookingFor.deleteMany();
+//     await Chat.deleteMany();
+//     await Message.deleteMany();
+//     // await Connection.deleteMany();
+//     await Date.deleteMany();
+//     // await Answer.deleteMany();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // deleteDevData();
 const generate = (min, max) => Math.floor(Math.random() * (max - min) + min);
@@ -205,7 +206,7 @@ const import_data = async () => {
   //     userId: mongoose.Types.ObjectId(this.userId),
   //   }
   // );
-  console.log('done');
+  // console.log('done');
   // let users = await User.find({});
   // users = users.slice(10);
   // const ids = users.map((u, i) => {
@@ -220,10 +221,24 @@ const import_data = async () => {
 // "_id": { "$oid":"dbfe53c3c4d568240378b0c6"}
 // deleteDevData();
 
-var myStr = '075-63546725';
-var myRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+// var myStr = '075-63546725';
+// var myRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
-//Using Match()
-// var result = myStr.match(myRegex);
-var result = myRegex.test(myStr);
-console.log(result);
+// //Using Match()
+// // var result = myStr.match(myRegex);
+// var result = myRegex.test(myStr);
+// console.log(result);
+
+const updateAnswers = async () => {
+  const questionIds = await Question.find({}).select('_id');
+
+  const updated = await Answer.updateMany(
+    {},
+    {
+      questions: questionIds,
+    }
+  );
+  process.exit(0);
+};
+
+updateAnswers();

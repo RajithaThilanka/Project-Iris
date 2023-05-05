@@ -131,17 +131,19 @@ function Login() {
             )}
           </Grid>
           <Grid item sm={12} xs={12}>
+            <div className="error-container">
+              <p className="forgot-password">
+                <Link to="/forgot-password" replace={true}>
+                  Trouble logging in?
+                </Link>
+              </p>
+            </div>
             {error && (
               <div className="error-container">
                 <p className="error-msg">{error.response.data.message}</p>
                 <p className="forgot-password">
                   {error.response.data.message ===
-                  "Incorrect email or password" ? (
-                    <Link to="/forgot-password" replace={true}>
-                      Trouble logging in?
-                    </Link>
-                  ) : error.response.data.message ===
-                    "Your account has been blocked by the moderators" ? (
+                  "Your account has been blocked by the moderators" ? (
                     <Link
                       to="/users/submit-request"
                       replace={true}

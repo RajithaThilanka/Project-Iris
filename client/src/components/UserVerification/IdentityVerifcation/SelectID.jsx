@@ -41,12 +41,16 @@ export default function SelectID(props) {
 
   //Upload image and rename and new name upload
   const handleUploadAndImageNameUpdate = async (e) => {
+    let newImageName = null;
+    let newImageName2 = null;
+
     if (image) {
       const data = new FormData();
-      const newImageName = Date.now() + image.name;
+      newImageName = Date.now() + image.name;
       setFrontImageName(newImageName);
       data.append("name", newImageName);
       data.append("file", image);
+      console.log(newImageName);
 
       try {
         await dispatch(uploadImage(data));
@@ -61,10 +65,11 @@ export default function SelectID(props) {
 
     if (image2) {
       const data2 = new FormData();
-      const newImageName2 = Date.now() + image2.name;
+      newImageName2 = Date.now() + image2.name;
       setBackImageName(newImageName2);
       data2.append("name", newImageName2);
       data2.append("file", image2);
+      console.log(newImageName2);
 
       try {
         await dispatch(uploadImage(data2));
@@ -77,7 +82,7 @@ export default function SelectID(props) {
       console.log("Upload Error");
     }
 
-    props.onSelectImage(frontImageName, backImageName);
+    props.onSelectImage(newImageName, newImageName2);
   };
 
   const [state, setState] = React.useState({

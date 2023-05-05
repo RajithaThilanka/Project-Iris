@@ -48,6 +48,7 @@ const pages = [
   { label: "Explore", to: "/explore" },
   { label: "Safety Tips", to: "/me" },
   { label: "About Us", to: "/about-us" },
+  { label: "Donate Us", to: "/me/donateus" },
 ];
 // const settings = ["Account", "Dashboard"];
 const settings = [
@@ -427,6 +428,12 @@ function Navbar({ user, socket }) {
               sx={{ my: 2, color: "white", display: "block" }}
             >
               About Us
+            </Button>
+            <Button
+              onClick={() => navigate("/me/donateus")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Donate Us
             </Button>
           </Box>
 
