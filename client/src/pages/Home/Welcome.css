@@ -2099,7 +2099,8 @@ body {
 }
 
 .navigation__link:link,
-.navigation__link:visited {
+.navigation__link:visited,
+.navigation-btn {
   display: inline-block;
   font-size: 3rem;
   font-weight: 300;
@@ -2119,13 +2120,16 @@ body {
 }
 
 .navigation__link:link span,
-.navigation__link:visited span {
+.navigation__link:visited span,
+.navigation-btn span {
   margin-right: 1.5rem;
   display: inline-block;
 }
 
 .navigation__link:hover,
-.navigation__link:active {
+.navigation__link:active,
+.navigation-btn:hover,
+.navigation-btn:active {
   background-position: 100%;
   color: #000;
   -webkit-transform: translateX(1rem);
