@@ -111,10 +111,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <>
         <Routes>
-          <Route
+          {/* <Route
             path="/auth/signup/questions"
             element={user ? <SignQuestion /> : <Auth action="login" />}
-          ></Route>
+          ></Route> */}
           <Route
             path="/auth/signup/lookingfor-info"
             element={<LookingFor />}
