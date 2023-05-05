@@ -310,7 +310,7 @@ exports.getVerificationStatus = catchAsync(async (req, res, next) => {
     userId: req.user._id,
   });
   // verificationStatus = verificationStatus || null;
-  console.log('hey');
+
   res.status(200).json({
     status: 'success',
     data: {

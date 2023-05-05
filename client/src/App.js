@@ -43,8 +43,8 @@ import Explore from "./components/Explore/Explore";
 import ManualSearch from "./components/ManualSearch/ManualSearch";
 import UserVerification from "./pages/Uverifcation/UserVerfication";
 import TagDashboard from "./components/TagDashboard/TagDashboard";
+import SignQuestion from "./components/SignQuestion/SignQuestion";
 import DonationPage from "./pages/Donation/DonationPage.jsx";
-import { Elements } from "@stripe/react-stripe-js";
 
 const theme = createTheme({
   palette: {
