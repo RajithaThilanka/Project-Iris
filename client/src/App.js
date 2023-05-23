@@ -44,7 +44,7 @@ import ManualSearch from "./components/ManualSearch/ManualSearch";
 import UserVerification from "./pages/Uverifcation/UserVerfication";
 import TagDashboard from "./components/TagDashboard/TagDashboard";
 import SignQuestion from "./components/SignQuestion/SignQuestion";
-import DonationPage from "./pages/Donation/DonationPage.jsx";
+import DonationPage from "./pages/Advertise/DonationPage";
 
 const theme = createTheme({
   palette: {

@@ -13,6 +13,7 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import "./DonationStyle.css";
 import { useNavigate } from "react-router-dom";
+import Slider from "@mui/material/Slider";
 export default function DonationPage() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState("");
@@ -84,9 +85,7 @@ export default function DonationPage() {
             >
               <img className="logo" src={serverPublic + "irislogo.png"} />
 
-              <Typography variant="h5">
-                Donate to Support Our Service
-              </Typography>
+              <Typography variant="h5"> Advertice With Us</Typography>
               <FormControl sx={{ width: "300px" }}>
                 <InputLabel type="number">Amount</InputLabel>
                 <OutlinedInput
@@ -96,15 +95,26 @@ export default function DonationPage() {
                   label="Amount"
                 />
               </FormControl>
-              <TextField sx={{ width: "300px" }} required label="Enter email" />
               <TextField
                 sx={{ width: "300px" }}
-                label="Leave a Message"
+                id="outlined-multiline-static"
                 multiline
-                rows={1}
-                value={message}
-                onChange={handleMessageChange}
+                rows={3}
+                label="Enter Description"
               />
+              <Box sx={{ width: 300 }}>
+                <Slider
+                  aria-label="Temperature"
+                  defaultValue={30}
+                  getAriaValueText={""}
+                  valueLabelDisplay="auto"
+                  step={1}
+                  marks
+                  min={1}
+                  max={30}
+                />
+              </Box>
+
               <Stack
                 spacing={2}
                 direction="row"
@@ -115,7 +125,7 @@ export default function DonationPage() {
                   variant="contained"
                   onClick={handleDonateClick}
                 >
-                  Donate
+                  Submit
                 </Button>
                 <Button
                   sx={{ width: "140px" }}
