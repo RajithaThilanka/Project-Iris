@@ -37,7 +37,7 @@ export default function SuggessionPage() {
 
   return (
     <div className="suggesstionPage">
-      <Grid container spacing={{ xs: 7, sm: 8, md: 8, lg: 8 }}>
+      <Grid container spacing={{ xs: 7, sm: 8, md: 8, lg: 8, xl: 8 }}>
         <Grid item xs={12}>
           <Navbar user={user} />
         </Grid>
@@ -50,7 +50,6 @@ export default function SuggessionPage() {
           />
         </Grid>
       </Grid>
-      <Stack direction="column"></Stack>
 
       <Stack
         direction="column"

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Container } from '@mui/material';
-import Question from "../../components/Question/Question";
+import Question from "../../components/SignUp/SignUpForms/Question";
 //import QuestionHeader from "../../components/Question/QuestionHeader";
 //import QuestionAnswers from "../../components/Question/QuestionAnswers";
 import Box from '@mui/material/Box';

@@ -11,18 +11,18 @@ import { Typography, makeStyles } from "@mui/material";
 import { createStyles } from "@mui/styles";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import { Link, useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import IconButton from "@mui/material/IconButton";
+
 export default function SuggestionHeader(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   return (
     <div className="SuggesstionHeader">
-      <Box
-        sx={{
-          width: "100%",
-          height: { xl: 300, lg: 300, md: 230, sm: 150, xs: 150 },
-        }}
-      >
+      <Box className="Mainheader">
         <Stack
+          className="componentStack"
           sx={{
             padding: {
               xl: "20px",
@@ -43,11 +43,12 @@ export default function SuggestionHeader(props) {
           }}
           spacing={3}
         >
-          <Box
+          {/* <Box
+            className="ProfileAvatar"
             sx={{
               boxShadow: 4,
-              width: { xl: 250, lg: 250, md: 150, sm: 110, xs: 110 },
-              height: { xl: 250, lg: 250, md: 150, sm: 110, xs: 110 },
+              //width: { xl: 250, lg: 250, md: 150, sm: 110, xs: 110 },
+              //height: { xl: 250, lg: 250, md: 150, sm: 110, xs: 110 },
               borderRadius: 2,
               bgcolor: "gray",
             }}
@@ -55,7 +56,36 @@ export default function SuggestionHeader(props) {
             height="140"
             src={serverPublic + props.imageid}
             alt="green iguana"
-          ></Box>
+          ></Box> */}
+          <div style={{ position: "relative", backgroundColor: "none" }}>
+            <Avatar
+              className="profileavatar custom-avatar"
+              style={{
+                border: "4px solid white",
+                margin: "1px",
+              }}
+              alt="The image"
+              src={serverPublic + props.imageid}
+              sx={{
+                width: { xs: 64, sm: 96, md: 128, lg: 150 },
+                height: { xs: 64, sm: 96, md: 128, lg: 150 },
+              }}
+            />
+
+            {/* <label htmlFor="file-upload">
+              <Avatar
+                sx={{
+                  bgcolor: "primary.main",
+                  width: 27,
+                  height: 27,
+                  border: "4px solid #fff",
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+              ></Avatar>
+            </label> */}
+          </div>
           <Stack
             direction="column"
             justifyContent="flex-start"
@@ -68,8 +98,8 @@ export default function SuggestionHeader(props) {
               alignItems="center"
               spacing={2}
             >
-              <Typography variant="h4">Name :</Typography>
-              <Typography variant="h5">{props.name}</Typography>
+              <Typography className="Name">Name :</Typography>
+              <Typography className="NameContent">{props.name}</Typography>
             </Stack>
             <Stack
               direction="row"
@@ -77,15 +107,17 @@ export default function SuggestionHeader(props) {
               alignItems="center"
               spacing={2}
             >
-              <Typography variant="h4">Occupation :</Typography>
-              <Typography variant="h5">{props.occupation}</Typography>
+              <Typography className="Occupation">Occupation :</Typography>
+              <Typography className="OccupationContent">
+                {props.occupation}
+              </Typography>
             </Stack>
 
-            <Typography variant="h5">
+            <Typography className="OccupationContent">
               {props.Verified ? <VerifiedUserIcon /> : <GppBadIcon />}
             </Typography>
             {/* /me/chat */}
-            <Button
+            {/* <Button
               variant="contained"
               onClick={() => navigate("/me/chat")}
               sx={{
@@ -94,7 +126,7 @@ export default function SuggestionHeader(props) {
               }}
             >
               <ChatIcon />
-            </Button>
+            </Button> */}
           </Stack>
         </Stack>
       </Box>

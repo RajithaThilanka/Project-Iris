@@ -14,6 +14,8 @@ import ListSubheader from "@mui/material/ListSubheader";
 import "./settingsStyle.css";
 
 import ScheduleIcon from "@mui/icons-material/Schedule";
+import UpdateClusters from "../UpdateClusters/UpdateClusters";
+
 function CustomToolbar(props) {
   return null;
 }
@@ -36,6 +38,7 @@ export default function AdminSettings() {
   };
   const [selectedDate, setSelectedDate] = useState(null);
   const [convertdate, setConvertDate] = useState(null);
+
   const handleButtonClick = () => {
     setHatespeech(convertdate)
       .then((response) => {
@@ -144,6 +147,9 @@ export default function AdminSettings() {
               </List>
             </Box>
           </Stack>
+        </Stack>
+        <Stack direction="column" spacing={2}>
+          <UpdateClusters />
         </Stack>
       </Stack>
     </div>

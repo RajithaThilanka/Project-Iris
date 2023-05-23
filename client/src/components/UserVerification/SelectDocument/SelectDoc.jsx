@@ -5,25 +5,17 @@ import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Typography, Stack } from "@mui/material";
 import "./selectdoc.css";
 
 export default function SelectDoc(props) {
-  const [view, setView] = React.useState("list");
   const [method, setMethod] = useState("");
 
-  const handleChange = (event, nextView) => {
-    setView(nextView);
-    // update the method state based on the selected value of the toggle button group
-    if (nextView === "idcard") {
-      setMethod("identity card");
-    } else if (nextView === "passport") {
-      setMethod("passport");
-    } else if (nextView === "drivinglicence") {
-      setMethod("driving licence");
-    }
-    props.onSelectDoc(method);
+  const handleOnClick = (event, value) => {
+    setMethod(value);
+    props.onSelectDoc(value);
+    console.log("Selected value:", value);
   };
 
   return (
@@ -35,9 +27,9 @@ export default function SelectDoc(props) {
           </Typography>
           <ToggleButtonGroup
             orientation="vertical"
-            value={view}
+            value={method}
             exclusive
-            onChange={handleChange}
+            onChange={handleOnClick}
             color="primary"
           >
             <ToggleButton
@@ -59,7 +51,7 @@ export default function SelectDoc(props) {
                 },
                 "&.Mui-selected": { color: "#C81172" },
               }}
-              value="idcard"
+              value="Identity card"
               aria-label="list"
             >
               <Typography>Identity Card</Typography>
@@ -84,7 +76,7 @@ export default function SelectDoc(props) {
                 },
                 "&.Mui-selected": { color: "#C81172" },
               }}
-              value="passport"
+              value="Passport"
               aria-label="module"
             >
               <Typography> Passport</Typography>
@@ -109,10 +101,10 @@ export default function SelectDoc(props) {
                 },
                 "&.Mui-selected": { color: "#C81172" },
               }}
-              value="drivinglicence"
+              value="Driving licence"
               aria-label="quilt"
             >
-              <Typography>Driving Liceense</Typography>
+              <Typography>Driving licence</Typography>
             </ToggleButton>
           </ToggleButtonGroup>
         </Stack>

@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Welcome.css";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/AuthActions";
+import { Button } from "@mui/material";
 function Navigation() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <>
       <div className="navigation__background">&nbsp;</div>
@@ -29,9 +34,16 @@ function Navigation() {
             </Link>
           </li>
           <li className="navigation__item">
-            <Link to="/login/admin" className="navigation__link">
+            <span
+              className="navigation-btn"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                dispatch(logout());
+                navigate("/login/admin", { replace: true });
+              }}
+            >
               <span>04</span>Admin Login
-            </Link>
+            </span>
           </li>
         </ul>
       </nav>
