@@ -111,15 +111,9 @@ export const fetchWarnings = () => API.get("/report/fetch-warnings");
 
 export const reportUser = (data) => API.post("/report", data);
 
-<<<<<<< HEAD
-export const RequestManualVerification = (data) =>
-  API.post("/users/me/manual-verify", data);
-
-=======
 export const setNotified = (id) => API.patch("/report/notified", { id });
 
 export const getMyVerStatus = () => API.get("/users/me/ver-status");
->>>>>>> 3596e5f4ade07003d8d79a5a6d99cdeba43c7ec8
 //export const Camara = () => API.get("/")
 
 export const getSearchNames = (keyword) =>
