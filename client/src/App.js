@@ -269,7 +269,7 @@ function App() {
           <Route path="/me/safetytips" element={<SafetyTips />} />
 
           <Route path="/me/uverification" element={<UserVerification />} />
-          <Route path="/me/donateus" element={<DonationPage />} />
+          <Route path="/me/advertise" element={<DonationPage />} />
 
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
