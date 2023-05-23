@@ -25,7 +25,7 @@ function Navigation() {
           </li>
           <li className="navigation__item">
             <Link to="/reviews" className="navigation__link">
-              <span>03</span>reviwes
+              <span>03</span>reviews
             </Link>
           </li>
           <li className="navigation__item">
