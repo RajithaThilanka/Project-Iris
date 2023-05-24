@@ -22,6 +22,9 @@ const { validateChat } = require('./controllers/aiController');
 const schedule = require('node-schedule');
 const { dateToCron } = require('./utils/utilFuncs');
 const paymentRouter = require('./routes/paymentRouter');
+const morgan = require('morgan');
+
+app.use(morgan('dev'));
 
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());

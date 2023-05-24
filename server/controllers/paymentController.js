@@ -1,27 +1,17 @@
 const stripe = require('stripe')(
-  'sk_test_51N3gxUSFB1LW96dhmYtkWan6Y8V5MrHiNo73kwLrqNocrKRxvVmQ6K1BcYpxQAHWiDgWXckqM08b1nQoSH88iKBb00cNmyna9s'
+  'sk_test_51NAzG4BmWq0tXqH3btKY0BYANRp5AadzYnF0DPtO6suuGV3UU5kJieyvFEwlmiaR8aJSuVibNJSOFXlc8pClnNYP00wsyYL5GF'
 );
 require('dotenv').config();
 const catchAsync = require('../utils/catchAsync');
 
-exports.pay = catchAsync(async (req, res, next) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'T-shirt',
-          },
-          unit_amount: 2000,
-        },
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    success_url: 'http://localhost:4242/success',
-    cancel_url: 'http://localhost:4242/cancel',
+exports.pay = catchAsync(async (req, res) => {
+  const { amount } = req.body;
+  const payment = await stripe.paymentIntents.create({
+    amount: amount,
+    currency: 'usd',
   });
 
-  res.redirect(303, session.url);
+  res.status(201).send({
+    clientSecret: payment.client_secret,
+  });
 });

@@ -31,7 +31,7 @@ export default function SuggestionContent(props) {
   return (
     <div>
       <Grid
-        containesr
+        container
         justifyContent="center"
         alignItems="flex-start"
         marginBottom="50px"
@@ -39,12 +39,9 @@ export default function SuggestionContent(props) {
         sx={{
           boxShadow: 4,
           height: "100%",
-          // width: { xl: 1000, lg: 1000, md: 650, sm: 550 },
           borderRadius: 2,
           textAlign: "center",
           bgcolor: "white",
-          marginLeft: { xl: 20, lg: 20, md: 10, sm: 5, xs: 5 },
-          marginRight: { xl: 20, lg: 20, md: 10, sm: 5, xs: 5 },
         }}
       >
         <Grid item xl={8} lg={8} md={8} sm={8} xs={12}>
@@ -202,18 +199,16 @@ export default function SuggestionContent(props) {
           </Stack>
         </Grid>
 
-        <Grid item xl={4} lg={4} md={4} sm={4} xs={12} sx={{ padding: "10px" }}>
-          <Stack direction="column">
+        <Grid item xl={4} lg={4} md={4} sm={4} xs={12}>
+          <Stack
+            className="InnerAbout"
+            direction="column"
+            sx={{ padding: "10px" }}
+            spacing={2}
+          >
             <Box
               className="FactfileContent"
               sx={{
-                // width: {
-                //   xl: "300px",
-                //   lg: "300px",
-                //   md: "200px",
-                //   sm: "160px",
-                //   xs: "480px",
-                // },
                 height: "100%",
                 borderRadius: 2,
                 textAlign: "center",
@@ -224,19 +219,17 @@ export default function SuggestionContent(props) {
                 padding: 3,
               }}
             >
-              <Typography variant="h6">
-                <SuggessionFactfiles
-                  Height={props?.Height}
-                  callName={props?.callName}
-                  Ethnicity={props?.Ethnicity}
-                  Dob={props?.Dob}
-                  Education={props?.Education}
-                  Language={props?.Language}
-                  Income={props?.Income}
-                  Haschildren={props?.Haschildren}
-                  Religion={props?.Religion}
-                />
-              </Typography>
+              <SuggessionFactfiles
+                Height={props?.Height}
+                callName={props?.callName}
+                Ethnicity={props?.Ethnicity}
+                Dob={props?.Dob}
+                Education={props?.Education}
+                Language={props?.Language}
+                Income={props?.Income}
+                Haschildren={props?.Haschildren}
+                Religion={props?.Religion}
+              />
             </Box>
           </Stack>
         </Grid>
