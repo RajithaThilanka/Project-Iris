@@ -49,6 +49,7 @@ const pages = [
   { label: "Safety Tips", to: "/me" },
   { label: "About Us", to: "/about-us" },
   { label: "Advertise Here", to: "/me/advertise" },
+  { label: "Rate Us", to: "/me/review" },
 ];
 // const settings = ["Account", "Dashboard"];
 const settings = [
@@ -434,6 +435,12 @@ function Navbar({ user, socket }) {
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Advertise Here
+            </Button>
+            <Button
+              onClick={() => navigate("/me/review")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Rate Us
             </Button>
           </Box>
 

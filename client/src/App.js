@@ -45,6 +45,7 @@ import TagDashboard from "./components/TagDashboard/TagDashboard";
 import SignQuestion from "./components/SignQuestion/SignQuestion";
 import DonationPage from "./pages/Advertise/DonationPage";
 import CheckoutPage from "./pages/Advertise/CheckoutPage";
+import Review from "./components/Review/Review";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -164,7 +165,7 @@ function App() {
             path="/auth/login"
             element={user ? <Navigate to="/me" /> : <Auth action="login" />}
           ></Route>
-          <Route path="/advertise" element={<Advertise />}></Route>
+          {/* <Route path="/advertise" element={<Advertise />}></Route> */}
           <Route
             path="/explore"
             element={user ? <Explore /> : <Auth action="login" />}
@@ -172,6 +173,10 @@ function App() {
           <Route
             path="/me/manual-search"
             element={user ? <ManualSearch /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/review"
+            element={user ? <Review /> : <Auth action="login" />}
           ></Route>
           <Route
             path="/me/tag-suggestions/:tag"

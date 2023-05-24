@@ -1,0 +1,15 @@
+.star-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.star-icon {
+  color: var(--color-primary-light);
+  font-size: 3.5rem;
+}
+.rate-label-container {
+  text-align: center;
+  padding: 0 1rem;
+  font-size: 2rem;
+}
