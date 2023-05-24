@@ -11,9 +11,13 @@ const AboutUs = () => {
   return (
     <>
       <Container className="container">
-        <Typography variant="h2" align="center" gutterBottom className="">
-          About Us
-        </Typography>
+        <Grid>
+          <Box className="explore-card-get-verified">
+            <Typography variant="h2" align="center" gutterBottom>
+              About Us
+            </Typography>
+          </Box>
+        </Grid>
         <Typography variant="body1" align="justify" gutterBottom>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus
           mauris mauris, a sollicitudin justo blandit a. Duis euismod euismod
@@ -107,7 +111,7 @@ const AboutUs = () => {
                   />
                 </Box>
                 <Box>
-                  <Typography variant="h6" align="center">
+                  <Typography variant="h6" align="center" className="nameStyle">
                     Asanka Madushan
                   </Typography>
                 </Box>
@@ -135,7 +139,7 @@ const AboutUs = () => {
                   />
                 </Box>
                 <Box>
-                  <Typography variant="h6" align="center">
+                  <Typography variant="h6" align="center" className="nameStyle">
                     Rajitha Thilanka
                   </Typography>
                 </Box>
@@ -163,7 +167,7 @@ const AboutUs = () => {
                   />
                 </Box>
                 <Box>
-                  <Typography variant="h6" align="center">
+                  <Typography variant="h6" align="center" className="nameStyle">
                     Rusith Liyanage
                   </Typography>
                 </Box>
@@ -191,7 +195,7 @@ const AboutUs = () => {
                   />
                 </Box>
                 <Box>
-                  <Typography variant="h6" align="center">
+                  <Typography variant="h6" align="center" className="nameStyle">
                     Kisal Perera
                   </Typography>
                 </Box>
