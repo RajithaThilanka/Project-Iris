@@ -4,6 +4,7 @@ const path = require('path');
 const userRouter = require('./routes/userRouter');
 const uploadRouter = require('./routes/uploadRouter');
 const questionRouter = require('./routes/questionRouter');
+const reviewRouter = require('./routes/reviewRouter');
 const chatRouter = require('./routes/chatRouter');
 const reportRouter = require('./routes/reportRouter');
 const messageRouter = require('./routes/messageRouter');
@@ -59,6 +60,7 @@ app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/message', messageRouter);
 app.use('/api/v1/report', reportRouter);
 app.use('/api/v1/settings', settingsRouter);
+app.use('/api/v1/review', reviewRouter);
 app.use('/api/v1/payment', paymentRouter);
 
 app.all('*', (req, res, next) => {

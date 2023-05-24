@@ -1,13 +1,1 @@
-Implement sending message to reported User and reportedBy User after review
-
-Implement hate speech
-
-Implement sending answers
-Implement flag in hate speech psotive
-
-Re activate account
-
-###URGENT!!!!!!!!!!
-Test generating suggestions
-Replace AI Server
-Implement answer model
+Handle error in submitting review

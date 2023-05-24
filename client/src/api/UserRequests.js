@@ -141,7 +141,7 @@ export const requestManualVerify = (
 export const getSignUpQuestions = () => API.get("/users/me/questions");
 export const addAnswer = (questionId, answerIndex) =>
   API.patch(`users/me/submit-answer/${questionId}`, { answerIndex });
-
+export const addAReview = (data) => API.post("/review", data);
 export const Payment = (amount) => {
   const res = API.post("/payment/create-checkout-session", { amount });
   return res;
