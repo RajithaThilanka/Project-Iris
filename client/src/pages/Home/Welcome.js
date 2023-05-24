@@ -316,7 +316,7 @@ function Welcome() {
             <div className="story">
               <figure className="story__shape">
                 <img
-                  src="https://live.staticflickr.com/65535/52755942790_9a567da99e_o.jpg"
+                  src={serverPublic + "pic117.jpg"}
                   alt="Person on a tour"
                   className="story__img"
                 />
@@ -341,7 +341,7 @@ function Welcome() {
             <div className="story">
               <figure className="story__shape">
                 <img
-                  src="https://live.staticflickr.com/65535/52755781469_0cf93eb37f_o.jpg"
+                  src={serverPublic + "pic174.jpg"}
                   alt="Person on a tour"
                   className="story__img"
                 />

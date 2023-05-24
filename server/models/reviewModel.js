@@ -6,6 +6,10 @@ const reviewSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    highlight: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,

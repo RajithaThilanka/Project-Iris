@@ -5,13 +5,14 @@ const AppError = require('../utils/appError');
 
 exports.addReview = catchAsync(async (req, res, next) => {
   const reviewer = req.user._id;
-  const { description, rating } = req.body;
+  const { description, rating, highlight } = req.body;
 
   try {
     let newReview = await Review.create({
       userId: reviewer,
       description,
       rating,
+      highlight,
     });
     res.status(200).json({
       status: 'success',

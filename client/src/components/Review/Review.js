@@ -25,6 +25,7 @@ function Review() {
   const [shade, setShade] = useState([false, false, false, false, false]);
   const [success, setSuccess] = useState(false);
   const [description, setDescription] = useState("");
+  const [highlight, setHighlight] = useState("");
   const [rated, setRated] = useState(false);
   const {
     data: { user },
@@ -58,7 +59,7 @@ function Review() {
         data: {
           data: { data },
         },
-      } = await addAReview({ description, rating });
+      } = await addAReview({ description, rating, highlight });
       setLoading(false);
       setSuccess(true);
       setErr(null);
@@ -124,6 +125,23 @@ function Review() {
                   name="lastname"
                   value={user?.lastname}
                   aria-readonly
+                />
+              </Stack>
+            </Grid>
+            <Grid sm={12} xs={12}>
+              <Stack spacing={3}>
+                <FormLabel sx={{ marginLeft: "0.7rem" }}>
+                  What is your biggest achievement from our service?
+                </FormLabel>
+                <TextField
+                  id="filled-multiline-static"
+                  multiline
+                  rows={10}
+                  variant="filled"
+                  name="highlight"
+                  value={highlight}
+                  onChange={(e) => setHighlight(e.target.value)}
+                  required
                 />
               </Stack>
             </Grid>
