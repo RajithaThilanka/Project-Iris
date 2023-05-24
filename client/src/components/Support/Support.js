@@ -17,7 +17,7 @@ function Support() {
         <button
           variant="contained"
           className="btn btn--white btn--animated"
-          style={{ color: "#fff" }}
+          style={{ color: "#fff", fontSize: "1.5rem" }}
         >
           Contact Us
         </button>

@@ -171,17 +171,10 @@ exports.getUser = catchAsync(async (req, res, next) => {
 exports.getUsers = catchAsync(async (req, res, next) => {
   const keyword = req.query.search
     ? {
-        $or: [
-          {
-            firstname: {
-              $regex: req.query.search,
-              $options: 'i',
-            },
-          },
-          {
-            email: { $regex: req.query.search, $options: 'i' },
-          },
-        ],
+        firstname: {
+          $regex: req.query.search,
+          $options: 'i',
+        },
       }
     : {};
   const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
@@ -226,7 +219,7 @@ exports.getUserNames = catchAsync(async (req, res, next) => {
 
 exports.fetchConnections = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
-  console.log(userId);
+
   // const keyword = req.query.search
   //   ? {
   //       $or: [
