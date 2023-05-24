@@ -45,7 +45,7 @@ import UserVerification from "./pages/Uverifcation/UserVerfication";
 import TagDashboard from "./components/TagDashboard/TagDashboard";
 import SignQuestion from "./components/SignQuestion/SignQuestion";
 import DonationPage from "./pages/Advertise/DonationPage";
-
+import CheckoutPage from "./pages/Advertise/CheckoutPage";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -270,6 +270,7 @@ function App() {
 
           <Route path="/me/uverification" element={<UserVerification />} />
           <Route path="/me/advertise" element={<DonationPage />} />
+          <Route path="/me/advertise/checkout" element={<CheckoutPage />} />
 
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>

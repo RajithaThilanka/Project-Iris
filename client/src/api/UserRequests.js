@@ -142,4 +142,5 @@ export const getSignUpQuestions = () => API.get("/users/me/questions");
 export const addAnswer = (questionId, answerIndex) =>
   API.patch(`users/me/submit-answer/${questionId}`, { answerIndex });
 
-export const Donate = () => API.post("/payment/create-checkout-session");
+export const Payment = (amount) =>
+  API.post("/payment/create-checkout-session", { amount });
