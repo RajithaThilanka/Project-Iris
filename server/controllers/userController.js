@@ -191,17 +191,10 @@ exports.getUsers = catchAsync(async (req, res, next) => {
 exports.getUserNames = catchAsync(async (req, res, next) => {
   const keyword = req.query.search
     ? {
-        $or: [
-          {
-            firstname: {
-              $regex: req.query.search,
-              $options: 'i',
-            },
-          },
-          {
-            email: { $regex: req.query.search, $options: 'i' },
-          },
-        ],
+        firstname: {
+          $regex: req.query.search,
+          $options: 'i',
+        },
       }
     : {};
   const users = await User.find(keyword)
