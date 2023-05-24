@@ -1,0 +1,9 @@
+.container {
+  width: 400;
+  height: 1000;
+}
+
+.nameStyle {
+  color: var(--color-grey-dark-2);
+  /* background-color: #f4d2d2; */
+}
