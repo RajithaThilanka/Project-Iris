@@ -8,7 +8,9 @@ import { Box } from "@mui/material"; // Import the missing Box component
 import Stack from "@mui/material/Stack";
 import Navbar from "../../components/Appbar/Navbar";
 export default function CheckoutPage() {
-  const stripePromise = loadStripe("YOUR_STRIPE_PUBLISHABLE_KEY");
+  const stripePromise = loadStripe(
+    "pk_test_51NAzG4BmWq0tXqH3JFYSu6xGa1OExnXwTlQ5D93RJdzbGGbEvl966ysE0nHAZgeEhQo1CrHq130GIyR9bZUu64ct00law4bwXf"
+  );
   const {
     data: { user },
   } = useSelector((state) => state.authReducer.authData);

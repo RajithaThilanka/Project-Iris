@@ -55,8 +55,8 @@ export default function DonationPage() {
 
   const handleDonateClick = async () => {
     try {
-      const response = await Payment(sliderValue * 100);
-      console.log(response);
+      // const response = await Payment(sliderValue * 100);
+      // console.log(response);
       navigate("/me/advertise/checkout");
     } catch (error) {
       console.log(error);
@@ -93,7 +93,7 @@ export default function DonationPage() {
               borderRadius: 1,
               boxShadow: 5,
               width: "600px",
-              height: "600px",
+              height: "620px",
             }}
           >
             <Stack
@@ -150,6 +150,7 @@ export default function DonationPage() {
                 label="Enter Description"
               />
               <Box sx={{ width: 300 }}>
+                <Typography>Select Days</Typography>
                 <Slider
                   aria-label="Temperature"
                   defaultValue={sliderValue}
@@ -162,9 +163,7 @@ export default function DonationPage() {
                   max={30}
                 />
               </Box>
-              <Typography variant="body1">
-                Amount Is: {sliderValue}${" "}
-              </Typography>
+              <Typography variant="body1">Fee: {sliderValue}$ </Typography>
 
               <Stack
                 spacing={2}

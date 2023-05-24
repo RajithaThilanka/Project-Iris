@@ -14,6 +14,4 @@ exports.pay = catchAsync(async (req, res) => {
   res.status(201).send({
     clientSecret: payment.client_secret,
   });
-
-  res.redirect(url, session.url);
 });
