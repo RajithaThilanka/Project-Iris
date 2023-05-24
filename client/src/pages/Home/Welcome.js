@@ -1,17 +1,42 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
 import "./Welcome.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { getReviews } from "../../api/CountryRequest";
+import Loader from "../../components/Loading/Loading";
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 function Welcome() {
   const [navOpen, setNavOpen] = useState(false);
   const features = useRef();
-
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const handleClick = () => {
     features.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      setLoading(true);
+      setErr(null);
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getReviews();
+        setReviews(data);
+        setLoading(false);
+        setErr(null);
+      } catch (error) {
+        setLoading(false);
+        setErr(error);
+      }
+    };
+    fetchReviews();
+  }, []);
   return (
     <div>
       <div className="navigation">
@@ -311,8 +336,44 @@ function Welcome() {
               We make people genuinely happy
             </h2>
           </div>
-
-          <div className="row">
+          {!loading && reviews?.length > 0 ? (
+            reviews.map((review) => (
+              <div className="row">
+                <div className="story">
+                  <figure className="story__shape">
+                    <LazyLoadImage
+                      effect="blur"
+                      src={serverPublic + review.userId.profilePhoto}
+                      alt="Person on a tour"
+                      className="story__img"
+                    />
+                    <figcaption className="story__caption">
+                      {review.userId.firstname + " " + review.userId.lastname}
+                    </figcaption>
+                  </figure>
+                  <div className="story__text">
+                    <h3 className="heading-tertiary u-margin-bottom-small">
+                      {review.highlight}
+                    </h3>
+                    <p>{review.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : loading && !err ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Loader />
+            </div>
+          ) : (
+            ""
+          )}
+          {/* <div className="row">
             <div className="story">
               <figure className="story__shape">
                 <img
@@ -360,13 +421,7 @@ function Welcome() {
                 </p>
               </div>
             </div>
-          </div>
-
-          <div className="u-center-text u-margin-top-huge">
-            <a href="#" className="btn-text">
-              Read all stories &rarr;
-            </a>
-          </div>
+          </div> */}
         </section>
       </main>
 
@@ -383,7 +438,7 @@ function Welcome() {
             src="img/logo-green-2x.png"
           />
         </div>
-        <div className="row">
+        <div className="footer-container-mod">
           <div className="col-1-of-2">
             <div className="footer__navigation">
               <ul className="footer__list">
@@ -411,7 +466,7 @@ function Welcome() {
             </div>
           </div>
 
-          <div className="col-1-of-2">
+          {/* <div className="col-1-of-2">
             <p className="footer__copyright" />
             Built by{" "}
             <a href="#" className="footer__link">
@@ -419,7 +474,7 @@ function Welcome() {
             </a>
             <tr />
             Copyright &copy;
-          </div>
+          </div> */}
         </div>
       </footer>
     </div>

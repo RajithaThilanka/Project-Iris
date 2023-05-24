@@ -992,7 +992,11 @@ body {
   position: relative;
   height: 52rem;
 }
-
+.footer-container-mod {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .card__side {
   height: 52rem;
   -webkit-transition: all 0.8s ease;

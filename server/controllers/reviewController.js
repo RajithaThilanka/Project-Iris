@@ -25,24 +25,17 @@ exports.addReview = catchAsync(async (req, res, next) => {
   }
 });
 
-//get all reports
-// exports.getReports = catchAsync(async (req, res, next) => {
-//   const features = new APIFeatures(Report.find({}), req.query).filter().sort();
-//   const reports = await features.query
-//     .populate('reportedByUser')
-//     .populate('reportedUser');
-//   //   let reports = await Report.find({})
-//   //     .populate('reportedByUser')
-//   //     .populate('reportedUser');
+// get all reviews
+exports.getReviews = catchAsync(async (req, res, next) => {
+  let reviews = await Review.find({}).populate('userId').limit(3);
 
-//   res.status(200).json({
-//     status: 'success',
-//     nReports: reports.length,
-//     data: {
-//       data: reports,
-//     },
-//   });
-// });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: reviews,
+    },
+  });
+});
 
 // exports.reviewReport = catchAsync(async (req, res, next) => {
 //   const { reportId, reviewStatus } = req.body;

@@ -3,7 +3,10 @@ const reviewController = require('../controllers/reviewController');
 const authController = require('../controllers/authController');
 const router = express.Router();
 
-router.route('/').post(authController.protect, reviewController.addReview);
+router
+  .route('/')
+  .post(authController.protect, reviewController.addReview)
+  .get(reviewController.getReviews);
 
 // router
 //   .route('/review-report')
