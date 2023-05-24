@@ -11,6 +11,7 @@ const Report = require('../models/reportModel');
 const getUsersByIndex = async users => {
   const suggestedUserPromises = users.map(async user => {
     const u = await User.findOne({ index: user.index });
+
     return u;
   });
   return Promise.all(suggestedUserPromises);
@@ -170,6 +171,7 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
         return { ...u, verStatus: status };
       })
     );
+
     updatedSuggestions = updatedSuggestions.sort(() => 0.5 - Math.random());
     res.status(200).json({
       status: 'success',

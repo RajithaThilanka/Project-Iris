@@ -166,39 +166,44 @@ def generate_suggestions(newUser,isSaved):
     new_profile.at[new_profile.index[0],'Sports']=newUser['Sports']
     new_profile['Age']=newUser['Age']
     new_profile_temp=new_profile.copy()
+   
     # Looping through the columns and applying the string_convert() function (for vectorization purposes)
     for col in df.columns:
         df[col] = df[col].apply(string_convert)
         new_profile[col] = new_profile[col].apply(string_convert)
-        
+    
+   
     # Vectorizing the New Data
     df_v, input_df = vectorization(df, df.columns, new_profile)
-            
+  
     # Scaling the New Data
     new_df = scaling(df_v, input_df)
-            
+    
     # Predicting/Classifying the new data
+    #print(new_df)
     cluster = model.predict(new_df)
-
     # Finding the top 10 related profiles
     top_10_df = top_ten(cluster, vect_df, new_df,df)
-    
-    if(isSaved==False):
+    """
+    if isSaved==False:
         #vetorized_refined.pkl
-
+      
+  
         new_cluster_df = pd.DataFrame(cluster,columns=['Cluster #'])
         new_cluster_df.index=new_df.index
         new_vectorized = pd.concat([vect_df,pd.concat([new_df, new_cluster_df],axis=1)])
-        
+    
         with open("./vectorized_refined.pkl", "wb") as fp:
             pickle.dump(new_vectorized, fp)
 
-
+      
 
         #clustered_profiles.pkl
 
         new_clusters=pd.concat([cluster_df,pd.concat([new_profile,new_cluster_df],axis=1)])
-
+        print(cluster_df)
+        print(new_clusters)
+     
         with open("./refined_cluster.pkl", "wb") as fp:
             pickle.dump(new_clusters, fp)
 
@@ -209,7 +214,8 @@ def generate_suggestions(newUser,isSaved):
 
         with open("./refined_profiles.pkl", "wb") as fp:
             pickle.dump(new_profiles, fp)
-            
+       
+        """    
     return json_convert(top_10_df)
     #return top_10_df
     

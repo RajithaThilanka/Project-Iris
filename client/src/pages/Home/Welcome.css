@@ -2291,7 +2291,7 @@ body {
       rgba(255, 255, 255, 0.6) 50%,
       transparent 50%
     ),
-    url("https://live.staticflickr.com/65535/52756217718_27b7318f11_o.jpg");
+    url("https://live.staticflickr.com/65535/52921010939_68747bf427_k.jpg");
   background-size: 100%;
   border-radius: 3px;
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
@@ -2306,7 +2306,7 @@ body {
         rgba(255, 255, 255, 0.6) 65%,
         transparent 65%
       ),
-      url("https://live.staticflickr.com/65535/52756217718_27b7318f11_o.jpg");
+      url("https://live.staticflickr.com/65535/52921010939_68747bf427_k.jpg");
     background-size: cover;
   }
 }
@@ -2320,13 +2320,13 @@ body {
         from(rgba(255, 255, 255, 0.6)),
         to(rgba(255, 255, 255, 0.6))
       ),
-      url("https://live.staticflickr.com/65535/52756217718_27b7318f11_o.jpg");
+      url("https://live.staticflickr.com/65535/52921010939_68747bf427_k.jpg");
     background-image: linear-gradient(
         to right,
         rgba(255, 255, 255, 0.6) 0%,
         rgba(255, 255, 255, 0.6) 100%
       ),
-      url("https://live.staticflickr.com/65535/52756217718_27b7318f11_o.jpg");
+      url("https://live.staticflickr.com/65535/52921010939_68747bf427_k.jpg");
   }
 }
 

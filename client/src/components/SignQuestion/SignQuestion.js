@@ -105,6 +105,7 @@ function SignQuestion() {
             </Grid>
             <Grid sm={12} xs={12}>
               <div className="option-tag-container">
+                {console.log(questions[currentQuestion]?.optionTags)}
                 {questions[currentQuestion]?.optionTags.map((tag, index) => (
                   <div
                     className={"option-tag-item"}
@@ -138,6 +139,7 @@ function SignQuestion() {
                   fullWidth
                   type="submit"
                   disabled={!selectedOption}
+                  onSubmit={handleSubmit}
                 >
                   {questions.length === 1 ? "Finish" : "Next"}
                 </Button>
