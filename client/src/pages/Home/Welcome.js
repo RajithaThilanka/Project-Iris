@@ -6,6 +6,9 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { getReviews } from "../../api/CountryRequest";
 import Loader from "../../components/Loading/Loading";
+import AboutIris from "../../components/AboutIris/AboutIris";
+import Support from "../../components/Support/Support";
+import Footer from "../../components/Footer/Footer";
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 function Welcome() {
   const [navOpen, setNavOpen] = useState(false);
@@ -292,9 +295,9 @@ function Welcome() {
                   </h4>
                   <div className="card__details">
                     <ul>
-                      <li>hate speech detection</li>
-                      <li>report users</li>
-                      <li> block users</li>
+                      <li>Hate Speech Detection</li>
+                      <li>Report Users</li>
+                      <li> Block Users</li>
                     </ul>
                   </div>
                 </div>
@@ -423,60 +426,11 @@ function Welcome() {
             </div>
           </div> */}
         </section>
+        <Support />
+        <AboutIris />
       </main>
 
-      <footer className="footer">
-        <div className="footer__logo-box">
-          <picture className="footer__logo" />
-          <source
-            srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"
-            media="(max-width: 37.5em)"
-          />
-          <img
-            srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x"
-            alt="Full logo"
-            src="img/logo-green-2x.png"
-          />
-        </div>
-        <div className="footer-container-mod">
-          <div className="col-1-of-2">
-            <div className="footer__navigation">
-              <ul className="footer__list">
-                <li className="footer__item">
-                  <a href="#" className="footer__link">
-                    Contact us
-                  </a>
-                </li>
-                <li className="footer__item">
-                  <a href="#" className="footer__link">
-                    About Us
-                  </a>
-                </li>
-                <li className="footer__item">
-                  <a href="#" className="footer__link">
-                    Privacy policy
-                  </a>
-                </li>
-                <li className="footer__item">
-                  <a href="#" className="footer__link">
-                    Terms
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* <div className="col-1-of-2">
-            <p className="footer__copyright" />
-            Built by{" "}
-            <a href="#" className="footer__link">
-              IRIS Project
-            </a>
-            <tr />
-            Copyright &copy;
-          </div> */}
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
