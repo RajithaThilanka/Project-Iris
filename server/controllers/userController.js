@@ -295,7 +295,6 @@ exports.getVerificationStatus = catchAsync(async (req, res, next) => {
   const verificationStatus = await ManualVerification.findOne({
     userId: req.user._id,
   });
-  // verificationStatus = verificationStatus || null;
 
   res.status(200).json({
     status: 'success',

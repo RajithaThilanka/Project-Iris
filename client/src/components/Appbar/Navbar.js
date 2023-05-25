@@ -431,12 +431,6 @@ function Navbar({ user, socket }) {
               About Us
             </Button>
             <Button
-              onClick={() => navigate("/me/advertise")}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              Advertise
-            </Button>
-            <Button
               onClick={() => navigate("/me/review")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
