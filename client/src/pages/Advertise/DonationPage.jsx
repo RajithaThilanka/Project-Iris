@@ -95,26 +95,39 @@ export default function DonationPage() {
               borderRadius: 1,
               boxShadow: 5,
               width: "600px",
-              height: "620px",
+              height: "640px",
             }}
           >
             <Stack
               className="containStack"
-              spacing={3}
+              spacing={2}
               direction="column"
               sx={{
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: "25px",
+                marginTop: "10px",
               }}
             >
               <img className="logo" src={serverPublic + "irislogo.png"} />
 
               <Typography variant="h5"> Advertice With Us</Typography>
+              <TextField
+                sx={{ width: "300px" }}
+                id="outlined-basic"
+                label="Enter Full Name :"
+                variant="outlined"
+              />
+              <TextField
+                sx={{ width: "300px" }}
+                id="outlined-basic"
+                label="Enter Email :"
+                variant="outlined"
+              />
+
               <Box
                 sx={{
                   width: "300px",
-                  height: "120px",
+                  height: "60px",
                   borderRadius: 1,
                   boxShadow: 3,
                   display: "flex",
@@ -122,6 +135,7 @@ export default function DonationPage() {
                   alignItems: "center",
                 }}
               >
+                <Typography>Upload Addvertiement</Typography>
                 {uploadedImage ? (
                   <img
                     src={uploadedImage}
