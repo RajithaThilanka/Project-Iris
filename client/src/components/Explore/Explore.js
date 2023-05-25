@@ -124,6 +124,7 @@ function Explore() {
     };
     getStatus();
   }, []);
+
   useEffect(() => {
     return () => {
       socket.off();

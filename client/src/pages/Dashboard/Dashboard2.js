@@ -131,6 +131,27 @@ function Dashboard2() {
     setNotification,
   } = useContext(MatchesContext);
   useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getSignUpQuestions();
+        data?.questions.length > 0 &&
+          navigate("/auth/signup/questions", {
+            replace: true,
+            state: {
+              id: user._id,
+            },
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchQuestions();
+  }, []);
+  useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
@@ -190,22 +211,7 @@ function Dashboard2() {
       }
     });
   });
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const {
-          data: {
-            data: { data },
-          },
-        } = await getSignUpQuestions();
-        data?.questions.length > 0 &&
-          navigate("/auth/signup/questions", { replace: true });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchQuestions();
-  }, []);
+
   useEffect(() => {
     const generateSuggestions = async () => {
       setLoading(true);

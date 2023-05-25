@@ -35,10 +35,7 @@ function MailConfirmed({ main }) {
         <p>
           {" "}
           Click{" "}
-          <Link
-            style={{ color: "var(--color-secondary)" }}
-            to="/auth/signup/questions"
-          >
+          <Link style={{ color: "var(--color-secondary)" }} to="/me/dashboard">
             here
           </Link>{" "}
           to go to your account

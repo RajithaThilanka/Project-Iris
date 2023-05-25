@@ -10,7 +10,6 @@ import VerifyMail from "./pages/VerifyMail/VerifyMail";
 import Error from "./pages/Error/Error";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import QuestionPage from "./pages/Questions/QuestionPage";
 
 import UserProfile from "./pages/UProfile/UserProfile";
 import SuggessionPage from "./pages/suggestionProfile/SuggessionPage";
@@ -19,7 +18,7 @@ import DateDummy from "./pages/DateDummy";
 import AccountInfo from "./components/SignUp/SignUpForms/AccountInfo";
 import UserInfo from "./components/SignUp/SignUpForms/UserInfo";
 import ProfileView from "./components/SignUp/SignUpForms/ProfileView";
-import Question from "./components/SignUp/SignUpForms/Question";
+
 import LookingFor from "./components/SignUp/SignUpForms/LookingFor";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -46,6 +45,8 @@ import TagDashboard from "./components/TagDashboard/TagDashboard";
 import SignQuestion from "./components/SignQuestion/SignQuestion";
 import DonationPage from "./pages/Advertise/DonationPage";
 import CheckoutPage from "./pages/Advertise/CheckoutPage";
+import Review from "./components/Review/Review";
+import PaymentSuccess from "./pages/Advertise/PaymentSuccess";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -129,7 +130,6 @@ function App() {
               state ? <UserInfo /> : <Navigate to="/auth/signup/account-info" />
             }
           ></Route>
-
           <Route
             path="/auth/signup/profileview-info"
             element={
@@ -143,7 +143,11 @@ function App() {
           <Route
             path="/auth/signup/questions"
             element={
-              state ? <Question /> : <Navigate to="/auth/signup/account-info" />
+              state ? (
+                <SignQuestion />
+              ) : (
+                <Navigate to="/auth/signup/account-info" />
+              )
             }
           ></Route>
           <Route
@@ -156,11 +160,11 @@ function App() {
               )
             }
           ></Route>
-
           <Route
             path="/auth/login"
             element={user ? <Navigate to="/me" /> : <Auth action="login" />}
           ></Route>
+          {/* <Route path="/advertise" element={<Advertise />}></Route> */}
           <Route
             path="/explore"
             element={user ? <Explore /> : <Auth action="login" />}
@@ -168,6 +172,10 @@ function App() {
           <Route
             path="/me/manual-search"
             element={user ? <ManualSearch /> : <Auth action="login" />}
+          ></Route>
+          <Route
+            path="/me/review"
+            element={user ? <Review /> : <Auth action="login" />}
           ></Route>
           <Route
             path="/me/tag-suggestions/:tag"
@@ -261,16 +269,18 @@ function App() {
             path="/users/uprofile/:id"
             element={<SuggessionPage />}
           ></Route>
-
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="/me/verification" element={<IdVerification />} />
           <Route path="/me/uploadimages" element={<UploadImages />} />
           <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
           <Route path="/me/safetytips" element={<SafetyTips />} />
-
           <Route path="/me/uverification" element={<UserVerification />} />
-          <Route path="/me/advertise" element={<DonationPage />} />
-          <Route path="/me/advertise/checkout" element={<CheckoutPage />} />
+          <Route path="/advertise" element={<DonationPage />} />
+          <Route path="/advertise/checkout" element={<CheckoutPage />} />
+          <Route
+            path="/advertise/Paymentsuccess"
+            element={<PaymentSuccess />}
+          />
 
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>

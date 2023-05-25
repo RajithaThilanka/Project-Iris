@@ -62,7 +62,11 @@ export default function AdminSettings() {
 
   return (
     <div>
-      <Stack direction="row" spacing="5">
+      <Stack
+        direction="row"
+        spacing="5"
+        sx={{ justifyContent: "center", alignItems: "center" }}
+      >
         <Stack diretion="column" spacing={2} sx={{ alignItems: "center" }}>
           <Typography variant="h5">
             Schedule Hatespeech Detect Date and Time
@@ -120,7 +124,7 @@ export default function AdminSettings() {
             >
               {isLoading ? "Loading..." : "Check Hate Speech Now"}
             </Button>
-            <Box
+            {/* <Box
               sx={{
                 width: "300px",
                 height: "300px",
@@ -145,7 +149,7 @@ export default function AdminSettings() {
                   />
                 </ListItem>
               </List>
-            </Box>
+            </Box> */}
           </Stack>
         </Stack>
         <Stack direction="column" spacing={2}>

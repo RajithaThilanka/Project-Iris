@@ -171,17 +171,10 @@ exports.getUser = catchAsync(async (req, res, next) => {
 exports.getUsers = catchAsync(async (req, res, next) => {
   const keyword = req.query.search
     ? {
-        $or: [
-          {
-            firstname: {
-              $regex: req.query.search,
-              $options: 'i',
-            },
-          },
-          {
-            email: { $regex: req.query.search, $options: 'i' },
-          },
-        ],
+        firstname: {
+          $regex: req.query.search,
+          $options: 'i',
+        },
       }
     : {};
   const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
@@ -198,17 +191,10 @@ exports.getUsers = catchAsync(async (req, res, next) => {
 exports.getUserNames = catchAsync(async (req, res, next) => {
   const keyword = req.query.search
     ? {
-        $or: [
-          {
-            firstname: {
-              $regex: req.query.search,
-              $options: 'i',
-            },
-          },
-          {
-            email: { $regex: req.query.search, $options: 'i' },
-          },
-        ],
+        firstname: {
+          $regex: req.query.search,
+          $options: 'i',
+        },
       }
     : {};
   const users = await User.find(keyword)
@@ -226,7 +212,7 @@ exports.getUserNames = catchAsync(async (req, res, next) => {
 
 exports.fetchConnections = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
-  console.log(userId);
+
   // const keyword = req.query.search
   //   ? {
   //       $or: [
@@ -309,7 +295,6 @@ exports.getVerificationStatus = catchAsync(async (req, res, next) => {
   const verificationStatus = await ManualVerification.findOne({
     userId: req.user._id,
   });
-  // verificationStatus = verificationStatus || null;
 
   res.status(200).json({
     status: 'success',

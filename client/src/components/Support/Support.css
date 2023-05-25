@@ -1,0 +1,47 @@
+.support-container {
+  background: url("https://live.staticflickr.com/65535/52800386429_19cf461e23_k.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-width: 105rem;
+
+  margin: auto;
+  margin-top: -6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  /* margin-top: 2rem; */
+  padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+}
+.support-heading {
+  text-align: center;
+  margin: auto;
+  width: 100%;
+  position: relative;
+  margin-top: 1rem;
+  color: #fff;
+}
+.support-heading::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  border-radius: 10px;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.support-content {
+  font-size: 1.5rem;
+  color: #fff;
+  padding: 0.5rem 1.7rem;
+}
+.support-btn-container {
+  text-align: center;
+  margin: 0 auto 1.5rem auto;
+  /* margin: 1rem auto; */
+}

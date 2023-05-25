@@ -19,13 +19,13 @@ function Navigation() {
             </Link>
           </li>
           <li className="navigation__item">
-            <Link to="/benifits" className="navigation__link">
-              <span>02</span>Your benfits
+            <Link to="/advertise" className="navigation__link">
+              <span>02</span>Advertising
             </Link>
           </li>
           <li className="navigation__item">
             <Link to="/reviews" className="navigation__link">
-              <span>03</span>reviwes
+              <span>03</span>reviews
             </Link>
           </li>
           <li className="navigation__item">

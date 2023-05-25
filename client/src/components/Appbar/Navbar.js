@@ -44,11 +44,12 @@ import { Divider } from "@mui/material";
 // const pages = ["Explore", "Safety Tips", "About Us"];
 
 const pages = [
-  { label: "Home", to: "/me" },
+  { label: "Dashboard", to: "/me" },
   { label: "Explore", to: "/explore" },
   { label: "Safety Tips", to: "/me" },
   { label: "About Us", to: "/about-us" },
-  { label: "Advertise Here", to: "/me/advertise" },
+  { label: "Advertise", to: "/me/advertise" },
+  { label: "Rate Us", to: "/me/review" },
 ];
 // const settings = ["Account", "Dashboard"];
 const settings = [
@@ -409,7 +410,7 @@ function Navbar({ user, socket }) {
               onClick={() => navigate("/me/dashboard")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
-              HOME
+              Dashboard
             </Button>
             <Button
               onClick={() => navigate("/explore")}
@@ -430,10 +431,10 @@ function Navbar({ user, socket }) {
               About Us
             </Button>
             <Button
-              onClick={() => navigate("/me/advertise")}
+              onClick={() => navigate("/me/review")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
-              Advertise Here
+              Rate Us
             </Button>
           </Box>
 

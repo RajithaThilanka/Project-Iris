@@ -118,7 +118,10 @@ export const getMyVerStatus = () => API.get("/users/me/ver-status");
 
 export const getSearchNames = (keyword) =>
   API.get(`/users/names?search=${keyword}`);
-export const getAnyUser = (keyword) => API.get(`/users?search=${keyword}`);
+export const getAnyUser = (keyword) =>
+  API.get(`/users/token-search?search=${keyword}`);
+
+export const getTokenProfile = (id) => API.get(`/users/token-profile/${id}`);
 export const getSearchTokens = () => API.get(`/users/search-tokens`);
 
 export const getTagSuggestions = (tag) =>
@@ -141,6 +144,8 @@ export const requestManualVerify = (
 export const getSignUpQuestions = () => API.get("/users/me/questions");
 export const addAnswer = (questionId, answerIndex) =>
   API.patch(`users/me/submit-answer/${questionId}`, { answerIndex });
-
-export const Payment = (amount) =>
-  API.post("/payment/create-checkout-session", { amount });
+export const addAReview = (data) => API.post("/review", data);
+export const Payment = (amount) => {
+  const res = API.post("/payment/create-checkout-session", { amount });
+  return res;
+};

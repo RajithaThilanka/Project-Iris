@@ -28,7 +28,7 @@ import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import ProComplete from "../../../components/Profile/ProfileComplete/profilecomplete";
 import Factfile from "../../../components/Profile/ProfileFactfiles/Factfile";
-import { getMe } from "../../../api/UserRequests";
+import { getMe, getMyVerStatus } from "../../../api/UserRequests";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import Lookingfor from "../../../components/Profile/Lookingfor/Lookingfor";
 import { updateMe } from "../../../components/api/UserRequests";
@@ -124,7 +124,29 @@ export default function ProfileAbout() {
         handleUpdateerrClick();
       });
   };
+  const [verStatus, setVerStatus] = useState(false);
+  useEffect(() => {
+    const getStatus = async () => {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getMyVerStatus();
 
+        if (data) {
+          setVerStatus(data.status);
+        } else {
+          setVerStatus(false);
+        }
+        //   setVerStatus()
+      } catch (error) {
+        console.log(error);
+        setVerStatus(false);
+      }
+    };
+    getStatus();
+  }, []);
   return (
     <div>
       {/*About change popup */}
@@ -306,12 +328,10 @@ export default function ProfileAbout() {
                 alignItems="center"
                 spacing={2}
               >
-                <VerifiedIcon verified={user?.verified} />
+                <VerifiedIcon verified={verStatus} />
 
-                <Typography>
-                  {user?.verified ? "Verified" : "Unverified"}
-                </Typography>
-                <Link to="/me/verification">
+                <Typography>{verStatus ? "Unverified" : "Verified"}</Typography>
+                <Link to="/me/uverification">
                   <IconButton>
                     <ArrowUpwardIcon />
                   </IconButton>
