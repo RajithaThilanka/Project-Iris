@@ -90,6 +90,20 @@ router
   .patch(authController.adminProtect, authController.verifyAccount);
 
 router.route('/names').get(authController.protect, userController.getUsers);
+router
+  .route('/token-search')
+  .get(
+    authController.protect,
+    userSettingsController.checkSearchTokens,
+    userController.getUsers
+  );
+router
+  .route('/token-profile/:id')
+  .get(
+    authController.protect,
+    userSettingsController.checkSearchTokens,
+    userController.getUser
+  );
 
 router.route('/').get(authController.protect, userController.getUsers);
 router

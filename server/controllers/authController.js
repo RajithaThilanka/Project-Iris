@@ -342,6 +342,7 @@ exports.verify = catchAsync(async (req, res, next) => {
     .createHash('sha256')
     .update(uniqueString)
     .digest('hex');
+  console.log(hashedToken);
   const userVerify = await UserVerification.findOne({
     userId: id,
     uniqueString: hashedToken,

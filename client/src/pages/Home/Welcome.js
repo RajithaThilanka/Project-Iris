@@ -1,17 +1,45 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
 import "./Welcome.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { getReviews } from "../../api/CountryRequest";
+import Loader from "../../components/Loading/Loading";
+import AboutIris from "../../components/AboutIris/AboutIris";
+import Support from "../../components/Support/Support";
+import Footer from "../../components/Footer/Footer";
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 function Welcome() {
   const [navOpen, setNavOpen] = useState(false);
   const features = useRef();
-
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const handleClick = () => {
     features.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      setLoading(true);
+      setErr(null);
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getReviews();
+        setReviews(data);
+        setLoading(false);
+        setErr(null);
+      } catch (error) {
+        setLoading(false);
+        setErr(error);
+      }
+    };
+    fetchReviews();
+  }, []);
   return (
     <div>
       <div className="navigation">
@@ -267,9 +295,9 @@ function Welcome() {
                   </h4>
                   <div className="card__details">
                     <ul>
-                      <li>hate speech detection</li>
-                      <li>report users</li>
-                      <li> block users</li>
+                      <li>Hate Speech Detection</li>
+                      <li>Report Users</li>
+                      <li> Block Users</li>
                     </ul>
                   </div>
                 </div>
@@ -311,12 +339,48 @@ function Welcome() {
               We make people genuinely happy
             </h2>
           </div>
-
-          <div className="row">
+          {!loading && reviews?.length > 0 ? (
+            reviews.map((review) => (
+              <div className="row">
+                <div className="story">
+                  <figure className="story__shape">
+                    <LazyLoadImage
+                      effect="blur"
+                      src={serverPublic + review.userId.profilePhoto}
+                      alt="Person on a tour"
+                      className="story__img"
+                    />
+                    <figcaption className="story__caption">
+                      {review.userId.firstname + " " + review.userId.lastname}
+                    </figcaption>
+                  </figure>
+                  <div className="story__text">
+                    <h3 className="heading-tertiary u-margin-bottom-small">
+                      {review.highlight}
+                    </h3>
+                    <p>{review.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : loading && !err ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Loader />
+            </div>
+          ) : (
+            ""
+          )}
+          {/* <div className="row">
             <div className="story">
               <figure className="story__shape">
                 <img
-                  src="https://live.staticflickr.com/65535/52755942790_9a567da99e_o.jpg"
+                  src={serverPublic + "pic117.jpg"}
                   alt="Person on a tour"
                   className="story__img"
                 />
@@ -341,7 +405,7 @@ function Welcome() {
             <div className="story">
               <figure className="story__shape">
                 <img
-                  src="https://live.staticflickr.com/65535/52755781469_0cf93eb37f_o.jpg"
+                  src={serverPublic + "pic174.jpg"}
                   alt="Person on a tour"
                   className="story__img"
                 />
@@ -360,138 +424,13 @@ function Welcome() {
                 </p>
               </div>
             </div>
-          </div>
-
-          <div className="u-center-text u-margin-top-huge">
-            <a href="#" className="btn-text">
-              Read all stories &rarr;
-            </a>
-          </div>
+          </div> */}
         </section>
-
-        <section className="section-book">
-          <div className="row">
-            <div className="book">
-              <div className="book__form">
-                <form action="#" className="form">
-                  <div className="u-margin-bottom-medium">
-                    <h2 className="heading-secondary">Join With Us</h2>
-                  </div>
-
-                  <div className="form__group">
-                    <input
-                      type="text"
-                      className="form__input"
-                      placeholder="Full name"
-                      id="name"
-                      required
-                    />
-                    <label for="name" className="form__label">
-                      Full name
-                    </label>
-                  </div>
-
-                  <div className="form__group">
-                    <input
-                      type="email"
-                      className="form__input"
-                      placeholder="Email address"
-                      id="email"
-                      required
-                    />
-                    <label for="email" className="form__label">
-                      Email address
-                    </label>
-                  </div>
-
-                  <div className="form__group u-margin-bottom-medium">
-                    <div className="form__radio-group">
-                      <input
-                        type="radio"
-                        className="form__radio-input"
-                        id="small"
-                        name="size"
-                      />
-                      <label for="small" className="form__radio-label">
-                        <span className="form__radio-button"></span>i am a man
-                      </label>
-                    </div>
-
-                    <div className="form__radio-group">
-                      <input
-                        type="radio"
-                        className="form__radio-input"
-                        id="large"
-                        name="size"
-                      />
-                      <label for="large" className="form__radio-label">
-                        <span className="form__radio-button"></span>i am a woman
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="form__group">
-                    <button className="btn btn--green">Next step &rarr;</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
+        <Support />
+        <AboutIris />
       </main>
 
-      <footer className="footer">
-        <div className="footer__logo-box">
-          <picture className="footer__logo" />
-          <source
-            srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"
-            media="(max-width: 37.5em)"
-          />
-          <img
-            srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x"
-            alt="Full logo"
-            src="img/logo-green-2x.png"
-          />
-        </div>
-        <div className="row">
-          <div className="col-1-of-2">
-            <div className="footer__navigation">
-              <ul className="footer__list">
-                <li className="footer__item">
-                  <a href="#" className="footer__link">
-                    Contact us
-                  </a>
-                </li>
-                <li className="footer__item">
-                  <a href="#" className="footer__link">
-                    About Us
-                  </a>
-                </li>
-                <li className="footer__item">
-                  <a href="#" className="footer__link">
-                    Privacy policy
-                  </a>
-                </li>
-                <li className="footer__item">
-                  <a href="#" className="footer__link">
-                    Terms
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="col-1-of-2">
-            <p className="footer__copyright" />
-            Built by{" "}
-            <a href="#" className="footer__link">
-              IRIS Project
-            </a>
-            <tr />
-            Copyright &copy;
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

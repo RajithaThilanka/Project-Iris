@@ -1,0 +1,19 @@
+.publish-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.section-publish {
+  width: 100vw;
+  min-height: 100vh;
+  /* background-image: ; */
+}
+.upload-ad-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+.book-container {
+  height: 100%;
+}

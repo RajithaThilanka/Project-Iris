@@ -4,6 +4,7 @@ import {
   getAnyUser,
   getSearchNames,
   getSearchTokens,
+  getTokenProfile,
 } from "../../api/UserRequests";
 import SearchIcon from "@mui/icons-material/Search";
 import MatchesContext from "../../context/matches";
@@ -21,6 +22,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import "./ManualSearch.css";
 import { IconButton } from "@mui/material";
 import SearchUserCard from "../SearchUserCard/SearchUserCard";
+import { useNavigate } from "react-router-dom";
 const ENDPOINT = "http://localhost:5000";
 let socket;
 function ManualSearch() {
@@ -218,6 +220,15 @@ function ManualSearch() {
     setResultVisible(true);
     setGrid(false);
   };
+  const navigate = useNavigate();
+  const handleVisit = async (id) => {
+    try {
+      await getTokenProfile(id);
+      navigate(`/users/uprofile/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       {socketConnected && <Navbar user={user} socket={socket} />}
@@ -232,6 +243,10 @@ function ManualSearch() {
           <div
             className="manual-search"
             style={{ overflowY: tokenErr || err ? "hidden" : "scroll" }}
+            // onClick={(e) => {
+            //   e.stopPropagation();
+            //   setGrid(false);
+            // }}
           >
             {!tokenErr && err?.response?.status !== 400 && (
               <span className="tokens-remaining">
@@ -247,7 +262,9 @@ function ManualSearch() {
                   onChange={handleChange}
                   className="man-search__input user-search__input"
                   onFocus={() => setGrid(true)}
-                  onBlur={() => setGrid(false)}
+                  onBlur={() => {
+                    !keyword && setGrid(false);
+                  }}
                 />
                 <IconButton className="search__button">
                   <SearchIcon className="search__icon" />
@@ -277,7 +294,10 @@ function ManualSearch() {
                   {!searchLoading && !err ? (
                     names.slice(0, 8).map((u) => {
                       return (
-                        <div className="search-grid-history-item">
+                        <div
+                          className="search-grid-history-item"
+                          onClick={() => handleVisit(u._id)}
+                        >
                           <h6 className="search-grid-history-item-heading">
                             {u.firstname + " " + u.lastname}
                           </h6>

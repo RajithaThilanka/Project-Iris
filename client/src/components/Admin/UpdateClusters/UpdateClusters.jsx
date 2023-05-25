@@ -38,15 +38,14 @@ export default function UpdateClusters() {
       <Box
         sx={{
           width: 300,
-          height: 300,
+          height: 200,
           boxShadow: 2,
           borderRadius: 1,
         }}
       >
         <Stack
           direction="column"
-          alignItems={"center"}
-          justifyContent={"center"}
+          sx={{ justifyContent: "center", alignItems: "center" }}
         >
           <Typography variant="h6">Update Clusters</Typography>
           {loading ? (

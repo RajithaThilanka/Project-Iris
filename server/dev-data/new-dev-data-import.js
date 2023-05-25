@@ -233,20 +233,22 @@ const names = [
   'Remi',
   'Mackenzie',
 ];
-const updateData = () => {
-  ids.forEach(async id => {
-    const updated = await User.findByIdAndUpdate(id, {
-      profilePhoto: `pic${generate(84, 193)}.jpg`,
+const updateData = async () => {
+  let new_ids = await User.find({});
+  // new_ids = new_ids.map(id => id._id);
+
+  const p = new_ids.map(async id => {
+    const updated = await User.findByIdAndUpdate(id._id, {
+      profilePhoto: `pic${generate(1, 190)}.jpg`,
       photos: [
-        `pic${generate(84, 193)}.jpg`,
-        `pic${generate(84, 193)}.jpg`,
-        `pic${generate(84, 193)}.jpg`,
+        `pic${generate(1, 190)}.jpg`,
+        `pic${generate(1, 190)}.jpg`,
+        `pic${generate(1, 190)}.jpg`,
       ],
-      gender: 'female',
-      firstname: names[generate(0, names.length)],
-      lastname: names[generate(0, names.length)],
     });
   });
+  await Promise.all(p);
+  process.exit(1);
 };
 
 updateData();

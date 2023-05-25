@@ -1,6 +1,6 @@
 @media screen and (max-width: 320px) {
   .AboutContent {
-    width: 250px;
+    width: 250px !important;
   }
   .Caption {
     font-size: "20px" !important;
@@ -12,58 +12,58 @@
 
 @media screen and (min-width: 321px) and (max-width: 480px) {
   .AboutContent {
-    width: 300px;
+    width: 270px !important;
   }
   .Caption {
     font-size: "20px" !important;
   }
   .FactfileContent {
-    width: 280px;
+    width: 250px;
   }
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
   .AboutContent {
-    width: 450px;
+    width: 450px !important;
   }
   .InnerAbout {
-    width: 240px;
+    width: 310px !important;
   }
   .Caption {
     font-size: "20px" !important;
   }
   .FactfileContent {
-    width: 200px;
+    width: 130px;
   }
 }
 
 @media screen and (min-width: 769px) and (max-width: 992px) {
   .AboutContent {
-    width: 700px;
+    width: 650px !important;
   }
   .InnerAbout {
-    width: 440px;
+    width: 440px !important;
   }
   .Caption {
     font-size: "20px" !important;
   }
   .FactfileContent {
-    width: 200px;
+    width: 195px;
   }
 }
 
 @media screen and (min-width: 993px) {
   .AboutContent {
-    width: 900px;
+    width: 860px !important;
   }
   .InnerAbout {
-    width: 580px;
+    width: 580px !important;
   }
   .Caption {
     font-size: "20px" !important;
   }
   .FactfileContent {
-    width: 200px;
+    width: 263px;
   }
   .custom-grid-item {
   }
