@@ -5,10 +5,10 @@ function AboutIris() {
     <div className="more-info-container">
       <div className="more-info-item">
         <h6 className="heading-tertiary">
-          EHARMONY – A TRUSTED ONLINE DATING SITE FOR SINGLES
+          IRIS – A TRUSTED ONLINE DATING SITE FOR SINGLES
         </h6>
         <div className="more-info-content">
-          eharmony is the first platform to use a proprietary matching system we
+          IRIS is the first platform to use a proprietary matching system we
           developed to match you with highly compatible singles. eharmony’s
           matching is based on using its 32 DIMENSIONS® model to match couples
           based on features of compatibility found in thousands of successful
@@ -29,30 +29,30 @@ function AboutIris() {
       </div>
       <div className="more-info-item">
         <h6 className="heading-tertiary">
-          MEET PEOPLE OF MANY AGES, RACES, AND RELIGIONS ON EHARMONY
+          MEET PEOPLE OF MANY AGES, RACES, AND RELIGIONS ON IRIS
         </h6>
         <div className="more-info-content">
-          With millions of registered users, the eharmony member base is an
+          With millions of registered users, the IRIS member base is an
           ethnically, racially, and religiously diverse group of individuals of
           many ages who are looking to find someone special. We understand it
           can be difficult to find a match with whom you share a similar
           background, goals, or beliefs, and regardless of who you may be
-          looking for, eharmony wants to help you find the love of your life.
-          Asian Dating Black Dating Christian Dating Latin Dating Jewish Dating
-          Senior Dating Local Dating
+          looking for, IRIS wants to help you find the love of your life. Asian
+          Dating Black Dating Christian Dating Latin Dating Jewish Dating Senior
+          Dating Local Dating
         </div>
       </div>
       <div className="more-info-item">
         <h6 className="heading-tertiary">FIND LOCAL SINGLES ONLINE</h6>
         <div className="more-info-content">
-          eharmony recognizes it can be difficult to meet people with whom you
-          share common interests and goals within your geographical area, and we
-          can help. eharmony matches you with compatible local men or women –
-          whether you’re looking for love in Los Angeles, Denver, or Seattle.
-          Our membership pool consists of quality singles residing throughout
-          the U.S. and almost every country in the world. Long distance dating
-          can be difficult and time consuming. Finding your ideal match in your
-          own neighborhood has never been easier with eharmony.
+          IRIS recognizes it can be difficult to meet people with whom you share
+          common interests and goals within your geographical area, and we can
+          help. IRIS matches you with compatible local men or women – whether
+          you’re looking for love in Los Angeles, Denver, or Seattle. Our
+          membership pool consists of quality singles residing throughout the
+          U.S. and almost every country in the world. Long distance dating can
+          be difficult and time consuming. Finding your ideal match in your own
+          neighborhood has never been easier with IRIS.
         </div>
       </div>
 
@@ -74,8 +74,8 @@ function AboutIris() {
           FREE ONLINE DATING ADVICE AND COMMUNITY
         </h6>
         <div className="more-info-content">
-          We at eharmony want you to find love and romance and to make it last.
-          To assist you in this quest, we offer free dating advice at Love and
+          We at IRIS want you to find love and romance and to make it last. To
+          assist you in this quest, we offer free dating advice at Love and
           Harmony. Meet people in our online dating community and receive advice
           from our relationship experts.
         </div>

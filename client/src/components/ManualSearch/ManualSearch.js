@@ -243,6 +243,10 @@ function ManualSearch() {
           <div
             className="manual-search"
             style={{ overflowY: tokenErr || err ? "hidden" : "scroll" }}
+            // onClick={(e) => {
+            //   e.stopPropagation();
+            //   setGrid(false);
+            // }}
           >
             {!tokenErr && err?.response?.status !== 400 && (
               <span className="tokens-remaining">

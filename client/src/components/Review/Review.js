@@ -3,9 +3,11 @@ import {
   Button,
   FormControl,
   FormLabel,
+  IconButton,
   Stack,
   TextField,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import React, { useEffect, useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
@@ -78,7 +80,25 @@ function Review() {
           onSubmit={handleSubmit}
           className="account-info-form"
           method="post"
+          style={{ position: "relative" }}
         >
+          <IconButton
+            sx={{
+              position: "absolute",
+              top: "2rem",
+              left: "2rem",
+              color: "var(--color-primary)",
+            }}
+            onClick={() => {
+              // setReported(false);
+              // setLoading(false);
+              // resetShare();
+              // setData(initialData);
+              navigate("/me", { replace: true });
+            }}
+          >
+            <ArrowBackIcon />
+          </IconButton>
           <Grid container spacing={3} px={3} margin={2}>
             <Grid sm={12} xs={12}>
               <div style={{ textAlign: "center" }}>
