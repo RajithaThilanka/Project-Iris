@@ -9,22 +9,22 @@ function AboutIris() {
         </h6>
         <div className="more-info-content">
           IRIS is the first platform to use a proprietary matching system we
-          developed to match you with highly compatible singles. eharmony’s
-          matching is based on using its 32 DIMENSIONS® model to match couples
-          based on features of compatibility found in thousands of successful
-          relationships. eharmony is committed to helping singles find love
-          every day and we are confident in our ability to do so. eharmony
-          matches single women and men for lasting and fulfilling relationships.
-          Traditional Internet dating can be challenging for those singles
-          looking for love that lasts – but eharmony is not a traditional dating
-          site. Of all the single men or women you may meet online, very few
-          will be compatible with you specifically, and it can be difficult to
-          determine the level of compatibility of a potential partner through
-          methods of other dating services ? swiping profile photos, browsing
-          classified ads or online personals. Our Compatibility Matching System
-          does the work for you by narrowing the field from thousands of single
-          prospects to match you with a select group of compatible matches with
-          whom you can build a quality relationship.
+          developed to match you with highly compatible singles. IRIS matching
+          is based on using its 32 DIMENSIONS® model to match couples based on
+          features of compatibility found in thousands of successful
+          relationships. IRIS is committed to helping singles find love every
+          day and we are confident in our ability to do so. IRIS matches single
+          women and men for lasting and fulfilling relationships. Traditional
+          Internet dating can be challenging for those singles looking for love
+          that lasts – but IRIS is not a traditional dating site. Of all the
+          single men or women you may meet online, very few will be compatible
+          with you specifically, and it can be difficult to determine the level
+          of compatibility of a potential partner through methods of other
+          dating services ? swiping profile photos, browsing classified ads or
+          online personals. Our Compatibility Matching System does the work for
+          you by narrowing the field from thousands of single prospects to match
+          you with a select group of compatible matches with whom you can build
+          a quality relationship.
         </div>
       </div>
       <div className="more-info-item">
