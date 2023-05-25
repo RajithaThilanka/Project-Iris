@@ -46,6 +46,7 @@ import TagDashboard from "./components/TagDashboard/TagDashboard";
 import SignQuestion from "./components/SignQuestion/SignQuestion";
 import DonationPage from "./pages/Advertise/DonationPage";
 import CheckoutPage from "./pages/Advertise/CheckoutPage";
+import PaymentSuccess from "./pages/Advertise/PaymentSuccess";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -129,7 +130,6 @@ function App() {
               state ? <UserInfo /> : <Navigate to="/auth/signup/account-info" />
             }
           ></Route>
-
           <Route
             path="/auth/signup/profileview-info"
             element={
@@ -156,7 +156,6 @@ function App() {
               )
             }
           ></Route>
-
           <Route
             path="/auth/login"
             element={user ? <Navigate to="/me" /> : <Auth action="login" />}
@@ -261,16 +260,18 @@ function App() {
             path="/users/uprofile/:id"
             element={<SuggessionPage />}
           ></Route>
-
           <Route path="/video-date/:id" element={<DateDummy />}></Route>
           <Route path="/me/verification" element={<IdVerification />} />
           <Route path="/me/uploadimages" element={<UploadImages />} />
           <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
           <Route path="/me/safetytips" element={<SafetyTips />} />
-
           <Route path="/me/uverification" element={<UserVerification />} />
-          <Route path="/me/advertise" element={<DonationPage />} />
-          <Route path="/me/advertise/checkout" element={<CheckoutPage />} />
+          <Route path="/advertise" element={<DonationPage />} />
+          <Route path="/advertise/checkout" element={<CheckoutPage />} />
+          <Route
+            path="/advertise/Paymentsuccess"
+            element={<PaymentSuccess />}
+          />
 
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>

@@ -48,7 +48,6 @@ const pages = [
   { label: "Explore", to: "/explore" },
   { label: "Safety Tips", to: "/me" },
   { label: "About Us", to: "/about-us" },
-  { label: "Advertise Here", to: "/me/advertise" },
 ];
 // const settings = ["Account", "Dashboard"];
 const settings = [
@@ -428,12 +427,6 @@ function Navbar({ user, socket }) {
               sx={{ my: 2, color: "white", display: "block" }}
             >
               About Us
-            </Button>
-            <Button
-              onClick={() => navigate("/me/advertise")}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              Advertise Here
             </Button>
           </Box>
 

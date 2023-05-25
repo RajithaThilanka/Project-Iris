@@ -11,10 +11,10 @@ export default function CheckoutPage() {
   const stripePromise = loadStripe(
     "pk_test_51NAzG4BmWq0tXqH3JFYSu6xGa1OExnXwTlQ5D93RJdzbGGbEvl966ysE0nHAZgeEhQo1CrHq130GIyR9bZUu64ct00law4bwXf"
   );
-  const {
-    data: { user },
-  } = useSelector((state) => state.authReducer.authData);
-  const { id } = useParams();
+  // const {
+  //   data: { user },
+  // } = useSelector((state) => state.authReducer.authData);
+  // const { id } = useParams();
 
   return (
     <Box
@@ -25,12 +25,15 @@ export default function CheckoutPage() {
       }}
     >
       <Stack className="MainStack" spacing={12} direction="column">
-        <Navbar user={user} />
         <Stack
           className="conponenentStack"
           spacing={5}
           direction="row"
-          sx={{ justifyContent: "center", alignItems: "center" }}
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "50px",
+          }}
         >
           <Box
             className="containBox"

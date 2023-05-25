@@ -122,18 +122,7 @@ export default function SearchAppBar() {
               <IconButton
                 //onClick={handleOpenUserMenu}
                 sx={{ p: 0, objectFit: "cover" }}
-              >
-                <StyledBadge
-                  overlap="circular"
-                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                  // variant={socketConnected ? "dot" : ""}
-                >
-                  <Avatar
-                    alt="user avatar"
-                    //src={serverPublic + user.profilePhoto}
-                  />
-                </StyledBadge>
-              </IconButton>
+              ></IconButton>
             </Tooltip>
           </Stack>
         </Toolbar>

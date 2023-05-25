@@ -34,10 +34,11 @@ export default function DonationPage() {
     console.log(`Donating ${amount} with message: ${message}`);
   };
 
-  const {
-    data: { user },
-  } = useSelector((state) => state.authReducer.authData);
-  const { id } = useParams();
+  // const {
+  //   data: { user },
+  // } = useSelector((state) => state.authReducer.authData);
+  // const { id } = useParams();
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -55,9 +56,7 @@ export default function DonationPage() {
 
   const handleDonateClick = async () => {
     try {
-      // const response = await Payment(sliderValue * 100);
-      // console.log(response);
-      navigate("/me/advertise/checkout");
+      navigate(`/advertise/checkout`);
     } catch (error) {
       console.log(error);
     }
@@ -79,12 +78,15 @@ export default function DonationPage() {
       }}
     >
       <Stack className="MainStack" spacing={12} direction="column">
-        <Navbar user={user} />
         <Stack
           className="conponenentStack"
           spacing={5}
           direction="row"
-          sx={{ justifyContent: "center", alignItems: "center" }}
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "50px",
+          }}
         >
           <Box
             className="containBox"

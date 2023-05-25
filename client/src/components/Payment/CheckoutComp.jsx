@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Payment } from "../../api/UserRequests";
+import { useLocation } from "react-router-dom";
 
 const CheckoutPage = () => {
   const stripe = useStripe();
@@ -24,8 +25,7 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      const data = await Payment(100 * 100);
-
+      const data = await Payment(50 * 100);
       setClientSecret(data.data.clientSecret);
     };
 
@@ -53,9 +53,9 @@ const CheckoutPage = () => {
         console.log(error);
         setErrorMessage("Error processing payment.");
       } else {
-        // // setTimeout(() => {
-        //   navigate("/CustomerPlace-Order");
-        // }, 2000);
+        setTimeout(() => {
+          navigate("/advertise/Paymentsuccess");
+        }, 2000);
       }
     } catch (error) {
       console.error(error);
@@ -72,7 +72,8 @@ const CheckoutPage = () => {
 
         <form onSubmit={handleConfirmPayment}>
           <Stack direction="column" padding={"20px"} spacing={3}>
-            <Typography variant="body1">Total payment Is: {""}$ </Typography>
+            {/* <Typography variant="body1">Total payment Is: ${amount}</Typography> */}
+            <Typography variant="body1">Total payment Is: 10$</Typography>
             <TextField fullWidth label="Enter email" required />
 
             <div
