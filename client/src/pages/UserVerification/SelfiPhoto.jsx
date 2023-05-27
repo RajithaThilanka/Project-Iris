@@ -17,10 +17,6 @@ import Camera from "./Camera.jsx";
 import { useState } from "react";
 
 function SelfiPhoto() {
-  const camaramode = false;
-  const switchcamara = {
-    camaramode: true,
-  };
   const [Clicked, setClicked] = useState(false);
   return (
     <div>
