@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 
 export default function ProfileSuspeneReason(props) {
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <Stack
         spacing={0}
         direction="column"

@@ -61,7 +61,7 @@ export default function AdminSettings() {
   };
 
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <Stack
         direction="row"
         spacing="5"

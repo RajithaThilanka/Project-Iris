@@ -9,16 +9,16 @@ import MessageIcon from "@mui/icons-material/Message";
 import BlockIcon from "@mui/icons-material/Block";
 import { useState, useEffect } from "react";
 import RestoreIcon from "@mui/icons-material/Restore";
-import ProfileSuspeneReason from "../ProfileSuspendReason/ProfileSuspeneReason";
+import Preview from "../Advertisements/Preview";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import { Checkbox, FormControlLabel, Popover } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import jsonData from "./AllData.json"; // Import the JSON file
+import DoneIcon from "@mui/icons-material/Done";
 import { getAllSuspendedAccounts } from "../../api/AdminRequests";
 
-export default function SuspendedAccounts() {
+export default function Add() {
   const [rows, setRows] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => {
@@ -30,29 +30,13 @@ export default function SuspendedAccounts() {
   const open = Boolean(anchorEl);
   const id = open ? "popup-checkbox" : undefined;
   const columns = [
-    { field: "id", headerName: "ID", width: 150 },
-    { field: "fullname", headerName: "First name", width: 100 },
+    { field: "fullname", headerName: "Name", width: 100 },
     {
       field: `email`,
       headerName: "Email",
       width: 150,
       editable: false,
     },
-    {
-      field: "status",
-      headerName: "Verified",
-      type: "string",
-      width: 110,
-      editable: false,
-    },
-    {
-      field: "reportCount",
-      headerName: "Report Count",
-      type: "string",
-      width: 110,
-      editable: false,
-    },
-
     {
       field: "action",
       headerName: "Action",
@@ -114,9 +98,9 @@ export default function SuspendedAccounts() {
                     />
                   </FormGroup>
                   <Stack direction="row" spacing={2}>
-                    <Button variant="contained" onClick={handleClose}>
-                      Close
-                    </Button>
+                    <IconButton size="small" onClick={""}>
+                      <DoneIcon />
+                    </IconButton>
                     <Button variant="contained">Delete</Button>
                   </Stack>
                 </FormControl>
@@ -124,7 +108,7 @@ export default function SuspendedAccounts() {
             </Popover>
             <Stack direction="row" spacing={1}>
               <IconButton size="small" onClick={showDescription}>
-                <RestoreIcon />
+                <DoneIcon />
               </IconButton>
               <IconButton size="small" onClick={handleClick}>
                 <DeleteIcon />
@@ -163,16 +147,15 @@ export default function SuspendedAccounts() {
         <Box
           sx={{
             height: 400,
-            width: 800,
+            width: 500,
             justifyContent: "center",
             textAlign: "center",
           }}
         >
-          <Typography variant="h6">Suspended Accounts </Typography>
+          <Typography variant="h6">Advertisement</Typography>
           <DataGrid
             getRowId={(row) => row._id}
             rows={rows}
-            // rows={jsonData}
             columns={columns}
             pageSize={20}
             rowsPerPageOptions={[]}
@@ -180,7 +163,7 @@ export default function SuspendedAccounts() {
           />
         </Box>
         <Box>
-          <ProfileSuspeneReason description={description} />
+          <Preview description={description} />
         </Box>
       </Stack>
     </div>

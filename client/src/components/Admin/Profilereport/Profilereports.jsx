@@ -126,7 +126,7 @@ export default function Profilereports() {
   }, []);
 
   return (
-    <>
+    <div style={{ height: "100vh" }}>
       <Stack direction="row" spacing={2}>
         <Box
           sx={{
@@ -153,6 +153,6 @@ export default function Profilereports() {
           <ProfileReportReason desc={des} evidence={evidence} />
         </Box>
       </Stack>
-    </>
+    </div>
   );
 }

@@ -191,7 +191,7 @@ export default function VerificationRequests() {
   }, []);
 
   return (
-    <>
+    <div style={{ height: "100vh" }}>
       <Stack direction="row" spacing={3}>
         <Box
           sx={{
@@ -221,6 +221,6 @@ export default function VerificationRequests() {
           />
         </Box>
       </Stack>
-    </>
+    </div>
   );
 }

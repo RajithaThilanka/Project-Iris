@@ -579,6 +579,7 @@ exports.adminProtect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
 // Request manual verification
 exports.requestManualVerify = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
@@ -612,6 +613,7 @@ exports.requestManualVerify = catchAsync(async (req, res, next) => {
       }
     }
   }
+
   const { verificationMethod, liveImage, nicFront, nicBack } = req.body;
   const manualVerificationRequest = await ManualVerification.create({
     userId,

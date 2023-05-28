@@ -18,6 +18,58 @@ import IconButton from "@mui/material/IconButton";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 export default function DonationPage() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [image, setImage] = useState(null);
+  const [description, setDescription] = useState("");
+
+  const handleFullNameChange = (event) => {
+    setFullName(event.target.value);
+    setFullNameError("");
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailError("");
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      setUploadedImage(e.target.result);
+      setImage(file);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+    setDescriptionError("");
+  };
+
+  const handleDonateClick = async () => {
+    if (!fullName) {
+      setFullNameError("Please enter your full name");
+    }
+    if (!email) {
+      setEmailError("Please enter your email");
+    }
+    if (!description) {
+      setDescriptionError("Please enter a description");
+    }
+
+    if (fullName && email && description) {
+      try {
+        navigate(`/advertise/checkout`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const navigate = useNavigate();
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
@@ -43,30 +95,34 @@ export default function DonationPage() {
 
   const [uploadedImage, setUploadedImage] = useState(null);
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+  // const handleFileUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
 
-    reader.onload = (e) => {
-      setUploadedImage(e.target.result);
-    };
+  //   reader.onload = (e) => {
+  //     setUploadedImage(e.target.result);
+  //   };
 
-    reader.readAsDataURL(file);
-  };
+  //   reader.readAsDataURL(file);
+  // };
 
-  const handleDonateClick = async () => {
-    try {
-      navigate(`/advertise/checkout`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleDonateClick = async () => {
+  //   try {
+  //     navigate(`/advertise/checkout`);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const [sliderValue, setSliderValue] = useState(30);
 
   const handleSliderChange = (event, newValue) => {
     setSliderValue(newValue);
   };
+
+  const [fullNameError, setFullNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
 
   return (
     <div
@@ -86,6 +142,7 @@ export default function DonationPage() {
             justifyContent: "center",
             alignItems: "center",
             marginTop: "50px",
+            marginBottom: "50px",
           }}
         >
           <Box
@@ -95,7 +152,7 @@ export default function DonationPage() {
               borderRadius: 1,
               boxShadow: 5,
               width: "600px",
-              height: "640px",
+              height: "120%",
             }}
           >
             <Stack
@@ -114,14 +171,22 @@ export default function DonationPage() {
               <TextField
                 sx={{ width: "300px" }}
                 id="outlined-basic"
-                label="Enter Full Name :"
+                label="Enter Full Name"
                 variant="outlined"
+                value={fullName}
+                onChange={handleFullNameChange}
+                error={!!fullNameError}
+                helperText={fullNameError}
               />
               <TextField
                 sx={{ width: "300px" }}
                 id="outlined-basic"
-                label="Enter Email :"
+                label="Enter Email"
                 variant="outlined"
+                value={email}
+                onChange={handleEmailChange}
+                error={!!emailError}
+                helperText={emailError}
               />
 
               <Box
@@ -164,6 +229,10 @@ export default function DonationPage() {
                 multiline
                 rows={3}
                 label="Enter Description"
+                value={description}
+                onChange={handleDescriptionChange}
+                error={!!descriptionError}
+                helperText={descriptionError}
               />
               <Box sx={{ width: 300 }}>
                 <Typography>Select Days</Typography>

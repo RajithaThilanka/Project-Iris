@@ -11,29 +11,27 @@ export default function ProfileReportReason(props) {
       <Stack
         spacing={3}
         direction="column"
-        sx={{ width: "100%", height: "100%" }}
+        sx={{
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
+        <Typography variant="h6"> Preview </Typography>
         <Stack
-          spacing={0}
-          direction="column"
+          spacing={2}
+          direction="row"
           sx={{ width: "100%", height: "100%" }}
         >
-          <Typography variant="inherit"> Report Description </Typography>
           <TextField
             sx={{ width: "300px" }}
             multiline
             disabled
-            rows={3}
+            rows={14}
             value={props.desc}
-            defaultValue="Default Value"
+            defaultValue="Description"
           />
-        </Stack>
-        <Stack
-          spacing={0}
-          direction="column"
-          sx={{ width: "100%", height: "100%" }}
-        >
-          <Typography variant="inherit">Evidence</Typography>
           <Box
             sx={{
               boxShadow: 2,
@@ -47,7 +45,6 @@ export default function ProfileReportReason(props) {
               },
             }}
             component="img"
-            alt="NO evidance"
             src={serverPublic + props.evidence}
           />
         </Stack>

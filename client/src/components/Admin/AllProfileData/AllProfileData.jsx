@@ -8,7 +8,7 @@ export default function UserVerificationView(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <Stack
         spacing={0}
         direction="column"
