@@ -32,6 +32,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return new AppError(

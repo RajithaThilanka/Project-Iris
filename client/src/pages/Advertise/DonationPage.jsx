@@ -136,26 +136,26 @@ export default function DonationPage() {
                 }}
               >
                 <Typography>Upload Addvertiement</Typography>
-                {uploadedImage ? (
+                {/* {uploadedImage ? (
                   <img
                     src={uploadedImage}
                     alt="Uploaded"
                     style={{ maxWidth: "100%", maxHeight: "100%" }}
                   />
-                ) : (
-                  <IconButton>
-                    <label htmlFor="file-upload">
-                      <input
-                        id="file-upload"
-                        type="file"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                        onChange={handleFileUpload}
-                      />
-                      <FileUploadIcon />
-                    </label>
-                  </IconButton>
-                )}
+                ) : ( */}
+                <IconButton>
+                  <label htmlFor="file-upload">
+                    <input
+                      id="file-upload"
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleFileUpload}
+                    />
+                    <FileUploadIcon />
+                  </label>
+                </IconButton>
+                {/* )} */}
               </Box>
 
               <TextField

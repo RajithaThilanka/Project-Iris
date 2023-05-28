@@ -62,12 +62,12 @@ export default function VerificationRequests() {
       width: 100,
       editable: false,
     },
-    {
-      field: "completeion",
-      headerName: "Completetion",
-      width: 150,
-      editable: false,
-    },
+    // {
+    //   field: "completeion",
+    //   headerName: "Completetion",
+    //   width: 150,
+    //   editable: false,
+    // },
 
     {
       field: "action",
@@ -80,9 +80,10 @@ export default function VerificationRequests() {
         let liveimg;
         let idFront;
         let idBack;
+
         const approveRequest = (e) => {
           const userId = params.row._id;
-          const status = "verified"; // convert to lowercase
+          const status = "verified";
           manualVarifyAccount(userId, status)
             .then((response) => {
               console.log("Verified");
