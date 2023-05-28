@@ -144,7 +144,7 @@ def top_ten(cluster, vect_df, input_vect,df):
     corr = des_cluster.T.corrwith(des_cluster.loc[user_n])
 
     # Creating a DF with the Top 50 most similar profiles
-    top_10_sim = corr.sort_values(ascending=False)[1:11]
+    top_10_sim = corr.sort_values(ascending=False)[1:51]
         
     # The Top Profiles
     top_10 = df.loc[top_10_sim.index]
