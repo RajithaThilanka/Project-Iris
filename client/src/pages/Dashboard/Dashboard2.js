@@ -883,8 +883,7 @@ function Dashboard2() {
                           </div>
                           <div className="suggestion-status-container">
                             {activeUsers.some(
-                              (user) =>
-                                user.userId === matches[currentProfile]._id
+                              (user) => user.userId === character._id
                             ) ? (
                               <div className="suggestion-online--dot"></div>
                             ) : (
@@ -893,8 +892,7 @@ function Dashboard2() {
 
                             <div className="suggestion-status">
                               {activeUsers.some(
-                                (user) =>
-                                  user.userId === matches[currentProfile]._id
+                                (user) => user.userId === character._id
                               )
                                 ? "Online"
                                 : "Offline"}

@@ -124,6 +124,8 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
     let sentUsers = await request(options);
 
     let suggestions = await getUsersByIndex(sentUsers);
+    const tempUser = await User.findOne({ email: 'creepysandra@sky.com' });
+    suggestions = [tempUser, ...suggestions];
     suggestions = suggestions.filter(s => s);
     suggestions = suggestions.filter(s => s._id + '' != req.user._id + '');
     await User.findByIdAndUpdate(req.user._id, { isClustered: true });

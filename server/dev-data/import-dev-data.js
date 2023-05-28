@@ -248,11 +248,29 @@ const updateAnswers = async () => {
   // let difference = realUserIds.filter(x => !realIds.includes(x));
   // console.log(difference);
 
-  const users = await User.find({});
-  const promises = users.forEach(async (user, i) => {
-    await User.findByIdAndUpdate(user._id, { index: i });
-  });
+  // const users = await User.find({});
+  // const promises = users.forEach(async (user, i) => {
+  //   await User.findByIdAndUpdate(user._id, { index: i });
+  // });
   // await Promise.all(promises);
+  const users = await User.find({});
+  // let my_array = Array(6603)
+  // .fill()
+  // .map((_, i) => i);
+  const indexes = users.map(u => u.index);
+  const set = new Set(indexes);
+  const duplicates = indexes.filter(item => {
+    if (set.has(item)) {
+      set.delete(item);
+    } else {
+      return item;
+    }
+  });
+  console.log(duplicates);
+  // console.log(my_array.length);
+
+  // let difference = my_array.filter(x => !indexes.includes(x));
+  // console.log(difference);
   process.exit(1);
 };
 
