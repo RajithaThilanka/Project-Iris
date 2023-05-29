@@ -16,7 +16,7 @@ import FormGroup from "@mui/material/FormGroup";
 import { Checkbox, FormControlLabel, Popover } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
-import { getAllSuspendedAccounts } from "../../api/AdminRequests";
+
 import AddData from "./AddData.json";
 export default function Add() {
   const [rows, setRows] = useState([]);
@@ -51,61 +51,6 @@ export default function Add() {
 
         return (
           <>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-            >
-              <Box
-                justifyContent="flex-end"
-                alignItems="flex-start"
-                sx={{ width: "100%", height: "100%", padding: "2px" }}
-              >
-                <Stack
-                  direction="row"
-                  justifyContent="flex-end"
-                  alignItems="flex-start"
-                >
-                  <IconButton onClick={handleClose}>
-                    <CloseIcon />
-                  </IconButton>
-                </Stack>
-                <FormControl
-                  sx={{ m: 3 }}
-                  component="fieldset"
-                  variant="standard"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <FormLabel component="legend">Reason</FormLabel>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={<Checkbox onChange={""} name="checkbox1" />}
-                      label="Not Clear NIC Photo"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox onChange={""} name="checkbox2" />}
-                      label="Not Clear Live Photo"
-                    />
-                  </FormGroup>
-                  <Stack direction="row" spacing={2}>
-                    <IconButton size="small" onClick={""}>
-                      <DoneIcon />
-                    </IconButton>
-                    <Button variant="contained">Delete</Button>
-                  </Stack>
-                </FormControl>
-              </Box>
-            </Popover>
             <Stack direction="row" spacing={1}>
               <IconButton size="small" onClick={showDescription}>
                 <DoneIcon />
@@ -119,27 +64,13 @@ export default function Add() {
       },
     },
   ];
+  const showDescription = (params) => {
+    setDecription(params.row.description);
+    setPost(params.row.Postname);
+  };
 
-  const [accounts, setAccounts] = useState([]);
+  const [post, setPost] = useState([]);
   const [description, setDecription] = useState("");
-
-  //APi call
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const {
-          data: {
-            data: { data },
-          },
-        } = await getAllSuspendedAccounts();
-        console.log("Data from server: ", data);
-        setRows(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
 
   return (
     <div style={{ height: "100vh" }}>
@@ -154,13 +85,15 @@ export default function Add() {
         >
           <Typography variant="h6">Advertisement</Typography>
           <DataGrid
-            getRowId={(row) => row._id}
-            rows={rows}
-            // rows={AddData}
+            // getRowId={(row) => row._id}
+            //rows={rows}
+            getRowId={(row) => row.id}
+            rows={AddData}
             columns={columns}
             pageSize={20}
             rowsPerPageOptions={[]}
             experimentalFeatures={{ newEditingApi: true }}
+            onRowClick={showDescription}
           />
         </Box>
         <Box>
