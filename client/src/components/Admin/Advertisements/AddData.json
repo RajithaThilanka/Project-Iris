@@ -1,16 +1,23 @@
 [
   {
-    "id": "u1",
+    "id": "id001",
     "fullname": "RajithaThilanka",
     "email": "rajithat1998@gmail.com",
     "description": "Test Description",
     "Postname": "post1.jpg"
   },
   {
-    "id": "u2",
+    "id": "id002",
     "fullname": "Rusith Liyanage",
-    "email": "rajithat1998@gmail.com",
+    "email": "liyanagerusith@gmail.com",
     "description": "Test Description 2",
     "Postname": "post2.jpg"
+  },
+  {
+    "id": "id003",
+    "fullname": "Dinitha Wijewardana",
+    "email": "dini2040gh@gmail.com",
+    "description": "Test Description 3",
+    "Postname": "post3.jpg"
   }
 ]

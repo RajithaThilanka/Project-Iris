@@ -29,8 +29,7 @@ export default function ProfileReportReason(props) {
             multiline
             disabled
             rows={14}
-            value={props.desc}
-            defaultValue="Description"
+            value={props.description}
           />
           <Box
             sx={{
