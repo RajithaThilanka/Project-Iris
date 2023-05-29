@@ -145,9 +145,18 @@ exports.getToBeBlockedAccounts = catchAsync(async (req, res, next) => {
         reportCount: { $sum: 1 },
       },
     },
+    {
+      $project: {
+        _id: 0,
+        userId: '$_id',
+        reportCount: '$reportCount',
+      },
+    },
   ]);
-  await User.populate(accounts, { path: '_id' });
-  const filtered = accounts.filter(acc => acc.reportCount >= 2);
+
+  await User.populate(accounts, { path: 'userId' });
+  let filtered = accounts.filter(acc => acc.reportCount >= 2);
+
   res.status(200).json({
     status: 'success',
     data: {

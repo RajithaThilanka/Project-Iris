@@ -25,7 +25,8 @@ def init_files():
     
     with open("refined_profiles.pkl",'rb') as fp:
        df = pickle.load(fp)
-   
+  
+        
     def string_convert(x):
         """
         First converts the lists in the DF into strings
@@ -224,4 +225,6 @@ def init_files():
     from joblib import dump
 
     dump(nb, "refined_model.joblib")
-  
+
+
+#init_files()

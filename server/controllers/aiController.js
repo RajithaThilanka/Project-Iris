@@ -122,7 +122,6 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
   };
   try {
     let sentUsers = await request(options);
-
     let suggestions = await getUsersByIndex(sentUsers);
     suggestions = suggestions.filter(s => s);
     suggestions = suggestions.filter(s => s._id + '' != req.user._id + '');
@@ -182,7 +181,12 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
       },
     });
   } catch (error) {
-    return next(new AppError(error, 500));
+    return next(
+      new AppError(
+        'We have trouble connecting to AI. Please try again later',
+        500
+      )
+    );
   }
 });
 
