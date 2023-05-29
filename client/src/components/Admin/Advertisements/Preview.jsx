@@ -44,7 +44,7 @@ export default function ProfileReportReason(props) {
               },
             }}
             component="img"
-            src={serverPublic + props.evidence}
+            src={serverPublic + props.post}
           />
         </Stack>
       </Stack>

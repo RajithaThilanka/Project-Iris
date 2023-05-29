@@ -97,7 +97,7 @@ export default function Add() {
           />
         </Box>
         <Box>
-          <Preview description={description} />
+          <Preview description={description} post={post} />
         </Box>
       </Stack>
     </div>
