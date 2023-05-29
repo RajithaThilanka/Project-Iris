@@ -82,12 +82,13 @@ export default function VerificationRequests() {
         let idBack;
 
         const approveRequest = (e) => {
-          const userId = params.row._id;
+          const userId = params.row.userId._id;
+          //console.log(userId);
           const status = "verified";
           manualVarifyAccount(userId, status)
             .then((response) => {
               console.log("Verified");
-              setRows(rows.filter((u) => u._id + "" !== userId));
+              setRows(rows.filter((u) => u.userId._id + "" !== userId));
             })
             .catch((error) => {
               console.log(error);
@@ -97,7 +98,19 @@ export default function VerificationRequests() {
         const showRequest = () => {
           showRequest(params);
         };
-        const deleteRequest = (e) => {};
+        const deleteRequest = (e) => {
+          const userId = params.row.userId._id;
+          //console.log(userId);
+          const status = "failed";
+          manualVarifyAccount(userId, status)
+            .then((response) => {
+              console.log("failed");
+              setRows(rows.filter((u) => u.userId._id + "" !== userId));
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
 
         return (
           <>
@@ -162,7 +175,7 @@ export default function VerificationRequests() {
                 <DoneIcon />
               </IconButton>
 
-              <IconButton size="small" onClick={handleClick}>
+              <IconButton size="small" onClick={deleteRequest}>
                 <DeleteIcon />
               </IconButton>
             </Stack>
