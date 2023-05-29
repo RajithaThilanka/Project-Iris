@@ -47,6 +47,7 @@ import DonationPage from "./pages/Advertise/DonationPage";
 import CheckoutPage from "./pages/Advertise/CheckoutPage";
 import Review from "./components/Review/Review";
 import PaymentSuccess from "./pages/Advertise/PaymentSuccess";
+import AdvertiseMainPage from "./pages/Advertise/AdvertiseMainPage";
 const theme = createTheme({
   palette: {
     type: "light",
@@ -275,8 +276,9 @@ function App() {
           <Route path="/me/selfiPhoto" element={<SelfiPhoto />} />
           <Route path="/me/safetytips" element={<SafetyTips />} />
           <Route path="/me/uverification" element={<UserVerification />} />
-          <Route path="/advertise" element={<DonationPage />} />
+          {/* <Route path="/advertise" element={<DonationPage />} /> */}
           <Route path="/advertise/checkout" element={<CheckoutPage />} />
+          <Route path="/advertise" element={<AdvertiseMainPage />} />
           <Route
             path="/advertise/Paymentsuccess"
             element={<PaymentSuccess />}

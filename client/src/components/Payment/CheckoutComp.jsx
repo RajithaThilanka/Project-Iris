@@ -112,16 +112,6 @@ const CheckoutPage = () => {
             >
               {loading ? <CircularProgress size={24} /> : "Pay"}
             </Button>
-            <Button
-              fullWidth
-              sx={{ mt: 2 }}
-              variant="contained"
-              onClick={() => {
-                navigate("/advertise");
-              }}
-            >
-              Back
-            </Button>
           </Stack>
         </form>
       </Stack>
