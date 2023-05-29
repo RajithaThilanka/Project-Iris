@@ -136,7 +136,7 @@ export default function AdvertiseMainPage(props) {
                     //button container component
                     sx={{
                       height: {
-                        xl: "750px",
+                        xl: "850px",
                         lg: "500px",
                         //md: "480px",
                         // sm: "440px",
@@ -144,7 +144,7 @@ export default function AdvertiseMainPage(props) {
                       },
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "5px",
+                      //   padding: "2px",
                     }}
                   >
                     <Stack
@@ -172,7 +172,7 @@ export default function AdvertiseMainPage(props) {
                       },
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "5px",
+                      //   padding: "5px",
                     }}
                   >
                     <Stack

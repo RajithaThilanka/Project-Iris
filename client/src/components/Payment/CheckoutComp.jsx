@@ -72,8 +72,8 @@ const CheckoutPage = () => {
         </Typography>
 
         <form onSubmit={handleConfirmPayment}>
-          <Stack direction="column" padding={"20px"} spacing={3}>
-            <Typography variant="body1">Total payment Is: 10$</Typography>
+          <Stack direction="column" padding={"20px"} spacing={2}>
+            <Typography variant="body1">Total payment Is: 50$</Typography>
 
             <div
               style={{

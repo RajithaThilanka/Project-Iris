@@ -17,7 +17,7 @@ import { Checkbox, FormControlLabel, Popover } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 import { getAllSuspendedAccounts } from "../../api/AdminRequests";
-
+import AddData from "./AddData.json";
 export default function Add() {
   const [rows, setRows] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -156,6 +156,7 @@ export default function Add() {
           <DataGrid
             getRowId={(row) => row._id}
             rows={rows}
+            // rows={AddData}
             columns={columns}
             pageSize={20}
             rowsPerPageOptions={[]}

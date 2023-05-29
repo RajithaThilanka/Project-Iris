@@ -62,11 +62,11 @@ export default function DonationPage() {
     }
 
     if (fullName && email && description) {
-      try {
-        navigate(`/advertise/checkout`);
-      } catch (error) {
-        console.log(error);
-      }
+      // try {
+      //   navigate(`/advertise/checkout`);
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
   };
 
@@ -143,64 +143,67 @@ export default function DonationPage() {
 
               <Typography variant="h5"> Advertice With Us</Typography>
 
-              <TextField
-                sx={{ width: "300px" }}
-                id="outlined-basic"
-                label="Enter Full Name"
-                variant="outlined"
-                value={fullName}
-                onChange={handleFullNameChange}
-                error={!!fullNameError}
-                helperText={fullNameError}
-              />
-              <TextField
-                sx={{ width: "300px" }}
-                id="outlined-basic"
-                label="Enter Email"
-                variant="outlined"
-                value={email}
-                onChange={handleEmailChange}
-                error={!!emailError}
-                helperText={emailError}
-              />
+              <Stack direction="column" padding={"20px"} spacing={2}>
+                <TextField
+                  // sx={{ width: "300px" }}
+                  id="outlined-basic"
+                  label="Enter Full Name"
+                  variant="outlined"
+                  value={fullName}
+                  onChange={handleFullNameChange}
+                  error={!!fullNameError}
+                  helperText={fullNameError}
+                />
+                <TextField
+                  // sx={{ width: "300px" }}
+                  id="outlined-basic"
+                  label="Enter Email"
+                  variant="outlined"
+                  value={email}
+                  onChange={handleEmailChange}
+                  error={!!emailError}
+                  helperText={emailError}
+                />
 
-              <Box
-                sx={{
-                  width: "300px",
-                  height: "60px",
-                  borderRadius: 1,
-                  boxShadow: 3,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography>Upload Addvertiement</Typography>
-                <IconButton>
-                  <label htmlFor="file-upload">
-                    <input
-                      id="file-upload"
-                      type="file"
-                      accept="image/*"
-                      style={{ display: "none" }}
-                      onChange={handleFileUpload}
-                    />
-                    <FileUploadIcon />
-                  </label>
-                </IconButton>
-              </Box>
+                <Box
+                  sx={{
+                    width: "300px",
+                    height: "60px",
+                    borderRadius: 1,
+                    boxShadow: 3,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography>Upload Addvertiement</Typography>
+                  <IconButton>
+                    <label htmlFor="file-upload">
+                      <input
+                        id="file-upload"
+                        type="file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={handleFileUpload}
+                      />
+                      <FileUploadIcon />
+                    </label>
+                  </IconButton>
+                </Box>
 
-              <TextField
-                sx={{ width: "300px" }}
-                id="outlined-multiline-static"
-                multiline
-                rows={3}
-                label="Enter Description"
-                value={description}
-                onChange={handleDescriptionChange}
-                error={!!descriptionError}
-                helperText={descriptionError}
-              />
+                <TextField
+                  // sx={{ width: "300px" }}
+                  id="outlined-multiline-static"
+                  multiline
+                  rows={3}
+                  label="Enter Description"
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  error={!!descriptionError}
+                  helperText={descriptionError}
+                />
+              </Stack>
+
               <Box sx={{ width: 300 }}>
                 <Typography>Select Days</Typography>
                 <Slider
@@ -212,7 +215,7 @@ export default function DonationPage() {
                   step={1}
                   marks
                   min={0}
-                  max={30}
+                  max={50}
                 />
               </Box>
               <Typography variant="body1">Fee: {sliderValue}$ </Typography>
