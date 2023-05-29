@@ -12,7 +12,7 @@ from flask import Flask, request
 import json 
 
 """
-def create_refined_profiles(data):
+def create_refined_profiles(dFata):
     
     df = pd.DataFrame(data['passionsWithAge'])
     with open("refined_profiles.pkl",'wb') as fp:

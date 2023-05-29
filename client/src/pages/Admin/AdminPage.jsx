@@ -14,6 +14,7 @@ import UserVerificationView from "../../components/Admin/UserVerificationData/Us
 import VerificationRequests from "../../components/Admin/VerificationRequests/VerificationRequests";
 import SuspendedAccounts from "../../components/Admin/SuspendedAccounts/SuspendedAccounts";
 import AdminSettings from "../../components/Admin/AdminSettings/AdminSettings";
+import Add from "../../components/Admin/Advertisements/Add";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -75,7 +76,7 @@ export default function AdminPage() {
               flexGrow: 1,
               bgcolor: "background.paper",
               display: "flex",
-              height: "224px",
+              height: "100%",
               width: "100%",
             }}
           >
@@ -90,8 +91,9 @@ export default function AdminPage() {
               <Tab label="All Profiles" {...a11yProps(0)} />
               <Tab label="Varification Requests" {...a11yProps(1)} />
               <Tab label="Profile Reports" {...a11yProps(2)} />
-              <Tab label="Suspended Accounts" {...a11yProps(3)} />
-              <Tab label="Admin Settings" {...a11yProps(4)} />
+              <Tab label="Suspend Accounts" {...a11yProps(3)} />
+              <Tab label="Advertisement" {...a11yProps(4)} />
+              <Tab label="Admin Settings" {...a11yProps(5)} />
             </Tabs>
             <TabPanel value={value} index={0}>
               <Allprofiles />
@@ -106,6 +108,9 @@ export default function AdminPage() {
               <SuspendedAccounts />
             </TabPanel>
             <TabPanel value={value} index={4}>
+              <Add />
+            </TabPanel>
+            <TabPanel value={value} index={5}>
               <AdminSettings />
             </TabPanel>
           </Box>

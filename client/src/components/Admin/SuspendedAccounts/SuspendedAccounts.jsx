@@ -30,16 +30,16 @@ export default function SuspendedAccounts() {
   const open = Boolean(anchorEl);
   const id = open ? "popup-checkbox" : undefined;
   const columns = [
-    { field: " []._id.id", headerName: "ID", width: 150 },
-    { field: "_id.firstname", headerName: "First name", width: 100 },
+    { field: "id", headerName: "ID", width: 150 },
+    { field: "fullname", headerName: "First name", width: 100 },
     {
-      field: `_id.email`,
+      field: `email`,
       headerName: "Email",
       width: 150,
       editable: false,
     },
     {
-      field: "_id.verified",
+      field: "status",
       headerName: "Verified",
       type: "string",
       width: 110,
@@ -158,7 +158,7 @@ export default function SuspendedAccounts() {
   }, []);
 
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <Stack direction="row" spacing={2}>
         <Box
           sx={{
@@ -172,6 +172,7 @@ export default function SuspendedAccounts() {
           <DataGrid
             getRowId={(row) => row._id}
             rows={rows}
+            // rows={jsonData}
             columns={columns}
             pageSize={20}
             rowsPerPageOptions={[]}
