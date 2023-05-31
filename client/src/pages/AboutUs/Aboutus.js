@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import Navbar from "../../components/Appbar/Navbar";
 import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 export default function AboutUs() {
   const {
     data: { user },

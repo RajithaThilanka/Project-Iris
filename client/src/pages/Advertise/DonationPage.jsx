@@ -18,6 +18,58 @@ import IconButton from "@mui/material/IconButton";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 export default function DonationPage() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [image, setImage] = useState(null);
+  const [description, setDescription] = useState("");
+
+  const handleFullNameChange = (event) => {
+    setFullName(event.target.value);
+    setFullNameError("");
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailError("");
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      setUploadedImage(e.target.result);
+      setImage(file);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+    setDescriptionError("");
+  };
+
+  const handleDonateClick = async () => {
+    if (!fullName) {
+      setFullNameError("Please enter your full name");
+    }
+    if (!email) {
+      setEmailError("Please enter your email");
+    }
+    if (!description) {
+      setDescriptionError("Please enter a description");
+    }
+
+    if (fullName && email && description) {
+      // try {
+      //   navigate(`/advertise/checkout`);
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    }
+  };
+
   const navigate = useNavigate();
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
@@ -30,37 +82,12 @@ export default function DonationPage() {
   };
 
   const handleDonate = () => {
-    // handle donation logic here
     console.log(`Donating ${amount} with message: ${message}`);
   };
-
-  // const {
-  //   data: { user },
-  // } = useSelector((state) => state.authReducer.authData);
-  // const { id } = useParams();
 
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const [uploadedImage, setUploadedImage] = useState(null);
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-      setUploadedImage(e.target.result);
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  const handleDonateClick = async () => {
-    try {
-      navigate(`/advertise/checkout`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const [sliderValue, setSliderValue] = useState(30);
 
@@ -68,10 +95,13 @@ export default function DonationPage() {
     setSliderValue(newValue);
   };
 
+  const [fullNameError, setFullNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+
   return (
     <div
       style={{
-        backgroundImage: `url(${serverPublic}donationimge.jpg)`,
         height: "100vh",
         backgroundSize: "100% auto",
         backgroundPosition: "center",
@@ -86,6 +116,7 @@ export default function DonationPage() {
             justifyContent: "center",
             alignItems: "center",
             marginTop: "50px",
+            marginBottom: "50px",
           }}
         >
           <Box
@@ -95,7 +126,7 @@ export default function DonationPage() {
               borderRadius: 1,
               boxShadow: 5,
               width: "600px",
-              height: "640px",
+              height: "120%",
             }}
           >
             <Stack
@@ -111,38 +142,41 @@ export default function DonationPage() {
               <img className="logo" src={serverPublic + "irislogo.png"} />
 
               <Typography variant="h5"> Advertice With Us</Typography>
-              <TextField
-                sx={{ width: "300px" }}
-                id="outlined-basic"
-                label="Enter Full Name :"
-                variant="outlined"
-              />
-              <TextField
-                sx={{ width: "300px" }}
-                id="outlined-basic"
-                label="Enter Email :"
-                variant="outlined"
-              />
 
-              <Box
-                sx={{
-                  width: "300px",
-                  height: "60px",
-                  borderRadius: 1,
-                  boxShadow: 3,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography>Upload Addvertiement</Typography>
-                {uploadedImage ? (
-                  <img
-                    src={uploadedImage}
-                    alt="Uploaded"
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                  />
-                ) : (
+              <Stack direction="column" padding={"20px"} spacing={2}>
+                <TextField
+                  // sx={{ width: "300px" }}
+                  id="outlined-basic"
+                  label="Enter Full Name"
+                  variant="outlined"
+                  value={fullName}
+                  onChange={handleFullNameChange}
+                  error={!!fullNameError}
+                  helperText={fullNameError}
+                />
+                <TextField
+                  // sx={{ width: "300px" }}
+                  id="outlined-basic"
+                  label="Enter Email"
+                  variant="outlined"
+                  value={email}
+                  onChange={handleEmailChange}
+                  error={!!emailError}
+                  helperText={emailError}
+                />
+
+                <Box
+                  sx={{
+                    width: "300px",
+                    height: "60px",
+                    borderRadius: 1,
+                    boxShadow: 3,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography>Upload Addvertiement</Typography>
                   <IconButton>
                     <label htmlFor="file-upload">
                       <input
@@ -155,16 +189,21 @@ export default function DonationPage() {
                       <FileUploadIcon />
                     </label>
                   </IconButton>
-                )}
-              </Box>
+                </Box>
 
-              <TextField
-                sx={{ width: "300px" }}
-                id="outlined-multiline-static"
-                multiline
-                rows={3}
-                label="Enter Description"
-              />
+                <TextField
+                  // sx={{ width: "300px" }}
+                  id="outlined-multiline-static"
+                  multiline
+                  rows={3}
+                  label="Enter Description"
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  error={!!descriptionError}
+                  helperText={descriptionError}
+                />
+              </Stack>
+
               <Box sx={{ width: 300 }}>
                 <Typography>Select Days</Typography>
                 <Slider
@@ -176,7 +215,7 @@ export default function DonationPage() {
                   step={1}
                   marks
                   min={0}
-                  max={30}
+                  max={50}
                 />
               </Box>
               <Typography variant="body1">Fee: {sliderValue}$ </Typography>
@@ -187,20 +226,14 @@ export default function DonationPage() {
                 sx={{ justifyContent: "center", alignItems: "center" }}
               >
                 <Button
-                  sx={{ width: "140px" }}
-                  variant="contained"
                   onClick={handleDonateClick}
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{ mt: 2 }}
                 >
                   Submit
-                </Button>
-                <Button
-                  sx={{ width: "140px" }}
-                  variant="contained"
-                  onClick={() => {
-                    navigate("/me/dashboard");
-                  }}
-                >
-                  Back
                 </Button>
               </Stack>
             </Stack>

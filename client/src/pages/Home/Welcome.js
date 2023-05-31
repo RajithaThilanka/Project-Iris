@@ -65,7 +65,7 @@ function Welcome() {
             <LazyLoadImage
               effect="blur"
               src={serverPublic + "irislogo.png"}
-              alt="Logo"
+              alt="Iris Logo"
               className="header__logo"
             />
             <span className="logo-content">IRIS</span>

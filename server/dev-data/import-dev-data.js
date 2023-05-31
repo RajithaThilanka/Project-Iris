@@ -193,27 +193,27 @@ const countries = [
 // });
 // // console.log(passions);
 // fs.writeFileSync('./test.json', JSON.stringify(updated), 'utf-8');
-const import_data = async () => {
-  // await User.create(users, { validateBeforeSave: false });
-  await User.updateMany({}, { isClustered: true });
-  // const updatedLooking = looking.map((p, i) => {
-  //   return { ...p, userId: { $oid: `${ids[i]}` } };
-  // });
-  // fs.writeFileSync('./new.json', JSON.stringify(updatedLooking), 'utf-8');
-  // await LookingFor.updateMany(
-  //   {},
-  //   {
-  //     userId: mongoose.Types.ObjectId(this.userId),
-  //   }
-  // );
-  // console.log('done');
-  // let users = await User.find({});
-  // users = users.slice(10);
-  // const ids = users.map((u, i) => {
-  //   return u._id;
-  // });
-  // fs.writeFileSync('./userIds.json', JSON.stringify(ids), 'utf-8');
-};
+// const import_data = async () => {
+// await User.create(users, { validateBeforeSave: false });
+// await User.updateMany({}, { isClustered: true });
+// const updatedLooking = looking.map((p, i) => {
+//   return { ...p, userId: { $oid: `${ids[i]}` } };
+// });
+// fs.writeFileSync('./new.json', JSON.stringify(updatedLooking), 'utf-8');
+// await LookingFor.updateMany(
+//   {},
+//   {
+//     userId: mongoose.Types.ObjectId(this.userId),
+//   }
+// );
+// console.log('done');
+// let users = await User.find({});
+// users = users.slice(10);
+// const ids = users.map((u, i) => {
+//   return u._id;
+// });
+// fs.writeFileSync('./userIds.json', JSON.stringify(ids), 'utf-8');
+// };
 //     console.log('Data successfully loaded!');
 // deleteDevData();
 // import_data();
@@ -230,15 +230,48 @@ const import_data = async () => {
 // console.log(result);
 
 const updateAnswers = async () => {
-  const questionIds = await Question.find({}).select('_id');
+  // const questionIds = await Question.find({}).select('_id');
 
-  const updated = await Answer.updateMany(
-    {},
-    {
-      questions: questionIds,
+  // const updated = await Answer.updateMany(
+  //   {},
+  //   {
+  //     questions: questionIds,
+  //   }
+  // );
+  // process.exit(0);
+
+  // const answerIds = await Answer.find({}).select('userId');
+  // const userIds = await User.find({}).select('_id');
+  // const realIds = answerIds.map(a => a.userId + '');
+  // const realUserIds = userIds.map(u => u._id + '');
+
+  // let difference = realUserIds.filter(x => !realIds.includes(x));
+  // console.log(difference);
+
+  // const users = await User.find({});
+  // const promises = users.forEach(async (user, i) => {
+  //   await User.findByIdAndUpdate(user._id, { index: i });
+  // });
+  // await Promise.all(promises);
+  const users = await User.find({});
+  // let my_array = Array(6603)
+  // .fill()
+  // .map((_, i) => i);
+  const indexes = users.map(u => u.index);
+  const set = new Set(indexes);
+  const duplicates = indexes.filter(item => {
+    if (set.has(item)) {
+      set.delete(item);
+    } else {
+      return item;
     }
-  );
-  process.exit(0);
+  });
+  console.log(duplicates);
+  // console.log(my_array.length);
+
+  // let difference = my_array.filter(x => !indexes.includes(x));
+  // console.log(difference);
+  process.exit(1);
 };
 
 updateAnswers();

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Payment } from "../../api/UserRequests";
 
+const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 const CheckoutPage = () => {
   const stripe = useStripe();
   const elements = useElements();
@@ -60,14 +61,19 @@ const CheckoutPage = () => {
   return (
     <div>
       <Stack direction="column" padding={"20px"} spacing={2}>
+        <img
+          className="logo"
+          style={{ display: "block", margin: "0 auto" }}
+          src={serverPublic + "Strip.png"}
+        />
+
         <Typography variant="h5" align="center" gutterBottom>
           Checkout Payment
         </Typography>
 
         <form onSubmit={handleConfirmPayment}>
-          <Stack direction="column" padding={"20px"} spacing={3}>
-            <Typography variant="body1">Total payment Is: 10$</Typography>
-            <TextField fullWidth label="Enter email" required />
+          <Stack direction="column" padding={"20px"} spacing={2}>
+            <Typography variant="body1">Total payment Is: 50$</Typography>
 
             <div
               style={{

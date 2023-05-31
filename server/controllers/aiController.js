@@ -9,11 +9,11 @@ const Message = require('../models/messageModel');
 const ManualVerification = require('../models/manualVerificationModel');
 const Report = require('../models/reportModel');
 const getUsersByIndex = async users => {
-  const suggestedUserPromises = users.map(async user => {
+  let suggestedUserPromises = users.map(async user => {
     const u = await User.findOne({ index: user.index });
-
     return u;
   });
+
   return Promise.all(suggestedUserPromises);
 };
 
@@ -121,9 +121,9 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
     json: true,
   };
   try {
-    const sentUsers = await request(options);
+    let sentUsers = await request(options);
     let suggestions = await getUsersByIndex(sentUsers);
-
+    suggestions = suggestions.filter(s => s);
     suggestions = suggestions.filter(s => s._id + '' != req.user._id + '');
     await User.findByIdAndUpdate(req.user._id, { isClustered: true });
     // const filteredUsers = filterByLookingFor(aiSuggestedUsers);
@@ -181,7 +181,12 @@ exports.generateSuggestions = catchAsync(async (req, res, next) => {
       },
     });
   } catch (error) {
-    return next(new AppError('Something went wrong', 500));
+    return next(
+      new AppError(
+        'We have trouble connecting to AI. Please try again later',
+        500
+      )
+    );
   }
 });
 

@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 export default function ProfileReportReason(props) {
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <Stack
         spacing={3}
         direction="column"

@@ -6,11 +6,20 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import MinMaxScaler
 import _pickle as pickle
 from hate_speech import detect_hate_speech
+from refined_files import init_files
 from cluster import run_clusters
-
 from flask import Flask, request
 import json 
 
+"""
+def create_refined_profiles(dFata):
+    
+    df = pd.DataFrame(data['passionsWithAge'])
+    with open("refined_profiles.pkl",'wb') as fp:
+        pickle.dump(df, fp)
+    
+    init_files()
+"""
 
 def load_data():
     # Loading the Profiles
@@ -23,6 +32,7 @@ def load_data():
     with open("vectorized_refined.pkl", 'rb') as fp:
         vect_df = pickle.load(fp)
 
+    
     # Loading the Classification Model
     model = load("refined_model.joblib")
     
@@ -49,7 +59,7 @@ def vectorization(df, columns, input_df):
     column_name = columns[0]
         
     # Checking if the column name has been removed already
-    if column_name not in ['Bios', 'Movies','Religion', 'Music', 'Politics', 'Social Media', 'Sports']:
+    if column_name not in ['Bios', 'Movies','Religion', 'Music', 'Politics', 'Social_Media', 'Sports']:
                 
         return df, input_df
     
@@ -162,7 +172,7 @@ def generate_suggestions(newUser,isSaved):
     new_profile['Politics']=newUser['Politics']
     new_profile.at[new_profile.index[0],'Movies']=newUser['Movies']
     new_profile.at[new_profile.index[0],'Music']=newUser['Music']
-    new_profile.at[new_profile.index[0],'Social Media']=newUser['Social_Media']
+    new_profile.at[new_profile.index[0],'Social_Media']=newUser['Social_Media']
     new_profile.at[new_profile.index[0],'Sports']=newUser['Sports']
     new_profile['Age']=newUser['Age']
     new_profile_temp=new_profile.copy()
@@ -179,43 +189,25 @@ def generate_suggestions(newUser,isSaved):
     # Scaling the New Data
     new_df = scaling(df_v, input_df)
     
+    
+    
     # Predicting/Classifying the new data
     #print(new_df)
     cluster = model.predict(new_df)
     # Finding the top 10 related profiles
     top_10_df = top_ten(cluster, vect_df, new_df,df)
-    """
+    
     if isSaved==False:
         #vetorized_refined.pkl
       
-  
-        new_cluster_df = pd.DataFrame(cluster,columns=['Cluster #'])
-        new_cluster_df.index=new_df.index
-        new_vectorized = pd.concat([vect_df,pd.concat([new_df, new_cluster_df],axis=1)])
-    
-        with open("./vectorized_refined.pkl", "wb") as fp:
-            pickle.dump(new_vectorized, fp)
-
-      
-
-        #clustered_profiles.pkl
-
-        new_clusters=pd.concat([cluster_df,pd.concat([new_profile,new_cluster_df],axis=1)])
-        print(cluster_df)
-        print(new_clusters)
-     
-        with open("./refined_cluster.pkl", "wb") as fp:
-            pickle.dump(new_clusters, fp)
-
-
-        #profiles_refined
-
         new_profiles=pd.concat([df_temp,new_profile_temp])
 
         with open("./refined_profiles.pkl", "wb") as fp:
             pickle.dump(new_profiles, fp)
-       
-        """    
+        
+        init_files()
+ 
+     
     return json_convert(top_10_df)
     #return top_10_df
     
@@ -241,6 +233,16 @@ with open("suggestions.json", "w") as outfile:
 # Setup flask server
 app = Flask(__name__) 
 
+"""
+@app.route('/api/v1/users/init-generate-suggestions', methods = ['POST']) 
+def init_suggestions_handler():
+    try:
+        data = request.get_json()
+        create_refined_profiles(data)
+        return json.dumps({"code":200,"status":"success","message":"user profiles clustered successfully"})
+    except:
+        return json.dumps({"code":500,"status":"error","message":"something went wrong"})   
+"""
 
 @app.route('/api/v1/users/generate-suggestions', methods = ['POST']) 
 def suggestions_handler(): 

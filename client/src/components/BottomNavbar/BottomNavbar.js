@@ -142,23 +142,6 @@ function BottomNavbar({ children }) {
             style={{ position: "relative" }}
             onClick={() => handleClick(6, "/me/manual-search")}
           >
-            <div
-              style={{
-                position: "absolute",
-                top: "-25%",
-                right: "-40%",
-                background: "red",
-                borderRadius: "50%",
-                width: "2rem",
-                height: "2rem",
-                fontSize: "1.2rem",
-                textAlign: "center",
-                color: "#fff",
-                display: notification.length > 0 ? "block" : "none",
-              }}
-            >
-              {notification?.length}
-            </div>
             <LocationSearchingIcon
               fontSize="medium"
               sx={{ color: "var(--color-grey-dark-2)" }}
