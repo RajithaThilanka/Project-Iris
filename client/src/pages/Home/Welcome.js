@@ -178,7 +178,7 @@ function Welcome() {
                   Virtual Dates
                 </h3>
                 <p className="feature-box__text">
-                  You can make virutal dates with connected friends
+                  You can make virutal dates with your friends and more
                 </p>
               </div>
             </div>
